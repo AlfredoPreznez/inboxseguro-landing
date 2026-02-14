@@ -108,14 +108,14 @@
                 </div>
 
                 <div class="hidden lg:flex space-x-5 text-sm font-medium">
-                    <a href="diagnostico.html"
-                        class="text-slate-500 hover:text-brand-600 transition-colors">Diagnóstico</a>
                     <a href="#como-funciona" class="text-slate-500 hover:text-brand-600 transition-colors">Cómo
                         funciona</a>
                     <a href="#dashboard" class="text-slate-500 hover:text-brand-600 transition-colors">Plataforma</a>
                     <a href="#nosotros" class="text-slate-500 hover:text-brand-600 transition-colors">Nosotros</a>
                     <a href="#precios" class="text-slate-500 hover:text-brand-600 transition-colors">Precios</a>
                     <a href="#faq" class="text-slate-500 hover:text-brand-600 transition-colors">FAQ</a>
+                    <a href="#diagnostico-cta"
+                        class="text-slate-500 hover:text-brand-600 transition-colors">Diagnóstico</a>
                     <a href="#contacto"
                         onclick="event.preventDefault(); window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})"
                         class="text-slate-500 hover:text-brand-600 transition-colors">Contacto</a>
@@ -147,8 +147,7 @@
         <!-- Mobile menu -->
         <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
             <div class="px-4 py-4 space-y-1">
-                <a href="diagnostico.html" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Diagnóstico</a>
+
                 <a href="#como-funciona" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo
                     funciona</a>
@@ -160,6 +159,8 @@
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
                 <a href="#faq" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">FAQ</a>
+                <a href="#diagnostico-cta" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Diagnóstico</a>
                 <a href="#contacto"
                     onclick="event.preventDefault(); closeMobileMenu(); window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
@@ -197,17 +198,16 @@
 
 
             <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-8 leading-tight text-white tracking-tight">
-                Seguridad de correo corporativo <br>
+                Infraestructura de Seguridad <br>
                 <span
-                    class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 animate-gradient-x">sin
-                    complicaciones técnicas.</span>
+                    class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-emerald-400 animate-gradient-x">para
+                    Correo Corporativo.</span>
             </h1>
 
-            <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
+            <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-4xl mx-auto font-light leading-relaxed">
                 InboxSeguro monitorea tu dominio y te guía paso a paso para configurar tu seguridad (DMARC, SPF, DKIM).
                 <span class="text-white font-medium">Sin intervenir tus equipos ni leer tus correos.</span>
-                Incluye un <span class="text-white font-medium">Asistente con IA</span> que resuelve dudas técnicas en
-                lenguaje claro.
+                Incluye un Asistente con IA que resuelve dudas técnicas en lenguaje claro.
                 Diseñado para empresas que necesitan cumplimiento y protección continua.
             </p>
 
@@ -226,42 +226,110 @@
                         class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity">
                     </div>
                 </a>
-                <a href="diagnostico.html"
-                    class="px-8 py-4 glass-dark hover:bg-white/10 text-white text-lg rounded-xl font-medium border border-white/10 transition-all hover:-translate-y-1 backdrop-blur-md flex items-center gap-2 justify-center">
-                    <svg class="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    Diagnóstico Gratuito
+                <a href="#diagnostico-cta"
+                    class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl backdrop-blur-sm border border-white/10 transition-all flex items-center gap-2">
+                    <i class="fa-regular fa-circle-check"></i> Diagnóstico Gratuito
+                </a>
+            </div>
+
+            <div class="animate-bounce mt-16 hidden md:block">
+                <a href="#problema"
+                    class="text-slate-400 hover:text-white transition-colors flex flex-col items-center gap-2 text-xs font-medium uppercase tracking-widest opacity-70 hover:opacity-100">
+                    <span>Entender el problema</span>
+                    <i class="fa-solid fa-chevron-down text-lg"></i>
                 </a>
             </div>
 
             <!-- Trusted Badges -->
-            <div class="pt-8 border-t border-white/10 max-w-4xl mx-auto">
+            <div class="pt-8 border-t border-white/10 max-w-6xl mx-auto">
                 <p class="text-sm text-slate-400 mb-6 font-medium uppercase tracking-widest text-xs">Compatible con</p>
                 <div
-                    class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+                    class="flex flex-wrap justify-center items-center gap-6 md:gap-10 opacity-80 grayscale hover:grayscale-0 transition-all duration-500">
                     <!-- Google Workspace -->
-                    <div class="flex items-center gap-2 text-white font-semibold text-lg">
-                        <i class="fa-brands fa-google text-2xl"></i> Workspace
+                    <div class="flex items-center gap-2 text-white font-semibold text-sm md:text-base">
+                        <i class="fa-brands fa-google text-xl"></i> Workspace
                     </div>
                     <!-- Microsoft 365 -->
-                    <div class="flex items-center gap-2 text-white font-semibold text-lg">
-                        <i class="fa-brands fa-microsoft text-2xl"></i> Microsoft 365
+                    <div class="flex items-center gap-2 text-white font-semibold text-sm md:text-base">
+                        <i class="fa-brands fa-microsoft text-xl"></i> Microsoft 365
                     </div>
                     <!-- Zoho -->
-                    <div class="flex items-center gap-2 text-white font-semibold text-lg">
-                        <span class="font-black text-2xl tracking-wide"
-                            style="font-family: 'Arial Black', sans-serif;">ZOHO</span> Mail
+                    <div class="flex items-center gap-2 text-white font-semibold text-sm md:text-base">
+                        <i class="fa-solid fa-envelope text-xl"></i> Zoho Mail
                     </div>
                     <!-- cPanel -->
-                    <div class="flex items-center gap-2 text-white font-semibold text-lg">
+                    <div class="flex items-center gap-2 text-white font-semibold text-sm md:text-base">
                         <i class="fa-solid fa-server text-xl"></i> cPanel
+                    </div>
+                    <!-- NIC Chile -->
+                    <div
+                        class="flex items-center gap-2 text-white font-semibold text-sm md:text-base border-l border-white/20 pl-6">
+                        <i class="fa-solid fa-globe text-xl text-red-500"></i> NIC Chile
+                    </div>
+                    <!-- Standards -->
+                    <div class="flex items-center gap-2 text-white font-semibold text-sm md:text-base">
+                        <i class="fa-solid fa-shield-halved text-xl text-emerald-500"></i> Estándares RFC
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
+    <!-- PAIN POINTS SECTION: "El problema que muchas empresas desconocen" -->
+    <section id="problema" class="py-20 bg-slate-50 relative overflow-hidden scroll-mt-20">
+        <div class="max-w-6xl mx-auto px-4 relative z-10">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                    El problema que muchas empresas desconocen
+                </h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                    Tener un dominio corporativo no garantiza que esté correctamente autenticado. Si su identidad
+                    técnica no está configurada adecuadamente, pueden presentarse los siguientes escenarios:
+                </p>
+            </div>
 
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Pain 1: Impersonation -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-6 text-red-600">
+                        <i class="fa-solid fa-user-secret text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Suplantación de identidad</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Sin una política DMARC activa, terceros pueden enviar correos en nombre de tu dominio sin
+                        autorización. Esto puede afectar la confianza de clientes y proveedores.
+                    </p>
+                </div>
+
+                <!-- Pain 2: Inconsistent Delivery -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div
+                        class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-6 text-amber-600">
+                        <i class="fa-solid fa-envelope-open-text text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Entrega inconsistente de correos</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Configuraciones incorrectas de SPF o DKIM pueden provocar que Gmail u Outlook clasifiquen tus
+                        mensajes como spam, afectando cotizaciones, facturación y comunicaciones clave.
+                    </p>
+                </div>
+
+                <!-- Pain 3: Reputational Risk -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div
+                        class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-6 text-slate-600">
+                        <i class="fa-solid fa-ban text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Riesgo reputacional del dominio</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Si tu dominio es utilizado para envíos abusivos, puede terminar en listas negras públicas,
+                        impactando la entregabilidad de toda la organización.
+                    </p>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -679,10 +747,12 @@
 
 
     <!-- Diagnóstico CTA -->
-    <section class="py-16 bg-white border-t border-slate-200">
-        <div class="max-w-4xl mx-auto px-4 text-center">
+    <section id="diagnostico-cta"
+        class="py-24 bg-white border-t border-slate-200 scroll-mt-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-slate-50/50 -skew-y-1 transform origin-bottom-right pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
             <div
-                class="inline-block p-1 rounded-full bg-slate-100 border border-slate-200 mb-6 hover:bg-slate-50 transition-colors">
+                class="inline-block p-1 rounded-full bg-slate-100 border border-slate-200 mb-8 hover:bg-slate-50 transition-colors">
                 <a href="diagnostico.html" class="flex items-center gap-2 px-3 py-1">
                     <span class="flex h-2 w-2 rounded-full bg-emerald-500"></span>
                     <span class="text-xs font-semibold text-slate-600 uppercase tracking-wide">Herramienta
