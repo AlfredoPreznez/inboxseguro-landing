@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Gratuito - InboxSeguro</title>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <meta name="description"
+        content="Herramienta gratuita para analizar la seguridad de tu correo corporativo. Verifica SPF, DKIM y DMARC en segundos.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            600: '#2563EB', /* Azul Marca */
+                            700: '#1d4ed8',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .brand-accent {
+            color: #2563EB;
+        }
+
+        /* Glassmorphism Premium */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Blob Animations */
+        @keyframes float {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        .animate-blob {
+            animation: float 10s infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-200 antialiased relative min-h-screen flex flex-col">
+
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="index.html" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="logo.png" alt="Logo InboxSeguro" class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex space-x-5 text-sm font-medium">
+                    <a href="index.html" class="text-slate-300 hover:text-brand-600 transition-colors">Volver al
+                        Inicio</a>
+                    <a href="index.html#precios" class="text-slate-300 hover:text-brand-600 transition-colors">Ver
+                        Planes</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso
+                        Clientes</a>
+                    <a href="index.html#precios"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">
+                        Ver Planes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Tool Section -->
+    <main class="flex-grow flex items-center justify-center relative overflow-hidden pt-24 pb-12">
+        <!-- Dynamic Background -->
+        <div class="absolute inset-0 bg-slate-900 pointer-events-none">
+            <div
+                class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-blue-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-purple-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000">
+            </div>
+        </div>
+
+        <div
+            class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 contrast-150 brightness-100 pointer-events-none">
+        </div>
+
+        <div class="max-w-3xl w-full mx-auto px-4 relative z-10 text-center">
+
+            <div
+                class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
+                Herramienta Gratuita</div>
+
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-6">Diagnóstico de Seguridad</h1>
+            <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
+                Analiza tu dominio en tiempo real. Verifica si tus registros SPF, DMARC y DKIM están listos para evitar
+                el spam.
+            </p>
+
+            <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl">
+                <form onsubmit="handleDiagnostico(event)" class="flex flex-col sm:flex-row gap-3" id="diagForm">
+                    <input type="text" id="dominioInput" placeholder="ej: tuempresa.cl"
+                        class="flex-1 px-5 py-4 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-lg transition-all"
+                        required>
+                    <button type="submit" id="diagBtn"
+                        class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                        Analizar
+                    </button>
+                </form>
+
+                <p class="text-xs text-slate-500 mt-4 text-left">
+                    <i class="fa-solid fa-lock mr-1"></i> Análisis seguro basado en registros públicos DNS.
+                </p>
+
+                <!-- Results Container -->
+                <div id="diagResults"
+                    class="hidden mt-8 text-left border-t border-white/10 pt-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-white font-bold text-lg">Resultados para <span id="diagDomain"
+                                class="text-brand-400"></span></h3>
+                        <div id="diagScore" class="px-3 py-1 rounded-full text-xs font-bold"></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div id="row-spf"
+                            class="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/5">
+                            <div id="icon-spf"
+                                class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"></div>
+                            <span class="text-white font-bold text-sm w-16">SPF</span>
+                            <p id="txt-spf" class="text-sm text-slate-400 truncate flex-1"></p>
+                            <span id="badge-spf"
+                                class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
+                        </div>
+                        <div id="row-dmarc"
+                            class="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/5">
+                            <div id="icon-dmarc"
+                                class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"></div>
+                            <span class="text-white font-bold text-sm w-16">DMARC</span>
+                            <p id="txt-dmarc" class="text-sm text-slate-400 truncate flex-1"></p>
+                            <span id="badge-dmarc"
+                                class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
+                        </div>
+                        <div id="row-dkim"
+                            class="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/5">
+                            <div id="icon-dkim"
+                                class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"></div>
+                            <span class="text-white font-bold text-sm w-16">DKIM</span>
+                            <p id="txt-dkim" class="text-sm text-slate-400 truncate flex-1"></p>
+                            <span id="badge-dkim"
+                                class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
+                        </div>
+                    </div>
+
+                    <div id="resultMessageContainer"
+                        class="mt-8 p-4 rounded-xl bg-brand-900/40 border border-brand-500/30 text-center">
+                        <h4 id="resultTitle" class="text-white font-bold mb-2">¿Necesitas ayuda con estos errores?</h4>
+                        <p id="resultText" class="text-slate-300 text-sm mb-4">InboxSeguro te guía paso a paso para
+                            solucionarlos.</p>
+                        <a id="resultBtn" href="index.html#precios"
+                            class="inline-block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 text-sm">
+                            Ver Planes de Solución
+                        </a>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-800 py-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-sm text-slate-500 flex items-center gap-1">
+                © 2026
+                <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                    <span>Inbox<span class="text-blue-400">Seguro</span></span>
+                    <sup class="text-blue-400 text-[0.6rem] font-bold relative top-[-0.4em]">TM</sup>
+                </span>
+            </div>
+            <div class="flex gap-6 text-sm text-slate-500">
+                <a href="/terminos.html" class="hover:text-blue-400 transition-colors">Términos y Condiciones</a>
+                <a href="/privacidad.html" class="hover:text-blue-400 transition-colors">Política de Privacidad</a>
+                <a href="index.html#contacto" class="hover:text-blue-400 transition-colors">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // DIAGNOSTIC FORM — Real-time DNS check via Google DoH
+        async function handleDiagnostico(event) {
+            event.preventDefault();
+            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+            if (!dominio) return;
+
+            const btn = document.getElementById('diagBtn');
+            const resultsDiv = document.getElementById('diagResults');
+            btn.disabled = true;
+            btn.innerText = 'Analizando...';
+            resultsDiv.classList.add('hidden');
+
+            try {
+                const [spfData, dmarcData, dkimData] = await Promise.all([
+                    fetchDNS(dominio, 'TXT'),
+                    fetchDNS('_dmarc.' + dominio, 'TXT'),
+                    checkDKIM(dominio)
+                ]);
+
+                // Parse SPF
+                const spfRecords = extractTXT(spfData);
+                const spfRecord = spfRecords.find(r => r.startsWith('v=spf1'));
+                const spfResult = analyzeSpf(spfRecord);
+
+                // Parse DMARC
+                const dmarcRecords = extractTXT(dmarcData);
+                const dmarcRecord = dmarcRecords.find(r => r.startsWith('v=DMARC1'));
+                const dmarcResult = analyzeDmarc(dmarcRecord);
+
+                // DKIM
+                const dkimResult = {
+                    status: dkimData.found ? 'ok' : 'fail',
+                    label: dkimData.found ? 'Configurado' : 'No detectado',
+                    text: dkimData.found ? 'Selector: ' + dkimData.selector : 'No se detectó en selectores comunes'
+                };
+
+                // Render results
+                setResult('spf', spfResult);
+                setResult('dmarc', dmarcResult);
+                setResult('dkim', dkimResult);
+
+                document.getElementById('diagDomain').textContent = dominio;
+
+                // Smart Score
+                const statuses = [spfResult.status, dmarcResult.status, dkimResult.status];
+                const okCount = statuses.filter(s => s === 'ok').length;
+                const warnCount = statuses.filter(s => s === 'warn').length;
+                const failCount = statuses.filter(s => s === 'fail').length;
+                const scoreEl = document.getElementById('diagScore');
+
+                if (failCount === 0 && warnCount === 0) {
+                    scoreEl.textContent = 'Protegido';
+                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400';
+                } else if (failCount === 0) {
+                    scoreEl.textContent = 'Mejorable';
+                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
+                } else if (okCount > 0) {
+                    scoreEl.textContent = 'Parcial';
+                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
+                } else {
+                    scoreEl.textContent = 'Sin protección';
+                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400';
+                }
+
+                // Update Result Message
+                updateResultMessage(failCount, warnCount, okCount);
+
+                resultsDiv.classList.remove('hidden');
+                // Scroll to results if needed, though centered page might not need it
+            } catch (err) {
+                alert('Error al consultar DNS. Verifica que el dominio sea válido.');
+                console.error(err);
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Analizar';
+            }
+        }
+
+        function updateResultMessage(failCount, warnCount, okCount) {
+            const title = document.getElementById('resultTitle');
+            const text = document.getElementById('resultText');
+            const btn = document.getElementById('resultBtn');
+            const container = document.getElementById('resultMessageContainer');
+
+            // Reset classes
+            container.className = 'mt-8 p-4 rounded-xl border text-center transition-colors duration-500';
+            btn.className = 'inline-block px-6 py-2.5 font-bold rounded-xl shadow-lg transition-all hover:-translate-y-0.5 text-sm';
+
+            if (failCount === 0 && warnCount === 0) {
+                // Success
+                container.classList.add('bg-emerald-900/40', 'border-emerald-500/30');
+                title.textContent = '¡Tu dominio está bien configurado!';
+                text.textContent = 'Mantén tu seguridad al día con nuestro monitoreo continuo.';
+                btn.textContent = 'Ver Planes de Monitoreo';
+                btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'text-white', 'shadow-emerald-600/30');
+            } else if (failCount === 0) {
+                // Warning (e.g. DMARC none)
+                container.classList.add('bg-amber-900/40', 'border-amber-500/30');
+                title.textContent = 'Estás a un paso de la seguridad total.';
+                text.textContent = 'Tu configuración es válida pero mejorable. Evita la suplantación con nuestras guías.';
+                btn.textContent = 'Optimizar mi Seguridad';
+                btn.classList.add('bg-amber-600', 'hover:bg-amber-500', 'text-white', 'shadow-amber-600/30');
+            } else {
+                // Fail
+                container.classList.add('bg-brand-900/40', 'border-brand-500/30');
+                title.textContent = '¿Necesitas ayuda con estos errores?';
+                text.textContent = 'InboxSeguro te guía paso a paso para solucionarlos.';
+                btn.textContent = 'Ver Planes de Solución';
+                btn.classList.add('bg-brand-600', 'hover:bg-brand-500', 'text-white', 'shadow-blue-600/30');
+            }
+        }
+
+        function analyzeSpf(record) {
+            if (!record) return { status: 'fail', label: 'No configurado', text: 'No se encontró registro SPF' };
+            if (record.includes('+all')) return { status: 'warn', label: 'Mejorable', text: 'Usa +all (permite cualquier servidor). Considera cambiar a ~all o -all.' };
+            return { status: 'ok', label: 'Configurado', text: record.length > 60 ? record.substring(0, 60) + '...' : record };
+        }
+
+        function analyzeDmarc(record) {
+            if (!record) return { status: 'fail', label: 'No configurado', text: 'No se encontró registro DMARC' };
+            const policyMatch = record.match(/p=([^;\s]+)/);
+            const policy = policyMatch ? policyMatch[1].toLowerCase() : 'none';
+            if (policy === 'none') {
+                return { status: 'warn', label: 'Mejorable', text: 'Política p=none (solo monitoreo, no bloquea suplantación). Recomendamos p=quarantine.' };
+            } else if (policy === 'quarantine') {
+                return { status: 'ok', label: 'Configurado', text: 'Política p=quarantine (envía suplantaciones a spam)' };
+            } else if (policy === 'reject') {
+                return { status: 'ok', label: 'Óptimo', text: 'Política p=reject (bloquea suplantaciones completamente)' };
+            }
+            return { status: 'ok', label: 'Configurado', text: record.length > 60 ? record.substring(0, 60) + '...' : record };
+        }
+
+        async function fetchDNS(name, type) {
+            const res = await fetch('https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type);
+            return res.json();
+        }
+
+        function extractTXT(data) {
+            if (!data.Answer) return [];
+            return data.Answer.filter(a => a.type === 16).map(a => a.data.replace(/"/g, ''));
+        }
+
+        async function checkDKIM(domain) {
+            const selectors = ['google', 'default', 'selector1', 'selector2', 'k1', 'dkim', 'mail', 'zoho'];
+            for (const sel of selectors) {
+                try {
+                    const data = await fetchDNS(sel + '._domainkey.' + domain, 'TXT');
+                    const records = extractTXT(data);
+                    if (records.some(r => r.includes('v=DKIM1') || r.includes('k=rsa'))) {
+                        return { found: true, selector: sel };
+                    }
+                } catch (e) { /* ignore */ }
+            }
+            return { found: false, selector: null };
+        }
+
+        function setResult(key, result) {
+            const icon = document.getElementById('icon-' + key);
+            const txt = document.getElementById('txt-' + key);
+            const badge = document.getElementById('badge-' + key);
+            if (result.status === 'ok') {
+                icon.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
+                // icon container class updated in inline loop
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-emerald-500/20';
+                badge.textContent = result.label;
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-emerald-500/20 text-emerald-400';
+            } else if (result.status === 'warn') {
+                icon.innerHTML = '<i class="fa-solid fa-exclamation text-xs text-amber-400"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-500/20';
+                badge.textContent = result.label;
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-amber-500/20 text-amber-400';
+            } else {
+                icon.innerHTML = '<i class="fa-solid fa-xmark text-xs text-red-400"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-red-500/20';
+                badge.textContent = result.label;
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-red-500/20 text-red-400';
+            }
+            txt.textContent = result.text;
+        }
+    </script>
+
+</body>
+
+</html>

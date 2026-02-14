@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad - InboxSeguro</title>
+    <link rel="icon" href="favicon.png" type="image/png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-50 text-slate-800 py-8 md:py-12">
+
+    <div class="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-xl shadow-sm border border-slate-200">
+
+        <div
+            class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 border-b border-slate-100 pb-6">
+            <div class="flex items-center gap-3">
+                <img src="logo.png" alt="InboxSeguro Logo" class="h-8 w-auto">
+                <span class="font-bold text-slate-900 text-xl tracking-tight">
+                    InboxSeguro<sup class="text-xs text-slate-500 font-normal">TM</sup>
+                </span>
+            </div>
+            <a href="/" class="text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline transition-colors">
+                &larr; Volver al inicio
+            </a>
+        </div>
+
+        <h1 class="text-3xl font-bold mb-2 text-slate-900">Política de Privacidad</h1>
+        <p class="text-slate-500 mb-8 text-sm">Última actualización: 10 de enero de 2026</p>
+
+        <div class="prose prose-slate max-w-none text-sm text-justify leading-relaxed">
+
+            <p>En InboxSeguro<sup class="text-[10px] text-slate-400">TM</sup>, nos tomamos muy en serio la privacidad y
+                seguridad de tus datos. Esta política describe qué información recopilamos, cómo la utilizamos y, lo más
+                importante, qué <strong>no</strong> hacemos con ella.</p>
+
+            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">1. Información que Recopilamos</h3>
+            <p>Para prestar nuestro servicio de configuración y monitoreo, recopilamos:</p>
+            <ul class="list-disc pl-5 my-2 space-y-1">
+                <li><strong>Datos de Cuenta:</strong> Información que nos proporcionas al registrarte, como tu nombre,
+                    dirección de correo electrónico de contacto y detalles de facturación.</li>
+                <li><strong>Datos Técnicos del Dominio:</strong> Información pública de tus registros DNS (SPF, DKIM,
+                    DMARC).</li>
+                <li><strong>Reportes de Tráfico y Seguridad:</strong> Reportes automatizados <strong>RUA</strong>
+                    (Aggregate Reports) y metadatos de reportes <strong>TLS Reporting (TLS-RPT)</strong> sobre el estado
+                    de las conexiones cifradas de correo.</li>
+            </ul>
+
+            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">2. Tratamiento de Reportes Técnicos (RUA y TLS)</h3>
+            <p>Este es el núcleo de nuestro servicio. InboxSeguro recibe y procesa <strong>reportes de agregación RUA y
+                    metadatos de TLS-RPT</strong>. Es fundamental que entiendas lo siguiente:</p>
+            <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 text-slate-700 mt-4 mb-4">
+                <p class="font-medium text-blue-900 mb-2">Enfoque en la Privacidad:</p>
+                <p>InboxSeguro <strong>NO procesa reportes RUF (Forensic Reports)</strong>, ya que estos podrían
+                    contener fragmentos de correos originales. Nuestro sistema trabaja exclusivamente con metadatos
+                    agregados (estadísticas de envío).</p>
+            </div>
+            <p><strong>Lo que vemos:</strong> Dirección IP del servidor de envío, dominio de envío, resultados de
+                autenticación (Pass/Fail), volumen de mensajes y estado del cifrado TLS.</p>
+            <p><strong>Lo que NO vemos:</strong> Asuntos (subject lines), cuerpo del mensaje, direcciones de correo de
+                destino ni archivos adjuntos.</p>
+
+            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">3. Uso de la Información</h3>
+            <p>Utilizamos la información recopilada exclusivamente para:</p>
+            <ul class="list-disc pl-5 my-2 space-y-1">
+                <li>Generar las configuraciones DNS necesarias para tu dominio.</li>
+                <li>Crear reportes visuales sobre la salud y entregabilidad de tu correo.</li>
+                <li>Enviarte alertas si detectamos problemas de seguridad (ej: suplantación de identidad).</li>
+                <li>Facturar el servicio y brindar soporte técnico.</li>
+            </ul>
+
+            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">4. Compartir Información con Terceros</h3>
+            <p>InboxSeguro no vende ni alquila tus datos a anunciantes. Solo compartimos datos estrictamente necesarios
+                con proveedores de infraestructura:</p>
+            <ul class="list-disc pl-5 my-2 space-y-1">
+                <li><strong>Infraestructura y Pagos:</strong> Proveedores de servidores en la nube y pasarelas de pago
+                    seguras.</li>
+                <li><strong>Alertas y Notificaciones:</strong> Servicios de correo transaccional y canales de alertas
+                    (por ejemplo, proveedores de email y plataformas de chat/alertas) que usamos para enviarte
+                    notificaciones técnicas.</li>
+            </ul>
+
+            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">5. Seguridad de Datos</h3>
+            <p>Implementamos medidas de seguridad técnicas y organizativas para proteger tus datos contra acceso no
+                autorizado. Utilizamos encriptación en tránsito (HTTPS/TLS) para todas las comunicaciones.</p>
+
+            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">6. Retención y Eliminación de Datos</h3>
+            <p>Conservamos los reportes técnicos y métricas históricas mientras mantengas una cuenta activa. Si decides
+                cancelar tu cuenta, eliminaremos tu información personal en un plazo razonable.</p>
+            <p>No obstante, podremos conservar datos agregados o anonimizados de forma indefinida con fines estadísticos
+                y de mejora del servicio, sin que estos puedan asociarse a una persona o empresa específica.</p>
+
+            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">7. Legislación y Derechos</h3>
+            <p>El tratamiento de datos se realiza conforme a la legislación chilena aplicable en materia de protección
+                de datos (Ley N° 19.628 y sus modificaciones). Tienes derecho a solicitar acceso, rectificación o
+                eliminación de tus datos personales contactando a nuestro soporte.</p>
+            <p class="mt-2 text-slate-600 bg-slate-100 p-2 rounded text-xs border border-slate-200 inline-block">Para
+                ejercer estos derechos podremos pedirte información adicional que nos permita verificar tu identidad.
+            </p>
+
+            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">8. Contacto</h3>
+            <p>Si tienes preguntas sobre nuestra política de privacidad, contáctanos en:</p>
+            <p class="mt-2 font-medium text-slate-900">contacto@inboxseguro.com</p>
+
+        </div>
+
+        <div class="mt-12 pt-8 border-t border-slate-100 text-center flex flex-col items-center gap-2">
+            <img src="logo.png" alt="" class="h-6 w-auto opacity-50 grayscale">
+            <p class="text-xs text-slate-400">© 2026 InboxSeguro<sup class="text-[8px]">TM</sup> - Santiago, Chile.
+                Todos los derechos reservados.</p>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
