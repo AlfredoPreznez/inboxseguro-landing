@@ -1130,9 +1130,9 @@
 
                 // DKIM
                 const dkimResult = {
-                    status: dkimData.found ? 'ok' : 'fail',
-                    label: dkimData.found ? 'Configurado' : 'No detectado',
-                    text: dkimData.found ? 'Selector: ' + dkimData.selector : 'No se detectó en selectores comunes'
+                    status: dkimData.found ? 'ok' : 'warn',
+                    label: dkimData.found ? 'Configurado' : 'Oculto / Personalizado',
+                    text: dkimData.found ? 'Selector: ' + dkimData.selector : 'No detectado en selectores comunes. Si tienes un selector personalizado, podría estar activo.'
                 };
 
                 // Render results
@@ -1205,15 +1205,30 @@
         }
 
         async function checkDKIM(domain) {
-            const selectors = ['google', 'default', 'selector1', 'selector2', 'k1', 'dkim', 'mail', 'zoho'];
-            for (const sel of selectors) {
-                try {
-                    const data = await fetchDNS(sel + '._domainkey.' + domain, 'TXT');
-                    const records = extractTXT(data);
-                    if (records.some(r => r.includes('v=DKIM1') || r.includes('k=rsa'))) {
-                        return { found: true, selector: sel };
-                    }
-                } catch (e) { /* ignore */ }
+            const selectors = [
+                'google', 'default', 'selector1', 'selector2', 'k1', 'k2', 'k3', 'dkim',
+                'mail', 'zoho', 's1', 's2', 'pic', 'a', 'b', 'c', 'fm1', 'fm2', 'fm3',
+                'titan1', 'titan2', 'key1', 'key2', 'smtp', 'mandrill', 'protonmail', 'protonmail2', 'pm', 'pm2', 'mlk', 'sg', 'sendgrid'
+            ];
+
+            for (let i = 0; i < selectors.length; i += 5) {
+                const batch = selectors.slice(i, i + 5);
+                const promises = batch.map(async (sel) => {
+                    try {
+                        const data = await fetchDNS(sel + '._domainkey.' + domain, 'TXT');
+                        const records = extractTXT(data);
+                        if (records.some(r => r.includes('v=DKIM1') || r.includes('k=rsa'))) {
+                            return sel;
+                        }
+                    } catch (e) { /* ignore */ }
+                    return null;
+                });
+
+                const results = await Promise.all(promises);
+                const found = results.find(sel => sel !== null);
+                if (found) {
+                    return { found: true, selector: found };
+                }
             }
             return { found: false, selector: null };
         }
