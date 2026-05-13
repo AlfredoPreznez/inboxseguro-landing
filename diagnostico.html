@@ -100,7 +100,7 @@
             <div class="flex justify-between h-16 md:h-20 items-center">
 
                 <a href="/" class="flex items-center gap-1.5 cursor-pointer">
-                    <img src="https://panel.inboxseguro.com/static/logo.png" alt="Logo InboxSeguro"
+                    <img src="logo.png" alt="Logo InboxSeguro"
                         class="h-8 md:h-9 w-auto object-contain">
                     <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
                         <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
@@ -109,13 +109,8 @@
                 </a>
 
                 <div class="hidden lg:flex space-x-5 text-sm font-medium">
-                    <a href="/" class="text-slate-300 hover:text-brand-600 transition-colors">Volver al
-                        Inicio</a>
-                    <a href="index.html#precios" class="text-slate-300 hover:text-brand-600 transition-colors">Ver
-                        Planes</a>
-                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
-                        target="_blank" rel="noopener noreferrer"
-                        class="text-emerald-400 hover:text-emerald-300 transition-colors">Agendar demo</a>
+                    <a href="/" class="text-slate-300 hover:text-brand-600 transition-colors">Volver al Inicio</a>
+                    <a href="index.html#precios" class="text-slate-300 hover:text-brand-600 transition-colors">Ver Planes</a>
                 </div>
 
                 <div class="flex items-center gap-3">
@@ -157,10 +152,9 @@
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
                 Herramienta Gratuita</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-6">Diagnóstico de Seguridad</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verifica si tu empresa está expuesta a suplantación</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Analiza tu dominio en tiempo real. Verifica si tus registros SPF, DMARC y DKIM están listos para evitar
-                el spam.
+                Ingresa tu dominio y en segundos sabemos si alguien puede hacerse pasar por tu empresa para cometer fraude. Gratis, sin registro.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl">
@@ -366,50 +360,46 @@
             const btn = document.getElementById('resultBtn');
             const container = document.getElementById('resultMessageContainer');
 
-            // Reset classes
-            container.className = 'mt-8 p-4 rounded-xl border text-center transition-colors duration-500';
-            btn.className = 'inline-block px-6 py-2.5 font-bold rounded-xl shadow-lg transition-all hover:-translate-y-0.5 text-sm';
+            container.className = 'mt-8 p-5 rounded-xl border text-center transition-colors duration-500';
+            btn.className = 'inline-block px-6 py-3 font-bold rounded-xl shadow-lg transition-all hover:-translate-y-0.5 text-sm mt-1';
 
             if (failCount === 0 && warnCount === 0) {
-                // Success
                 container.classList.add('bg-emerald-900/40', 'border-emerald-500/30');
-                title.textContent = '¡Tu dominio está bien configurado!';
-                text.textContent = 'Mantén tu seguridad al día con nuestro monitoreo continuo.';
-                btn.textContent = 'Ver Planes de Monitoreo';
+                title.textContent = '✅ Tu dominio está protegido.';
+                text.textContent = 'Nadie puede enviarte correos a tus clientes haciéndose pasar por ti. Mantén esa protección activa con monitoreo continuo.';
+                btn.textContent = 'Activar Monitoreo Continuo →';
                 btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'text-white', 'shadow-emerald-600/30');
             } else if (failCount === 0) {
-                // Warning (e.g. DMARC none)
                 container.classList.add('bg-amber-900/40', 'border-amber-500/30');
-                title.textContent = 'Estás a un paso de la seguridad total.';
-                text.textContent = 'Tu configuración es válida pero mejorable. Evita la suplantación con nuestras guías.';
-                btn.textContent = 'Optimizar mi Seguridad';
+                title.textContent = '⚠️ Exposición parcial detectada.';
+                text.textContent = 'Tu dominio tiene protección básica, pero aún permite que correos suplantados lleguen a tus clientes. Cierra esa brecha hoy.';
+                btn.textContent = 'Cerrar la brecha de seguridad →';
                 btn.classList.add('bg-amber-600', 'hover:bg-amber-500', 'text-white', 'shadow-amber-600/30');
             } else {
-                // Fail
-                container.classList.add('bg-brand-900/40', 'border-brand-500/30');
-                title.textContent = '¿Necesitas ayuda con estos errores?';
-                text.textContent = 'InboxSeguro te guía paso a paso para solucionarlos.';
-                btn.textContent = 'Ver Planes de Solución';
-                btn.classList.add('bg-brand-600', 'hover:bg-brand-500', 'text-white', 'shadow-blue-600/30');
+                container.classList.add('bg-red-900/40', 'border-red-500/30');
+                title.textContent = '🚨 Tu dominio está desprotegido.';
+                text.textContent = 'Cualquier persona puede enviar correos haciéndose pasar por tu empresa ahora mismo. Facturos falsas, instrucciones de pago, engaños a clientes. Activa la protección hoy.';
+                btn.textContent = 'Proteger mi dominio ahora →';
+                btn.classList.add('bg-red-600', 'hover:bg-red-500', 'text-white', 'shadow-red-600/30');
             }
         }
 
         function analyzeSpf(record) {
-            if (!record) return { status: 'fail', label: 'No configurado', text: 'No se encontró registro SPF' };
-            if (record.includes('+all')) return { status: 'warn', label: 'Mejorable', text: 'Usa +all (permite cualquier servidor). Considera cambiar a ~all o -all.' };
+            if (!record) return { status: 'fail', label: 'No configurado', text: 'Sin protección SPF — cualquiera puede enviar correos como tu empresa' };
+            if (record.includes('+all')) return { status: 'warn', label: 'Mejorable', text: 'Protección débil: permite cualquier servidor. Cambia +all por -all para bloquear suplantación.' };
             return { status: 'ok', label: 'Configurado', text: record.length > 60 ? record.substring(0, 60) + '...' : record };
         }
 
         function analyzeDmarc(record) {
-            if (!record) return { status: 'fail', label: 'No configurado', text: 'No se encontró registro DMARC' };
+            if (!record) return { status: 'fail', label: 'No configurado', text: 'Sin DMARC — no hay control sobre quién puede usar tu dominio para enviar correos' };
             const policyMatch = record.match(/p=([^;\s]+)/);
             const policy = policyMatch ? policyMatch[1].toLowerCase() : 'none';
             if (policy === 'none') {
-                return { status: 'warn', label: 'Mejorable', text: 'Política p=none (solo monitoreo, no bloquea suplantación). Recomendamos p=quarantine.' };
+                return { status: 'warn', label: 'Solo monitoreo', text: 'p=none: ves los ataques pero no los bloqueas. Activa p=quarantine para proteger a tus clientes.' };
             } else if (policy === 'quarantine') {
-                return { status: 'ok', label: 'Configurado', text: 'Política p=quarantine (envía suplantaciones a spam)' };
+                return { status: 'ok', label: 'Protección activa', text: 'p=quarantine: correos fraudulentos van a spam. Protección sólida.' };
             } else if (policy === 'reject') {
-                return { status: 'ok', label: 'Óptimo', text: 'Política p=reject (bloquea suplantaciones completamente)' };
+                return { status: 'ok', label: 'Óptimo', text: 'p=reject: los correos fraudulentos son bloqueados completamente. Protección máxima.' };
             }
             return { status: 'ok', label: 'Configurado', text: record.length > 60 ? record.substring(0, 60) + '...' : record };
         }
