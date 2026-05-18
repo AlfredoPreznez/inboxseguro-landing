@@ -194,7 +194,7 @@
                             <div id="icon-spf"
                                 class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"></div>
                             <span class="text-white font-bold text-sm w-16">SPF</span>
-                            <p id="txt-spf" class="text-sm text-slate-400 truncate flex-1"></p>
+                            <p id="txt-spf" class="text-sm text-slate-400 break-words flex-1 pr-2"></p>
                             <span id="badge-spf"
                                 class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
                         </div>
@@ -203,7 +203,7 @@
                             <div id="icon-dmarc"
                                 class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"></div>
                             <span class="text-white font-bold text-sm w-16">DMARC</span>
-                            <p id="txt-dmarc" class="text-sm text-slate-400 truncate flex-1"></p>
+                            <p id="txt-dmarc" class="text-sm text-slate-400 break-words flex-1 pr-2"></p>
                             <span id="badge-dmarc"
                                 class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
                         </div>
@@ -212,7 +212,7 @@
                             <div id="icon-dkim"
                                 class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"></div>
                             <span class="text-white font-bold text-sm w-16">DKIM</span>
-                            <p id="txt-dkim" class="text-sm text-slate-400 truncate flex-1"></p>
+                            <p id="txt-dkim" class="text-sm text-slate-400 break-words flex-1 pr-2"></p>
                             <span id="badge-dkim"
                                 class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
                         </div>
@@ -387,7 +387,7 @@
         function analyzeSpf(record) {
             if (!record) return { status: 'fail', label: 'No configurado', text: 'Sin protección SPF — cualquiera puede enviar correos como tu empresa' };
             if (record.includes('+all')) return { status: 'warn', label: 'Mejorable', text: 'Protección débil: permite cualquier servidor. Cambia +all por -all para bloquear suplantación.' };
-            return { status: 'ok', label: 'Configurado', text: record.length > 60 ? record.substring(0, 60) + '...' : record };
+            return { status: 'ok', label: 'Configurado', text: record };
         }
 
         function analyzeDmarc(record) {
@@ -397,11 +397,11 @@
             if (policy === 'none') {
                 return { status: 'warn', label: 'Solo monitoreo', text: 'p=none: ves los ataques pero no los bloqueas. Activa p=quarantine para proteger a tus clientes.' };
             } else if (policy === 'quarantine') {
-                return { status: 'ok', label: 'Protección activa', text: 'p=quarantine: correos fraudulentos van a spam. Protección sólida.' };
+                return { status: 'info', label: 'Protección parcial', text: 'p=quarantine: correos fraudulentos van a spam. Escala a p=reject para máxima seguridad.' };
             } else if (policy === 'reject') {
                 return { status: 'ok', label: 'Óptimo', text: 'p=reject: los correos fraudulentos son bloqueados completamente. Protección máxima.' };
             }
-            return { status: 'ok', label: 'Configurado', text: record.length > 60 ? record.substring(0, 60) + '...' : record };
+            return { status: 'ok', label: 'Configurado', text: record };
         }
 
         async function fetchDNS(name, type) {
@@ -458,6 +458,11 @@
                 icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-500/20';
                 badge.textContent = result.label;
                 badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-amber-500/20 text-amber-400';
+            } else if (result.status === 'info') {
+                icon.innerHTML = '<i class="fa-solid fa-shield-halved text-xs text-blue-400"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-blue-500/20';
+                badge.textContent = result.label;
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-blue-500/20 text-blue-400';
             } else {
                 icon.innerHTML = '<i class="fa-solid fa-xmark text-xs text-red-400"></i>';
                 icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-red-500/20';
