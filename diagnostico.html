@@ -306,17 +306,21 @@
                 const statuses = [spfResult.status, dmarcResult.status, dkimResult.status];
                 const okCount = statuses.filter(s => s === 'ok').length;
                 const warnCount = statuses.filter(s => s === 'warn').length;
+                const infoCount = statuses.filter(s => s === 'info').length;
                 const failCount = statuses.filter(s => s === 'fail').length;
                 const scoreEl = document.getElementById('diagScore');
 
-                if (failCount === 0 && warnCount === 0) {
+                if (failCount === 0 && warnCount === 0 && infoCount === 0) {
                     scoreEl.textContent = 'Protegido';
                     scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400';
+                } else if (failCount === 0 && warnCount === 0 && infoCount > 0) {
+                    scoreEl.textContent = 'Protección Parcial';
+                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400';
                 } else if (failCount === 0) {
                     scoreEl.textContent = 'Mejorable';
                     scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
-                } else if (okCount > 0) {
-                    scoreEl.textContent = 'Parcial';
+                } else if (okCount > 0 || infoCount > 0) {
+                    scoreEl.textContent = 'Riesgo Parcial';
                     scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
                 } else {
                     scoreEl.textContent = 'Sin protección';
@@ -324,7 +328,7 @@
                 }
 
                 // Update Result Message
-                updateResultMessage(failCount, warnCount, okCount);
+                updateResultMessage(failCount, warnCount, okCount, infoCount);
 
                 // Notify Backend (Discord)
                 // Fire and forget, no await
@@ -354,7 +358,7 @@
             }
         }
 
-        function updateResultMessage(failCount, warnCount, okCount) {
+        function updateResultMessage(failCount, warnCount, okCount, infoCount) {
             const title = document.getElementById('resultTitle');
             const text = document.getElementById('resultText');
             const btn = document.getElementById('resultBtn');
@@ -363,12 +367,18 @@
             container.className = 'mt-8 p-5 rounded-xl border text-center transition-colors duration-500';
             btn.className = 'inline-block px-6 py-3 font-bold rounded-xl shadow-lg transition-all hover:-translate-y-0.5 text-sm mt-1';
 
-            if (failCount === 0 && warnCount === 0) {
+            if (failCount === 0 && warnCount === 0 && infoCount === 0) {
                 container.classList.add('bg-emerald-900/40', 'border-emerald-500/30');
-                title.textContent = '✅ Tu dominio está protegido.';
+                title.textContent = '✅ Tu dominio está completamente protegido.';
                 text.textContent = 'Nadie puede enviarte correos a tus clientes haciéndose pasar por ti. Mantén esa protección activa con monitoreo continuo.';
                 btn.textContent = 'Activar Monitoreo Continuo →';
                 btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'text-white', 'shadow-emerald-600/30');
+            } else if (failCount === 0 && warnCount === 0 && infoCount > 0) {
+                container.classList.add('bg-blue-900/40', 'border-blue-500/30');
+                title.textContent = '🛡️ Tu dominio tiene protección parcial.';
+                text.textContent = 'Los correos fraudulentos están siendo enviados a la carpeta de spam, pero aún podrían llegar a tus clientes. Para bloquearlos por completo, debes escalar tu política a "reject".';
+                btn.textContent = 'Bloquear suplantación por completo →';
+                btn.classList.add('bg-blue-600', 'hover:bg-blue-500', 'text-white', 'shadow-blue-600/30');
             } else if (failCount === 0) {
                 container.classList.add('bg-amber-900/40', 'border-amber-500/30');
                 title.textContent = '⚠️ Tu dominio tiene protección incompleta.';
