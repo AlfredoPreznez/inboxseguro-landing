@@ -37,77 +37,76 @@
 
         <div class="prose prose-slate max-w-none text-sm text-justify leading-relaxed">
 
-            <p>En InboxSeguro<sup class="text-[10px] text-slate-400">TM</sup>, nos tomamos muy en serio la privacidad y
-                seguridad de tus datos. Esta política describe qué información recopilamos, cómo la utilizamos y, lo más
-                importante, qué <strong>no</strong> hacemos con ella.</p>
+            <p>En InboxSeguro<sup class="text-[10px] text-slate-400">TM</sup>, nos tomamos muy en serio la privacidad y seguridad de tus datos. Esta política describe qué información recopilamos, cómo la utilizamos y qué no hacemos con ella.</p>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">1. Información que Recopilamos</h3>
             <p>Para prestar nuestro servicio de configuración y monitoreo, recopilamos:</p>
             <ul class="list-disc pl-5 my-2 space-y-1">
-                <li><strong>Datos de Cuenta:</strong> Información que nos proporcionas al registrarte, como tu nombre,
-                    dirección de correo electrónico de contacto y detalles de facturación.</li>
-                <li><strong>Datos Técnicos del Dominio:</strong> Información pública de tus registros DNS (SPF, DKIM,
-                    DMARC).</li>
-                <li><strong>Reportes de Tráfico y Seguridad:</strong> Reportes automatizados <strong>RUA</strong>
-                    (Aggregate Reports) y metadatos de reportes <strong>TLS Reporting (TLS-RPT)</strong> sobre el estado
-                    de las conexiones cifradas de correo.</li>
+                <li><strong>Datos de Cuenta:</strong> Información necesaria para la creación y gestión de la cuenta, como nombre y correo electrónico de contacto.</li>
+                <li><strong>Datos Técnicos del Dominio:</strong> Información pública de los registros DNS de tu dominio (SPF, DKIM, DMARC).</li>
+                <li><strong>Reportes Técnicos:</strong> Reportes agregados RUA (DMARC) y metadatos de reportes TLS-RPT sobre el estado de autenticación y cifrado del correo.</li>
             </ul>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">2. Tratamiento de Reportes Técnicos (RUA y TLS)</h3>
-            <p>Este es el núcleo de nuestro servicio. InboxSeguro recibe y procesa <strong>reportes de agregación RUA y
-                    metadatos de TLS-RPT</strong>. Es fundamental que entiendas lo siguiente:</p>
+            <p>Este es el núcleo del servicio.</p>
+            <p class="mt-2">InboxSeguro procesa exclusivamente reportes agregados y metadatos técnicos.</p>
             <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 text-slate-700 mt-4 mb-4">
-                <p class="font-medium text-blue-900 mb-2">Enfoque en la Privacidad:</p>
-                <p>InboxSeguro <strong>NO procesa reportes RUF (Forensic Reports)</strong>, ya que estos podrían
-                    contener fragmentos de correos originales. Nuestro sistema trabaja exclusivamente con metadatos
-                    agregados (estadísticas de envío).</p>
+                <p class="font-medium text-blue-900 mb-2">Enfoque en privacidad:</p>
+                <ul class="list-disc pl-5 space-y-1 text-sm">
+                    <li>InboxSeguro <strong>NO procesa reportes RUF (forensic reports)</strong>.</li>
+                    <li>Solo trabajamos con datos agregados y métricas de autenticación.</li>
+                </ul>
             </div>
-            <p><strong>Lo que vemos:</strong> Dirección IP del servidor de envío, dominio de envío, resultados de
-                autenticación (Pass/Fail), volumen de mensajes y estado del cifrado TLS.</p>
-            <p><strong>Lo que NO vemos:</strong> Asuntos (subject lines), cuerpo del mensaje, direcciones de correo de
-                destino ni archivos adjuntos.</p>
+            <p><strong>Lo que vemos:</strong></p>
+            <ul class="list-disc pl-5 my-2 space-y-1">
+                <li>IP de servidores de envío</li>
+                <li>Dominio de envío</li>
+                <li>Resultados de autenticación (pass/fail)</li>
+                <li>Volumen de mensajes</li>
+                <li>Estado de cifrado TLS</li>
+            </ul>
+            <p class="mt-4"><strong>Lo que NO vemos:</strong></p>
+            <ul class="list-disc pl-5 my-2 space-y-1">
+                <li>Contenido de correos</li>
+                <li>Asuntos (subject lines)</li>
+                <li>Destinatarios</li>
+                <li>Adjuntos</li>
+            </ul>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">3. Uso de la Información</h3>
             <p>Utilizamos la información recopilada exclusivamente para:</p>
             <ul class="list-disc pl-5 my-2 space-y-1">
-                <li>Generar las configuraciones DNS necesarias para tu dominio.</li>
-                <li>Crear reportes visuales sobre la salud y entregabilidad de tu correo.</li>
-                <li>Enviarte alertas si detectamos problemas de seguridad (ej: suplantación de identidad).</li>
+                <li>Generar configuraciones DNS necesarias para tu dominio.</li>
+                <li>Crear reportes sobre la salud y entregabilidad del correo.</li>
+                <li>Enviar alertas sobre problemas de seguridad o autenticación (ej: suplantación de identidad).</li>
                 <li>Gestionar la suscripción y el acceso al servicio.</li>
                 <li>Brindar soporte técnico.</li>
             </ul>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">4. Compartir Información con Terceros</h3>
-            <p>InboxSeguro no vende ni alquila tus datos a anunciantes. Solo compartimos datos estrictamente necesarios
-                con proveedores de infraestructura:</p>
+            <p>InboxSeguro no vende ni alquila datos personales a terceros.</p>
+            <p class="mt-2">Solo compartimos información estrictamente necesaria con proveedores que actúan en nuestro nombre para la prestación del servicio:</p>
             <ul class="list-disc pl-5 my-2 space-y-1">
-                <li><strong>Infraestructura y Pagos:</strong> Proveedores de servidores en la nube y pasarelas de pago
-                    seguras.</li>
-                <li><strong>Alertas y Notificaciones:</strong> Servicios de correo transaccional y canales de alertas
-                    (por ejemplo, proveedores de email y plataformas de chat/alertas) que usamos para enviarte
-                    notificaciones técnicas.</li>
+                <li>Infraestructura en la nube para operación del servicio.</li>
+                <li>Proveedores de pago para la gestión de suscripciones.</li>
+                <li>Proveedores de notificaciones (correo transaccional u otros canales) para envío de alertas técnicas.</li>
             </ul>
+            <p class="mt-4">Todos los proveedores están sujetos a obligaciones de confidencialidad y solo procesan datos conforme a nuestras instrucciones.</p>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">5. Seguridad de Datos</h3>
-            <p>Implementamos medidas de seguridad técnicas y organizativas para proteger tus datos contra acceso no
-                autorizado. Utilizamos encriptación en tránsito (HTTPS/TLS) para todas las comunicaciones.</p>
+            <p>Implementamos medidas técnicas y organizativas para proteger la información contra acceso no autorizado.</p>
+            <p class="mt-2">Todas las comunicaciones se realizan mediante conexiones cifradas (HTTPS/TLS).</p>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">6. Retención y Eliminación de Datos</h3>
-            <p>Conservamos los reportes técnicos y métricas históricas mientras mantengas una cuenta activa. Si decides
-                cancelar tu cuenta, eliminaremos tu información personal en un plazo razonable.</p>
-            <p>No obstante, podremos conservar datos agregados o anonimizados de forma indefinida con fines estadísticos
-                y de mejora del servicio, sin que estos puedan asociarse a una persona o empresa específica.</p>
+            <p>Conservamos los datos mientras la cuenta esté activa.</p>
+            <p class="mt-2">Si el usuario cancela su cuenta, la información personal será eliminada en un plazo razonable.</p>
+            <p class="mt-2">Podemos conservar datos agregados o anonimizados de forma indefinida, sin posibilidad de identificar a usuarios o empresas, con fines estadísticos y de mejora del servicio.</p>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">7. Legislación y Derechos</h3>
-            <p>El tratamiento de datos se realiza conforme a la legislación chilena aplicable en materia de protección
-                de datos (Ley N° 19.628 y sus modificaciones). Tienes derecho a solicitar acceso, rectificación o
-                eliminación de tus datos personales contactando a nuestro soporte.</p>
-            <p class="mt-2 text-slate-600 bg-slate-100 p-2 rounded text-xs border border-slate-200 inline-block">Para
-                ejercer estos derechos podremos pedirte información adicional que nos permita verificar tu identidad.
-            </p>
+            <p>El tratamiento de datos se realiza conforme a la legislación chilena aplicable (Ley N° 19.628 y sus modificaciones).</p>
+            <p class="mt-2">El usuario puede solicitar acceso, rectificación o eliminación de sus datos contactando a soporte.</p>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">8. Contacto</h3>
-            <p>Si tienes preguntas sobre nuestra política de privacidad, contáctanos en:</p>
             <p class="mt-2 font-medium text-slate-900">contacto@inboxseguro.com</p>
 
         </div>
