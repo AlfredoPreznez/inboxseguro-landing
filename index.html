@@ -199,9 +199,9 @@
             </h1>
 
             <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
-                Ve quién envía en tu nombre y 
-                <span class="text-white font-medium">corrige tu SPF, DKIM y DMARC antes de que te afecte.</span>
-                Sin depender de un equipo técnico.
+                Evita que terceros envíen correos como si fueran tu empresa. Detecta configuraciones incorrectas en SPF, DKIM y DMARC y corrige vulnerabilidades antes de que afecten tu reputación o entregabilidad.
+                <br><br>
+                <span class="text-white font-medium">Sin equipo técnico. Sin acceso a servidores.</span>
             </p>
 
             <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-20 items-center">
@@ -209,15 +209,11 @@
                     class="group relative px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 transition-all hover:-translate-y-1 overflow-hidden">
                     <span class="relative z-10 flex items-center gap-2">
                         Verificar mi dominio gratis
-                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
-                            stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                         </svg>
                     </span>
-                    <div
-                        class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity">
-                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                 </a>
                 <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
                     target="_blank" rel="noopener noreferrer"
@@ -228,7 +224,6 @@
 
             <!-- AHA MOMENT UI MOCKUP -->
             <div class="mt-16 max-w-3xl mx-auto relative group">
-                <!-- Efecto Glow -->
                 <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
                 
                 <div class="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 md:p-6 shadow-2xl text-left">
@@ -237,18 +232,17 @@
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 border-b border-slate-700/50 pb-4 gap-4">
                         <div>
                             <h3 class="text-white font-bold text-lg md:text-xl flex items-center gap-2">
-                                <i class="fa-solid fa-radar text-blue-400"></i> Estado de protección de tu dominio
+                                <i class="fa-solid fa-shield-virus text-blue-400"></i> Estado de seguridad de tu dominio en tiempo real
                             </h3>
-                            <p class="text-slate-400 text-sm">dominio-cliente.com (riesgos de envío detectados)</p>
+                            <p class="text-slate-400 text-sm">dominio-cliente.com · últimos 7 días</p>
                         </div>
                         <div class="px-3 py-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-xs font-bold flex items-center gap-2">
                             <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                            1 Riesgo Detectado
+                            ⚠️ Configuración incompleta
                         </div>
                     </div>
                     
                     <div class="space-y-3">
-                        <!-- Normalidad: Google Workspace -->
                         <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white">
@@ -256,7 +250,7 @@
                                 </div>
                                 <div>
                                     <p class="text-white text-sm font-bold">Google Workspace</p>
-                                    <p class="text-slate-400 text-xs">24,500 correos</p>
+                                    <p class="text-slate-400 text-xs">24,500 correos enviados</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-1.5 text-emerald-400 text-xs md:text-sm font-bold bg-emerald-400/10 px-2 md:px-3 py-1 rounded-md">
@@ -264,14 +258,13 @@
                             </div>
                         </div>
                         
-                        <!-- Normalidad: ERP Interno -->
                         <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white">
                                     <i class="fa-solid fa-server text-lg"></i>
                                 </div>
                                 <div>
-                                    <p class="text-white text-sm font-bold">ERP Interno (192.168.x.x)</p>
+                                    <p class="text-white text-sm font-bold">ERP Interno (red corporativa)</p>
                                     <p class="text-slate-400 text-xs">8,200 correos</p>
                                 </div>
                             </div>
@@ -280,37 +273,39 @@
                             </div>
                         </div>
 
-                        <!-- Zona Gris: Marketing -->
                         <div class="flex items-center justify-between p-3 bg-amber-500/10 rounded-lg border border-amber-500/20 hover:bg-amber-500/20 transition-colors">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
                                     <i class="fa-solid fa-bullhorn text-lg"></i>
                                 </div>
                                 <div>
-                                    <p class="text-white text-sm font-bold">Mailchimp (Marketing)</p>
+                                    <p class="text-white text-sm font-bold">Mailchimp (marketing)</p>
                                     <p class="text-slate-400 text-xs">4,300 correos</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-1.5 text-amber-400 text-xs md:text-sm font-bold bg-amber-400/10 px-2 md:px-3 py-1 rounded-md">
-                                <i class="fa-solid fa-circle-exclamation"></i> <span class="hidden sm:inline">Sin Configurar</span>
+                                <i class="fa-solid fa-triangle-exclamation"></i> <span class="hidden sm:inline">Requiere SPF/DKIM</span>
                             </div>
                         </div>
 
-                        <!-- Problema: Servidor Desconocido -->
                         <div class="flex items-center justify-between p-3 bg-red-500/10 rounded-lg border border-red-500/20 hover:bg-red-500/20 transition-colors">
                             <div class="flex items-center gap-3">
                                 <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400">
                                     <i class="fa-solid fa-user-secret text-lg"></i>
                                 </div>
                                 <div>
-                                    <p class="text-white text-sm font-bold">Servidor Desconocido</p>
+                                    <p class="text-white text-sm font-bold">Servidor no reconocido</p>
                                     <p class="text-slate-400 text-xs">1,500 correos</p>
                                 </div>
                             </div>
                             <div class="flex items-center gap-1.5 text-red-400 text-xs md:text-sm font-bold bg-red-400/10 px-2 md:px-3 py-1 rounded-md">
-                                <i class="fa-solid fa-xmark-circle"></i> <span class="hidden sm:inline">No Autorizado</span>
+                                <i class="fa-solid fa-xmark-circle"></i> <span class="hidden sm:inline">Posible suplantación</span>
                             </div>
                         </div>
+                    </div>
+                    
+                    <div class="mt-4 pt-4 border-t border-slate-700/50 text-center text-sm text-slate-400 font-medium">
+                        1 origen no autorizado detectado + configuración incompleta de autenticación
                     </div>
                 </div>
             </div>
@@ -321,78 +316,92 @@
     <section id="problema" class="py-20 bg-slate-50 relative overflow-hidden scroll-mt-20">
         <div class="max-w-6xl mx-auto px-4 relative z-10">
             <div class="text-center mb-16">
+                <p class="text-sm font-bold uppercase tracking-widest text-brand-600 mb-4">El Problema Real</p>
                 <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-                    Tu dominio está siendo usado sin control
+                    Tu dominio puede estar enviando correos sin control total
                 </h2>
                 <p class="text-lg text-slate-600 max-w-3xl mx-auto">
-                    No es phishing tradicional, es falta de visibilidad. Si no sabes qué sistemas envían correos a tu nombre, dejas la puerta abierta al uso no autorizado de tu dominio.
+                    No se trata de phishing tradicional. El problema ocurre cuando tu dominio no tiene configuradas correctamente sus mecanismos de autenticación.<br><br>
+                    <span class="font-bold text-slate-800">Esto causa tres impactos directos:</span>
                 </p>
             </div>
 
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Pain 1: Fraud -->
-                <div
-                    class="bg-white p-8 rounded-2xl shadow-sm border border-red-100 hover:shadow-md transition-shadow">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-red-100 hover:shadow-md transition-shadow">
                     <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-6 text-red-600">
                         <i class="fa-solid fa-user-secret text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Uso no autorizado de tu identidad</h3>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Uso indebido del dominio</h3>
                     <p class="text-slate-600 leading-relaxed">
-                        Hoy mismo alguien puede enviar una factura falsa o instrucciones de pago haciéndose pasar por tu empresa. Tus clientes y proveedores no tienen forma de detectarlo.
+                        Alguien puede enviar facturas o instrucciones de pago haciéndose pasar por tu empresa.
                     </p>
                 </div>
 
                 <!-- Pain 2: Revenue Loss -->
-                <div
-                    class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                    <div
-                        class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-6 text-amber-600">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-6 text-amber-600">
                         <i class="fa-solid fa-envelope-open-text text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Tus correos llegan a spam — y pierdes negocios</h3>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Pérdida de ingresos</h3>
                     <p class="text-slate-600 leading-relaxed">
-                        Cotizaciones, contratos y facturas que nunca llegan porque Gmail u Outlook los filtran. Cada correo perdido es una oportunidad de negocio que no ves.
+                        Correos legítimos que no llegan a clientes o se van a spam.
                     </p>
                 </div>
 
                 <!-- Pain 3: Reputation -->
-                <div
-                    class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                    <div
-                        class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-6 text-slate-600">
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                    <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-6 text-slate-600">
                         <i class="fa-solid fa-ban text-xl"></i>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Tu reputación destruida sin que te avisen</h3>
+                    <h3 class="text-xl font-bold text-slate-900 mb-3">Daño de reputación</h3>
                     <p class="text-slate-600 leading-relaxed">
-                        Si tu dominio aparece en listas negras por abuso, todos tus correos — incluyendo los legítimos — son bloqueados. El daño puede tardar meses en revertirse.
+                        Listas negras pueden afectar todos tus envíos, incluso los correctos.
                     </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- INSIGHT SECTION -->
+    <!-- CREDIBILITY & TRANSITION SECTION -->
     <section class="py-16 bg-slate-900 border-y border-slate-700">
-        <div class="max-w-4xl mx-auto px-4 text-center">
-            <p class="text-sm font-bold uppercase tracking-widest text-blue-400 mb-4">La realidad del mercado</p>
-            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">Tener antivirus o firewall no te da control sobre tu dominio.</h2>
-            <p class="text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed">
-                La falta de control de tu dominio no ataca tu red — ataca la confianza. Un estafador no necesita hackear nada:
-                solo necesita que tu dominio no esté protegido para enviar correos que parecen legítimos.
-                <span class="text-white font-medium">Las soluciones tradicionales de seguridad no cubren esto.</span>
-            </p>
-            <div class="mt-10 grid md:grid-cols-3 gap-6 text-left">
+        <div class="max-w-5xl mx-auto px-4 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">La mayoría de ataques comienza por correo electrónico</h2>
+            
+            <div class="mt-10 grid md:grid-cols-3 gap-6 text-left mb-16">
                 <div class="bg-white/5 border border-white/10 rounded-xl p-5">
                     <p class="text-3xl font-extrabold text-red-400 mb-2">91%</p>
-                    <p class="text-sm text-slate-400">de los ciberataques a empresas comienza con un correo electrónico falso.</p>
+                    <p class="text-sm text-slate-400">de los ciberataques empresariales inician por email falso.</p>
                 </div>
                 <div class="bg-white/5 border border-white/10 rounded-xl p-5">
                     <p class="text-3xl font-extrabold text-amber-400 mb-2">$2.9M</p>
-                    <p class="text-sm text-slate-400">USD es el costo promedio de un ataque BEC (suplantación de correo empresarial) según el FBI IC3 2023.</p>
+                    <p class="text-sm text-slate-400">USD es el costo promedio de un ataque BEC (Business Email Compromise).</p>
                 </div>
                 <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-                    <p class="text-3xl font-extrabold text-emerald-400 mb-2">10 seg</p>
-                    <p class="text-sm text-slate-400">es todo lo que toma verificar si tu dominio está expuesto con InboxSeguro.</p>
+                    <p class="text-3xl font-extrabold text-blue-400 mb-2">Tardío</p>
+                    <p class="text-sm text-slate-400">La mayoría de empresas no detecta el problema hasta que ya afecta su entregabilidad.</p>
+                </div>
+            </div>
+
+            <!-- Transition to product -->
+            <div class="bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 text-left relative overflow-hidden shadow-2xl">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 relative z-10">Descubre exactamente qué está ocurriendo en tu dominio</h2>
+                <p class="text-lg text-slate-300 mb-6 relative z-10">InboxSeguro analiza tus registros DNS y detecta:</p>
+                
+                <ul class="space-y-4 text-slate-300 relative z-10 mb-8">
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-check text-blue-400"></i> Qué sistemas pueden enviar correos en tu nombre</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-xmark text-red-400"></i> Qué orígenes no están autorizados</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Qué configuraciones SPF, DKIM y DMARC están incompletas</li>
+                    <li class="flex items-center gap-3"><i class="fa-solid fa-shield-virus text-emerald-400"></i> Qué riesgos pueden afectar tu reputación</li>
+                </ul>
+
+                <div class="mt-8 text-center border-t border-slate-700 pt-8 relative z-10">
+                    <h3 class="text-xl font-bold text-white mb-4">Detecta vulnerabilidades en menos de 10 segundos</h3>
+                    <a href="#diagnostico-cta" class="inline-block px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-1 mb-3">
+                        Ver diagnóstico gratuito
+                    </a>
+                    <p class="text-sm text-slate-400">Sin instalación. Sin acceso a servidores. Solo tu dominio.</p>
                 </div>
             </div>
         </div>
