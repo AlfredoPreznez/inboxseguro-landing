@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planes y Precios de Suscripción Mensual | InboxSeguro</title>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <meta name="description"
+        content="Conoce los planes y precios de InboxSeguro. Protege tu dominio por una suscripción simple de $39.000 CLP al mes con 14 días de prueba gratuita.">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+
+    <!-- Header Light -->
+    <nav class="fixed w-full z-40 bg-white/95 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="logo.png" alt="Logo InboxSeguro"
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-slate-900 select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+                    <a href="como-funciona" class="text-slate-500 hover:text-brand-600 transition-colors">Cómo funciona</a>
+                    <a href="plataforma" class="text-slate-500 hover:text-brand-600 transition-colors">Plataforma</a>
+                    <a href="precios" class="text-brand-600 font-semibold transition-colors">Precios</a>
+                    
+                    <!-- Dropdown Herramientas Gratuitas -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-500 hover:text-brand-600 transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Herramientas Gratuitas</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-56 rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
+                            <a href="domain-checker" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors">
+                                <i class="fa-solid fa-server text-xs text-brand-600"></i>
+                                <span class="font-semibold">Diagnóstico Completo</span>
+                            </a>
+                            <div class="border-t border-slate-100 my-1"></div>
+                            <a href="spf-checker" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors">
+                                <i class="fa-solid fa-shield-halved text-xs text-blue-500"></i>
+                                <span>Verificador SPF</span>
+                            </a>
+                            <a href="dmarc-checker" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors">
+                                <i class="fa-solid fa-lock text-xs text-indigo-500"></i>
+                                <span>Verificador DMARC</span>
+                            </a>
+                            <a href="dkim-checker" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors">
+                                <i class="fa-solid fa-key text-xs text-teal-500"></i>
+                                <span>Verificador DKIM</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="contacto" class="text-slate-500 hover:text-brand-600 transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">Acceso
+                        Clientes</a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                        target="_blank" rel="noopener noreferrer"
+                        class="hidden sm:inline-flex items-center text-sm font-semibold text-emerald-700 hover:text-emerald-800 border border-emerald-200 hover:border-emerald-300 bg-emerald-50/80 hover:bg-emerald-50 px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar
+                        demo</a>
+                    <a href="precios"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Ver
+                        planes</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-600 hover:text-slate-900 cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                
+                <!-- Herramientas Gratuitas Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">🔍 Diagnóstico Completo</a>
+                    <a href="spf-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🛡️ Verificador SPF</a>
+                    <a href="dmarc-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🔒 Verificador DMARC</a>
+                    <a href="dkim-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🔑 Verificador DKIM</a>
+                </div>
+
+                <a href="contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro." target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()"
+                        class="block px-4 py-3 text-sm font-medium text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow pt-24 lg:pt-32">
+
+        <!-- Hero Section/Header -->
+        <section class="py-16 bg-slate-900 text-white relative overflow-hidden">
+            <div class="absolute inset-0 bg-slate-900 pointer-events-none">
+                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-blue-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+            </div>
+            <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight tracking-tight">
+                    Planes y Precios Simples
+                </h1>
+                <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
+                    Una sola suscripción profesional con todas las características de blindaje incluidas para tu dominio corporativo.
+                </p>
+            </div>
+        </section>
+
+        <!-- Precios Section -->
+        <section id="precios" class="py-24 bg-white relative">
+            <div class="max-w-7xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-12">
+                    <div class="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">
+                        Plan Profesional</div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-900 tracking-tight">Seguridad de nivel corporativo para tu dominio.</h2>
+                    <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">Una sola suscripción con todas las herramientas para blindar tu identidad, sin costos ocultos.</p>
+                </div>
+
+                <div class="max-w-lg mx-auto bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative transform hover:-translate-y-2 transition-all duration-300">
+
+                    <div class="bg-slate-900 p-6 text-center text-white relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="font-bold text-xl mb-2 relative z-10 leading-snug">
+                            Protege la identidad de tu correo corporativo<br>
+                            <span class="text-blue-300">y evita que alguien se haga pasar por tu empresa</span>
+                        </h3>
+                    </div>
+
+                    <div class="p-6 text-center bg-slate-50 border-b border-slate-100">
+                        <p class="text-xs font-bold text-slate-600 tracking-wide mb-4">Empresas usan InboxSeguro para evitar el uso no autorizado de su dominio en el correo.</p>
+                        <div class="flex justify-center items-baseline gap-2">
+                            <span class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-700">$39.000</span>
+                            <span class="text-lg text-slate-500 font-medium">CLP / mes</span>
+                        </div>
+                        <div class="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                            14 días de prueba gratis
+                        </div>
+                    </div>
+
+                    <div class="p-8">
+                        <p class="text-sm text-slate-600 leading-relaxed mb-6 border-l-2 border-blue-500 pl-4">
+                            Detecta quién está enviando correos en nombre de tu empresa y evita usos no autorizados y bloqueos en listas negras antes de que afecte a tus clientes.
+                        </p>
+
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">Qué incluye:</p>
+                        <ul class="space-y-4 text-sm text-slate-600 mb-10">
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span class="font-medium text-slate-900">Visibilidad completa de todos los sistemas que envían correos con tu dominio (Google, Zoho, ERP, etc.)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span>Configuración guiada para asegurar que solo tus sistemas autorizados puedan enviar correos</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span>Alertas en tiempo real ante intentos de suplantación o cambios no autorizados</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span>Monitoreo continuo de reputación y bloqueos en listas negras</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span class="font-medium text-slate-900">Reportes ejecutivos listos para presentar a gerencia</span>
+                            </li>
+                        </ul>
+
+                        <a href="https://panel.inboxseguro.com/register"
+                            class="block w-full bg-gradient-to-r from-brand-600 to-blue-700 hover:from-brand-700 hover:to-blue-800 text-white font-bold py-4 rounded-xl text-center shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]">
+                            Comenzar prueba gratuita de 14 días
+                        </a>
+
+                        <div class="flex justify-center gap-5 mt-5 text-xs text-slate-400 flex-wrap">
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Sin contratos</span>
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Cancela cuando quieras</span>
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Activación en minutos, sin soporte técnico</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section to check SPF/DKIM/DMARC -->
+        <section class="py-20 bg-slate-50 border-t border-slate-200">
+            <div class="max-w-4xl mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">¿Quieres verificar tu dominio antes de registrarte?</h2>
+                <p class="text-slate-600 mb-8 max-w-xl mx-auto">
+                    Ejecuta un diagnóstico DNS gratuito y conoce el nivel de seguridad de tus firmas corporativas SPF, DKIM y DMARC hoy mismo.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="domain-checker" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">
+                        Probar Diagnóstico Gratuito
+                    </a>
+                    <a href="contacto" class="px-8 py-4 bg-white hover:bg-slate-100 text-slate-800 font-semibold rounded-xl border border-slate-300 transition-all hover:-translate-y-0.5">
+                        Consultar por Planes Especiales
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="logo.png" alt="Logo" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        El mapa de control del correo corporativo para evitar suplantación de identidad.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="como-funciona" class="hover:text-blue-400 transition-colors">Cómo funciona</a></li>
+                            <li><a href="plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="precios" class="text-blue-400 font-medium">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas Gratuitas</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="domain-checker" class="hover:text-blue-400 transition-colors font-semibold">Diagnóstico Completo</a></li>
+                            <li><a href="spf-checker" class="hover:text-blue-400 transition-colors">Verificador SPF</a></li>
+                            <li><a href="dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
+                            <li><a href="dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank" class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                            </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // MOBILE MENU
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const iconOpen = document.getElementById('menuIconOpen');
+            const iconClose = document.getElementById('menuIconClose');
+            menu.classList.toggle('hidden');
+            iconOpen.classList.toggle('hidden');
+            iconClose.classList.toggle('hidden');
+        }
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            const iconOpen = document.getElementById('menuIconOpen');
+            const iconClose = document.getElementById('menuIconClose');
+            menu.classList.add('hidden');
+            iconOpen.classList.remove('hidden');
+            iconClose.classList.add('hidden');
+        }
+    </script>
+
+</body>
+
+</html>

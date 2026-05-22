@@ -4,116 +4,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InboxSeguro | Seguridad para correo corporativo</title>
+    <title>InboxSeguro | Seguridad y Autenticación para Correo Corporativo</title>
 
     <link rel="icon" type="image/png" href="favicon.png">
 
     <meta name="description"
-        content="InboxSeguro previene la suplantación de identidad en correo corporativo. Detecta en tiempo real si terceros usan tu dominio para usar tu identidad corporativa sin tu control.">
-
-    <script src="https://cdn.tailwindcss.com"></script>
+        content="InboxSeguro previene la suplantación de identidad en correo corporativo. Detecta y corrige configuraciones de SPF, DKIM y DMARC de forma guiada y simple.">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { sans: ['Inter', 'sans-serif'] },
-                    colors: {
-                        brand: {
-                            50: '#eff6ff',
-                            100: '#dbeafe',
-                            600: '#2563EB', /* Azul Marca */
-                            700: '#1d4ed8',
-                            900: '#0f172a',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        .brand-accent {
-            color: #2563EB;
-        }
-
-        /* Glassmorphism Premium */
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        .glass-dark {
-            background: rgba(15, 23, 42, 0.6);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        /* Blob Animations */
-        @keyframes float {
-            0% {
-                transform: translate(0px, 0px) scale(1);
-            }
-
-            33% {
-                transform: translate(30px, -50px) scale(1.1);
-            }
-
-            66% {
-                transform: translate(-20px, 20px) scale(0.9);
-            }
-
-            100% {
-                transform: translate(0px, 0px) scale(1);
-            }
-        }
-
-        .animate-blob {
-            animation: float 10s infinite;
-        }
-
-        .animation-delay-2000 {
-            animation-delay: 2s;
-        }
-
-        .animation-delay-4000 {
-            animation-delay: 4s;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="bg-white text-slate-800 antialiased relative">
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
 
+    <!-- Header Light -->
     <nav class="fixed w-full z-40 bg-white/95 backdrop-blur-md border-b border-slate-100">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16 md:h-20 items-center">
 
-                <div class="flex items-center gap-1.5 cursor-pointer" onclick="window.scrollTo(0,0)">
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
                     <img src="logo.png" alt="Logo InboxSeguro"
                         class="h-8 md:h-9 w-auto object-contain">
                     <span class="flex items-baseline gap-0.5 leading-none font-bold text-slate-900 select-none">
                         <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
                         <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
                     </span>
-                </div>
+                </a>
 
-                <div class="hidden lg:flex items-center space-x-5 text-sm font-medium">
-                    <a href="#como-funciona" class="text-slate-500 hover:text-brand-600 transition-colors">Cómo funciona</a>
+                <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+                    <a href="como-funciona" class="text-slate-500 hover:text-brand-600 transition-colors">Cómo funciona</a>
+                    <a href="plataforma" class="text-slate-500 hover:text-brand-600 transition-colors">Plataforma</a>
+                    <a href="precios" class="text-slate-500 hover:text-brand-600 transition-colors">Precios</a>
                     
                     <!-- Dropdown Herramientas Gratuitas -->
                     <div class="relative group">
-                        <button class="flex items-center gap-1 text-slate-500 hover:text-brand-600 transition-colors focus:outline-none py-2">
+                        <button class="flex items-center gap-1 text-slate-500 hover:text-brand-600 transition-colors focus:outline-none py-2 cursor-pointer">
                             <span>Herramientas Gratuitas</span>
                             <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -140,13 +67,8 @@
                         </div>
                     </div>
 
-                    <a href="#diagnostico-cta" class="text-slate-500 hover:text-brand-600 transition-colors">Diagnóstico</a>
-                    <a href="#dashboard" class="text-slate-500 hover:text-brand-600 transition-colors">Plataforma</a>
-                    <a href="#nosotros" class="text-slate-500 hover:text-brand-600 transition-colors">Nosotros</a>
-                    <a href="#precios" class="text-slate-500 hover:text-brand-600 transition-colors">Precios</a>
-                    <a href="#faq" class="text-slate-500 hover:text-brand-600 transition-colors">FAQ</a>
+                    <a href="contacto" class="text-slate-500 hover:text-brand-600 transition-colors">Contacto</a>
                 </div>
-
 
                 <div class="flex items-center gap-3">
                     <a href="https://panel.inboxseguro.com/login"
@@ -156,12 +78,12 @@
                         target="_blank" rel="noopener noreferrer"
                         class="hidden sm:inline-flex items-center text-sm font-semibold text-emerald-700 hover:text-emerald-800 border border-emerald-200 hover:border-emerald-300 bg-emerald-50/80 hover:bg-emerald-50 px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar
                         demo</a>
-                    <a href="#precios"
+                    <a href="precios"
                         class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Ver
                         planes</a>
                     <!-- Hamburger -->
                     <button id="menuBtn" onclick="toggleMobileMenu()"
-                        class="lg:hidden p-2 text-slate-600 hover:text-slate-900">
+                        class="lg:hidden p-2 text-slate-600 hover:text-slate-900 cursor-pointer">
                         <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16"></path>
@@ -178,8 +100,12 @@
         <!-- Mobile menu -->
         <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
             <div class="px-4 py-4 space-y-1">
-                <a href="#como-funciona" onclick="closeMobileMenu()"
+                <a href="como-funciona" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
                 
                 <!-- Herramientas Gratuitas Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
@@ -194,17 +120,8 @@
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🔑 Verificador DKIM</a>
                 </div>
 
-                <a href="#diagnostico-cta" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Diagnóstico</a>
-
-                <a href="#dashboard" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
-                <a href="#nosotros" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Nosotros</a>
-                <a href="#precios" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
-                <a href="#faq" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">FAQ</a>
+                <a href="contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
                 <div class="pt-2 border-t border-slate-100 space-y-1">
                     <a href="https://panel.inboxseguro.com/login"
                         class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
@@ -215,787 +132,594 @@
         </div>
     </nav>
 
-    <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-slate-900 overflow-hidden">
+    <!-- Main Homepage Area -->
+    <main class="flex-grow">
 
-        <!-- Dynamic Background -->
-        <div class="absolute inset-0 bg-slate-900">
+        <!-- Hero Section -->
+        <section class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 bg-slate-900 overflow-hidden">
+
+            <!-- Dynamic Background -->
+            <div class="absolute inset-0 bg-slate-900 pointer-events-none">
+                <div
+                    class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-blue-600/30 rounded-full mix-blend-screen filter blur-[100px] animate-blob">
+                </div>
+                <div
+                    class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-indigo-600/30 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000">
+                </div>
+                <div
+                    class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-slate-800/50 rounded-full mix-blend-overlay filter blur-[80px] animate-blob animation-delay-4000">
+                </div>
+            </div>
+
+            <!-- Grid overlay -->
             <div
-                class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-blue-600/30 rounded-full mix-blend-screen filter blur-[100px] animate-blob">
-            </div>
-            <div
-                class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-indigo-600/30 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000">
-            </div>
-            <div
-                class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-slate-800/50 rounded-full mix-blend-overlay filter blur-[80px] animate-blob animation-delay-4000">
-            </div>
-        </div>
-
-        <!-- Grid overlay -->
-        <div
-            class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 contrast-150 brightness-100">
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
-
-
-
-            <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-8 leading-tight text-white tracking-tight">
-                Protege tu dominio contra suplantación<br>
-                <span class="text-blue-500">y pérdida de reputación.</span>
-            </h1>
-
-            <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
-                Evita que terceros envíen correos como si fueran tu empresa. Detecta configuraciones incorrectas en SPF, DKIM y DMARC y corrige vulnerabilidades antes de que afecten tu reputación o entregabilidad.
-                <br><br>
-                <span class="text-white font-medium">Sin equipo técnico. Sin acceso a servidores.</span>
-            </p>
-
-            <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-20 items-center">
-                <a href="#diagnostico-cta"
-                    class="group relative px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 transition-all hover:-translate-y-1 overflow-hidden">
-                    <span class="relative z-10 flex items-center gap-2">
-                        Verificar mi dominio gratis
-                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                        </svg>
-                    </span>
-                    <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                </a>
-                <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
-                    target="_blank" rel="noopener noreferrer"
-                    class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white text-lg font-semibold rounded-xl border border-white/20 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
-                    <i class="fa-regular fa-calendar-check"></i> Agendar una demo
-                </a>
+                class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 contrast-150 brightness-100 pointer-events-none">
             </div>
 
-            <!-- AHA MOMENT UI MOCKUP -->
-            <div class="mt-16 max-w-3xl mx-auto relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-                
-                <div class="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 md:p-6 shadow-2xl text-left">
-                    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-t-2xl"></div>
+            <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
+
+                <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-8 leading-tight text-white tracking-tight">
+                    Protege tu dominio contra suplantación<br>
+                    <span class="text-blue-500">y pérdida de reputación.</span>
+                </h1>
+
+                <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
+                    Evita que terceros envíen correos como si fueran tu empresa. Detecta configuraciones incorrectas en SPF, DKIM y DMARC y corrige vulnerabilidades antes de que afecten tu reputación o entregabilidad.
+                    <br><br>
+                    <span class="text-white font-medium">Sin equipo técnico. Sin acceso a servidores.</span>
+                </p>
+
+                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-20 items-center">
+                    <a href="domain-checker"
+                        class="group relative px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 transition-all hover:-translate-y-1 overflow-hidden">
+                        <span class="relative z-10 flex items-center gap-2">
+                            Verificar mi dominio gratis
+                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                            </svg>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    </a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                        target="_blank" rel="noopener noreferrer"
+                        class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white text-lg font-semibold rounded-xl border border-white/20 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
+                        <i class="fa-regular fa-calendar-check"></i> Agendar una demo
+                    </a>
+                </div>
+
+                <!-- AHA MOMENT UI MOCKUP -->
+                <div class="mt-16 max-w-3xl mx-auto relative group">
+                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
                     
-                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 border-b border-slate-700/50 pb-4 gap-4">
-                        <div>
-                            <h3 class="text-white font-bold text-lg md:text-xl flex items-center gap-2">
-                                <i class="fa-solid fa-shield-virus text-blue-400"></i> Superficie de envío y autenticación detectada
-                            </h3>
-                            <p class="text-slate-400 text-sm">dominio-cliente.com · últimos 7 días</p>
-                        </div>
-                        <div class="px-3 py-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-xs font-bold flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                            ⚠️ Configuración incompleta
-                        </div>
-                    </div>
-                    
-                    <div class="space-y-3">
-                        <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white">
-                                    <i class="fa-brands fa-google text-lg"></i>
-                                </div>
-                                <div>
-                                    <p class="text-white text-sm font-bold">Google Workspace</p>
-                                    <p class="text-slate-400 text-xs">24,500 correos enviados</p>
-                                </div>
+                    <div class="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 md:p-6 shadow-2xl text-left">
+                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-t-2xl"></div>
+                        
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 border-b border-slate-700/50 pb-4 gap-4">
+                            <div>
+                                <h3 class="text-white font-bold text-lg md:text-xl flex items-center gap-2">
+                                    <i class="fa-solid fa-shield-virus text-blue-400"></i> Superficie de envío y autenticación detectada
+                                </h3>
+                                <p class="text-slate-400 text-sm">dominio-cliente.com · últimos 7 días</p>
                             </div>
-                            <div class="flex items-center gap-1.5 text-emerald-400 text-xs md:text-sm font-bold bg-emerald-400/10 px-2 md:px-3 py-1 rounded-md">
-                                <i class="fa-solid fa-check-circle"></i> <span class="hidden sm:inline">Autorizado</span>
+                            <div class="px-3 py-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-xs font-bold flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                ⚠️ Configuración incompleta
                             </div>
                         </div>
                         
-                        <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white">
-                                    <i class="fa-solid fa-server text-lg"></i>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white">
+                                        <i class="fa-brands fa-google text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white text-sm font-bold">Google Workspace</p>
+                                        <p class="text-slate-400 text-xs">24,500 correos enviados</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-white text-sm font-bold">ERP Interno (red corporativa)</p>
-                                    <p class="text-slate-400 text-xs">8,200 correos</p>
+                                <div class="flex items-center gap-1.5 text-emerald-400 text-xs md:text-sm font-bold bg-emerald-400/10 px-2 md:px-3 py-1 rounded-md">
+                                    <i class="fa-solid fa-check-circle"></i> <span class="hidden sm:inline">Autorizado</span>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-1.5 text-emerald-400 text-xs md:text-sm font-bold bg-emerald-400/10 px-2 md:px-3 py-1 rounded-md">
-                                <i class="fa-solid fa-check-circle"></i> <span class="hidden sm:inline">Autorizado</span>
+                            
+                            <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white">
+                                        <i class="fa-solid fa-server text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white text-sm font-bold">ERP Interno (red corporativa)</p>
+                                        <p class="text-slate-400 text-xs">8,200 correos</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-1.5 text-emerald-400 text-xs md:text-sm font-bold bg-emerald-400/10 px-2 md:px-3 py-1 rounded-md">
+                                    <i class="fa-solid fa-check-circle"></i> <span class="hidden sm:inline">Autorizado</span>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="flex items-center justify-between p-3 bg-amber-500/10 rounded-lg border border-amber-500/20 hover:bg-amber-500/20 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
-                                    <i class="fa-solid fa-bullhorn text-lg"></i>
+                            <div class="flex items-center justify-between p-3 bg-amber-500/10 rounded-lg border border-amber-500/20 hover:bg-amber-500/20 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-400">
+                                        <i class="fa-solid fa-bullhorn text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white text-sm font-bold">Mailchimp (marketing)</p>
+                                        <p class="text-slate-400 text-xs">4,300 correos</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-white text-sm font-bold">Mailchimp (marketing)</p>
-                                    <p class="text-slate-400 text-xs">4,300 correos</p>
+                                <div class="flex items-center gap-1.5 text-amber-400 text-xs md:text-sm font-bold bg-amber-400/10 px-2 md:px-3 py-1 rounded-md">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> <span class="hidden sm:inline">Requiere SPF/DKIM</span>
                                 </div>
                             </div>
-                            <div class="flex items-center gap-1.5 text-amber-400 text-xs md:text-sm font-bold bg-amber-400/10 px-2 md:px-3 py-1 rounded-md">
-                                <i class="fa-solid fa-triangle-exclamation"></i> <span class="hidden sm:inline">Requiere SPF/DKIM</span>
-                            </div>
-                        </div>
 
-                        <div class="flex items-center justify-between p-3 bg-red-500/10 rounded-lg border border-red-500/20 hover:bg-red-500/20 transition-colors">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400">
-                                    <i class="fa-solid fa-user-secret text-lg"></i>
+                            <div class="flex items-center justify-between p-3 bg-red-500/10 rounded-lg border border-red-500/20 hover:bg-red-500/20 transition-colors">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400">
+                                        <i class="fa-solid fa-user-secret text-lg"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white text-sm font-bold">Servidor no reconocido</p>
+                                        <p class="text-slate-400 text-xs">1,500 correos</p>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="text-white text-sm font-bold">Servidor no reconocido</p>
-                                    <p class="text-slate-400 text-xs">1,500 correos</p>
+                                <div class="flex items-center gap-1.5 text-red-400 text-xs md:text-sm font-bold bg-red-400/10 px-2 md:px-3 py-1 rounded-md">
+                                    <i class="fa-solid fa-xmark-circle"></i> <span class="hidden sm:inline">Posible suplantación</span>
                                 </div>
-                            </div>
-                            <div class="flex items-center gap-1.5 text-red-400 text-xs md:text-sm font-bold bg-red-400/10 px-2 md:px-3 py-1 rounded-md">
-                                <i class="fa-solid fa-xmark-circle"></i> <span class="hidden sm:inline">Posible suplantación</span>
                             </div>
                         </div>
-                    </div>
-                    
-                    <div class="mt-4 pt-4 border-t border-slate-700/50 text-center text-sm text-slate-400 font-medium">
-                        <span class="text-amber-500 font-bold">Riesgo de suplantación activo:</span> configuración SPF/DKIM incompleta
+                        
+                        <div class="mt-4 pt-4 border-t border-slate-700/50 text-center text-sm text-slate-400 font-medium">
+                            <span class="text-amber-500 font-bold">Riesgo de suplantación activo:</span> configuración SPF/DKIM incompleta
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- PAIN POINTS SECTION -->
-    <section id="problema" class="py-20 bg-slate-50 relative overflow-hidden scroll-mt-20">
-        <div class="max-w-6xl mx-auto px-4 relative z-10">
-            <div class="text-center mb-16">
-                <p class="text-sm font-bold uppercase tracking-widest text-brand-600 mb-4">El Problema Real</p>
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
-                    Tu dominio puede estar enviando correos sin control total
-                </h2>
-                <p class="text-lg text-slate-600 max-w-3xl mx-auto">
-                    No se trata de phishing tradicional. El problema ocurre cuando tu dominio no tiene configuradas correctamente sus mecanismos de autenticación.<br><br>
-                    <span class="font-bold text-slate-800">Esto causa tres impactos directos:</span>
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Pain 1: Fraud -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-red-100 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-6 text-red-600">
-                        <i class="fa-solid fa-user-secret text-xl"></i>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Uso indebido del dominio</h3>
-                    <p class="text-slate-600 leading-relaxed">
-                        Alguien puede enviar facturas o instrucciones de pago haciéndose pasar por tu empresa.
+        <!-- PAIN POINTS SECTION -->
+        <section id="problema" class="py-20 bg-slate-50 relative overflow-hidden">
+            <div class="max-w-6xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-16">
+                    <p class="text-sm font-bold uppercase tracking-widest text-brand-600 mb-4">El Problema Real</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-6">
+                        Tu dominio puede estar enviando correos sin control total
+                    </h2>
+                    <p class="text-lg text-slate-600 max-w-3xl mx-auto">
+                        No se trata de phishing tradicional. El problema ocurre cuando tu dominio no tiene configuradas correctamente sus mecanismos de autenticación.<br><br>
+                        <span class="font-bold text-slate-800">Esto causa tres impactos directos:</span>
                     </p>
                 </div>
 
-                <!-- Pain 2: Revenue Loss -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-6 text-amber-600">
-                        <i class="fa-solid fa-envelope-open-text text-xl"></i>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <!-- Pain 1: Fraud -->
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-red-100 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-6 text-red-600">
+                            <i class="fa-solid fa-user-secret text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Uso indebido del dominio</h3>
+                        <p class="text-slate-600 leading-relaxed font-normal">
+                            Alguien puede enviar facturas o instrucciones de pago haciéndose pasar por tu empresa.
+                        </p>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Pérdida de ingresos</h3>
-                    <p class="text-slate-600 leading-relaxed">
-                        Correos legítimos que no llegan a clientes o se van a spam.
-                    </p>
-                </div>
 
-                <!-- Pain 3: Reputation -->
-                <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
-                    <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-6 text-slate-600">
-                        <i class="fa-solid fa-ban text-xl"></i>
+                    <!-- Pain 2: Revenue Loss -->
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center mb-6 text-amber-600">
+                            <i class="fa-solid fa-envelope-open-text text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Pérdida de ingresos</h3>
+                        <p class="text-slate-600 leading-relaxed font-normal">
+                            Correos legítimos que no llegan a clientes o se van a spam.
+                        </p>
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 mb-3">Daño de reputación</h3>
-                    <p class="text-slate-600 leading-relaxed">
-                        Listas negras pueden afectar todos tus envíos, incluso los correctos.
-                    </p>
+
+                    <!-- Pain 3: Reputation -->
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mb-6 text-slate-600">
+                            <i class="fa-solid fa-ban text-xl"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3">Daño de reputación</h3>
+                        <p class="text-slate-600 leading-relaxed font-normal">
+                            Listas negras pueden afectar todos tus envíos, incluso los correctos.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- CREDIBILITY & TRANSITION SECTION -->
-    <section id="diagnostico-cta" class="py-16 bg-slate-900 border-y border-slate-700 scroll-mt-20">
-        <div class="max-w-5xl mx-auto px-4 text-center">
-            <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">La mayoría de ataques comienza por correo electrónico</h2>
-            
-            <div class="mt-10 grid md:grid-cols-3 gap-6 text-left mb-16">
-                <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-                    <p class="text-3xl font-extrabold text-red-400 mb-2">91%</p>
-                    <p class="text-sm text-slate-400">de los ciberataques empresariales inician por email falso.</p>
-                </div>
-                <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-                    <p class="text-3xl font-extrabold text-amber-400 mb-2">$2.9M</p>
-                    <p class="text-sm text-slate-400">USD es el costo promedio de un ataque BEC (Business Email Compromise).</p>
-                </div>
-                <div class="bg-white/5 border border-white/10 rounded-xl p-5">
-                    <p class="text-3xl font-extrabold text-blue-400 mb-2">Tardío</p>
-                    <p class="text-sm text-slate-400">La mayoría de empresas no detecta el problema hasta que ya afecta su entregabilidad.</p>
-                </div>
-            </div>
-
-            <!-- Transition to product -->
-            <div class="bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 text-left relative overflow-hidden shadow-2xl">
-                <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
-                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 relative z-10">Conoce tu nivel de exposición en segundos</h2>
-                <p class="text-lg text-slate-300 mb-6 relative z-10">Nuestro diagnóstico analiza públicamente tus registros DNS para detectar:</p>
+        <!-- CREDIBILITY & TRANSITION SECTION -->
+        <section id="diagnostico-cta" class="py-16 bg-slate-900 border-y border-slate-700 scroll-mt-20">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-6">La mayoría de ataques comienza por correo electrónico</h2>
                 
-                <ul class="space-y-4 text-slate-300 relative z-10 mb-8">
-                    <li class="flex items-center gap-3"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Si tienes políticas SPF, DKIM y DMARC vulnerables</li>
-                    <li class="flex items-center gap-3"><i class="fa-solid fa-user-ninja text-red-400"></i> Qué tan fácil es suplantar la identidad de tu empresa</li>
-                    <li class="flex items-center gap-3"><i class="fa-solid fa-envelope-circle-xmark text-blue-400"></i> El riesgo de que tus correos legítimos vayan a spam</li>
-                    <li class="flex items-center gap-3"><i class="fa-solid fa-shield-halved text-emerald-400"></i> Qué acciones inmediatas necesitas para blindar tu dominio</li>
-                </ul>
-
-                <div class="mt-8 text-center border-t border-slate-700 pt-8 relative z-10">
-                    <h3 class="text-xl font-bold text-white mb-4">Detecta vulnerabilidades en menos de 10 segundos</h3>
-                    <a href="domain-checker" class="inline-block px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-1 mb-3">
-                        Ver diagnóstico gratuito
-                    </a>
-                    <p class="text-sm text-slate-400">Sin instalación. Sin acceso a servidores. Solo tu dominio.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="como-funciona" class="py-24 bg-white scroll-mt-28 relative overflow-hidden">
-        <!-- Decoración de fondo -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-            <div class="absolute -top-40 -left-40 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-50"></div>
-            <div class="absolute top-40 right-0 w-96 h-96 bg-indigo-50 rounded-full blur-3xl opacity-50"></div>
-        </div>
-
-        <div class="max-w-7xl mx-auto px-4 relative z-10">
-            <div class="text-center max-w-3xl mx-auto mb-20">
-                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-slate-900">Descubre quién está enviando en tu nombre</h2>
-                <p class="text-lg text-slate-600 leading-relaxed">
-                    En menos de 5 minutos sabes si estás expuesto y qué hacer. <span class="font-bold text-slate-900">InboxSeguro</span> te guía paso a paso, sin jerga técnica y sin tocar tus servidores.
-                </p>
-            </div>
-
-            <div class="grid md:grid-cols-3 gap-8 relative">
-                <!-- Conector visual (línea) -->
-                <div
-                    class="hidden md:block absolute top-[3.5rem] left-[15%] right-[15%] h-0.5 bg-gradient-to-r from-blue-100 via-indigo-100 to-blue-100 z-0">
-                </div>
-
-                <!-- Paso 1 -->
-                <div
-                    class="relative z-10 p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 group">
-                    <div
-                        class="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl flex items-center justify-center mb-6 text-xl font-bold shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform">
-                        1</div>
-                    <h3 class="text-xl font-bold mb-3 text-slate-900">Diagnóstico instantáneo</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Escanea tu dominio en segundos y detecta si estás desprotegido frente a suplantación. Sin registrarte, sin instalar nada.</p>
-                </div>
-
-                <!-- Paso 2 -->
-                <div
-                    class="relative z-10 p-8 bg-white rounded-2xl border-2 border-blue-500/10 shadow-2xl shadow-blue-900/5 hover:-translate-y-2 transition-all duration-300">
-                    <div
-                        class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] uppercase font-bold px-3 py-1 rounded-bl-xl rounded-tr-xl">
-                        Tu parte</div>
-                    <div
-                        class="w-14 h-14 bg-white border-2 border-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 text-xl font-bold shadow-sm group-hover:scale-110 transition-transform">
-                        2</div>
-                    <h3 class="text-xl font-bold mb-3 text-blue-600">Activación guiada</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Te decimos exactamente qué cambiar en tu proveedor de dominio. <em>"Copia este texto y pégalo aquí."</em> Sin dar tus claves a nadie. Sin conocimientos técnicos.</p>
-                </div>
-
-                <!-- Paso 3 -->
-                <div
-                    class="relative z-10 p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 group">
-                    <div
-                        class="w-14 h-14 bg-gradient-to-br from-indigo-600 to-indigo-700 text-white rounded-2xl flex items-center justify-center mb-6 text-xl font-bold shadow-lg shadow-indigo-500/30 group-hover:scale-110 transition-transform">
-                        3</div>
-                    <h3 class="text-xl font-bold mb-3 text-slate-900">Monitoreo y alertas 24/7</h3>
-                    <p class="text-slate-600 text-sm leading-relaxed">Vigilamos en tiempo real quién envía en nombre de tu dominio. Si detectamos actividad sospechosa o listas negras, te avisamos de inmediato.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="dashboard" class="py-24 bg-slate-50 border-y border-slate-200 overflow-hidden scroll-mt-28">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="grid lg:grid-cols-2 gap-12 items-center">
-
-                <div class="order-2 lg:order-1">
-                    <h2 class="text-3xl font-bold mb-6 text-slate-900">Toma medidas al instante para proteger tu identidad.</h2>
-                    <p class="text-lg text-slate-600 mb-6">Una vez que tienes visibilidad, la plataforma te indica exactamente qué configurar para bloquear a los emisores no autorizados y asegurar los legítimos.</p>
-                    <ul class="space-y-8 mb-8">
-                        <li class="flex items-start gap-4">
-                            <div
-                                class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm h-10 w-10 flex items-center justify-center brand-accent flex-shrink-0">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-lg">Detección Inteligente</h4>
-                                <p class="text-sm text-slate-600 mt-1">Identificamos si usas GoDaddy, Squarespace, NIC
-                                    Chile o Cloudflare y adaptamos las instrucciones.</p>
-                            </div>
-                        </li>
-                        <li class="flex items-start gap-4">
-                            <div
-                                class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm h-10 w-10 flex items-center justify-center brand-accent flex-shrink-0">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2">
-                                    </path>
-                                </svg>
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-slate-900 text-lg">Copia y Pega</h4>
-                                <p class="text-sm text-slate-600 mt-1">La tabla de registros te entrega los valores
-                                    exactos. Solo tienes que copiarlos y pegarlos.</p>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="order-1 lg:order-2">
-                    <img src="dashboard-screenshot.png" alt="Captura de pantalla del Asistente DNS de InboxSeguro"
-                        class="rounded-xl border border-slate-200 dashboard-card lg:rotate-1 transition-transform hover:rotate-0 w-full h-auto shadow-2xl">
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="features" class="py-16 bg-white border-t border-slate-200 scroll-mt-20">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-10">
-                <div
-                    class="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">
-                    Qué incluye tu plataforma</div>
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Todo lo que necesitas para blindar tu identidad corporativa
-                </h2>
-                <p class="text-lg text-slate-600 max-w-2xl mx-auto">Sin instalar software. Sin compartir accesos. Sin depender de tu proveedor de IT.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-
-                <div
-                    class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                    <div
-                        class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4 text-blue-600 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-shield-halved text-lg"></i>
+                <div class="mt-10 grid md:grid-cols-3 gap-6 text-left mb-16">
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-5 shadow-sm">
+                        <p class="text-3xl font-extrabold text-red-400 mb-2">91%</p>
+                        <p class="text-sm text-slate-400 font-light">de los ciberataques empresariales inician por email falso.</p>
                     </div>
-                    <h3 class="font-bold text-base text-slate-900 mb-2">Estado de protección en tiempo real</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">Indicador visual claro: sabes en 3 segundos si tu empresa está protegida o en riesgo de suplantación.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                    <div
-                        class="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-sliders text-lg"></i>
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-5 shadow-sm">
+                        <p class="text-3xl font-extrabold text-amber-400 mb-2">$2.9M</p>
+                        <p class="text-sm text-slate-400 font-light">USD es el costo promedio de un ataque BEC (Business Email Compromise).</p>
                     </div>
-                    <h3 class="font-bold text-base text-slate-900 mb-2">Activación de protecciones guiada</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">Te indicamos exactamente qué configurar en tu proveedor. Solo copia y pega — sin tocar servidores ni contratar soporte IT.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                    <div
-                        class="w-11 h-11 rounded-xl bg-indigo-100 flex items-center justify-center mb-4 text-indigo-600 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-headset text-lg"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-slate-900 mb-2">Asistente con IA</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">Pregúntale lo que quieras sobre tu configuración.
-                        Responde en español y en lenguaje simple.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                    <div
-                        class="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center mb-4 text-orange-600 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-envelope-open-text text-lg"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-slate-900 mb-2">Visión de quién envía en tu nombre</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">Detectamos todos los servicios y servidores que envíóan correos usando tu dominio. Si algo no debería estar ahí, lo ves al instante.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                    <div
-                        class="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center mb-4 text-amber-600 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-chart-line text-lg"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-slate-900 mb-2">Reputación y Listas Negras</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">Verificamos si tu dominio o IPs están en listas
-                        negras como Spamcop, Barracuda o PSBL.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                    <div
-                        class="w-11 h-11 rounded-xl bg-teal-100 flex items-center justify-center mb-4 text-teal-600 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-lock text-lg"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-slate-900 mb-2">Cifrado TLS</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">Monitoreamos que tus correos viajen cifrados.
-                        Recibes alertas si el cifrado falla o se degrada.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                    <div
-                        class="w-11 h-11 rounded-xl bg-red-100 flex items-center justify-center mb-4 text-red-600 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-bell text-lg"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-slate-900 mb-2">Alertas Automáticas</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">5 tipos de alerta configurables: blacklist,
-                        cambios DNS, nuevos orígenes, sugerencias y reportes periódicos.</p>
-                </div>
-
-                <div
-                    class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                    <div
-                        class="w-11 h-11 rounded-xl bg-cyan-100 flex items-center justify-center mb-4 text-cyan-600 group-hover:scale-110 transition-transform">
-                        <i class="fa-solid fa-file-pdf text-lg"></i>
-                    </div>
-                    <h3 class="font-bold text-base text-slate-900 mb-2">Informe Mensual PDF</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">Reporte ejecutivo descargable con estado de
-                        seguridad, eventos del mes y plan de acción. Ideal para gerencia.</p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- NEW TEAM SECTION (REQUIRED FOR GOOGLE STARTUPS) -->
-    <section id="nosotros" class="py-20 bg-slate-50 border-t border-slate-200 scroll-mt-20">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <div
-                    class="inline-block px-4 py-1.5 rounded-full bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider mb-4">
-                    Nuestra Misión
-                </div>
-                <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-4">La Historia de InboxSeguro</h2>
-                <p class="text-lg text-slate-600 max-w-2xl mx-auto">
-                    InboxSeguro nace con la visión de resolver un problema invisible pero crítico: la falta de
-                    autenticación técnica en el correo corporativo. Ayudamos a empresas a proteger su
-                    identidad y reputación, democratizando el acceso a estándares de seguridad que antes solo estaban al
-                    alcance de grandes corporaciones.
-                </p>
-            </div>
-
-            <div
-                class="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm flex flex-col md:flex-row items-center gap-8 md:gap-12 hover:shadow-md transition-shadow">
-                <div
-                    class="w-32 h-32 md:w-32 md:h-32 bg-white rounded-full flex-shrink-0 flex items-center justify-center border-4 border-white shadow-lg relative group overflow-hidden">
-                    <img src="https://panel.inboxseguro.com/static/logo.png" alt="InboxSeguro"
-                        class="w-20 h-auto object-contain">
-                </div>
-                <div class="text-center md:text-left flex-1">
-                    <h3 class="text-2xl font-bold text-slate-900 mb-1">Alfredo Pérez</h3>
-                    <div class="text-blue-600 font-medium text-sm mb-4 uppercase tracking-wide">Fundador & CEO</div>
-                    <p class="text-slate-600 leading-relaxed mb-6 italic">
-                        "Toma años construir la reputación de una empresa, pero un correo falso puede destruirla en segundos. Creamos InboxSeguro para que blindar tu identidad sea tan fácil como copiar y pegar. Cero código. Cero complicaciones."
-                    </p>
-                    <div class="flex justify-center md:justify-start gap-4">
-                        <a href="https://www.linkedin.com/in/alfredo-perez-inboxseguro/" target="_blank"
-                            class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-[#0077b5] hover:text-white transition-all"
-                            title="LinkedIn Personal">
-                            <i class="fa-brands fa-linkedin-in text-lg"></i>
-                        </a>
-                        <a href="mailto:alfredo@inboxseguro.com"
-                            class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 hover:bg-blue-600 hover:text-white transition-all"
-                            title="Email de contacto">
-                            <i class="fa-solid fa-envelope text-lg"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="precios" class="py-14 bg-white border-t border-slate-200 scroll-mt-16 relative">
-        <div class="max-w-7xl mx-auto px-4 relative z-10">
-            <div class="text-center mb-12">
-                <div
-                    class="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">
-                    Plan Profesional</div>
-                <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-900 tracking-tight">Seguridad de nivel corporativo para tu dominio.</h2>
-                <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">Una sola suscripción con todas las herramientas para blindar tu identidad, sin costos ocultos.</p>
-            </div>
-
-            <div
-                class="max-w-lg mx-auto bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative transform hover:-translate-y-2 transition-all duration-300">
-
-                <div class="bg-slate-900 p-6 text-center text-white relative overflow-hidden">
-                    <div
-                        class="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20">
-                    </div>
-                    <h3 class="font-bold text-xl mb-2 relative z-10 leading-snug">
-                        Protege la identidad de tu correo corporativo<br>
-                        <span class="text-blue-300">y evita que alguien se haga pasar por tu empresa</span>
-                    </h3>
-                </div>
-
-                <div class="p-6 text-center bg-slate-50 border-b border-slate-100">
-                    <p class="text-xs font-bold text-slate-600 tracking-wide mb-4">Empresas usan InboxSeguro para evitar el uso no autorizado de su dominio en el correo.</p>
-                    <div class="flex justify-center items-baseline gap-2">
-                        <span
-                            class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-700">$39.000</span>
-                        <span class="text-lg text-slate-500 font-medium">CLP / mes</span>
-                    </div>
-                    <div
-                        class="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold">
-                        <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
-                        14 días de prueba gratis
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-5 shadow-sm">
+                        <p class="text-3xl font-extrabold text-blue-400 mb-2">Tardío</p>
+                        <p class="text-sm text-slate-400 font-light">La mayoría de empresas no detecta el problema hasta que ya afecta su entregabilidad.</p>
                     </div>
                 </div>
 
-                <div class="p-8">
-                    <p class="text-sm text-slate-600 leading-relaxed mb-6 border-l-2 border-blue-500 pl-4">
-                        Detecta quién está enviando correos en nombre de tu empresa y evita usos no autorizados y bloqueos en listas negras antes de que afecte a tus clientes.
-                    </p>
-
-                    <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4">Qué incluye:</p>
-                    <ul class="space-y-4 text-sm text-slate-600 mb-10">
-                        <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i class="fa-solid fa-check text-xs"></i>
-                            </div>
-                            <span class="font-medium text-slate-900">Visibilidad completa de todos los sistemas que envían correos con tu dominio (Google, Zoho, ERP, etc.)</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i class="fa-solid fa-check text-xs"></i>
-                            </div>
-                            <span>Configuración guiada para asegurar que solo tus sistemas autorizados puedan enviar correos</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i class="fa-solid fa-check text-xs"></i>
-                            </div>
-                            <span>Alertas en tiempo real ante intentos de suplantación o cambios no autorizados</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i class="fa-solid fa-check text-xs"></i>
-                            </div>
-                            <span>Monitoreo continuo de reputación y bloqueos en listas negras</span>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                <i class="fa-solid fa-check text-xs"></i>
-                            </div>
-                            <span class="font-medium text-slate-900">Reportes ejecutivos listos para presentar a gerencia</span>
-                        </li>
+                <!-- Transition to product -->
+                <div class="bg-gradient-to-b from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 text-left relative overflow-hidden shadow-2xl">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white mb-4 relative z-10">Conoce tu nivel de exposición en segundos</h2>
+                    <p class="text-lg text-slate-300 mb-6 relative z-10 font-light">Nuestro diagnóstico analiza públicamente tus registros DNS para detectar:</p>
+                    
+                    <ul class="space-y-4 text-slate-300 relative z-10 mb-8 font-light">
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-triangle-exclamation text-amber-400"></i> Si tienes políticas SPF, DKIM y DMARC vulnerables</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-user-ninja text-red-400"></i> Qué tan fácil es suplantar la identidad de tu empresa</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-envelope-circle-xmark text-blue-400"></i> El riesgo de que tus correos legítimos vayan a spam</li>
+                        <li class="flex items-center gap-3"><i class="fa-solid fa-shield-halved text-emerald-400"></i> Qué acciones inmediatas necesitas para blindar tu dominio</li>
                     </ul>
 
-                    <a href="https://panel.inboxseguro.com/register"
-                        class="block w-full bg-gradient-to-r from-brand-600 to-blue-700 hover:from-brand-700 hover:to-blue-800 text-white font-bold py-4 rounded-xl text-center shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]">
-                        Comenzar prueba gratuita de 14 días
-                    </a>
-
-                    <div class="flex justify-center gap-5 mt-5 text-xs text-slate-400 flex-wrap">
-                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Sin contratos</span>
-                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Cancela cuando quieras</span>
-                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Activación en minutos, sin soporte técnico</span>
+                    <div class="mt-8 text-center border-t border-slate-700 pt-8 relative z-10">
+                        <h3 class="text-xl font-bold text-white mb-4">Detecta vulnerabilidades en menos de 10 segundos</h3>
+                        <a href="domain-checker" class="inline-block px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-1 mb-3">
+                            Ver diagnóstico gratuito
+                        </a>
+                        <p class="text-sm text-slate-400">Sin instalación. Sin acceso a servidores. Solo tu dominio.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section id="faq" class="py-24 bg-white border-t border-slate-200 scroll-mt-28">
-        <div class="max-w-4xl mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">Preguntas Frecuentes</h2>
-                <p class="text-lg text-slate-600 font-medium italic">"La falta de control no avisa. La visibilidad sí."</p>
-                <div class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 inline-block shadow-sm">
-                    <p class="text-sm text-slate-600">
-                        <span class="font-bold text-brand-600">¿Qué hace distinto a InboxSeguro?</span><br>
-                        No es una herramienta técnica para especialistas. Es una plataforma de protección que cualquier empresa puede activar hoy.
-                    </p>
+        <!-- Cómo funciona Teaser -->
+        <section class="py-20 bg-white">
+            <div class="max-w-5xl mx-auto px-4 text-center">
+                <h2 class="text-3xl font-bold text-slate-900 mb-6">Descubre quién está enviando en tu nombre</h2>
+                <p class="text-lg text-slate-600 mb-12 max-w-2xl mx-auto font-light">
+                    En menos de 5 minutos sabrás si estás expuesto y qué hacer. Te guiamos de forma simple y automatizada en la protección de tus firmas corporativas.
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 text-left mb-12">
+                    <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm">
+                        <span class="inline-block text-xs bg-blue-100 text-blue-800 font-bold px-2.5 py-1 rounded-md mb-4">Paso 1</span>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Diagnóstico Instantáneo</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed font-light">Escanea registros DNS en segundos de forma pasiva y sin comprometer claves.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm">
+                        <span class="inline-block text-xs bg-brand-100 text-brand-800 font-bold px-2.5 py-1 rounded-md mb-4">Paso 2</span>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Activación Guiada</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed font-light">Te entregamos valores exactos tipo copia y pega para configurar en tu panel DNS.</p>
+                    </div>
+                    <div class="p-6 bg-slate-50 border border-slate-200 rounded-2xl shadow-sm">
+                        <span class="inline-block text-xs bg-indigo-100 text-indigo-800 font-bold px-2.5 py-1 rounded-md mb-4">Paso 3</span>
+                        <h3 class="font-bold text-slate-900 text-lg mb-2">Monitoreo Activo</h3>
+                        <p class="text-slate-500 text-sm leading-relaxed font-light">Vigilamos remitentes no autorizados y listas negras los 365 días del año.</p>
+                    </div>
+                </div>
+                <a href="como-funciona" class="inline-flex items-center gap-2 font-bold text-brand-600 hover:text-brand-700 transition-colors text-base">
+                    Ver cómo funciona detalladamente &rarr;
+                </a>
+            </div>
+        </section>
+
+        <!-- Plataforma Teaser Section -->
+        <section class="py-20 bg-slate-50 border-y border-slate-200 overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold mb-6 text-slate-900">Toma medidas al instante para proteger tu identidad.</h2>
+                        <p class="text-lg text-slate-600 mb-8 font-light">Una vez que tienes visibilidad, la plataforma te indica exactamente qué configurar para bloquear a los emisores no autorizados y asegurar los legítimos.</p>
+                        
+                        <div class="grid grid-cols-2 gap-6 mb-8">
+                            <div class="flex gap-3">
+                                <i class="fa-solid fa-wand-magic-sparkles text-blue-600 text-xl flex-shrink-0 mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-sm">Detección Inteligente</h4>
+                                    <p class="text-xs text-slate-500 mt-1 font-light">Instrucciones adaptadas para NIC Chile, Cloudflare, etc.</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3">
+                                <i class="fa-solid fa-copy text-blue-600 text-xl flex-shrink-0 mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-bold text-slate-900 text-sm">Copia y Pega</h4>
+                                    <p class="text-xs text-slate-500 mt-1 font-light">Copia los valores listos para registrar en tu DNS.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="plataforma" class="inline-flex items-center gap-2 font-bold text-brand-600 hover:text-brand-700 transition-colors text-base">
+                            Explorar características de la plataforma &rarr;
+                        </a>
+                    </div>
+                    <div>
+                        <img src="dashboard-screenshot.png" alt="Captura de pantalla del Asistente DNS de InboxSeguro"
+                            class="rounded-xl border border-slate-200 w-full h-auto shadow-2xl lg:rotate-1 hover:rotate-0 transition-transform duration-300">
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div class="space-y-4">
-
-                <div
-                    class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                    <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                        <div
-                            class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                            ?</div>
-                        ¿Necesito entregarles mis contraseñas?
-                    </h3>
-                    <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                        <strong class="text-slate-900">Nunca.</strong> InboxSeguro analiza solo la información pública
-                        de tu dominio (DNS). Tú mantienes el control total de tus accesos. Nosotros solo te decimos qué
-                        copiar y pegar en tu panel de control actual.
-                    </p>
-                </div>
-
-
-
-                <div
-                    class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                    <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                        <div
-                            class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                            ?</div>
-                        ¿Cumplen con las normativas de Microsoft y Google?
-                    </h3>
-                    <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                        Sí. Nuestra herramienta está diseñada para ayudarte a cumplir con los requisitos de
-                        autenticación (SPF, DKIM, DMARC) exigidos por Google y Microsoft desde 2024 para evitar que tus
-                        correos sean marcados como spam.
+        <!-- Nosotros Section -->
+        <section id="nosotros" class="py-20 bg-white">
+            <div class="max-w-4xl mx-auto px-4">
+                <div class="text-center mb-12">
+                    <div
+                        class="inline-block px-4 py-1.5 rounded-full bg-slate-100 text-slate-600 font-bold text-xs uppercase tracking-wider mb-4 border border-slate-200">
+                        Nuestra Misión
+                    </div>
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">La Historia de InboxSeguro</h2>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto font-light leading-relaxed">
+                        InboxSeguro nace con la visión de resolver un problema invisible pero crítico: la falta de
+                        autenticación técnica en el correo corporativo. Ayudamos a empresas a proteger su
+                        identidad y reputación, democratizando el acceso a estándares de seguridad avanzados.
                     </p>
                 </div>
 
                 <div
-                    class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                    <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                        <div
-                            class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                            ?</div>
-                        ¿Puedo cancelar si no me sirve?
-                    </h3>
-                    <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                        Por supuesto. No hay contratos forzosos. Puedes cancelar tu suscripción con un solo clic desde
-                        tu panel de control cuando quieras.
-                    </p>
-                </div>
-
-                <div
-                    class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                    <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                        <div
-                            class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">
-                            ?</div>
-                        ¿Qué pasa si uso Zoho, GoDaddy o NIC Chile?
-                    </h3>
-                    <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                        Nuestra plataforma es compatible con cualquier proveedor de dominio. Tenemos guías específicas
-                        para NIC Chile, GoDaddy, Namecheap, Cloudflare, Google Domains y más.
-                    </p>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-
-
-
-
-
-    <!-- Sección de Contacto -->
-    <section id="contacto"
-        class="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden scroll-mt-28">
-        <div class="absolute inset-0">
-            <div
-                class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[100px]">
-            </div>
-            <div
-                class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-600/10 rounded-full mix-blend-screen filter blur-[80px]">
-            </div>
-        </div>
-        <div class="max-w-4xl mx-auto px-4 relative z-10">
-            <div class="text-center mb-12">
-                <div
-                    class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xs uppercase tracking-wider mb-4">
-                    Contacto</div>
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">¿Tienes dudas? Conversemos.</h2>
-                <p class="text-lg text-slate-400 max-w-xl mx-auto">Responderemos tu consulta en menos de 24 horas
-                    hábiles. Sin compromisos.</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-8 items-start">
-                <!-- Info de contacto -->
-                <div class="space-y-6">
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <div class="flex items-center gap-4 mb-4">
-                            <div
-                                class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                    class="bg-slate-50 rounded-2xl p-8 border border-slate-200 shadow-sm flex flex-col md:flex-row items-center gap-8 md:gap-12 hover:shadow-md transition-shadow duration-300">
+                    <div
+                        class="w-32 h-32 bg-white rounded-full flex-shrink-0 flex items-center justify-center border-4 border-white shadow-lg relative group overflow-hidden">
+                        <img src="https://panel.inboxseguro.com/static/logo.png" alt="InboxSeguro"
+                            class="w-20 h-auto object-contain">
+                    </div>
+                    <div class="text-center md:text-left flex-1">
+                        <h3 class="text-2xl font-bold text-slate-900 mb-1">Alfredo Pérez</h3>
+                        <div class="text-blue-600 font-semibold text-sm mb-4 uppercase tracking-wide">Fundador & CEO</div>
+                        <p class="text-slate-600 leading-relaxed mb-6 italic font-light">
+                            "Toma años construir la reputación de una empresa, pero un correo falso puede destruirla en segundos. Creamos InboxSeguro para que blindar tu identidad sea tan fácil como copiar y pegar. Cero código. Cero complicaciones."
+                        </p>
+                        <div class="flex justify-center md:justify-start gap-4">
+                            <a href="https://www.linkedin.com/in/alfredo-perez-inboxseguro/" target="_blank"
+                                class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-[#0077b5] hover:text-white hover:border-[#0077b5] transition-all"
+                                title="LinkedIn Personal">
+                                <i class="fa-brands fa-linkedin-in text-lg"></i>
+                            </a>
+                            <a href="mailto:alfredo@inboxseguro.com"
+                                class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-blue-600 hover:text-white hover:border-blue-600 transition-all"
+                                title="Email de contacto">
                                 <i class="fa-solid fa-envelope text-lg"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-400 uppercase tracking-wider">Email directo</p>
-                                <a href="mailto:contacto@inboxseguro.com"
-                                    class="text-white font-bold hover:text-blue-400 transition-colors">contacto@inboxseguro.com</a>
-                            </div>
+                            </a>
                         </div>
-                        <div class="flex items-center gap-4 mb-4">
-                            <div
-                                class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                                <i class="fa-brands fa-whatsapp text-lg"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-400 uppercase tracking-wider">WhatsApp Directo</p>
-                                <a href="https://wa.me/56928615416" target="_blank"
-                                    class="text-white font-bold hover:text-emerald-400 transition-colors">+56 9 2861
-                                    5416</a>
-                            </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Precios Plan Profesional Section -->
+        <section id="precios" class="py-20 bg-slate-50 border-t border-slate-200">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-12">
+                    <div class="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">
+                        Plan Profesional</div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 text-slate-900 tracking-tight">Seguridad de nivel corporativo para tu dominio.</h2>
+                    <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto">Una sola suscripción con todas las herramientas para blindar tu identidad, sin costos ocultos.</p>
+                </div>
+
+                <div
+                    class="max-w-lg mx-auto bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden relative transform hover:-translate-y-2 transition-all duration-300">
+
+                    <div class="bg-slate-900 p-6 text-center text-white relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                        <h3 class="font-bold text-xl mb-2 relative z-10 leading-snug">
+                            Protege la identidad de tu correo corporativo<br>
+                            <span class="text-blue-300">y evita que alguien se haga pasar por tu empresa</span>
+                        </h3>
+                    </div>
+
+                    <div class="p-6 text-center bg-slate-50 border-b border-slate-100">
+                        <p class="text-xs font-bold text-slate-600 tracking-wide mb-4">Empresas usan InboxSeguro para evitar el uso no autorizado de su dominio en el correo.</p>
+                        <div class="flex justify-center items-baseline gap-2">
+                            <span class="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-slate-900 to-slate-700">$39.000</span>
+                            <span class="text-lg text-slate-500 font-medium">CLP / mes</span>
                         </div>
-                        <div class="flex items-center gap-4">
-                            <div
-                                class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
-                                <i class="fa-solid fa-clock text-lg"></i>
-                            </div>
-                            <div>
-                                <p class="text-xs text-slate-400 uppercase tracking-wider">Tiempo de respuesta</p>
-                                <p class="text-white font-bold">Menos de 24 hrs hábiles</p>
-                            </div>
+                        <div class="mt-3 inline-flex items-center gap-2 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
+                            14 días de prueba gratis
                         </div>
                     </div>
 
-                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                        <p class="text-sm text-slate-300 leading-relaxed">
-                            <strong class="text-white">Asistencia y Onboarding</strong><br>
-                            Respondemos todas tus consultas en menos de 24 horas hábiles. Si tienes una empresa con múltiples usuarios de correo o dominios, cuéntanos — tenemos un proceso de onboarding guiado para tu equipo.
+                    <div class="p-8">
+                        <p class="text-sm text-slate-600 leading-relaxed mb-6 border-l-2 border-blue-500 pl-4 font-light">
+                            Detecta quién está enviando correos en nombre de tu empresa y evita usos no autorizados y bloqueos en listas negras antes de que afecte a tus clientes.
+                        </p>
+
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-4 font-medium">Qué incluye:</p>
+                        <ul class="space-y-4 text-sm text-slate-600 mb-10 font-light">
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span class="font-medium text-slate-900">Visibilidad completa de todos los sistemas que envían correos con tu dominio (Google, Zoho, ERP, etc.)</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span>Configuración guiada para asegurar que solo tus sistemas autorizados puedan enviar correos</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span>Alertas en tiempo real ante intentos de suplantación o cambios no autorizados</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span>Monitoreo continuo de reputación y bloqueos en listas negras</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <div class="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <i class="fa-solid fa-check text-xs"></i>
+                                </div>
+                                <span class="font-medium text-slate-900">Reportes ejecutivos listos para presentar a gerencia</span>
+                            </li>
+                        </ul>
+
+                        <a href="https://panel.inboxseguro.com/register"
+                            class="block w-full bg-gradient-to-r from-brand-600 to-blue-700 hover:from-brand-700 hover:to-blue-800 text-white font-bold py-4 rounded-xl text-center shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]">
+                            Comenzar prueba gratuita de 14 días
+                        </a>
+
+                        <div class="flex justify-center gap-5 mt-5 text-xs text-slate-400 flex-wrap">
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Sin contratos</span>
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Cancela cuando quieras</span>
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Activación en minutos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Teaser Section -->
+        <section class="py-20 bg-white">
+            <div class="max-w-4xl mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Preguntas Frecuentes</h2>
+                    <p class="text-lg text-slate-500 font-light">Resolviendo tus dudas técnicas de forma simple.</p>
+                </div>
+
+                <div class="space-y-4 mb-10">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
+                            ¿Necesito entregarles mis contraseñas?
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed pl-9 font-light">
+                            <strong class="text-slate-900">Nunca.</strong> InboxSeguro analiza solo la información pública de tu dominio (DNS). Tú mantienes el control total de tus accesos.
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
+                            ¿Cumplen con las normativas de Microsoft y Google?
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed pl-9 font-light">
+                            Sí. Nuestra herramienta está diseñada para ayudarte a cumplir con los requisitos de autenticación (SPF, DKIM, DMARC) exigidos por Google y Microsoft desde 2024.
                         </p>
                     </div>
                 </div>
 
-                <!-- Formulario -->
-                <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                    <form action="https://formspree.io/f/xzdbvbgr" method="POST" class="space-y-4"
-                        onsubmit="handleFormSubmit(event)">
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-1">Tu correo electrónico</label>
-                            <input type="email" name="email" required
-                                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                                placeholder="tu@empresa.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-1">Tu dominio (opcional)</label>
-                            <input type="text" name="domain"
-                                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
-                                placeholder="tuempresa.com">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-slate-300 mb-1">Tu consulta</label>
-                            <textarea name="message" rows="3" required
-                                class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none transition-all"
-                                placeholder="¿En qué podemos ayudarte?"></textarea>
-                        </div>
-                        <button type="submit"
-                            class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02]">
-                            Enviar Mensaje
-                        </button>
-                    </form>
+                <div class="text-center">
+                    <a href="faq" class="inline-flex items-center gap-2 font-bold text-brand-600 hover:text-brand-700 transition-colors text-base">
+                        Ver todas las preguntas frecuentes &rarr;
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
+        <!-- Sección de Contacto -->
+        <section id="contacto"
+            class="py-20 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 relative overflow-hidden scroll-mt-28">
+            <div class="absolute inset-0">
+                <div
+                    class="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/10 rounded-full mix-blend-screen filter blur-[100px]">
+                </div>
+                <div
+                    class="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-indigo-600/10 rounded-full mix-blend-screen filter blur-[80px]">
+                </div>
+            </div>
+            <div class="max-w-4xl mx-auto px-4 relative z-10">
+                <div class="text-center mb-12">
+                    <div
+                        class="inline-block px-4 py-1.5 rounded-full bg-blue-500/20 text-blue-400 font-bold text-xs uppercase tracking-wider mb-4 border border-blue-400/25">
+                        Contacto</div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">¿Tienes dudas? Conversemos.</h2>
+                    <p class="text-lg text-slate-400 max-w-xl mx-auto font-light">Responderemos tu consulta en menos de 24 horas hábiles. Sin compromisos.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8 items-start">
+                    <!-- Info de contacto -->
+                    <div class="space-y-6">
+                        <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-2xl">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                    <i class="fa-solid fa-envelope text-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400 uppercase tracking-wider">Email directo</p>
+                                    <a href="mailto:contacto@inboxseguro.com"
+                                        class="text-white font-bold hover:text-blue-400 transition-colors">contacto@inboxseguro.com</a>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 mb-4">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400 uppercase tracking-wider">WhatsApp Directo</p>
+                                    <a href="https://wa.me/56928615416" target="_blank"
+                                        class="text-white font-bold hover:text-emerald-400 transition-colors">+56 9 2861 5416</a>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div
+                                    class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                    <i class="fa-solid fa-clock text-lg"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-slate-400 uppercase tracking-wider">Tiempo de respuesta</p>
+                                    <p class="text-white font-bold">Menos de 24 hrs hábiles</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-2xl">
+                            <p class="text-sm text-slate-300 leading-relaxed font-light">
+                                <strong class="text-white">Asistencia y Onboarding</strong><br>
+                                Respondemos todas tus consultas en menos de 24 horas hábiles. Si tienes una empresa con múltiples usuarios de correo o dominios, cuéntanos — tenemos un proceso de onboarding guiado para tu equipo.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Formulario -->
+                    <div class="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-2xl">
+                        <form action="https://formspree.io/f/xzdbvbgr" method="POST" class="space-y-4"
+                            onsubmit="handleFormSubmit(event)">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-1">Tu correo electrónico</label>
+                                <input type="email" name="email" required
+                                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                    placeholder="tu@empresa.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-1">Tu dominio (opcional)</label>
+                                <input type="text" name="domain"
+                                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                                    placeholder="tuempresa.com">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-slate-300 mb-1">Tu consulta</label>
+                                <textarea name="message" rows="3" required
+                                    class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none resize-none transition-all"
+                                    placeholder="¿En qué podemos ayudarte?"></textarea>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:scale-[1.02] cursor-pointer">
+                                Enviar Mensaje
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
     <footer class="bg-slate-950 border-t border-slate-800 py-12">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-start gap-10">
                 <!-- Brand & Address -->
                 <div class="max-w-sm">
                     <div class="flex items-center gap-1.5 mb-4">
-                        <img src="logo.png" alt="Logo"
-                            class="h-6 w-auto grayscale">
+                        <img src="logo.png" alt="Logo" class="h-6 w-auto grayscale">
                         <span class="font-bold text-white text-lg tracking-tight">
-                            Inbox<span class="text-blue-400">Seguro</span><sup
-                                class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
                         </span>
                     </div>
                     <p class="text-slate-500 text-sm leading-relaxed mb-4">
@@ -1014,8 +738,9 @@
                     <div>
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
-                            <li><a href="#como-funciona" class="hover:text-blue-400 transition-colors">Cómo funciona</a></li>
-                            <li><a href="#precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                            <li><a href="como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
                         </ul>
                     </div>
                     <div>
@@ -1030,9 +755,9 @@
                     <div>
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
                             <li><a href="terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
-                            <li><a href="privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a>
-                            </li>
+                            <li><a href="privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
                             <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
                                     class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
                                     <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
@@ -1042,8 +767,7 @@
                 </div>
             </div>
 
-            <div
-                class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p class="text-xs text-slate-600">
                     © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
                 </p>
@@ -1056,59 +780,13 @@
         </div>
     </footer>
 
-    <div id="contactModal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onclick="closeContactModal()">
-        </div>
-        <div class="fixed inset-0 z-10 flex items-center justify-center p-4">
-            <div class="bg-white rounded-xl shadow-2xl max-w-md w-full p-6 relative transform transition-all scale-100">
-
-                <button onclick="closeContactModal()"
-                    class="absolute top-4 right-4 text-slate-400 hover:text-slate-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                        </path>
-                    </svg>
-                </button>
-
-                <div class="text-center mb-6">
-                    <div
-                        class="w-12 h-12 bg-blue-50 text-brand-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                            </path>
-                        </svg>
-                    </div>
-                    <h3 class="text-xl font-bold text-slate-900">¿En qué podemos ayudarte?</h3>
-                    <p class="text-sm text-slate-500 mt-1">Déjanos tu mensaje y te responderemos a la brevedad.</p>
-                </div>
-
-                <form action="https://formspree.io/f/xzdbvbgr" method="POST" class="space-y-4"
-                    onsubmit="handleFormSubmit(event)">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Tu correo electrónico</label>
-                        <input type="email" name="email" required
-                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-600 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1">Tu consulta</label>
-                        <textarea name="message" rows="4" required
-                            class="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-brand-600 outline-none resize-none"></textarea>
-                    </div>
-                    <button type="submit"
-                        class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-lg shadow-lg">Enviar
-                        Mensaje</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
+    <!-- Success Modal -->
     <div id="successModal" class="fixed inset-0 z-[100] hidden" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm transition-opacity" onclick="closeSuccessModal()">
         </div>
         <div class="fixed inset-0 z-10 flex items-center justify-center p-4">
             <div
-                class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-8 relative transform transition-all scale-100 text-center">
+                class="bg-white rounded-xl shadow-2xl max-w-sm w-full p-8 relative text-center">
 
                 <div
                     class="w-16 h-16 bg-emerald-100 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -1118,11 +796,10 @@
                 </div>
 
                 <h3 class="text-2xl font-bold text-slate-900 mb-2">¡Mensaje Enviado!</h3>
-                <p class="text-slate-500 mb-6">Hemos recibido tu consulta. Te responderemos al correo que nos indicaste
-                    lo antes posible.</p>
+                <p class="text-slate-500 mb-6">Hemos recibido tu consulta. Te responderemos al correo que nos indicaste lo antes posible.</p>
 
                 <button onclick="closeSuccessModal()"
-                    class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-lg transition-colors">
+                    class="w-full bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-3 rounded-lg transition-colors cursor-pointer">
                     Entendido, gracias
                 </button>
             </div>
@@ -1148,16 +825,6 @@
             iconClose.classList.add('hidden');
         }
 
-        // CONTACT MODAL LOGIC
-        function openContactModal() {
-            document.getElementById('contactModal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeContactModal() {
-            document.getElementById('contactModal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
-
         // SUCCESS MODAL LOGIC
         function openSuccessModal() {
             document.getElementById('successModal').classList.remove('hidden');
@@ -1166,163 +833,6 @@
         function closeSuccessModal() {
             document.getElementById('successModal').classList.add('hidden');
             document.body.style.overflow = 'auto';
-        }
-
-        // DIAGNOSTIC FORM — Real-time DNS check via Google DoH
-        async function handleDiagnostico(event) {
-            event.preventDefault();
-            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
-            if (!dominio) return;
-
-            const btn = document.getElementById('diagBtn');
-            const resultsDiv = document.getElementById('diagResults');
-            btn.disabled = true;
-            btn.innerText = 'Analizando...';
-            resultsDiv.classList.add('hidden');
-
-            try {
-                const [spfData, dmarcData, dkimData] = await Promise.all([
-                    fetchDNS(dominio, 'TXT'),
-                    fetchDNS('_dmarc.' + dominio, 'TXT'),
-                    checkDKIM(dominio)
-                ]);
-
-                // Parse SPF
-                const spfRecords = extractTXT(spfData);
-                const spfRecord = spfRecords.find(r => r.startsWith('v=spf1'));
-                const spfResult = analyzeSpf(spfRecord);
-
-                // Parse DMARC
-                const dmarcRecords = extractTXT(dmarcData);
-                const dmarcRecord = dmarcRecords.find(r => r.startsWith('v=DMARC1'));
-                const dmarcResult = analyzeDmarc(dmarcRecord);
-
-                // DKIM
-                const dkimResult = {
-                    status: dkimData.found ? 'ok' : 'warn',
-                    label: dkimData.found ? 'Configurado' : 'Oculto / Personalizado',
-                    text: dkimData.found ? 'Selector: ' + dkimData.selector : 'No detectado en selectores comunes. Si tienes un selector personalizado, podría estar activo.'
-                };
-
-                // Render results
-                setResult('spf', spfResult);
-                setResult('dmarc', dmarcResult);
-                setResult('dkim', dkimResult);
-
-                document.getElementById('diagDomain').textContent = dominio;
-
-                // Smart Score
-                const statuses = [spfResult.status, dmarcResult.status, dkimResult.status];
-                const okCount = statuses.filter(s => s === 'ok').length;
-                const warnCount = statuses.filter(s => s === 'warn').length;
-                const failCount = statuses.filter(s => s === 'fail').length;
-                const scoreEl = document.getElementById('diagScore');
-
-                if (failCount === 0 && warnCount === 0) {
-                    scoreEl.textContent = 'Protegido';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400';
-                } else if (failCount === 0) {
-                    scoreEl.textContent = 'Mejorable';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
-                } else if (okCount > 0) {
-                    scoreEl.textContent = 'Parcial';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
-                } else {
-                    scoreEl.textContent = 'Sin protección';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400';
-                }
-
-                resultsDiv.classList.remove('hidden');
-                document.getElementById('diagnostico').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } catch (err) {
-                alert('Error al consultar DNS. Verifica que el dominio sea válido.');
-                console.error(err);
-            } finally {
-                btn.disabled = false;
-                btn.innerText = 'Analizar dominio';
-            }
-        }
-
-        function analyzeSpf(record) {
-            if (!record) return { status: 'fail', label: 'No configurado', text: 'No se encontró registro SPF' };
-            if (record.includes('+all')) return { status: 'warn', label: 'Mejorable', text: 'Usa +all (permite cualquier servidor). Considera cambiar a ~all o -all.' };
-            return { status: 'ok', label: 'Configurado', text: record.length > 60 ? record.substring(0, 60) + '...' : record };
-        }
-
-        function analyzeDmarc(record) {
-            if (!record) return { status: 'fail', label: 'No configurado', text: 'No se encontró registro DMARC' };
-            const policyMatch = record.match(/p=([^;\s]+)/);
-            const policy = policyMatch ? policyMatch[1].toLowerCase() : 'none';
-            if (policy === 'none') {
-                return { status: 'warn', label: 'Mejorable', text: 'Política p=none (solo monitoreo, no bloquea suplantación). Recomendamos p=quarantine.' };
-            } else if (policy === 'quarantine') {
-                return { status: 'ok', label: 'Configurado', text: 'Política p=quarantine (envía suplantaciones a spam)' };
-            } else if (policy === 'reject') {
-                return { status: 'ok', label: 'Óptimo', text: 'Política p=reject (bloquea suplantaciones completamente)' };
-            }
-            return { status: 'ok', label: 'Configurado', text: record.length > 60 ? record.substring(0, 60) + '...' : record };
-        }
-
-        async function fetchDNS(name, type) {
-            const res = await fetch('https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type);
-            return res.json();
-        }
-
-        function extractTXT(data) {
-            if (!data.Answer) return [];
-            return data.Answer.filter(a => a.type === 16).map(a => a.data.replace(/"/g, ''));
-        }
-
-        async function checkDKIM(domain) {
-            const selectors = [
-                'google', 'default', 'selector1', 'selector2', 'k1', 'k2', 'k3', 'dkim',
-                'mail', 'zoho', 's1', 's2', 'pic', 'a', 'b', 'c', 'fm1', 'fm2', 'fm3',
-                'titan1', 'titan2', 'key1', 'key2', 'smtp', 'mandrill', 'protonmail', 'protonmail2', 'pm', 'pm2', 'mlk', 'sg', 'sendgrid'
-            ];
-
-            for (let i = 0; i < selectors.length; i += 5) {
-                const batch = selectors.slice(i, i + 5);
-                const promises = batch.map(async (sel) => {
-                    try {
-                        const data = await fetchDNS(sel + '._domainkey.' + domain, 'TXT');
-                        const records = extractTXT(data);
-                        if (records.some(r => r.includes('v=DKIM1') || r.includes('k=rsa'))) {
-                            return sel;
-                        }
-                    } catch (e) { /* ignore */ }
-                    return null;
-                });
-
-                const results = await Promise.all(promises);
-                const found = results.find(sel => sel !== null);
-                if (found) {
-                    return { found: true, selector: found };
-                }
-            }
-            return { found: false, selector: null };
-        }
-
-        function setResult(key, result) {
-            const icon = document.getElementById('icon-' + key);
-            const txt = document.getElementById('txt-' + key);
-            const badge = document.getElementById('badge-' + key);
-            if (result.status === 'ok') {
-                icon.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
-                icon.className = 'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-emerald-500/20';
-                badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-emerald-500/20 text-emerald-400';
-            } else if (result.status === 'warn') {
-                icon.innerHTML = '<i class="fa-solid fa-exclamation text-xs text-amber-400"></i>';
-                icon.className = 'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-500/20';
-                badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-amber-500/20 text-amber-400';
-            } else {
-                icon.innerHTML = '<i class="fa-solid fa-xmark text-xs text-red-400"></i>';
-                icon.className = 'w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-red-500/20';
-                badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-red-500/20 text-red-400';
-            }
-            txt.textContent = result.text;
         }
 
         // AJAX FORM SUBMISSION
@@ -1348,7 +858,6 @@
                 if (response.ok) {
                     // Success!
                     form.reset();
-                    closeContactModal(); // Close form modal
                     openSuccessModal();  // Open success modal
                 } else {
                     alert("Hubo un error al enviar el mensaje. Por favor intenta nuevamente.");
@@ -1364,7 +873,6 @@
         // Close on Escape key
         document.addEventListener('keydown', function (event) {
             if (event.key === "Escape") {
-                closeContactModal();
                 closeSuccessModal();
             }
         });
