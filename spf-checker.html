@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador y Verificador de Registros SPF Gratuito | InboxSeguro</title>
+
+    <link rel="icon" type="image/png" href="favicon.png">
+
+    <meta name="description"
+        content="Verifica la configuración de tu registro SPF en segundos. Evita que terceros suplanten tu identidad y asegura la entregabilidad de tus correos corporativos.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            600: '#2563EB', /* Azul Marca */
+                            700: '#1d4ed8',
+                            900: '#0f172a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .brand-accent {
+            color: #2563EB;
+        }
+
+        /* Glassmorphism Premium */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .glass-dark {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Blob Animations */
+        @keyframes float {
+            0% {
+                transform: translate(0px, 0px) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0px, 0px) scale(1);
+            }
+        }
+
+        .animate-blob {
+            animation: float 10s infinite;
+        }
+
+        .animation-delay-2000 {
+            animation-delay: 2s;
+        }
+
+        .animation-delay-4000 {
+            animation-delay: 4s;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-slate-200 antialiased relative min-h-screen flex flex-col">
+
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="logo.png" alt="Logo InboxSeguro"
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex space-x-5 text-sm font-medium">
+                    <a href="/" class="text-slate-300 hover:text-brand-600 transition-colors">Volver al Inicio</a>
+                    <a href="index.html#precios" class="text-slate-300 hover:text-brand-600 transition-colors">Ver Planes</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso
+                        Clientes</a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                        target="_blank" rel="noopener noreferrer"
+                        class="hidden sm:inline-flex items-center text-sm font-semibold text-emerald-200 border border-emerald-500/40 hover:bg-emerald-500/10 px-3 py-2 rounded-lg transition-colors">Agendar
+                        demo</a>
+                    <a href="index.html#precios"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">
+                        Ver Planes
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Tool Section -->
+    <main class="flex-grow relative overflow-hidden pt-28 pb-16">
+        <!-- Dynamic Background -->
+        <div class="absolute inset-0 bg-slate-900 pointer-events-none">
+            <div
+                class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-blue-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob">
+            </div>
+            <div
+                class="absolute bottom-0 left-0 -ml-20 -mb-20 w-[500px] h-[500px] bg-indigo-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob animation-delay-2000">
+            </div>
+        </div>
+
+        <div
+            class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 contrast-150 brightness-100 pointer-events-none">
+        </div>
+
+        <div class="max-w-3xl w-full mx-auto px-4 relative z-10 text-center">
+
+            <div
+                class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
+                Herramienta SPF</div>
+
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador de Registros SPF</h1>
+            <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
+                Analiza gratis si tu registro SPF está bien configurado y conoce si tu dominio está blindado frente a falsificaciones de identidad básicas.
+            </p>
+
+            <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
+                <form onsubmit="handleDiagnostico(event)" class="flex flex-col sm:flex-row gap-3" id="diagForm">
+                    <input type="text" id="dominioInput" placeholder="ej: tuempresa.com"
+                        class="flex-1 px-5 py-4 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-lg transition-all"
+                        required>
+                    <button type="submit" id="diagBtn"
+                        class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                        Analizar SPF
+                    </button>
+                </form>
+
+                <p class="text-xs text-slate-500 mt-4 text-left">
+                    <i class="fa-solid fa-lock mr-1"></i> Búsqueda de registros públicos DNS TXT mediante tecnología segura DoH.
+                </p>
+
+                <!-- Loading Spinner -->
+                <div id="diagLoading" class="hidden mt-8 text-center animate-in fade-in duration-300">
+                    <div
+                        class="inline-block w-8 h-8 md:w-10 md:h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin">
+                    </div>
+                    <p class="mt-3 text-slate-400 text-sm font-medium animate-pulse">Consultando registro SPF...</p>
+                </div>
+
+                <!-- Results Container -->
+                <div id="diagResults"
+                    class="hidden mt-8 text-left border-t border-white/10 pt-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-white font-bold text-lg">Resultados SPF para <span id="diagDomain"
+                                class="text-brand-400"></span></h3>
+                        <div id="diagScore" class="px-3 py-1 rounded-full text-xs font-bold"></div>
+                    </div>
+                    <div class="space-y-3 mb-6">
+                        <div id="row-spf"
+                            class="flex items-center gap-4 p-4 rounded-lg bg-white/5 border border-white/5">
+                            <div id="icon-spf"
+                                class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-slate-800"></div>
+                            <span class="text-white font-bold text-sm w-16">SPF</span>
+                            <p id="txt-spf" class="text-sm text-slate-400 break-words flex-1 pr-2"></p>
+                            <span id="badge-spf"
+                                class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
+                        </div>
+                    </div>
+
+                    <!-- SEO/UX CTA Box leading to domain-checker -->
+                    <div class="p-5 rounded-xl bg-brand-900/40 border border-brand-500/30 text-center">
+                        <h4 class="text-white font-bold mb-2">🛡️ ¿Quieres el diagnóstico de seguridad completo?</h4>
+                        <p class="text-slate-300 text-sm mb-4">
+                            El registro SPF es solo el primer paso. Para evitar fraudes sofisticados y cumplir con las políticas obligatorias de Google/Yahoo, necesitas auditar tu configuración **DMARC** y **DKIM**.
+                        </p>
+                        <a href="domain-checker.html"
+                            class="inline-block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 text-sm">
+                            Obtener Análisis Completo →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SSR/SEO Static Informative Content -->
+            <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-2">¿Qué es un registro SPF y cómo funciona?</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        El registro <strong>SPF (Sender Policy Framework)</strong> es un estándar técnico publicado en los registros DNS TXT de tu dominio. Este registro especifica una lista de direcciones IP y servidores autorizados que tienen permiso explícito para enviar correos electrónicos en nombre de tu empresa (como Google Workspace, Microsoft 365, Mailchimp, etc.).
+                    </p>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h3 class="text-white font-bold text-base mb-2">¿Por qué es importante tener un registro SPF optimizado?</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Si tu empresa no cuenta con un registro SPF válido, cualquier persona en el mundo puede enviar correos a tus clientes, socios o proveedores usando tu dominio en la dirección del remitente (suplantación de identidad). Los filtros anti-spam más importantes del mundo usan este registro para clasificar los emails entrantes:
+                    </p>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-400 text-xs leading-relaxed">
+                        <li><strong>Prevención de Fraude:</strong> Dificulta sustancialmente que ciberdelincuentes falsifiquen la dirección del remitente de tu empresa.</li>
+                        <li><strong>Mejora la Entregabilidad:</strong> Los correos enviados desde servidores autorizados pasan inmediatamente los filtros de seguridad, logrando llegar a la bandeja de entrada en lugar de la carpeta de spam.</li>
+                        <li><strong>Cumplimiento de Google y Yahoo:</strong> Desde principios de 2024, es obligatorio tener un registro SPF correcto para remitentes masivos de correo electrónico corporativo.</li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h3 class="text-white font-bold text-base mb-2">Ejemplo práctico de sintaxis SPF</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-3">
+                        Un registro SPF típico se define como una cadena de texto en tu DNS:
+                    </p>
+                    <div class="p-3 bg-white/5 border border-white/5 rounded-lg font-mono text-xs text-blue-300 mb-3 break-all">
+                        v=spf1 include:_spf.google.com include:sendgrid.net ~all
+                    </div>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        En este ejemplo, se autoriza a Google y a Sendgrid para enviar emails en representación del dominio. El indicador final <code class="text-indigo-300 font-mono">~all</code> especifica una política "SoftFail", indicando que cualquier otro servidor debe ser visto con sospecha por el receptor.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-slate-950 border-t border-slate-800 py-10 mt-auto">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+                <div class="text-sm text-slate-500 flex items-center gap-1">
+                    © 2026
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span>Inbox<span class="text-blue-400">Seguro</span></span>
+                        <sup class="text-blue-400 text-[0.6rem] font-bold relative top-[-0.4em]">TM</sup>
+                    </span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
+                    <a href="terminos" class="hover:text-blue-400 transition-colors">Términos y Condiciones</a>
+                    <a href="privacidad" class="hover:text-blue-400 transition-colors">Política de Privacidad</a>
+                    <a href="/#contacto" class="hover:text-blue-400 transition-colors">Contacto</a>
+                </div>
+            </div>
+            <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
+                <p>Herramientas SEO: <a href="spf-checker.html" class="hover:underline text-blue-500/80 font-bold">Verificador SPF</a> | <a href="dmarc-checker.html" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="dkim-checker.html" class="hover:underline text-blue-500/80">Verificador DKIM</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        async function handleDiagnostico(event) {
+            event.preventDefault();
+            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+            if (!dominio) return;
+
+            const btn = document.getElementById('diagBtn');
+            const resultsDiv = document.getElementById('diagResults');
+            const loadingDiv = document.getElementById('diagLoading');
+
+            btn.disabled = true;
+            btn.innerText = 'Analizando...';
+            resultsDiv.classList.add('hidden');
+            loadingDiv.classList.remove('hidden');
+
+            try {
+                // Analysis delay for realistic feel
+                await new Promise(r => setTimeout(r, 1500));
+
+                const spfData = await fetchDNS(dominio, 'TXT');
+                const spfRecords = extractTXT(spfData);
+                const spfRecord = spfRecords.find(r => r.startsWith('v=spf1'));
+                const spfResult = analyzeSpf(spfRecord);
+
+                // Render result
+                setResult('spf', spfResult);
+                document.getElementById('diagDomain').textContent = dominio;
+
+                const scoreEl = document.getElementById('diagScore');
+                if (spfResult.status === 'ok') {
+                    scoreEl.textContent = 'Correcto';
+                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400';
+                } else if (spfResult.status === 'warn') {
+                    scoreEl.textContent = 'Mejorable';
+                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
+                } else {
+                    scoreEl.textContent = 'Inseguro';
+                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400';
+                }
+
+                resultsDiv.classList.remove('hidden');
+            } catch (err) {
+                console.error(err);
+                alert('Ocurrió un error al consultar el registro SPF via Google DoH.');
+            } finally {
+                btn.disabled = false;
+                btn.innerText = 'Analizar SPF';
+                loadingDiv.classList.add('hidden');
+            }
+        }
+
+        function analyzeSpf(record) {
+            if (!record) return { status: 'fail', label: 'No configurado', text: 'Sin protección SPF — cualquiera puede enviar correos como tu empresa' };
+            if (record.includes('+all')) return { status: 'warn', label: 'Mejorable', text: 'Protección débil: permite cualquier servidor. Cambia +all por -all para bloquear suplantación.' };
+            return { status: 'ok', label: 'Configurado', text: record };
+        }
+
+        async function fetchDNS(name, type) {
+            const res = await fetch('https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type);
+            return res.json();
+        }
+
+        function extractTXT(data) {
+            if (!data.Answer) return [];
+            return data.Answer.filter(a => a.type === 16).map(a => a.data.replace(/"/g, ''));
+        }
+
+        function setResult(key, result) {
+            const icon = document.getElementById('icon-' + key);
+            const txt = document.getElementById('txt-' + key);
+            const badge = document.getElementById('badge-' + key);
+            if (result.status === 'ok') {
+                icon.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-emerald-500/20';
+                badge.textContent = result.label;
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-emerald-500/20 text-emerald-400';
+            } else if (result.status === 'warn') {
+                icon.innerHTML = '<i class="fa-solid fa-exclamation text-xs text-amber-400"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-500/20';
+                badge.textContent = result.label;
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-amber-500/20 text-amber-400';
+            } else {
+                icon.innerHTML = '<i class="fa-solid fa-xmark text-xs text-red-400"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-red-500/20';
+                badge.textContent = result.label;
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-red-500/20 text-red-400';
+            }
+            txt.textContent = result.text;
+        }
+    </script>
+
+</body>
+
+</html>

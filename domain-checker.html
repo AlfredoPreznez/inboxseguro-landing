@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnóstico Gratuito - InboxSeguro</title>
+    <title>Diagnóstico Completo de Seguridad de Dominio | SPF, DMARC, DKIM | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="favicon.png">
 
     <meta name="description"
-        content="Herramienta gratuita para analizar la seguridad de tu correo corporativo. Verifica SPF, DKIM y DMARC en segundos.">
+        content="Analiza gratis la seguridad de tu dominio corporativo. Verifica SPF, DKIM y DMARC en segundos y protege tu marca de la suplantación de identidad.">
 
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -131,7 +131,7 @@
     </nav>
 
     <!-- Main Tool Section -->
-    <main class="flex-grow flex items-center justify-center relative overflow-hidden pt-24 pb-12">
+    <main class="flex-grow relative overflow-hidden pt-28 pb-16">
         <!-- Dynamic Background -->
         <div class="absolute inset-0 bg-slate-900 pointer-events-none">
             <div
@@ -150,26 +150,26 @@
 
             <div
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
-                Herramienta Gratuita</div>
+                Análisis Unificado de DNS</div>
 
             <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verifica si tu empresa está expuesta a suplantación</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Ingresa tu dominio y en segundos sabemos si alguien puede hacerse pasar por tu empresa para cometer fraude. Gratis, sin registro.
+                Ingresa tu dominio corporativo para analizar la configuración de tus firmas SPF, políticas DMARC y llaves públicas DKIM de forma gratuita y al instante.
             </p>
 
-            <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl">
+            <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
                 <form onsubmit="handleDiagnostico(event)" class="flex flex-col sm:flex-row gap-3" id="diagForm">
-                    <input type="text" id="dominioInput" placeholder="ej: tuempresa.cl"
+                    <input type="text" id="dominioInput" placeholder="ej: tuempresa.com"
                         class="flex-1 px-5 py-4 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-lg transition-all"
                         required>
                     <button type="submit" id="diagBtn"
                         class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">
-                        Analizar
+                        Analizar dominio
                     </button>
                 </form>
 
                 <p class="text-xs text-slate-500 mt-4 text-left">
-                    <i class="fa-solid fa-lock mr-1"></i> Análisis seguro basado en registros públicos DNS.
+                    <i class="fa-solid fa-lock mr-1"></i> Análisis seguro y pasivo basado en consultas de registros públicos DNS (Google DoH).
                 </p>
 
                 <!-- Loading Spinner -->
@@ -177,7 +177,7 @@
                     <div
                         class="inline-block w-8 h-8 md:w-10 md:h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin">
                     </div>
-                    <p class="mt-3 text-slate-400 text-sm font-medium animate-pulse">Analizando registros DNS...</p>
+                    <p class="mt-3 text-slate-400 text-sm font-medium animate-pulse">Analizando registros DNS públicos...</p>
                 </div>
 
                 <!-- Results Container -->
@@ -227,8 +227,53 @@
                             class="inline-block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 text-sm">
                             Ver Planes de Solución
                         </a>
-                        </a>
                     </div>
+                </div>
+            </div>
+
+            <!-- SSR/SEO Static Informative Content -->
+            <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-8">
+                <div>
+                    <h2 class="text-2xl font-bold text-white mb-4">¿Qué evalúa nuestro analizador de dominio?</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Para garantizar que los correos electrónicos de tu empresa no sean bloqueados ni suplantados por atacantes informáticos para cometer estafas (Phishing), se requieren tres pilares esenciales de autenticación DNS:
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                        <h3 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Registro SPF
+                        </h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            <strong>Sender Policy Framework</strong>. Define exactamente qué servidores IP están autorizados para enviar correos en nombre de tu dominio, evitando falsificaciones básicas.
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                        <h3 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> Registro DMARC
+                        </h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            <strong>Domain-based Message Authentication</strong>. Da instrucciones a proveedores de correo sobre qué hacer si el email falla SPF/DKIM (monitorear, spam o rechazar).
+                        </p>
+                    </div>
+
+                    <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                        <h3 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span> Firmas DKIM
+                        </h3>
+                        <p class="text-slate-400 text-xs leading-relaxed">
+                            <strong>DomainKeys Identified Mail</strong>. Añade una firma criptográfica única a las cabeceras de tus correos para certificar que el contenido no fue alterado en tránsito.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-slate-800">
+                    <h3 class="text-white font-bold text-sm mb-2">¿Por qué es vital verificar estos registros juntos?</h3>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        Tener solo uno de estos mecanismos activos no es suficiente. DMARC requiere obligatoriamente alinearse con SPF o DKIM para proteger tu marca. Nuestro chequeador evalúa la cohesión del ecosistema completo de DNS de tu correo para certificar un nivel óptimo de protección empresarial.
+                    </p>
                 </div>
             </div>
 
@@ -236,18 +281,23 @@
     </main>
 
     <footer class="bg-slate-950 border-t border-slate-800 py-10 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="text-sm text-slate-500 flex items-center gap-1">
-                © 2026
-                <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
-                    <span>Inbox<span class="text-blue-400">Seguro</span></span>
-                    <sup class="text-blue-400 text-[0.6rem] font-bold relative top-[-0.4em]">TM</sup>
-                </span>
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
+                <div class="text-sm text-slate-500 flex items-center gap-1">
+                    © 2026
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span>Inbox<span class="text-blue-400">Seguro</span></span>
+                        <sup class="text-blue-400 text-[0.6rem] font-bold relative top-[-0.4em]">TM</sup>
+                    </span>
+                </div>
+                <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
+                    <a href="terminos" class="hover:text-blue-400 transition-colors">Términos y Condiciones</a>
+                    <a href="privacidad" class="hover:text-blue-400 transition-colors">Política de Privacidad</a>
+                    <a href="/#contacto" class="hover:text-blue-400 transition-colors">Contacto</a>
+                </div>
             </div>
-            <div class="flex gap-6 text-sm text-slate-500">
-                <a href="terminos" class="hover:text-blue-400 transition-colors">Términos y Condiciones</a>
-                <a href="privacidad" class="hover:text-blue-400 transition-colors">Política de Privacidad</a>
-                <a href="/#contacto" class="hover:text-blue-400 transition-colors">Contacto</a>
+            <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
+                <p>Herramientas SEO: <a href="spf-checker.html" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="dmarc-checker.html" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="dkim-checker.html" class="hover:underline text-blue-500/80">Verificador DKIM</a></p>
             </div>
         </div>
     </footer>
@@ -292,7 +342,7 @@
                 const dkimResult = {
                     status: dkimData.found ? 'ok' : 'warn',
                     label: dkimData.found ? 'Configurado' : 'Oculto / Personalizado',
-                    text: dkimData.found ? 'Selector: ' + dkimData.selector : 'No detectado en selectores comunes. Si tienes un selector personalizado, podría estar activo.'
+                    text: dkimData.found ? 'Selector detectado: ' + dkimData.selector : 'No detectado en selectores comunes. Si tienes un selector personalizado, podría estar activo.'
                 };
 
                 // Render results
@@ -347,13 +397,12 @@
                 }).catch(e => console.warn('Notify failed', e));
 
                 resultsDiv.classList.remove('hidden');
-                // Scroll to results if needed, though centered page might not need it
             } catch (err) {
                 console.error(err);
                 alert('Ocurrió un error al consultar el dominio via Google DoH.');
             } finally {
                 btn.disabled = false;
-                btn.innerText = 'Analizar';
+                btn.innerText = 'Analizar dominio';
                 loadingDiv.classList.add('hidden');
             }
         }
@@ -370,7 +419,7 @@
             if (failCount === 0 && warnCount === 0 && infoCount === 0) {
                 container.classList.add('bg-emerald-900/40', 'border-emerald-500/30');
                 title.textContent = '✅ Tu dominio está completamente protegido.';
-                text.textContent = 'Nadie puede enviarte correos a tus clientes haciéndose pasar por ti. Mantén esa protección activa con monitoreo continuo.';
+                text.textContent = 'Nadie puede enviar correos a tus clientes haciéndose pasar por ti. Mantén esa protección activa con monitoreo continuo.';
                 btn.textContent = 'Activar Monitoreo Continuo →';
                 btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'text-white', 'shadow-emerald-600/30');
             } else if (failCount === 0 && warnCount === 0 && infoCount > 0) {
@@ -388,7 +437,7 @@
             } else {
                 container.classList.add('bg-red-900/40', 'border-red-500/30');
                 title.textContent = '🚨 Tu dominio está desprotegido.';
-                text.textContent = 'Cualquier persona puede enviar correos haciéndose pasar por tu empresa ahora mismo. Facturos falsas, instrucciones de pago, engaños a clientes. Activa la protección hoy.';
+                text.textContent = 'Cualquier persona puede enviar correos haciéndose pasar por tu empresa ahora mismo. Facturas falsas, instrucciones de pago, engaños a clientes. Activa la protección hoy.';
                 btn.textContent = 'Proteger mi dominio ahora →';
                 btn.classList.add('bg-red-600', 'hover:bg-red-500', 'text-white', 'shadow-red-600/30');
             }
@@ -459,7 +508,6 @@
             const badge = document.getElementById('badge-' + key);
             if (result.status === 'ok') {
                 icon.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
-                // icon container class updated in inline loop
                 icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-emerald-500/20';
                 badge.textContent = result.label;
                 badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-emerald-500/20 text-emerald-400';
