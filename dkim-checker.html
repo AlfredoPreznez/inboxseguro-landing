@@ -108,9 +108,39 @@
                     </span>
                 </a>
 
-                <div class="hidden lg:flex space-x-5 text-sm font-medium">
+                <div class="hidden lg:flex items-center space-x-5 text-sm font-medium">
                     <a href="/" class="text-slate-300 hover:text-brand-600 transition-colors">Volver al Inicio</a>
-                    <a href="index.html#precios" class="text-slate-300 hover:text-brand-600 transition-colors">Ver Planes</a>
+                    
+                    <!-- Dropdown Herramientas Gratuitas -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-brand-600 transition-colors focus:outline-none py-2">
+                            <span>Herramientas Gratuitas</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-500 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-56 rounded-xl bg-slate-950/95 border border-slate-800 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2 backdrop-blur-md">
+                            <a href="domain-checker" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/5 hover:text-brand-400 transition-colors">
+                                <i class="fa-solid fa-server text-xs text-brand-500"></i>
+                                <span class="font-semibold">Diagnóstico Completo</span>
+                            </a>
+                            <div class="border-t border-slate-800 my-1"></div>
+                            <a href="spf-checker" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-brand-400 transition-colors">
+                                <i class="fa-solid fa-shield-halved text-xs text-blue-400"></i>
+                                <span>Verificador SPF</span>
+                            </a>
+                            <a href="dmarc-checker" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-brand-400 transition-colors">
+                                <i class="fa-solid fa-lock text-xs text-indigo-400"></i>
+                                <span>Verificador DMARC</span>
+                            </a>
+                            <a href="dkim-checker" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-brand-400 transition-colors">
+                                <i class="fa-solid fa-key text-xs text-teal-400"></i>
+                                <span>Verificador DKIM</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <a href="/#precios" class="text-slate-300 hover:text-brand-600 transition-colors">Ver Planes</a>
                 </div>
 
                 <div class="flex items-center gap-3">
@@ -121,7 +151,7 @@
                         target="_blank" rel="noopener noreferrer"
                         class="hidden sm:inline-flex items-center text-sm font-semibold text-emerald-200 border border-emerald-500/40 hover:bg-emerald-500/10 px-3 py-2 rounded-lg transition-colors">Agendar
                         demo</a>
-                    <a href="index.html#precios"
+                    <a href="/#precios"
                         class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">
                         Ver Planes
                     </a>
@@ -206,7 +236,7 @@
                         <p class="text-slate-300 text-sm mb-4">
                             DKIM firma digitalmente el correo, pero necesitas **DMARC** para obligar a que se aplique y **SPF** para declarar tus servidores autorizados. Realiza una auditoría completa.
                         </p>
-                        <a href="domain-checker.html"
+                        <a href="domain-checker"
                             class="inline-block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 text-sm">
                             Obtener Análisis Completo →
                         </a>
@@ -269,7 +299,7 @@
                 </div>
             </div>
             <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
-                <p>Herramientas SEO: <a href="spf-checker.html" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="dmarc-checker.html" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="dkim-checker.html" class="hover:underline text-blue-500/80 font-bold">Verificador DKIM</a></p>
+                <p>Herramientas Gratuitas: <a href="spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="dkim-checker" class="hover:underline text-blue-500/80 font-bold">Verificador DKIM</a></p>
             </div>
         </div>
     </footer>
