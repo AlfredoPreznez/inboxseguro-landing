@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnóstico Completo de Seguridad de Dominio | SPF, DMARC, DKIM | InboxSeguro</title>
+    <title>Verificador de Dominio Gratuito | Diagnóstico Completo SPF, DKIM y DMARC | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Analiza gratis la seguridad de tu dominio corporativo. Verifica SPF, DKIM y DMARC en segundos y protege tu marca de la suplantación de identidad.">
+        content="Realiza un diagnóstico completo de seguridad para tu dominio corporativo de forma gratuita. Verifica SPF, DKIM y DMARC en un clic y optimiza tu entregabilidad de correo.">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -154,9 +154,9 @@
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
                 Análisis Unificado de DNS</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verifica si tu empresa está expuesta a suplantación</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador de Dominio y Diagnóstico de Seguridad de Correo Corporativo</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Ingresa tu dominio corporativo para analizar la configuración de tus firmas SPF, políticas DMARC y llaves públicas DKIM de forma gratuita y al instante.
+                Realiza una auditoría gratuita con nuestro domain checker. Analiza la correcta alineación y validez de tus registros DNS de email: SPF, DKIM y DMARC en un solo clic.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
@@ -230,52 +230,113 @@
                             Ver Planes de Solución
                         </a>
                     </div>
-                </div>
-            </div>
-
-            <!-- SSR/SEO Static Informative Content -->
+                       <!-- SSR/SEO Static Informative Content -->
             <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-8">
                 <div>
-                    <h2 class="text-2xl font-bold text-white mb-4">¿Qué evalúa nuestro analizador de dominio?</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed">
-                        Para garantizar que los correos electrónicos de tu empresa no sean bloqueados ni suplantados por atacantes informáticos para cometer estafas (Phishing), se requieren tres pilares esenciales de autenticación DNS:
+                    <h2 class="text-2xl font-bold text-white mb-3">La Tríada Perfecta de la Autenticación de Correo: SPF, DKIM y DMARC</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Para garantizar que los correos electrónicos de tu empresa no sean rechazados por los proveedores ni suplantados por cibercriminales para cometer estafas avanzadas de Phishing, no basta con implementar una sola herramienta. Se requiere una estrategia robusta de **email authentication** basada en tres pilares de configuración en tus **DNS records**:
                     </p>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-6">
                     <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
                         <h3 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span> Registro SPF
+                            <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span> Registro SPF
                         </h3>
                         <p class="text-slate-400 text-xs leading-relaxed">
-                            <strong>Sender Policy Framework</strong>. Define exactamente qué servidores IP están autorizados para enviar correos en nombre de tu dominio, evitando falsificaciones básicas.
+                            <strong>Sender Policy Framework</strong>. Declara explícitamente cuáles son las direcciones IP y servidores de envío (como Google o HubSpot) autorizados a enviar correos usando tu dominio, combatiendo la suplantación inicial.
                         </p>
                     </div>
 
                     <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
                         <h3 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span> Registro DMARC
+                            <span class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></span> Firmas DKIM
                         </h3>
                         <p class="text-slate-400 text-xs leading-relaxed">
-                            <strong>Domain-based Message Authentication</strong>. Da instrucciones a proveedores de correo sobre qué hacer si el email falla SPF/DKIM (monitorear, spam o rechazar).
+                            <strong>DomainKeys Identified Mail</strong>. Inserta una firma criptográfica invisible en la cabecera de tus mensajes que garantiza que el correo no ha sido modificado o alterado maliciosamente en tránsito.
                         </p>
                     </div>
 
                     <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
                         <h3 class="text-white font-bold text-sm mb-2 flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-teal-500"></span> Firmas DKIM
+                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse"></span> Registro DMARC
                         </h3>
                         <p class="text-slate-400 text-xs leading-relaxed">
-                            <strong>DomainKeys Identified Mail</strong>. Añade una firma criptográfica única a las cabeceras de tus correos para certificar que el contenido no fue alterado en tránsito.
+                            <strong>Domain-based Message Authentication</strong>. Dicta la política de acción ante un fallo de SPF o DKIM (ignorar, enviar a spam o rechazar de inmediato) y consolida la telemetría agregada mediante reportes RUA.
                         </p>
                     </div>
                 </div>
 
-                <div class="pt-4 border-t border-slate-800">
-                    <h3 class="text-white font-bold text-sm mb-2">¿Por qué es vital verificar estos registros juntos?</h3>
-                    <p class="text-slate-400 text-xs leading-relaxed">
-                        Tener solo uno de estos mecanismos activos no es suficiente. DMARC requiere obligatoriamente alinearse con SPF o DKIM para proteger tu marca. Nuestro chequeador evalúa la cohesión del ecosistema completo de DNS de tu correo para certificar un nivel óptimo de protección empresarial.
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-3">¿Por qué es vital verificar todo el ecosistema de seguridad de tu dominio corporativo?</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Adoptar estas configuraciones de forma unificada no es un lujo técnico opcional, sino una obligación crítica para cualquier negocio digital:
                     </p>
+                    <ul class="list-disc pl-5 space-y-3 text-slate-400 text-sm leading-relaxed mb-4">
+                        <li><strong>Prevención de Spoofing y Ransomware:</strong> Evita que spammers y suplantadores dañen tu reputación de marca enviando malware o solicitudes de pago falsas haciéndose pasar por ti.</li>
+                        <li><strong>Mejora de la Entregabilidad (Email Deliverability):</strong> Asegura que tus correos de ventas, soporte y facturación tengan una excelente reputación de remitente y se entreguen en la bandeja de entrada principal en lugar de la carpeta de Spam.</li>
+                        <li><strong>Cumplimiento con Google y Yahoo (2024+):</strong> Las nuevas regulaciones de los mayores proveedores exigen obligatoriamente contar con SPF, DKIM y DMARC correctos para evitar que tus correos sean bloqueados de forma inmediata.</li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-3">Ejemplo de Configuración DNS Unificada Perfecta</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Una configuración típica y segura en tu proveedor de DNS (como Cloudflare o AWS Route 53) incluye registros TXT independientes y coordinados:
+                    </p>
+                    <div class="p-4 bg-white/5 border border-white/5 rounded-lg space-y-2 font-mono text-xs text-blue-300 mb-4 break-all">
+                        <div><span class="text-indigo-400"># Registro SPF (TXT en el dominio principal)</span><br>v=spf1 include:_spf.google.com include:sendgrid.net ~all</div>
+                        <div class="border-t border-white/5 my-2"></div>
+                        <div><span class="text-indigo-400"># Registro DKIM (TXT en el selector de subdominio)</span><br>google._domainkey.tudominio.com -> v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQ...</div>
+                        <div class="border-t border-white/5 my-2"></div>
+                        <div><span class="text-indigo-400"># Registro DMARC (TXT en _dmarc.tudominio.com)</span><br>v=DMARC1; p=reject; rua=mailto:reportes@inboxseguro.com; pct=100</div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-3">Errores Frecuentes en la Alineación de Registros de Correo</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        El error más severo que detecta nuestro **domain checker** o **verificador de dominio** unificado es la **Falta de Alineación DMARC** (Domain Alignment Failure). Esto sucede cuando:
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2">Desalineación SPF</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                El dominio visible del remitente (`header.From`) es diferente al dominio de retorno (`Return-Path` o `envelope-from` usado por tu plataforma de marketing). DMARC fallará la verificación a menos que coincidan.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2">Desalineación DKIM</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Ocurre cuando firmas digitalmente usando el dominio de la herramienta externa (ej: `d=sendgrid.net`) en lugar de firmar usando tu dominio corporativo propio (ej: `d=tuempresa.com`).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-4">Preguntas Frecuentes (FAQ) sobre el Diagnóstico de Dominio</h2>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Por qué mis correos siguen llegando a spam si pasé todas las pruebas DNS?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                La autenticación DNS (SPF, DKIM, DMARC) es el pilar de la confianza, pero la entregabilidad también se ve afectada por factores humanos y operativos: reputación histórica del dominio, contenido sospechoso del mensaje, tasas elevadas de rebote (bounce rate) y denuncias de spam de tus destinatarios.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Qué es exactamente la alineación de dominio en DMARC?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Es el mecanismo de seguridad que exige que el dominio visible del remitente (`From:`) sea coherente con los dominios validados por SPF y DKIM. Puede ser relajada (permite subdominios) o estricta (exige coincidencia exacta).
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Cómo soluciono un fallo en las firmas DKIM o SPF de mi dominio?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Debes acceder a la consola de administración de tu proveedor de correo (Workspace, Office 365, etc.), generar la clave DKIM, y luego publicarla como un registro TXT en el panel de control de tus DNS. Para SPF, debes ubicar el registro TXT existente y añadir la directiva `include:` del nuevo servicio.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

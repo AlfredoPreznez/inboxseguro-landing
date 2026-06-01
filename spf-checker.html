@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Analizador y Verificador de Registros SPF Gratuito | InboxSeguro</title>
+    <title>Verificador SPF Gratuito | Analizador de Registros SPF de Email | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Verifica la configuración de tu registro SPF en segundos. Evita que terceros suplanten tu identidad y asegura la entregabilidad de tus correos corporativos.">
+        content="¿Tu registro SPF está bien configurado? Usa nuestro SPF checker gratuito para validar tus registros DNS TXT de email, prevenir spoofing y mejorar tu entregabilidad.">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -154,9 +154,9 @@
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
                 Herramienta SPF</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador de Registros SPF</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador SPF y Analizador de Registros DNS de Email</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Analiza gratis si tu registro SPF está bien configurado y conoce si tu dominio está blindado frente a falsificaciones de identidad básicas.
+                Usa nuestro SPF checker gratuito para validar tus registros DNS TXT en segundos, prevenir la suplantación de identidad y maximizar la entregabilidad de tus correos corporativos.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
@@ -217,37 +217,100 @@
             </div>
 
             <!-- SSR/SEO Static Informative Content -->
-            <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6">
+            <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-8">
                 <div>
-                    <h2 class="text-2xl font-bold text-white mb-2">¿Qué es un registro SPF y cómo funciona?</h2>
+                    <h2 class="text-2xl font-bold text-white mb-3">¿Qué es un registro SPF (Sender Policy Framework) y cómo funciona?</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        El registro <strong>SPF (Sender Policy Framework)</strong> es un estándar técnico de <strong>email authentication</strong> publicado en los registros TXT de tu sistema de nombres de dominio (DNS). Funciona como una lista de invitados exclusiva: declara explícitamente qué servidores de correo y direcciones IP (como Google Workspace, Microsoft 365, HubSpot o Mailchimp) están autorizados a enviar correos electrónicos utilizando el nombre de tu dominio.
+                    </p>
                     <p class="text-slate-400 text-sm leading-relaxed">
-                        El registro <strong>SPF (Sender Policy Framework)</strong> es un estándar técnico publicado en los registros DNS TXT de tu dominio. Este registro especifica una lista de direcciones IP y servidores autorizados que tienen permiso explícito para enviar correos electrónicos en nombre de tu empresa (como Google Workspace, Microsoft 365, Mailchimp, etc.).
+                        Cuando un servidor de destino (como Gmail o Yahoo) recibe un correo que dice provenir de tu empresa, realiza una consulta rápida a tus <strong>DNS records</strong>. Si el servidor de envío no está en la lista de tu registro SPF, el mensaje se clasifica como sospechoso o fraudulento, activando las alertas de seguridad del receptor.
                     </p>
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h3 class="text-white font-bold text-base mb-2">¿Por qué es importante tener un registro SPF optimizado?</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                        Si tu empresa no cuenta con un registro SPF válido, cualquier persona en el mundo puede enviar correos a tus clientes, socios o proveedores usando tu dominio en la dirección del remitente (suplantación de identidad). Los filtros anti-spam más importantes del mundo usan este registro para clasificar los emails entrantes:
+                    <h3 class="text-white font-bold text-base mb-3">Validación y Verificación de Registros DNS de Email</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        El protocolo SPF no utiliza criptografía compleja directamente en el cuerpo del mensaje (a diferencia de DKIM), sino que se apoya en la validación directa de la dirección IP de origen en la capa de red del protocolo SMTP. Por esta razón, el uso de un **SPF checker** o **verificador SPF** es el punto de partida obligatorio para auditar la seguridad de tu correo electrónico corporativo.
                     </p>
-                    <ul class="list-disc pl-5 space-y-2 text-slate-400 text-xs leading-relaxed">
-                        <li><strong>Prevención de Fraude:</strong> Dificulta sustancialmente que ciberdelincuentes falsifiquen la dirección del remitente de tu empresa.</li>
-                        <li><strong>Mejora la Entregabilidad:</strong> Los correos enviados desde servidores autorizados pasan inmediatamente los filtros de seguridad, logrando llegar a la bandeja de entrada en lugar de la carpeta de spam.</li>
-                        <li><strong>Cumplimiento de Google y Yahoo:</strong> Desde principios de 2024, es obligatorio tener un registro SPF correcto para remitentes masivos de correo electrónico corporativo.</li>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-3">¿Por qué es vital contar con un SPF Checker en tu estrategia de Email Deliverability?</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Si tu empresa carece de un registro SPF configurado o tiene errores en su sintaxis, queda expuesta a graves vulnerabilidades de seguridad y reputación:
+                    </p>
+                    <ul class="list-disc pl-5 space-y-3 text-slate-400 text-sm leading-relaxed mb-4">
+                        <li><strong>Prevención de Spoofing y Phishing:</strong> Al restringir las IP autorizadas, dificultas drásticamente que cibercriminales falsifiquen tu dominio para engañar a tus clientes con facturas falsas o correos maliciosos (estafas de suplantación de identidad).</li>
+                        <li><strong>Mejora la Entregabilidad de Correo (Email Deliverability):</strong> Los correos enviados desde servidores declarados en tu SPF evitan ser retenidos por los filtros anti-spam, aumentando la probabilidad de llegar a la bandeja de entrada principal.</li>
+                        <li><strong>Prevención de Spam:</strong> Ayuda a mantener una excelente reputación del dominio (domain reputation) ante los principales ISPs mundiales.</li>
+                        <li><strong>Cumplimiento Obligatorio con Google y Yahoo:</strong> A partir de 2024, ambos gigantes del correo electrónico exigen la correcta implementación de SPF, DKIM y DMARC a todos los remitentes de correos corporativos. Si no cumples, tus correos serán rechazados automáticamente.</li>
                     </ul>
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h3 class="text-white font-bold text-base mb-2">Ejemplo práctico de sintaxis SPF</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-3">
-                        Un registro SPF típico se define como una cadena de texto en tu DNS:
+                    <h2 class="text-2xl font-bold text-white mb-3">Sintaxis y Ejemplo Práctico de un Registro SPF Real</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Un registro SPF se publica como una sola línea de texto en el registro TXT de tu zona DNS. Veámoslo en detalle:
                     </p>
-                    <div class="p-3 bg-white/5 border border-white/5 rounded-lg font-mono text-xs text-blue-300 mb-3 break-all">
-                        v=spf1 include:_spf.google.com include:sendgrid.net ~all
+                    <div class="p-4 bg-white/5 border border-white/5 rounded-lg font-mono text-sm text-blue-300 mb-4 break-all">
+                        v=spf1 include:_spf.google.com include:sendgrid.net ip4:192.168.1.100 ~all
                     </div>
-                    <p class="text-slate-400 text-xs leading-relaxed">
-                        En este ejemplo, se autoriza a Google y a Sendgrid para enviar emails en representación del dominio. El indicador final <code class="text-indigo-300 font-mono">~all</code> especifica una política "SoftFail", indicando que cualquier otro servidor debe ser visto con sospecha por el receptor.
+                    <p class="text-slate-400 text-sm leading-relaxed mb-3">
+                        Desglose técnico de la sintaxis:
                     </p>
+                    <ul class="list-none space-y-2 text-slate-400 text-xs leading-relaxed pl-2">
+                        <li>📌 <code class="text-indigo-300 font-mono">v=spf1</code>: Identifica la versión del protocolo (obligatorio al inicio).</li>
+                        <li>📌 <code class="text-indigo-300 font-mono">include:_spf.google.com</code>: Autoriza los servidores de Google Workspace.</li>
+                        <li>📌 <code class="text-indigo-300 font-mono">include:sendgrid.net</code>: Autoriza los servidores de envío de SendGrid.</li>
+                        <li>📌 <code class="text-indigo-300 font-mono">ip4:192.168.1.100</code>: Autoriza una dirección IP estática específica de tu red local.</li>
+                        <li>📌 <code class="text-indigo-300 font-mono">~all</code>: Política "SoftFail" (Fallo suave). Indica que los correos que no provengan de estas IPs pueden ser recibidos pero marcados como sospechosos o spam. Si usas <code class="text-indigo-300 font-mono">-all</code> (HardFail), le indicas al receptor que rechace directamente el correo no autorizado.</li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-3">Errores Comunes (Common Issues) al Configurar SPF</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Muchas organizaciones cometen fallos críticos en sus registros DNS que invalidan su protección. Nuestro **verificador SPF** en LATAM ayuda a detectar:
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2">1. Límite de 10 Consultas DNS (10 DNS Lookup Limit)</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                El estándar SPF limita a un máximo de 10 el número de resoluciones DNS adicionales (mechanisms como `include`, `a`, `mx`). Si incluyes demasiados servicios (Google, HubSpot, ActiveCampaign, Zendesk, etc.), el registro fallará silenciosamente.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2">2. Tener Múltiples Registros SPF</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Un dominio **solamente puede tener un único registro SPF**. Si creas múltiples registros TXT que comiencen con `v=spf1`, los proveedores de correo ignorarán ambos y tu dominio no estará protegido. Debes fusionarlos en un único registro combinando las directivas.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador SPF</h2>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Qué pasa si mi dominio no tiene registro SPF?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Si tu dominio carece de SPF, queda vulnerable ante la suplantación de identidad básica. Los cibercriminales podrán enviar emails fraudulentos usando tu dominio exacto, y tus correos legítimos tendrán altas tasas de rechazo o serán enviados directamente a la carpeta de correo no deseado.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Qué diferencia hay entre ~all (SoftFail) y -all (HardFail)?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                <code class="text-indigo-300 font-mono">~all</code> (SoftFail) aconseja a los servidores receptores aceptar los correos sospechosos pero marcándolos como spam. <code class="text-indigo-300 font-mono">-all</code> (HardFail) instruye el bloqueo inmediato del mensaje no autorizado. Recomendamos iniciar con <code class="text-indigo-300 font-mono">~all</code> y escalar a una protección estricta a través de políticas alineadas con **DMARC**.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Cuánto tarda en propagarse un cambio en el registro SPF?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                La propagación DNS depende del valor TTL (Time To Live) configurado en tu proveedor DNS (como Cloudflare, GoDaddy, AWS Route 53). Habitualmente suele tardar entre unos minutos y 24 horas en aplicarse globalmente.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

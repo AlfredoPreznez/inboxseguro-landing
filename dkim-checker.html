@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador de Registros DKIM Gratuito | InboxSeguro</title>
+    <title>Verificador DKIM Gratuito | DKIM Checker & Validación DNS | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Comprueba la existencia y validez de tus llaves públicas DKIM. Asegura que tus correos no sean alterados en tránsito y no caigan en la bandeja de spam.">
+        content="Valida la firma criptográfica DKIM de tu dominio de forma gratuita. Nuestro DKIM checker analiza tus llaves públicas en registros DNS para evitar que alteren tus correos.">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -154,9 +154,9 @@
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
                 Herramienta DKIM</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador de Firmas DKIM</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador DKIM y Analizador de Firmas Criptográficas de Email</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Analiza si tu dominio cuenta con llaves públicas DKIM activas consultando los selectores más habituales de la industria en tiempo real.
+                Usa nuestro DKIM checker gratuito para verificar tus llaves públicas DNS en tiempo real y garantizar que tus correos electrónicos no sean alterados en tránsito.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
@@ -217,37 +217,88 @@
             </div>
 
             <!-- SSR/SEO Static Informative Content -->
-            <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6">
+            <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-8">
                 <div>
-                    <h2 class="text-2xl font-bold text-white mb-2">¿Qué es DKIM y por qué es crucial?</h2>
+                    <h2 class="text-2xl font-bold text-white mb-3">¿Qué es una firma DKIM (DomainKeys Identified Mail) y por qué es crucial?</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        <strong>DKIM (DomainKeys Identified Mail)</strong> es un estándar técnico y método avanzado de **email authentication** publicado en tus **DNS records**. Permite a los propietarios de dominios asociar de forma inequívoca el nombre de su marca a un mensaje de correo electrónico saliente mediante el uso de firmas criptográficas digitales.
+                    </p>
                     <p class="text-slate-400 text-sm leading-relaxed">
-                        <strong>DKIM (DomainKeys Identified Mail)</strong> es un método criptográfico de autenticación de correo electrónico. Permite a una organización firmar digitalmente un correo electrónico saliente, asegurando que la cabecera y el cuerpo del mensaje no han sufrido alteraciones o manipulaciones maliciosas desde el momento en que se envió.
+                        A diferencia de SPF, que valida únicamente el servidor IP de origen, DKIM proporciona un sello de integridad sobre el contenido del mensaje. Esto asegura a los servidores destinatarios (como Gmail, Outlook o Apple Mail) que ni las cabeceras principales ni el cuerpo del correo electrónico han sido modificados, alterados o manipulados maliciosamente por terceros durante su tránsito por Internet.
                     </p>
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h3 class="text-white font-bold text-base mb-2">¿Cómo funciona la firma DKIM?</h3>
+                    <h2 class="text-2xl font-bold text-white mb-3">Criptografía Asimétrica: ¿Cómo funciona DKIM en tránsito?</h2>
                     <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                        El proceso de DKIM se basa en criptografía de clave asimétrica (pública y privada):
+                        El funcionamiento de DKIM se basa en la potencia de la criptografía asimétrica de par de claves pública y privada:
                     </p>
-                    <ul class="list-disc pl-5 space-y-2 text-slate-400 text-xs leading-relaxed">
-                        <li><strong>Firma en el Servidor de Origen:</strong> El servidor de correo emisor genera una firma digital utilizando una clave privada secreta asociada al dominio. Esta firma se inserta en las cabeceras invisibles del correo.</li>
-                        <li><strong>Publicación de Llave Pública:</strong> El propietario del dominio publica la clave pública correspondiente en sus registros DNS TXT bajo un nombre específico llamado "selector".</li>
-                        <li><strong>Verificación Criptográfica:</strong> Cuando el receptor (ej: Gmail) recibe el email, busca la clave pública en el DNS del dominio emisor y descifra la firma para certificar que el contenido es auténtico.</li>
+                    <ul class="list-disc pl-5 space-y-3 text-slate-400 text-sm leading-relaxed">
+                        <li><strong>1. Firma con Clave Privada (Servidor Emisor):</strong> El servidor de correo de origen (ej: Google Workspace, HubSpot o tu propio servidor de correo corporativo) calcula un hash del mensaje y lo firma utilizando una clave privada que se mantiene en estricto secreto. Esta firma digital se inyecta en la cabecera invisible del email.</li>
+                        <li><strong>2. Consulta de Clave Pública (DNS):</strong> El propietario del dominio publica la clave pública correspondiente en sus registros DNS TXT bajo un nombre de subdominio específico llamado "selector".</li>
+                        <li><strong>3. Validación en Destino:</strong> Al recibir el correo electrónico, el servidor destinatario consulta el DNS para obtener la clave pública. Si consigue descifrar el hash de la firma y este coincide exactamente con el del contenido recibido, se certifica la autenticidad y el correo es validado con éxito.</li>
                     </ul>
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h3 class="text-white font-bold text-base mb-2">¿Qué es un Selector DKIM?</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-3">
-                        Los selectores permiten publicar múltiples llaves DKIM simultáneamente bajo un mismo dominio (por ejemplo, una llave para Google Workspace y otra para HubSpot). Se ubican en el subdominio con la estructura:
+                    <h2 class="text-2xl font-bold text-white mb-3">¿Qué es un Selector DKIM y cómo ubicarlo en el DNS?</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Dado que una empresa suele utilizar múltiples herramientas externas para el envío de correos corporativos (como Google para el día a día, Salesforce para CRM y ActiveCampaign para marketing), es necesario poder publicar diferentes claves públicas bajo un mismo dominio. Esto se logra gracias a los **Selectores DKIM**.
                     </p>
-                    <div class="p-3 bg-white/5 border border-white/5 rounded-lg font-mono text-xs text-blue-300 mb-3">
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Cada selector apunta a un registro DNS TXT único ubicado con la siguiente estructura:
+                    </p>
+                    <div class="p-4 bg-white/5 border border-white/5 rounded-lg font-mono text-sm text-blue-300 mb-4 break-all">
                         [selector]._domainkey.tudominio.com
                     </div>
-                    <p class="text-slate-400 text-xs leading-relaxed">
-                        Nuestro verificador automático hace un escaneo rápido sobre más de 30 selectores comunes de la industria (como <code class="text-indigo-300">google</code>, <code class="text-indigo-300">default</code>, <code class="text-indigo-300">zoho</code>, <code class="text-indigo-300">s1</code>, etc.) para verificar la salud y robustez de tus llaves públicas.
+                    <p class="text-slate-400 text-sm leading-relaxed">
+                        Nuestro **DKIM checker** o **verificador DKIM** gratuito escanea simultáneamente más de 30 selectores comunes de la industria (como <code class="text-indigo-300 font-mono">google</code>, <code class="text-indigo-300 font-mono">default</code>, <code class="text-indigo-300 font-mono">zoho</code>, <code class="text-indigo-300 font-mono">s1</code>, <code class="text-indigo-300 font-mono">mail</code>, <code class="text-indigo-300 font-mono">k1</code>, etc.) para auditar la correcta publicación y disponibilidad de tus registros criptográficos.
                     </p>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-3">Errores Comunes al Configurar Firmas DKIM</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Configurar incorrectamente tus firmas criptográficas puede dañar gravemente tu **email deliverability** y reputación de dominio. Presta atención a estos fallos recurrentes:
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2">1. Uso de Llaves de 512 o 1024 bits (Obsoletas)</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Las llaves de longitud corta son vulnerables a ataques criptográficos de factoraje. Actualmente, los principales proveedores de correo consideran inseguras las firmas menores de 1024 bits. El estándar recomendado es utilizar llaves robustas de **2048 bits**.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2">2. Errores tipográficos y sintaxis rota</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Al copiar y pegar claves públicas extensas en el panel de control DNS, es fácil cometer errores ortográficos o incluir saltos de línea y espacios accidentales. Esto invalida por completo el registro y causa que todos los emails fallen la prueba criptográfica.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador DKIM</h2>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Por qué mi correo sigue llegando a Spam si tengo DKIM activo?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                DKIM garantiza la integridad del contenido, pero no la confianza general. Si tu dominio tiene mala reputación por haber enviado correo no deseado previamente, o si no tienes alineados adecuadamente tus registros **SPF** y **DMARC**, tus correos seguirán teniendo problemas de entregabilidad y podrían caer en la carpeta de spam.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Es seguro publicar mi clave pública DKIM en el DNS de forma abierta?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Sí, es completamente seguro. Por diseño técnico, la clave pública expuesta en el DNS solo sirve para verificar las firmas generadas, pero **nunca** puede ser utilizada para generar nuevas firmas fraudulentas. Tu clave privada sigue estando protegida en tus servidores de correo en todo momento.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Qué es la rotación de llaves DKIM y cada cuánto debe hacerse?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                La rotación de llaves consiste en generar un nuevo par de claves (pública y privada) y actualizar los registros DNS para evitar que una llave antigua comprometida sea descifrada a largo plazo. Las mejores prácticas de seguridad de TI aconsejan rotar tus claves DKIM cada 6 a 12 meses.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador y Analizador de Registros DMARC Gratuito | InboxSeguro</title>
+    <title>Verificador DMARC Gratuito | DMARC Checker & Analizador DNS | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Comprueba el estado de tu política DMARC de forma instantánea. Protege tu dominio de ataques de phishing y fraudes por correo electrónico.">
+        content="Comprueba la política DMARC de tu dominio de forma instantánea. Usa nuestro DMARC checker gratuito para prevenir ataques de phishing y proteger la entregabilidad de tus correos.">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -154,9 +154,9 @@
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
                 Herramienta DMARC</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador de Registros DMARC</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador DMARC y Analizador de Políticas de Seguridad de Dominio</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Analiza de forma instantánea si tu dominio tiene una política DMARC activa y conoce si tus clientes están protegidos contra campañas de phishing.
+                Utiliza nuestro DMARC checker gratuito para comprobar tu nivel de seguridad de correo, recibir reportes DNS de telemetría y blindar tu marca contra el phishing.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
@@ -217,33 +217,118 @@
             </div>
 
             <!-- SSR/SEO Static Informative Content -->
-            <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-6">
+            <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-8">
                 <div>
-                    <h2 class="text-2xl font-bold text-white mb-2">¿Qué es DMARC y por qué es fundamental?</h2>
+                    <h2 class="text-2xl font-bold text-white mb-3">¿Qué es DMARC (Domain-based Message Authentication, Reporting, and Conformance) y por qué es fundamental?</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        <strong>DMARC (Domain-based Message Authentication, Reporting, and Conformance)</strong> es una potente política de seguridad y protocolo de **email authentication** publicado en los registros TXT de tu sistema DNS. Actúa como la capa superior de gobernanza de correo corporativo, vinculando y alineando los resultados obtenidos por las validaciones previas de **SPF** y **DKIM**.
+                    </p>
                     <p class="text-slate-400 text-sm leading-relaxed">
-                        <strong>DMARC (Domain-based Message Authentication, Reporting, and Conformance)</strong> es una política de seguridad y autenticación de correo electrónico. DMARC actúa como la "capa de gobierno" que vincula las validaciones de SPF y DKIM, indicando a los servidores receptores (como Gmail u Outlook) qué hacer exactamente cuando reciben un correo falsificado que pretende venir de tu marca.
+                        Su función principal es dar instrucciones precisas y vinculantes a los servidores receptores (como Gmail, Outlook o Yahoo) sobre qué hacer exactamente cuando reciben un mensaje sospechoso que pretende provenir de tu empresa, pero que falla las pruebas de autenticidad. Sin una política DMARC activa, las firmas SPF y DKIM pierden gran parte de su efectividad defensiva.
                     </p>
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h3 class="text-white font-bold text-base mb-2">Las 3 Políticas de Protección DMARC</h3>
+                    <h2 class="text-2xl font-bold text-white mb-3">Las 3 Políticas de Protección DMARC</h2>
                     <p class="text-slate-400 text-sm leading-relaxed mb-4">
-                        El registro DMARC publica una de tres políticas básicas mediante la etiqueta <code class="text-blue-300 font-mono">p=</code>:
+                        A través de la etiqueta de política obligatoria <code class="text-indigo-300 font-mono">p=</code>, le indicas al destinatario de tu correo qué nivel de acción tomar ante mensajes no autorizados:
                     </p>
-                    <ul class="space-y-3 text-slate-400 text-xs leading-relaxed">
-                        <li><strong>1. Ninguna (p=none):</strong> Es la política inicial de monitoreo. Los correos que no se autentican se entregan con normalidad, pero el dominio recopila reportes sobre quién los está enviando. No bloquea el phishing.</li>
-                        <li><strong>2. Cuarentena (p=quarantine):</strong> Le indica al receptor que si el email no es auténtico, debe ser enviado directamente a la carpeta de correo no deseado (Spam) del destinatario. Protege de forma intermedia.</li>
-                        <li><strong>3. Rechazo (p=reject):</strong> Es la protección máxima. Los servidores receptores bloquearán y descartarán de inmediato cualquier correo que pretenda suplantar a tu dominio legítimo. Nadie ajeno a ti podrá usar tu nombre.</li>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-1">1. Monitoreo (p=none)</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Es la política inicial recomendada. Los servidores de destino entregan los correos no verificados directamente a la bandeja de entrada, pero envían informes a tu dominio detallando la procedencia de esos mensajes. Sirve para analizar tu ecosistema de envíos sin arriesgar la pérdida de correos legítimos, aunque **no ofrece prevención activa contra el fraude**.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-1">2. Cuarentena (p=quarantine)</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Indica a los servidores receptores que, si un correo falla la autenticación, debe ser tratado con alta sospecha y enviado inmediatamente a la carpeta de correo no deseado o **Spam** del usuario. Representa un nivel de protección intermedia ideal durante la transición a la seguridad total.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-1">3. Rechazo (p=reject)</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Es el estándar de oro en seguridad. Instruye a los destinatarios a bloquear y descartar de inmediato cualquier correo electrónico no autenticado. El correo malicioso nunca llega a tus clientes o proveedores, garantizando la máxima **prevención de spoofing** y blindando tu identidad de marca por completo.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-3">Importancia de DMARC para la Entregabilidad y Seguridad de Correo Corporativo</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        El uso periódico de un **DMARC checker** o **verificador DMARC** en tus auditorías de TI es vital para asegurar que no se produzcan bloqueos inesperados. Al mantener una política DMARC alineada en tus **DNS records**, tu negocio obtiene:
+                    </p>
+                    <ul class="list-disc pl-5 space-y-2 text-slate-400 text-sm leading-relaxed">
+                        <li><strong>Prevención de Spoofing y Ransomware:</strong> Bloquea ataques avanzados en los que cibercriminales intentan utilizar tu dominio para enviar campañas fraudulentas a gran escala.</li>
+                        <li><strong>Mejora de la Entregabilidad (Email Deliverability):</strong> Los proveedores de correo confían plenamente en los dominios que adoptan políticas DMARC estrictas, lo que incrementa el éxito de colocación de tus mensajes de marketing y transaccionales en la bandeja principal.</li>
+                        <li><strong>Visibilidad Total con Reportes RUA:</strong> Te permite recolectar datos detallados en formato XML para auditar si hay proveedores legítimos mal configurados en tu empresa.</li>
                     </ul>
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h3 class="text-white font-bold text-base mb-2">Reportes Agregados DMARC (RUA)</h3>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-3">
-                        DMARC incluye una etiqueta fundamental llamada <code class="text-indigo-300 font-mono">rua=mailto:...</code> que indica la dirección de correo electrónico a la que los proveedores de email deben enviar reportes de telemetría diarios. Estos reportes detallan todos los orígenes de envío del dominio en el mundo, permitiendo detectar ataques informáticos en tiempo real.
+                    <h2 class="text-2xl font-bold text-white mb-3">Ejemplo de Sintaxis DMARC para Bloqueo Total de Fraudes</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Un registro DMARC bien estructurado y seguro se define de la siguiente manera:
                     </p>
-                    <div class="p-3 bg-white/5 border border-white/5 rounded-lg font-mono text-xs text-blue-300 mb-3 break-all">
-                        v=DMARC1; p=reject; rua=mailto:reportes@inboxseguro.com; pct=100
+                    <div class="p-4 bg-white/5 border border-white/5 rounded-lg font-mono text-sm text-blue-300 mb-4 break-all">
+                        v=DMARC1; p=reject; rua=mailto:reportes@inboxseguro.com; pct=100; aspf=r; adkim=r
+                    </div>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-3">
+                        Desglose de etiquetas esenciales:
+                    </p>
+                    <ul class="list-none space-y-2 text-slate-400 text-xs leading-relaxed pl-2">
+                        <li>📌 <code class="text-indigo-300 font-mono">v=DMARC1</code>: Identifica la versión del protocolo (debe ser la primera etiqueta).</li>
+                        <li>📌 <code class="text-indigo-300 font-mono">p=reject</code>: Política estricta de rechazo de correos no autorizados.</li>
+                        <li>📌 <code class="text-indigo-300 font-mono">rua=mailto:reportes@inboxseguro.com</code>: Dirección donde se recibirán los informes agregados sobre el estado de la autenticación.</li>
+                        <li>📌 <code class="text-indigo-300 font-mono">pct=100</code>: Porcentaje de mensajes a los que se les aplica la política (100% recomendado).</li>
+                        <li>📌 <code class="text-indigo-300 font-mono">aspf=r / adkim=r</code>: Modo de alineación de SPF y DKIM (relajado por defecto, o estricto con 's').</li>
+                    </ul>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-3">Errores Frecuentes al Configurar DMARC</h2>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                        Nuestra experiencia como especialistas en entregabilidad nos demuestra que los siguientes fallos son muy habituales en organizaciones de LATAM:
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2">1. Dejar la política en "none" para siempre</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Establecer <code class="text-indigo-300 font-mono">p=none</code> sirve para recopilar reportes al inicio, pero si no escalas a <code class="text-indigo-300 font-mono">quarantine</code> o <code class="text-indigo-300 font-mono">reject</code> a mediano plazo, tu dominio seguirá estando desprotegido frente a ataques de suplantación.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
+                            <h4 class="text-white font-bold text-sm mb-2">2. Desalineación de Dominios (Domain Alignment Failures)</h4>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Para que DMARC apruebe un correo, el dominio del remitente visible (cabecera From) debe coincidir con el dominio utilizado por SPF (Return-Path) o por DKIM (firma d=). Si no están correctamente alineados, DMARC fallará aunque los registros individuales sean válidos.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="border-t border-slate-800 pt-6">
+                    <h2 class="text-2xl font-bold text-white mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador DMARC</h2>
+                    <div class="space-y-4">
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿DMARC funciona si no tengo SPF o DKIM configurados?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                No de forma efectiva. DMARC requiere obligatoriamente apoyarse en los resultados de SPF o DKIM. Si implementas DMARC sin tener SPF o DKIM activos y alineados, todos tus correos legítimos podrían ser rechazados o enviados a spam al no poder verificarse.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Qué son los reportes agregados RUA y en qué se diferencian de RUF?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                Los reportes **RUA** (Agregados) proveen estadísticas generales diarias sobre los servidores de correo que envían mensajes a tu nombre. Los reportes **RUF** (Forenses o a nivel de falla) son notificaciones en tiempo real que se envían ante cada correo específico que falla la autenticación (contienen detalles más invasivos y a veces información confidencial, por lo que muchos proveedores ya no los envían).
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                            <h3 class="text-white font-bold text-sm mb-2">¿Cómo paso de p=none a p=reject de manera segura?</h3>
+                            <p class="text-slate-400 text-xs leading-relaxed">
+                                El proceso seguro recomendado consiste en: 1) Publicar <code class="text-indigo-300 font-mono">p=none</code> y analizar los reportes RUA durante varias semanas para identificar todos tus remitentes válidos. 2) Configurar SPF y DKIM para cada remitente legítimo. 3) Escalar gradualmente a <code class="text-indigo-300 font-mono">p=quarantine</code> con porcentajes parciales (ej: <code class="text-indigo-300 font-mono">pct=25</code>). 4) Finalmente, definir <code class="text-indigo-300 font-mono">p=reject</code> al 100%.
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
