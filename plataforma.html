@@ -4,17 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plataforma de Control de SPF, DKIM y DMARC | InboxSeguro</title>
+    <title>Plataforma de control de envíos del dominio | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Descubre la plataforma de InboxSeguro. Monitorea quién envía correos con tu dominio, recibe alertas de suplantación y obtén reportes ejecutivos en PDF.">
+        content="InboxSeguro: inventario de quién envía con tu dominio, alertas de actividad y bloqueo de suplantación. Configuración DNS guiada sin equipo técnico.">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/styles.css?v=1.0.3">
+    <link rel="stylesheet" href="/styles.css?v=1.0.4">
 </head>
 
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
@@ -141,12 +141,63 @@
                 <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-blue-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
             </div>
             <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-blue-200 text-xs font-bold uppercase tracking-wider mb-6">
+                    Plataforma InboxSeguro
+                </div>
                 <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight tracking-tight">
-                    Plataforma de Control de Correo
+                    Control de envíos del dominio,<br class="hidden sm:block"> en un solo panel
                 </h1>
-                <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
-                    Una solución integral, 100% en la nube y en español para diagnosticar, configurar y monitorear la entregabilidad y seguridad de tus correos.
+                <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+                    Inventario de servicios, autorización y bloqueo, alertas de volumen y suplantación, informes para gerencia y configuración DNS guiada — 100% en español, sin instalar nada.
                 </p>
+            </div>
+        </section>
+
+        <!-- Actividad de envío highlight -->
+        <section class="py-20 bg-white border-b border-slate-100">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-4">Vista principal</span>
+                        <h2 class="text-3xl font-bold text-slate-900 mb-4">Actividad de envío: tu centro de mando</h2>
+                        <p class="text-slate-600 mb-6 leading-relaxed">Al entrar ves quién envía con tu dominio, cuántos correos al mes, si hay alertas y cuánta suplantación se bloqueó. Sin abrir XML ni interpretar DMARC.</p>
+                        <ul class="space-y-4 text-sm text-slate-700">
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span><strong>Sistemas de envío</strong> con rango mensual, responsable y sensibilidad de alertas.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span><strong>Fuentes detectadas</strong> para autorizar, bloquear o marcar reenvío.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span><strong>Analítica semanal</strong> opcional para consultar tendencias sin ruido de alertas.</span></li>
+                        </ul>
+                    </div>
+                    <div class="rounded-2xl border border-slate-200 bg-slate-50 p-6 shadow-lg">
+                        <div class="grid grid-cols-3 gap-3 mb-4">
+                            <div class="rounded-xl bg-white border border-slate-200 p-4 text-center">
+                                <p class="text-2xl font-black text-slate-900">3</p>
+                                <p class="text-[10px] uppercase font-bold text-slate-500 mt-1">Autorizados</p>
+                            </div>
+                            <div class="rounded-xl bg-amber-50 border border-amber-200 p-4 text-center">
+                                <p class="text-2xl font-black text-amber-700">0</p>
+                                <p class="text-[10px] uppercase font-bold text-amber-700/80 mt-1">Alertas</p>
+                            </div>
+                            <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 text-center">
+                                <p class="text-2xl font-black text-emerald-700">8</p>
+                                <p class="text-[10px] uppercase font-bold text-emerald-700/80 mt-1">Bloqueados</p>
+                            </div>
+                        </div>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between items-center bg-white rounded-lg border border-slate-200 px-4 py-3">
+                                <span class="font-semibold text-slate-800">Zoho Mail</span>
+                                <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-full">En rango</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white rounded-lg border border-slate-200 px-4 py-3">
+                                <span class="font-semibold text-slate-800">Resend</span>
+                                <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-full">En rango</span>
+                            </div>
+                            <div class="flex justify-between items-center bg-white rounded-lg border border-slate-200 px-4 py-3">
+                                <span class="font-semibold text-slate-800">Infraestructura desconocida</span>
+                                <span class="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-1 rounded-full">Bloqueado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -203,27 +254,59 @@
                 <div class="text-center mb-16">
                     <div class="inline-block px-4 py-1.5 rounded-full bg-blue-100 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">
                         Qué incluye tu plataforma</div>
-                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Todo lo que necesitas para blindar tu identidad corporativa
+                    <h2 class="text-3xl md:text-4xl font-bold text-slate-900 mb-3">Todo para operar el correo de tu empresa
                     </h2>
-                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">Sin instalar software. Sin compartir accesos. Sin depender de tu proveedor de IT.</p>
+                    <p class="text-lg text-slate-600 max-w-2xl mx-auto">El motor técnico (DMARC, SPF, DKIM) trabaja en segundo plano. Tú ves inventario, alertas e informes.</p>
                 </div>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
 
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
+                        <div class="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center mb-4 text-orange-600 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-paper-plane text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-slate-900 mb-2">Inventario y decisiones</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Autoriza proveedores legítimos, bloquea suplantación y separa reenvíos de sistemas que realmente envían en tu nombre.</p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
+                        <div class="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center mb-4 text-amber-600 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-sliders text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-slate-900 mb-2">Rangos de volumen mensual</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Define cuántos correos es normal enviar por servicio. Alertas solo cuando se supera el mes — no por ruido semanal.</p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
+                        <div class="w-11 h-11 rounded-xl bg-red-100 flex items-center justify-center mb-4 text-red-600 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-ban text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-slate-900 mb-2">Suplantación bloqueada</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Orígenes con SPF y DKIM fallidos se marcan y bloquean automáticamente. KPI mensual visible en el panel.</p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
+                        <div class="w-11 h-11 rounded-xl bg-cyan-100 flex items-center justify-center mb-4 text-cyan-600 group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-file-lines text-lg"></i>
+                        </div>
+                        <h3 class="font-bold text-base text-slate-900 mb-2">Informe mensual en el panel</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Resumen ejecutivo con control de envíos, score y eventos del mes. Aviso por correo con enlace — sin PDF adjunto.</p>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
                         <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4 text-blue-600 group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-shield-halved text-lg"></i>
                         </div>
-                        <h3 class="font-bold text-base text-slate-900 mb-2">Estado de protección en tiempo real</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Indicador visual claro: sabes en 3 segundos si tu empresa está protegida o en riesgo de suplantación.</p>
+                        <h3 class="font-bold text-base text-slate-900 mb-2">Estado de protección</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">InboxScore y estado SPF/DKIM/DMARC en un vistazo. La configuración DNS queda en segundo plano, accesible cuando la necesitas.</p>
                     </div>
 
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
                         <div class="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-sliders text-lg"></i>
                         </div>
-                        <h3 class="font-bold text-base text-slate-900 mb-2">Activación de protecciones guiada</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Te indicamos exactamente qué configurar en tu proveedor. Solo copia y pega — sin tocar servidores ni contratar soporte IT.</p>
+                        <h3 class="font-bold text-base text-slate-900 mb-2">DNS guiado (copiar y pegar)</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Registros listos para Cloudflare, GoDaddy, NIC Chile y más. El asistente con IA responde con datos de tu dominio.</p>
                     </div>
 
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
@@ -231,47 +314,15 @@
                             <i class="fa-solid fa-headset text-lg"></i>
                         </div>
                         <h3 class="font-bold text-base text-slate-900 mb-2">Asistente con IA</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Pregúntale lo que quieras sobre tu configuración. Responde en español y en lenguaje simple.</p>
-                    </div>
-
-                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                        <div class="w-11 h-11 rounded-xl bg-orange-100 flex items-center justify-center mb-4 text-orange-600 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-envelope-open-text text-lg"></i>
-                        </div>
-                        <h3 class="font-bold text-base text-slate-900 mb-2">Visión de quién envía en tu nombre</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Detectamos todos los servicios y servidores que envían correos usando tu dominio. Si algo no debería estar ahí, lo ves al instante.</p>
-                    </div>
-
-                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                        <div class="w-11 h-11 rounded-xl bg-amber-100 flex items-center justify-center mb-4 text-amber-600 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-chart-line text-lg"></i>
-                        </div>
-                        <h3 class="font-bold text-base text-slate-900 mb-2">Reputación y Listas Negras</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Verificamos si tu dominio o IPs están en listas negras como Spamcop, Barracuda o PSBL.</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">Pregunta en español sobre tus servicios de envío, alertas o DNS. Respuestas con contexto de tu cuenta.</p>
                     </div>
 
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
                         <div class="w-11 h-11 rounded-xl bg-teal-100 flex items-center justify-center mb-4 text-teal-600 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-lock text-lg"></i>
+                            <i class="fa-solid fa-chart-line text-lg"></i>
                         </div>
-                        <h3 class="font-bold text-base text-slate-900 mb-2">Cifrado TLS</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Monitoreamos que tus correos viajen cifrados. Recibes alertas si el cifrado falla o se degrada.</p>
-                    </div>
-
-                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                        <div class="w-11 h-11 rounded-xl bg-red-100 flex items-center justify-center mb-4 text-red-600 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-bell text-lg"></i>
-                        </div>
-                        <h3 class="font-bold text-base text-slate-900 mb-2">Alertas Automáticas</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">5 tipos de alerta configurables: blacklist, cambios DNS, nuevos orígenes, sugerencias y reportes periódicos.</p>
-                    </div>
-
-                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
-                        <div class="w-11 h-11 rounded-xl bg-cyan-100 flex items-center justify-center mb-4 text-cyan-600 group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-file-pdf text-lg"></i>
-                        </div>
-                        <h3 class="font-bold text-base text-slate-900 mb-2">Informe Mensual PDF</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Reporte ejecutivo descargable con estado de seguridad, eventos del mes y plan de acción. Ideal para gerencia.</p>
+                        <h3 class="font-bold text-base text-slate-900 mb-2">Reputación y listas negras</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Monitorización de IPs frente a RBL. Alertas si tu dominio aparece listado.</p>
                     </div>
 
                 </div>
@@ -281,9 +332,9 @@
         <!-- CTA Section -->
         <section class="py-20 bg-slate-50 border-t border-slate-200">
             <div class="max-w-4xl mx-auto px-4 text-center">
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">¿Listo para blindar tu infraestructura?</h2>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Empieza a controlar quién envía con tu dominio</h2>
                 <p class="text-slate-600 mb-8 max-w-xl mx-auto">
-                    Diagnostica tu dominio gratis hoy o adquiere una demo personalizada para ver cómo proteger tu entregabilidad.
+                    Diagnóstico gratuito en 30 segundos o demo guiada por WhatsApp. Pensado para PYME en Chile y LATAM.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="/domain-checker" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">
