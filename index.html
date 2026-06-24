@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InboxSeguro | Control de quién envía con tu dominio</title>
+    <title>InboxSeguro | Vigilancia de envíos y seguridad del dominio (DMARC)</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Sabe quién envía correo con tu dominio. Inventario automático de servicios, alertas y bloqueo de suplantación. Para PYME en Chile y LATAM.">
+        content="InboxSeguro vigila quién envía con tu dominio: inventario de servicios, alertas, bloqueo de suplantación y DMARC en español. Seguridad del correo para PYME en Chile.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/">
     <meta name="robots" content="index, follow">
@@ -17,12 +17,12 @@
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/">
-    <meta property="og:title" content="InboxSeguro | Control de quién envía con tu dominio">
-    <meta property="og:description" content="Sabe quién envía correo con tu dominio. Inventario automático de servicios, alertas y bloqueo de suplantación. Para PYME en Chile y LATAM.">
+    <meta property="og:title" content="InboxSeguro | Vigilancia de envíos y seguridad del dominio (DMARC)">
+    <meta property="og:description" content="InboxSeguro vigila quién envía con tu dominio: inventario de servicios, alertas, bloqueo de suplantación y DMARC en español. Seguridad del correo para PYME en Chile.">
     <meta property="og:image" content="https://www.inboxseguro.com/logo.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="InboxSeguro | Control de quién envía con tu dominio">
-    <meta name="twitter:description" content="Sabe quién envía correo con tu dominio. Inventario automático de servicios, alertas y bloqueo de suplantación. Para PYME en Chile y LATAM.">
+    <meta name="twitter:title" content="InboxSeguro | Vigilancia de envíos y seguridad del dominio (DMARC)">
+    <meta name="twitter:description" content="InboxSeguro vigila quién envía con tu dominio: inventario de servicios, alertas, bloqueo de suplantación y DMARC en español. Seguridad del correo para PYME en Chile.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/logo.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -40,7 +40,7 @@
     "@type": "Country",
     "name": "Chile"
   },
-  "description": "Control de envíos del dominio para PYME: inventario, alertas y bloqueo de suplantación."
+  "description": "Seguridad del correo y vigilancia de envíos del dominio para PYME: inventario, alertas DMARC y bloqueo de suplantación."
 }
 </script>
 </head>
@@ -188,7 +188,7 @@
 
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-blue-200 text-xs font-bold uppercase tracking-wider mb-6">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                    Centro de control de envíos del dominio
+                    Seguridad del correo · Vigilancia de envíos
                 </div>
 
                 <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-8 leading-tight text-white tracking-tight">
@@ -196,12 +196,11 @@
                     <span class="text-blue-500">con tu dominio.</span>
                 </h1>
 
-                <p class="text-lg md:text-xl text-slate-300 mb-6 max-w-3xl mx-auto font-light leading-relaxed">
-                    Inventario automático de servicios, alertas cuando aparece uno nuevo y bloqueo de suplantación.
-                    Configuración DNS guiada en español — sin contratar un experto DMARC.
+                <p class="text-lg md:text-xl text-slate-300 mb-4 max-w-3xl mx-auto font-light leading-relaxed">
+                    <span class="text-white font-medium">InboxSeguro</span> vigila quién envía con <span class="text-white font-medium">@tudominio</span> — inventario, alertas y bloqueo de suplantación.
                 </p>
                 <p class="text-sm md:text-base text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-                    En el primer mes sabrás exactamente cuántos sistemas envían como <span class="text-white font-medium">@tudominio.cl</span> y cuáles no reconoces.
+                    Seguridad del dominio con SPF, DKIM y DMARC traducidos a decisiones claras. Configuración DNS guiada en español — sin contratar un experto.
                 </p>
 
                 <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-20 items-center">
@@ -234,7 +233,7 @@
                                 <h3 class="text-white font-bold text-lg md:text-xl flex items-center gap-2">
                                     <i class="fa-solid fa-paper-plane text-blue-400"></i> Actividad de envío
                                 </h3>
-                                <p class="text-slate-400 text-sm">empresa-ejemplo.cl · vista del panel</p>
+                                <p class="text-slate-400 text-sm">empresa-ejemplo.cl · panel InboxSeguro</p>
                             </div>
                             <div class="px-3 py-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-xs font-bold flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
@@ -309,11 +308,25 @@
                         </div>
                         
                         <div class="mt-4 pt-4 border-t border-slate-700/50 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
-                            <span><span class="text-white font-semibold">No vendemos gráficos DMARC.</span> Vendemos decisiones: autorizar, bloquear, auditar.</span>
+                            <span><span class="text-white font-semibold">Vigilancia de envíos, no solo reportes DMARC.</span> Decisiones claras: autorizar, bloquear, auditar.</span>
                             <a href="/plataforma" class="text-blue-400 hover:text-blue-300 font-semibold whitespace-nowrap">Ver plataforma →</a>
                         </div>
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Puente narrativo marca -->
+        <section class="py-16 bg-gradient-to-b from-slate-50 to-white border-b border-slate-100">
+            <div class="max-w-3xl mx-auto px-4 text-center">
+                <span class="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-4">¿Por qué InboxSeguro?</span>
+                <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">La bandeja segura empieza por quién envía con tu dominio</h2>
+                <p class="text-slate-600 leading-relaxed mb-4">
+                    El nombre habla de <strong>inbox seguro</strong>, pero el riesgo real no es solo lo que entra: es quién puede enviar como <strong>@tudominio</strong> — el buzón de la empresa, el CRM de ventas, un proveedor que nadie avisó, o un atacante suplantando tu marca.
+                </p>
+                <p class="text-slate-600 leading-relaxed">
+                    InboxSeguro une ambas cosas: protección del correo corporativo y <strong>vigilancia continua de envíos</strong> con SPF, DKIM y DMARC traducidos a acciones — autorizar, bloquear, alertar.
+                </p>
             </div>
         </section>
 
@@ -546,7 +559,7 @@
                         </span>
                     </div>
                     <p class="text-slate-500 text-sm leading-relaxed mb-4">
-                        El mapa de control del correo corporativo para evitar suplantación de identidad.
+                        Seguridad del correo de tu empresa: vigilancia de envíos del dominio y bloqueo de suplantación.
                     </p>
                     <div class="space-y-2 text-xs text-slate-500 italic">
                         <p class="flex items-center gap-2">
@@ -565,6 +578,7 @@
                             <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
                             <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
                             <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
+                            <li><a href="/dmarc-para-pymes-chile" class="hover:text-blue-400 transition-colors">DMARC para PYME Chile</a></li>
                             <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
                         </ul>
                     </div>
