@@ -305,7 +305,7 @@
                             ¿Qué pasa si me suplantan el dominio?
                         </h3>
                         <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            InboxSeguro detecta envíos sin SPF ni DKIM válidos en tus informes DMARC. Esos orígenes se marcan como suplantación y pueden bloquearse automáticamente. Revisa el inventario de fuentes: si no reconoces el sistema, mantenlo bloqueado.
+                            InboxSeguro no detiene el ataque en tiempo real: analiza tus informes DMARC. Si un origen envía sin SPF ni DKIM válidos, lo marcamos como suplantación, te alertamos y lo dejamos bloqueado en el inventario (no es un remitente autorizado). Que el correo falso no llegue al destinatario depende de tu política DMARC (cuarentena o rechazo). Si no reconoces el sistema, mantén el bloqueo.
                             <a href="/suplantacion-correo-empresa" class="text-brand-600 hover:underline font-medium">Más sobre suplantación corporativa</a>.
                         </p>
                     </div>
