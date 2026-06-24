@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DMARC para PYME en Chile: guía práctica | InboxSeguro</title>
+    <title>DMARC para PYMEs: Guía práctica | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Qué es DMARC, por qué importa a tu PYME en Chile y cómo pasar de monitor a bloqueo sin ser experto. Seguridad del dominio y vigilancia de envíos.">
-    <link rel="canonical" href="https://www.inboxseguro.com/dmarc-para-pymes-chile">
+    <meta name="description" content="Qué es DMARC, por qué importa a tu PYME y cómo pasar de monitor a bloqueo sin ser experto. Seguridad del dominio y vigilancia de envíos.">
+    <link rel="canonical" href="https://www.inboxseguro.com/dmarc-para-pymes">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_CL">
-    <meta property="og:url" content="https://www.inboxseguro.com/dmarc-para-pymes-chile">
+    <meta property="og:url" content="https://www.inboxseguro.com/dmarc-para-pymes">
     <meta property="og:title" content="DMARC para PYME en Chile: guía práctica | InboxSeguro">
-    <meta property="og:description" content="Qué es DMARC, por qué importa a tu PYME en Chile y cómo pasar de monitor a bloqueo sin ser experto. Seguridad del dominio y vigilancia de envíos.">
+    <meta property="og:description" content="Qué es DMARC, por qué importa a tu PYME y cómo pasar de monitor a bloqueo sin ser experto. Seguridad del dominio y vigilancia de envíos.">
     <meta property="og:image" content="https://www.inboxseguro.com/logo.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DMARC para PYME en Chile: guía práctica | InboxSeguro">
-    <meta name="twitter:description" content="Qué es DMARC, por qué importa a tu PYME en Chile y cómo pasar de monitor a bloqueo sin ser experto. Seguridad del dominio y vigilancia de envíos.">
+    <meta name="twitter:description" content="Qué es DMARC, por qué importa a tu PYME y cómo pasar de monitor a bloqueo sin ser experto. Seguridad del dominio y vigilancia de envíos.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/logo.png">
     <script type="application/ld+json">
 {
@@ -70,6 +70,31 @@
                     <a href="/como-funciona" class="text-slate-500 hover:text-brand-600 transition-colors">Cómo funciona</a>
                     <a href="/plataforma" class="text-slate-500 hover:text-brand-600 transition-colors">Plataforma</a>
                     <a href="/precios" class="text-slate-500 hover:text-brand-600 transition-colors">Precios</a>
+                                        <!-- Dropdown Guías -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-500 hover:text-brand-600 transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Guías</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-0 mt-1 w-64 rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2">
+                            <a href="/control-envios-dominio" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors">
+                                <i class="fa-solid fa-list-check text-xs text-blue-500"></i>
+                                <span>Control de Envíos del Dominio</span>
+                            </a>
+                            <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors">
+                                <i class="fa-solid fa-user-secret text-xs text-red-500"></i>
+                                <span>Detener Suplantación Corporativa</span>
+                            </a>
+                            <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors">
+                                <i class="fa-solid fa-shield-halved text-xs text-indigo-500"></i>
+                                <span>Guía DMARC para PYMEs</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Dropdown Herramientas Gratuitas -->
                     <div class="relative group">
                         <button class="flex items-center gap-1 text-slate-500 hover:text-brand-600 transition-colors focus:outline-none py-2 cursor-pointer">
                             <span>Herramientas Gratuitas</span>
@@ -109,24 +134,43 @@
                 </div>
             </div>
         </div>
-        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+                <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
             <div class="px-4 py-4 space-y-1">
                 <a href="/como-funciona" onclick="closeMobileMenu()" class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
                 <a href="/plataforma" onclick="closeMobileMenu()" class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
                 <a href="/precios" onclick="closeMobileMenu()" class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                
+                <!-- Guías Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Guías de Seguridad</span>
+                    <a href="/control-envios-dominio" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">📋 Control de Envíos</a>
+                    <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">👤 Detener Suplantación</a>
+                    <a href="/dmarc-para-pymes" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🛡️ DMARC para PYMEs</a>
+                </div>
+
+                <!-- Herramientas Gratuitas Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/domain-checker" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">🔍 Diagnóstico Completo</a>
+                    <a href="/spf-checker" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🛡️ Verificador SPF</a>
+                    <a href="/dmarc-checker" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🔒 Verificador DMARC</a>
+                    <a href="/dkim-checker" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🔑 Verificador DKIM</a>
+                </div>
+
                 <a href="/contacto" onclick="closeMobileMenu()" class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
             </div>
+        </div>
         </div>
     </nav>
 <main class="flex-grow pt-24 lg:pt-32">
 <section class="py-16 bg-slate-900 text-white"><div class="max-w-4xl mx-auto px-4 text-center">
-<h1 class="text-4xl md:text-5xl font-extrabold mb-4">DMARC para PYME en Chile</h1>
+<h1 class="text-4xl md:text-5xl font-extrabold mb-4">DMARC para PYMEs: Guía práctica</h1>
 <p class="text-lg text-slate-300 font-light max-w-2xl mx-auto">Seguridad del dominio sin jerga: qué hace DMARC, por qué tu empresa lo necesita y cómo pasar de «solo monitorear» a bloquear suplantación.</p>
 </div></section>
-<section class="py-12 border-b border-slate-100"><div class="max-w-3xl mx-auto px-4"><h2 class="text-2xl font-bold text-slate-900 mb-4">DMARC no es solo para grandes empresas</h2><p class="text-slate-600 leading-relaxed mb-4">En Chile, la mayoría de las PYME usa Google Workspace, Zoho o Microsoft 365 — y además contrata CRM, newsletters o APIs transaccionales. Cada uno envía como <code>@tuempresa.cl</code>.</p><p class="text-slate-600 leading-relaxed mb-4">DMARC es el estándar que le dice a Gmail, Outlook y el resto del mundo qué hacer cuando alguien envía con tu dominio sin autorización. Sin él, la suplantación es más fácil y tu reputación de envío se degrada.</p></div></section>
+<section class="py-12 border-b border-slate-100"><div class="max-w-3xl mx-auto px-4"><h2 class="text-2xl font-bold text-slate-900 mb-4">DMARC no es solo para grandes empresas</h2><p class="text-slate-600 leading-relaxed mb-4">La mayoría de las PYMEs utilizan servicios de correo corporativo como Google Workspace, Zoho o Microsoft 365, y además contratan CRM, herramientas de email marketing o pasarelas de pago. Cada una de estas herramientas envía correos electrónicos en nombre de su propio dominio corporativo.</p><p class="text-slate-600 leading-relaxed mb-4">DMARC es el estándar que le dice a Gmail, Outlook y el resto del mundo qué hacer cuando alguien envía con tu dominio sin autorización. Sin él, la suplantación es más fácil y tu reputación de envío se degrada.</p></div></section>
 <section class="py-12 border-b border-slate-100"><div class="max-w-3xl mx-auto px-4"><h2 class="text-2xl font-bold text-slate-900 mb-4">SPF, DKIM y DMARC: el trío mínimo</h2><p class="text-slate-600 leading-relaxed mb-4"><strong>SPF</strong> lista qué servidores pueden enviar por tu dominio. <strong>DKIM</strong> firma cada mensaje. <strong>DMARC</strong> une ambos y define la política: solo observar (<code>p=none</code>), poner en cuarentena o rechazar.</p><p class="text-slate-600 leading-relaxed mb-4">Puedes verificar cada pieza gratis: <a href="/spf-checker" class="text-brand-600 hover:underline">SPF</a>, <a href="/dkim-checker" class="text-brand-600 hover:underline">DKIM</a> y <a href="/dmarc-checker" class="text-brand-600 hover:underline">DMARC</a>. El <a href="/domain-checker" class="text-brand-600 hover:underline">diagnóstico completo</a> los revisa de una vez.</p></div></section>
 <section class="py-12 border-b border-slate-100"><div class="max-w-3xl mx-auto px-4"><h2 class="text-2xl font-bold text-slate-900 mb-4">El error típico: poner DMARC y olvidarlo</h2><p class="text-slate-600 leading-relaxed mb-4">Muchas PYME publican un registro <code>p=none</code> y creen que ya están protegidas. En realidad solo están recibiendo informes XML que nadie lee.</p><p class="text-slate-600 leading-relaxed mb-4">InboxSeguro convierte esos informes en <strong>vigilancia de envíos</strong>: inventario de servicios, alertas cuando aparece uno nuevo y bloqueo de suplantación. Ver <a href="/control-envios-dominio" class="text-brand-600 hover:underline">control de envíos del dominio</a> y <a href="/plataforma" class="text-brand-600 hover:underline">plataforma</a>.</p></div></section>
-<section class="py-12 border-b border-slate-100"><div class="max-w-3xl mx-auto px-4"><h2 class="text-2xl font-bold text-slate-900 mb-4">Ruta recomendada para una PYME chilena</h2><ol class="list-decimal list-inside space-y-3 text-slate-600 leading-relaxed"><li>Diagnóstico DNS gratuito: saber si SPF, DKIM y DMARC existen hoy.</li><li>Inventario de envíos: autorizar Google, CRM, marketing y lo que reconozcas.</li><li>Monitoreo 2–4 semanas: confirmar que nada legítimo queda fuera.</li><li>Subir política a <code>quarantine</code> o <code>reject</code> con DNS guiado en español.</li><li>Alertas mensuales para gerencia: quién envió, qué se bloqueó. Sin adjuntar XML.</li></ol></div></section>
+<section class="py-12 border-b border-slate-100"><div class="max-w-3xl mx-auto px-4"><h2 class="text-2xl font-bold text-slate-900 mb-4">Ruta recomendada para tu PYME</h2><ol class="list-decimal list-inside space-y-3 text-slate-600 leading-relaxed"><li>Diagnóstico DNS gratuito: saber si SPF, DKIM y DMARC existen hoy.</li><li>Inventario de envíos: autorizar Google, CRM, marketing y lo que reconozcas.</li><li>Monitoreo 2–4 semanas: confirmar que nada legítimo queda fuera.</li><li>Subir política a <code>quarantine</code> o <code>reject</code> con DNS guiado.</li><li>Alertas mensuales para gerencia: quién envió, qué se bloqueó. Sin adjuntar XML.</li></ol></div></section>
 <section class="py-12 border-b border-slate-100"><div class="max-w-3xl mx-auto px-4"><h2 class="text-2xl font-bold text-slate-900 mb-4">DMARC y suplantación de dominio</h2><p class="text-slate-600 leading-relaxed mb-4">Cuando un atacante envía como tu empresa, SPF y DKIM suelen fallar. DMARC con política estricta hace que proveedores rechacen esos correos.</p><p class="text-slate-600 leading-relaxed mb-4">InboxSeguro marca esos intentos en el panel y te permite bloquear orígenes desconocidos. Más en la guía de <a href="/suplantacion-correo-empresa" class="text-brand-600 hover:underline">suplantación corporativa</a>.</p></div></section>
 <section class="py-12 bg-slate-50"><div class="max-w-3xl mx-auto px-4"><h2 class="text-2xl font-bold text-slate-900 mb-6">Preguntas frecuentes</h2><div class="space-y-4"><div class="bg-white p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿Cuánto tarda implementar DMARC en una PYME?</h3><p class="text-sm text-slate-600 leading-relaxed">Con DNS guiado, el registro inicial toma minutos. El inventario y el paso a política estricta suele tomar 2–4 semanas de monitoreo.</p></div><div class="bg-white p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿DMARC protege solo el correo entrante?</h3><p class="text-sm text-slate-600 leading-relaxed">No. Controla quién puede enviar con tu dominio hacia afuera: suplantación, servicios no autorizados y abusos de reputación.</p></div><div class="bg-white p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿Puedo verificar mi DMARC gratis?</h3><p class="text-sm text-slate-600 leading-relaxed">Sí: usa el <a href="/dmarc-checker" class="text-brand-600 hover:underline">verificador DMARC</a> o el <a href="/domain-checker" class="text-brand-600 hover:underline">diagnóstico completo</a>.</p></div></div></div></section>
 <section class="py-16 bg-slate-900 text-white text-center"><div class="max-w-2xl mx-auto px-4">
@@ -155,7 +199,7 @@
                             <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
                             <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
                             <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
-                            <li><a href="/dmarc-para-pymes-chile" class="text-blue-400 font-medium">DMARC para PYME Chile</a></li>
+                            <li><a href="/dmarc-para-pymes" class="text-blue-400 font-medium">DMARC para PYMEs</a></li>
                             <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
                         </ul>
                     </div>
