@@ -224,17 +224,6 @@
                     <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto font-light">Comienza con nuestra prueba gratuita de 14 días y protege la reputación de tu dominio corporativo.</p>
                 </div>
 
-                <!-- Toggle Switch -->
-                <div class="flex justify-center items-center gap-3 mb-16">
-                    <span id="labelMonthly" class="text-xs md:text-sm font-bold text-brand-600">MENSUAL</span>
-                    <button onclick="toggleBillingPeriod()" class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-slate-200 transition-colors duration-200 ease-in-out focus:outline-none" role="switch" aria-checked="false" id="billingToggle">
-                        <span aria-hidden="true" class="pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out translate-x-0" id="toggleHandle"></span>
-                    </button>
-                    <span id="labelAnnual" class="text-xs md:text-sm font-bold text-slate-400 flex items-center gap-1.5">
-                        ANUAL 
-                        <span class="px-2 py-0.5 text-[9px] font-extrabold bg-emerald-100 text-emerald-800 rounded-full uppercase tracking-wider">Ahorra 20%</span>
-                    </span>
-                </div>
 
                 <!-- Tarjeta Única Centrada -->
                 <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl border-2 border-brand-600 overflow-hidden relative transform hover:-translate-y-1 transition-all duration-300 mb-12">
@@ -251,10 +240,10 @@
                             <div>
                                 <div class="flex items-baseline gap-1">
                                     <span class="text-sm font-bold text-slate-500">$</span>
-                                    <span class="text-5xl font-extrabold text-slate-900 price-val" data-monthly="29" data-annual="24">29</span>
+                                    <span class="text-5xl font-extrabold text-slate-900">29</span>
                                     <span class="text-sm text-slate-500 font-medium">USD / mes</span>
                                 </div>
-                                <p class="text-xxs text-slate-400 mt-1 billing-val" data-monthly-text="facturado mensualmente" data-annual-text="facturado anualmente ($288 / año)">facturado mensualmente</p>
+                                <p class="text-xxs text-slate-400 mt-1">facturado mensualmente</p>
                             </div>
                             <div class="self-start sm:self-center">
                                 <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold">
@@ -545,42 +534,6 @@
             iconClose.classList.add('hidden');
         }
 
-        let isAnnual = false;
-        function toggleBillingPeriod() {
-            isAnnual = !isAnnual;
-            const toggle = document.getElementById('billingToggle');
-            const handle = document.getElementById('toggleHandle');
-            const labelMonthly = document.getElementById('labelMonthly');
-            const labelAnnual = document.getElementById('labelAnnual');
-            
-            if (isAnnual) {
-                toggle.classList.remove('bg-slate-200');
-                toggle.classList.add('bg-brand-600');
-                handle.classList.remove('translate-x-0');
-                handle.classList.add('translate-x-5');
-                labelMonthly.classList.remove('text-brand-600');
-                labelMonthly.classList.add('text-slate-400');
-                labelAnnual.classList.remove('text-slate-400');
-                labelAnnual.classList.add('text-brand-600');
-            } else {
-                toggle.classList.remove('bg-brand-600');
-                toggle.classList.add('bg-slate-200');
-                handle.classList.remove('translate-x-5');
-                handle.classList.add('translate-x-0');
-                labelMonthly.classList.remove('text-slate-400');
-                labelMonthly.classList.add('text-brand-600');
-                labelAnnual.classList.remove('text-brand-600');
-                labelAnnual.classList.add('text-slate-400');
-            }
-            
-            document.querySelectorAll('.price-val').forEach(el => {
-                el.textContent = isAnnual ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
-            });
-            
-            document.querySelectorAll('.billing-val').forEach(el => {
-                el.textContent = isAnnual ? el.getAttribute('data-annual-text') : el.getAttribute('data-monthly-text');
-            });
-        }
 
         function toggleComparisonTable() {
             const wrapper = document.getElementById('comparisonTableWrapper');
