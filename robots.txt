@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Panel de clientes (subdominio aparte) no vive aquí
+Disallow: /api/
+
+Sitemap: https://www.inboxseguro.com/sitemap.xml

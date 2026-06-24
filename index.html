@@ -9,12 +9,40 @@
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Sabe quién envía correo con tu dominio. Inventario automático de servicios, alertas de actividad sospechosa y bloqueo de suplantación. Sin equipo técnico.">
+        content="Sabe quién envía correo con tu dominio. Inventario automático de servicios, alertas y bloqueo de suplantación. Para PYME en Chile y LATAM.">
+
+        <link rel="canonical" href="https://www.inboxseguro.com/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/">
+    <meta property="og:title" content="InboxSeguro | Control de quién envía con tu dominio">
+    <meta property="og:description" content="Sabe quién envía correo con tu dominio. Inventario automático de servicios, alertas y bloqueo de suplantación. Para PYME en Chile y LATAM.">
+    <meta property="og:image" content="https://www.inboxseguro.com/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="InboxSeguro | Control de quién envía con tu dominio">
+    <meta name="twitter:description" content="Sabe quién envía correo con tu dominio. Inventario automático de servicios, alertas y bloqueo de suplantación. Para PYME en Chile y LATAM.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/logo.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/styles.css?v=1.0.4">
+    <link rel="stylesheet" href="/styles.css?v=1.0.5">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "InboxSeguro",
+  "url": "https://www.inboxseguro.com",
+  "logo": "https://www.inboxseguro.com/logo.png",
+  "areaServed": {
+    "@type": "Country",
+    "name": "Chile"
+  },
+  "description": "Control de envíos del dominio para PYME: inventario, alertas y bloqueo de suplantación."
+}
+</script>
 </head>
 
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
@@ -75,11 +103,11 @@
                         class="hidden md:block text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">Acceso
                         Clientes</a>
                     <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
-                        target="_blank" rel="noopener noreferrer"
+                        target="_blank" rel="noopener noreferrer" data-seo-event="cta_demo_whatsapp"
                         class="hidden sm:inline-flex items-center text-sm font-semibold text-emerald-700 hover:text-emerald-800 border border-emerald-200 hover:border-emerald-300 bg-emerald-50/80 hover:bg-emerald-50 px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar
                         demo</a>
                     <a href="/precios"
-                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Ver
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors" data-seo-event="cta_precios">Ver
                         planes</a>
                     <!-- Hamburger -->
                     <button id="menuBtn" onclick="toggleMobileMenu()"
@@ -188,7 +216,7 @@
                         <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     </a>
                     <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
-                        target="_blank" rel="noopener noreferrer"
+                        target="_blank" rel="noopener noreferrer" data-seo-event="cta_demo_whatsapp"
                         class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white text-lg font-semibold rounded-xl border border-white/20 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
                         <i class="fa-regular fa-calendar-check"></i> Agendar una demo
                     </a>
@@ -323,14 +351,14 @@
                             <i class="fa-solid fa-list-check text-lg"></i>
                         </div>
                         <h3 class="font-bold text-slate-900 text-lg mb-2">Inventario de envíos</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Detectamos Google, Zoho, Resend, HubSpot y decenas más. Autoriza lo legítimo y bloquea lo que no reconoces.</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">Detectamos Google, Zoho, Resend, HubSpot y decenas más. Autoriza lo legítimo y bloquea lo que no reconoces. <a href="/control-envios-dominio" class="text-brand-600 hover:underline font-medium">Guía completa</a>.</p>
                     </div>
                     <div class="rounded-2xl border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all">
                         <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-4">
                             <i class="fa-solid fa-bell text-lg"></i>
                         </div>
                         <h3 class="font-bold text-slate-900 text-lg mb-2">Alertas accionables</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Servicio nuevo, volumen fuera del rango mensual o suplantación: cada alerta con botones «Fui yo» o «Ayúdame a investigar».</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">Servicio nuevo, volumen fuera del rango mensual o suplantación: cada alerta con botones claros. <a href="/suplantacion-correo-empresa" class="text-brand-600 hover:underline font-medium">Qué hacer si te suplantan</a>.</p>
                     </div>
                     <div class="rounded-2xl border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all">
                         <div class="w-11 h-11 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4">
@@ -535,6 +563,8 @@
                         <ul class="space-y-2 text-sm text-slate-500">
                             <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
                             <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
                             <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
                         </ul>
                     </div>
@@ -595,6 +625,7 @@
         }
     </script>
 
+    <script src="/seo-analytics.js" defer></script>
 </body>
 
 </html>

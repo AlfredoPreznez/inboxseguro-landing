@@ -4,17 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cómo Funciona la Seguridad de Correo y DNS | InboxSeguro</title>
+    <title>Cómo funciona el control de envíos del dominio | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Entiende cómo SPF, DKIM y DMARC protegen tu correo corporativo. Aprende a detener la suplantación de identidad sin conocimientos técnicos avanzados.">
+        content="Detecta quién envía con tu dominio, autoriza servicios, recibe alertas y audita cada mes. Configuración DNS guiada.">
+
+        <link rel="canonical" href="https://www.inboxseguro.com/como-funciona">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/como-funciona">
+    <meta property="og:title" content="Cómo funciona el control de envíos del dominio | InboxSeguro">
+    <meta property="og:description" content="Detecta quién envía con tu dominio, autoriza servicios, recibe alertas y audita cada mes. Configuración DNS guiada.">
+    <meta property="og:image" content="https://www.inboxseguro.com/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cómo funciona el control de envíos del dominio | InboxSeguro">
+    <meta name="twitter:description" content="Detecta quién envía con tu dominio, autoriza servicios, recibe alertas y audita cada mes. Configuración DNS guiada.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/logo.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/styles.css?v=1.0.3">
+    <link rel="stylesheet" href="/styles.css?v=1.0.5">
 </head>
 
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
@@ -142,10 +156,10 @@
             </div>
             <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
                 <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight tracking-tight">
-                    Cómo Funciona la Seguridad de Correo
+                    Cómo funciona el control de envíos de tu dominio
                 </h1>
                 <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
-                    Aprende cómo detener la suplantación de identidad de tu dominio corporativo configurando adecuadamente los registros DNS de forma guiada y simple.
+                    Detecta quién envía con tu dominio, autoriza solo lo que reconoces, recibe alertas y audita cada mes. La configuración DNS es un paso guiado, no el producto.
                 </p>
             </div>
         </section>
@@ -223,23 +237,23 @@
                     <!-- Paso 1 -->
                     <div class="relative z-10 p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 group">
                         <div class="w-14 h-14 bg-gradient-to-br from-blue-600 to-blue-700 text-white rounded-2xl flex items-center justify-center mb-6 text-xl font-bold shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform">1</div>
-                        <h3 class="text-xl font-bold mb-3 text-slate-900">Diagnóstico instantáneo</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed font-normal">Escanea tu dominio en segundos y detecta si estás desprotegido frente a suplantación. Sin registrarte, sin instalar nada.</p>
+                        <h3 class="text-xl font-bold mb-3 text-slate-900">Inventario automático</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-normal">Detectamos Google, Zoho, Resend, HubSpot y más en tus informes DMARC. Ves quién envía sin leer XML.</p>
                     </div>
 
                     <!-- Paso 2 -->
                     <div class="relative z-10 p-8 bg-white rounded-2xl border-2 border-blue-500/10 shadow-2xl shadow-blue-900/5 hover:-translate-y-2 transition-all duration-300">
                         <div class="absolute top-0 right-0 bg-blue-500 text-white text-[10px] uppercase font-bold px-3 py-1 rounded-bl-xl rounded-tr-xl">Tu parte</div>
                         <div class="w-14 h-14 bg-white border-2 border-blue-100 text-blue-600 rounded-2xl flex items-center justify-center mb-6 text-xl font-bold shadow-sm group-hover:scale-110 transition-transform">2</div>
-                        <h3 class="text-xl font-bold mb-3 text-blue-600">Activación guiada</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed font-normal">Te decimos exactamente qué cambiar en tu proveedor de dominio. <em>"Copia este texto y pégalo aquí."</em> Sin dar tus claves a nadie. Sin conocimientos técnicos.</p>
+                        <h3 class="text-xl font-bold mb-3 text-blue-600">Autorizar y configurar</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-normal">Autoriza proveedores legítimos, bloquea lo desconocido y define rangos de volumen mensual. DNS guiado con copiar y pegar.</p>
                     </div>
 
                     <!-- Paso 3 -->
                     <div class="relative z-10 p-8 bg-white/80 backdrop-blur-sm rounded-2xl border border-slate-200 shadow-xl shadow-slate-200/50 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 group">
                         <div class="w-14 h-14 bg-gradient-to-br from-indigo-600 to-indigo-700 text-white rounded-2xl flex items-center justify-center mb-6 text-xl font-bold shadow-lg shadow-indigo-500/30 group-hover:scale-110 transition-transform">3</div>
-                        <h3 class="text-xl font-bold mb-3 text-slate-900">Monitoreo y alertas 24/7</h3>
-                        <p class="text-slate-600 text-sm leading-relaxed font-normal">Vigilamos en tiempo real quién envía en nombre de tu dominio. Si detectamos actividad sospechosa o listas negras, te avisamos de inmediato.</p>
+                        <h3 class="text-xl font-bold mb-3 text-slate-900">Alertas e informe mensual</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed font-normal">Alertas si aparece un servicio nuevo o se supera el rango mensual. Informe ejecutivo para gerencia en el panel.</p>
                     </div>
                 </div>
             </div>
@@ -409,6 +423,7 @@
         }
     </script>
 
+    <script src="/seo-analytics.js" defer></script>
 </body>
 
 </html>

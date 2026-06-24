@@ -4,17 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador DKIM Gratuito | DKIM Checker & Validación DNS | InboxSeguro</title>
+    <title>Verificador DKIM Gratuito | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Valida la firma criptográfica DKIM de tu dominio de forma gratuita. Nuestro DKIM checker analiza tus llaves públicas en registros DNS para evitar que alteren tus correos.">
+        content="Valida firmas DKIM de tu dominio gratis. Protege la integridad del correo corporativo.">
+
+        <link rel="canonical" href="https://www.inboxseguro.com/dkim-checker">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/dkim-checker">
+    <meta property="og:title" content="Verificador DKIM Gratuito | InboxSeguro">
+    <meta property="og:description" content="Valida firmas DKIM de tu dominio gratis. Protege la integridad del correo corporativo.">
+    <meta property="og:image" content="https://www.inboxseguro.com/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Verificador DKIM Gratuito | InboxSeguro">
+    <meta name="twitter:description" content="Valida firmas DKIM de tu dominio gratis. Protege la integridad del correo corporativo.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/logo.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/styles.css?v=1.0.3">
+    <link rel="stylesheet" href="/styles.css?v=1.0.5">
 </head>
 
 <body class="bg-slate-900 text-slate-200 antialiased relative min-h-screen flex flex-col">
@@ -277,6 +291,21 @@
                     </div>
                 </div>
 
+                
+                <div class="border-t border-slate-800 pt-6 seo-product-cta">
+                    <div class="p-5 rounded-xl bg-gradient-to-br from-blue-900/40 to-indigo-900/30 border border-blue-500/30">
+                        <h2 class="text-xl font-bold text-white mb-2">El checker valida DNS. InboxSeguro te da control operativo.</h2>
+                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                            Inventario de quién envía con tu dominio, alertas cuando aparece un servicio nuevo, bloqueo de suplantación e informes mensuales — sin leer reportes XML.
+                        </p>
+                        <div class="flex flex-col sm:flex-row flex-wrap gap-3">
+                            <a href="/plataforma" data-seo-event="cta_plataforma" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm transition">Ver quién envía con tu dominio</a>
+                            <a href="/precios" data-seo-event="cta_precios" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl border border-white/20 text-sm transition">Ver planes</a>
+                        </div>
+                        <p class="text-slate-500 text-xs mt-4">Guías: <a href="/control-envios-dominio" class="text-blue-400 hover:underline">Control de envíos</a> · <a href="/suplantacion-correo-empresa" class="text-blue-400 hover:underline">Suplantación</a> · <a href="/domain-checker" class="text-blue-400 hover:underline">Diagnóstico completo</a></p>
+                    </div>
+                </div>
+
                 <div class="border-t border-slate-800 pt-6">
                     <h2 class="text-2xl font-bold text-white mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador DKIM</h2>
                     <div class="space-y-4">
@@ -368,6 +397,7 @@
                 }
 
                 resultsDiv.classList.remove('hidden');
+                if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('dkim');
             } catch (err) {
                 console.error(err);
                 alert('Ocurrió un error al consultar firmas DKIM via Google DoH.');
@@ -454,6 +484,7 @@
         }
     </script>
 
+    <script src="/seo-analytics.js" defer></script>
 </body>
 
 </html>

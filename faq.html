@@ -4,17 +4,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Preguntas Frecuentes sobre Autenticación de Correo | InboxSeguro</title>
+    <title>Preguntas frecuentes sobre control de envíos y correo | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Resuelve tus dudas sobre autenticación de correos, entregabilidad y registros DNS (SPF, DKIM, DMARC) con la sección de preguntas frecuentes de InboxSeguro.">
+        content="Respuestas sobre suplantación, rangos de envío, blacklist, SPF, DKIM y DMARC para empresas en Chile.">
+
+        <link rel="canonical" href="https://www.inboxseguro.com/faq">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/faq">
+    <meta property="og:title" content="Preguntas frecuentes sobre control de envíos y correo | InboxSeguro">
+    <meta property="og:description" content="Respuestas sobre suplantación, rangos de envío, blacklist, SPF, DKIM y DMARC para empresas en Chile.">
+    <meta property="og:image" content="https://www.inboxseguro.com/logo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Preguntas frecuentes sobre control de envíos y correo | InboxSeguro">
+    <meta name="twitter:description" content="Respuestas sobre suplantación, rangos de envío, blacklist, SPF, DKIM y DMARC para empresas en Chile.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/logo.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/styles.css?v=1.0.3">
+    <link rel="stylesheet" href="/styles.css?v=1.0.5">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Necesito entregarles mis contraseñas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nunca. InboxSeguro analiza solo DNS público."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si me suplantan el dominio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Detectamos envíos sin SPF/DKIM y puedes bloquear orígenes desconocidos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿De qué sirve definir un rango de envíos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Alertas si un proveedor supera el volumen mensual habitual."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si caigo en blacklist?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Monitorizamos RBL y alertamos en el panel."
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
@@ -142,10 +196,10 @@
             </div>
             <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
                 <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight tracking-tight">
-                    Preguntas Frecuentes
+                    Preguntas sobre control de envíos y correo
                 </h1>
                 <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
-                    Encuentra respuestas a las dudas más comunes sobre la entregabilidad de correos, registros DNS e InboxSeguro.
+                    Suplantación, rangos de volumen, blacklist y configuración DNS — respuestas para empresas en Chile y LATAM.
                 </p>
             </div>
         </section>
@@ -207,8 +261,39 @@
                             ¿Qué pasa si uso Zoho, GoDaddy o NIC Chile?
                         </h3>
                         <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            Nuestra plataforma es compatible con cualquier proveedor de dominio. Tenemos guías específicas
-                            para NIC Chile, GoDaddy, Namecheap, Cloudflare, Google Domains y más.
+                            Compatible con cualquier proveedor de dominio. Guías para NIC Chile, GoDaddy, Cloudflare y más en la configuración DNS del panel.
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
+                            ¿Qué pasa si me suplantan el dominio?
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
+                            InboxSeguro detecta envíos sin SPF ni DKIM válidos en tus informes DMARC. Esos orígenes se marcan como suplantación y pueden bloquearse automáticamente. Revisa el inventario de fuentes: si no reconoces el sistema, mantenlo bloqueado.
+                            <a href="/suplantacion-correo-empresa" class="text-brand-600 hover:underline font-medium">Más sobre suplantación corporativa</a>.
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
+                            ¿De qué sirve definir un rango de envíos por servicio?
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
+                            Indicas cuántos correos al mes es normal para cada proveedor (por ejemplo Zoho o Resend). Si el volumen supera ese rango, recibes una alerta — útil para detectar cuentas comprometidas o herramientas que activó alguien sin avisar.
+                            <a href="/control-envios-dominio" class="text-brand-600 hover:underline font-medium">Guía de control de envíos</a>.
+                        </p>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
+                            ¿Qué pasa si mi dominio cae en una blacklist?
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
+                            Monitorizamos tus IPs frente a listas negras (RBL). Si apareces listado, verás alertas en el panel. Suele deberse a spam saliente o IPs compartidas del proveedor; revisa el detalle y contacta a tu proveedor de envío si es necesario.
                         </p>
                     </div>
 
@@ -325,6 +410,7 @@
         }
     </script>
 
+    <script src="/seo-analytics.js" defer></script>
 </body>
 
 </html>
