@@ -46,61 +46,60 @@
                     </span>
                 </a>
 
-                <div class="hidden lg:flex items-center space-x-6 text-sm font-medium">
+                <div class="hidden lg:flex items-center space-x-8 text-sm font-medium">
                     <a href="/como-funciona" class="text-slate-300 hover:text-brand-600 transition-colors">Cómo funciona</a>
                     <a href="/plataforma" class="text-slate-300 hover:text-brand-600 transition-colors">Plataforma</a>
                     <a href="/precios" class="text-slate-300 hover:text-brand-600 transition-colors">Precios</a>
                     
-                                        <!-- Dropdown Guías -->
+                                        <!-- Dropdown Recursos -->
                     <div class="relative group">
                         <button class="flex items-center gap-1 text-slate-300 hover:text-brand-600 transition-colors focus:outline-none py-2 cursor-pointer">
-                            <span>Guías</span>
+                            <span>Recursos</span>
                             <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-500 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
-                        <div class="absolute left-0 mt-1 w-64 rounded-xl bg-slate-950/95 border border-slate-800 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2 backdrop-blur-md">
-                            <a href="/control-envios-dominio" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/5 hover:text-brand-400 transition-colors">
-                                <i class="fa-solid fa-list-check text-xs text-blue-400"></i>
-                                <span>Control de Envíos del Dominio</span>
-                            </a>
-                            <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/5 hover:text-brand-400 transition-colors">
-                                <i class="fa-solid fa-user-secret text-xs text-red-400"></i>
-                                <span>Detener Suplantación Corporativa</span>
-                            </a>
-                            <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/5 hover:text-brand-400 transition-colors">
-                                <i class="fa-solid fa-shield-halved text-xs text-indigo-400"></i>
-                                <span>Guía DMARC para PYMEs</span>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!-- Dropdown Herramientas Gratuitas -->
-                    <div class="relative group">
-                        <button class="flex items-center gap-1 text-slate-300 hover:text-brand-600 transition-colors focus:outline-none py-2 cursor-pointer">
-                            <span>Herramientas Gratuitas</span>
-                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-500 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
-                        </button>
-                        <div class="absolute left-0 mt-1 w-56 rounded-xl bg-slate-950/95 border border-slate-800 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 py-2 backdrop-blur-md">
-                            <a href="/domain-checker" class="flex items-center gap-2 px-4 py-2.5 text-sm text-slate-200 hover:bg-white/5 hover:text-brand-400 transition-colors">
-                                <i class="fa-solid fa-server text-xs text-brand-500"></i>
-                                <span class="font-semibold">Diagnóstico Completo</span>
-                            </a>
-                            <div class="border-t border-slate-800 my-1"></div>
-                            <a href="/spf-checker" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-brand-400 transition-colors">
-                                <i class="fa-solid fa-shield-halved text-xs text-blue-400"></i>
-                                <span>Verificador SPF</span>
-                            </a>
-                            <a href="/dmarc-checker" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-brand-400 transition-colors">
-                                <i class="fa-solid fa-lock text-xs text-indigo-400"></i>
-                                <span>Verificador DMARC</span>
-                            </a>
-                            <a href="/dkim-checker" class="flex items-center gap-2 px-4 py-2 text-sm text-slate-300 hover:bg-white/5 hover:text-brand-400 transition-colors">
-                                <i class="fa-solid fa-key text-xs text-teal-400"></i>
-                                <span>Verificador DKIM</span>
-                            </a>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-slate-950/95 border border-slate-800 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4 backdrop-blur-md">
+                            <!-- Columna 1: Herramientas -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">Herramientas Gratis</span>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-200 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors font-semibold">
+                                        <i class="fa-solid fa-server text-brand-500 text-[10px]"></i>
+                                        <span>Diagnóstico Completo</span>
+                                    </a>
+                                    <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-shield-halved text-blue-400 text-[10px]"></i>
+                                        <span>Verificador SPF</span>
+                                    </a>
+                                    <a href="/dmarc-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-lock text-indigo-400 text-[10px]"></i>
+                                        <span>Verificador DMARC</span>
+                                    </a>
+                                    <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-key text-teal-400 text-[10px]"></i>
+                                        <span>Verificador DKIM</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Guías -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">Guías de Seguridad</span>
+                                <div class="space-y-1">
+                                    <a href="/control-envios-dominio" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-200 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors font-semibold">
+                                        <i class="fa-solid fa-list-check text-blue-400 text-[10px]"></i>
+                                        <span>Control de Envíos</span>
+                                    </a>
+                                    <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-user-secret text-red-400 text-[10px]"></i>
+                                        <span>Detener Suplantación</span>
+                                    </a>
+                                    <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-shield-halved text-indigo-400 text-[10px]"></i>
+                                        <span>Guía DMARC PYMEs</span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
