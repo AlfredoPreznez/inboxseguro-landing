@@ -13,30 +13,61 @@ Pasos manuales fuera del repositorio:
 ## Google Analytics 4
 
 1. Crear propiedad GA4 para `inboxseguro.com`
-2. Insertar antes de `seo-analytics.js` en las páginas:
+2. Copiar el Measurement ID (`G-XXXXXXXX`)
+3. Editar [`analytics-config.js`](analytics-config.js):
 
-```html
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXX');
-</script>
-<script src="/seo-analytics.js" defer></script>
+```javascript
+window.INBOXSEGURO_ANALYTICS = {
+  ga4Id: 'G-TU-ID-REAL',
+  clarityId: 'TU_CLARITY_ID', // opcional
+};
 ```
+
+Las 15 páginas HTML cargan automáticamente:
+- `analytics-config.js`
+- `analytics-loader.js`
+- `seo-analytics.js`
+
+## Microsoft Clarity (opcional)
+
+1. Crear proyecto en [clarity.microsoft.com](https://clarity.microsoft.com)
+2. Pegar el Project ID en `analytics-config.js` → `clarityId`
+
+## Herramientas SEO recomendadas
+
+| Herramienta | Uso |
+|-------------|-----|
+| Google Search Console | Indexación, keywords, errores crawl |
+| Google Analytics 4 | Tráfico y conversiones |
+| Microsoft Clarity | Heatmaps y scroll |
+| Ahrefs Webmaster Tools / Ubersuggest | Posiciones y auditoría |
+| Google Alerts | Menciones "DMARC Chile", "seguridad correo PYME" |
+| Schema Markup Validator | Validar JSON-LD tras cambios |
 
 ## Eventos definidos (`seo-analytics.js`)
 
 | Evento | Cuándo |
 |--------|--------|
-| `checker_submit` | Tras ejecutar diagnóstico en checkers (`trackCheckerSubmit('spf')`) |
+| `checker_submit` | Tras ejecutar diagnóstico en checkers |
+| `checker_high_risk` | Dominio sin protección o con advertencias |
 | `cta_precios` | Clic en enlaces con `data-seo-event="cta_precios"` |
 | `cta_plataforma` | Clic en enlaces con `data-seo-event="cta_plataforma"` |
-| `cta_demo_whatsapp` | Clic en enlaces con `data-seo-event="cta_demo_whatsapp"` |
+| `cta_demo_whatsapp` | Clic en WhatsApp demo |
+| `cta_informe_demo` | Clic en "Ver informe de ejemplo" |
+| `cta_fundador` | Clic en Programa Fundadores |
 
 ## KPIs (90 días)
 
-- Todas las URLs Tier A/B indexadas
-- +30% impresiones vs. mes baseline
-- ≥5% de sesiones desde checkers con clic a plataforma o precios
+| Métrica | Día 30 | Día 90 |
+|---------|--------|--------|
+| Páginas indexadas (GSC) | 14+ | 17+ |
+| Impresiones orgánicas/mes | Baseline + 20% | Baseline + 50% |
+| Clics checkers → precios/demo | 3% | 5% |
+| Keywords en top 20 | 5 | 15 |
+| Leads vía diagnosis-notify (Discord) | 10 | 40 |
+
+## Páginas SEO nuevas (pivote due diligence)
+
+- `/seguridad-correo-proveedores`
+- `/informe-higiene-correo-corporativo`
+- `/due-diligence-ciberseguridad-pyme`

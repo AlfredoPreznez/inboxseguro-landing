@@ -24,4 +24,16 @@
     window.trackCheckerSubmit = function (toolName) {
         track('checker_submit', { tool_name: toolName || 'unknown' });
     };
+
+    window.trackCheckerHighRisk = function (domain) {
+        track('checker_high_risk', { domain: (domain || '').slice(0, 120) });
+    };
+
+    window.trackCtaInformeDemo = function () {
+        track('cta_informe_demo', {});
+    };
+
+    window.trackCtaFundador = function () {
+        track('cta_fundador', {});
+    };
 })();

@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Diagnóstico SPF, DKIM y DMARC Gratuito | InboxSeguro</title>
+    <title>Diagnóstico gratuito de seguridad de correo corporativo | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Diagnóstico completo de autenticación de correo gratis. Descubre quién puede enviar con tu dominio.">
+        content="Verifica gratis la seguridad de correo de tu dominio. Diagnóstico para PYMEs proveedoras que necesitan evidencia para clientes corporativos.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/domain-checker">
     <meta name="robots" content="index, follow">
@@ -17,18 +17,54 @@
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/domain-checker">
-    <meta property="og:title" content="Diagnóstico SPF, DKIM y DMARC Gratuito | InboxSeguro">
-    <meta property="og:description" content="Diagnóstico completo de autenticación de correo gratis. Descubre quién puede enviar con tu dominio.">
-    <meta property="og:image" content="https://www.inboxseguro.com/logo.png">
+    <meta property="og:title" content="Diagnóstico gratuito de seguridad de correo corporativo | InboxSeguro">
+    <meta property="og:description" content="Verifica la higiene de correo de tu dominio en segundos. Ideal para proveedores que necesitan evidencia para due diligence.">
+    <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Diagnóstico SPF, DKIM y DMARC Gratuito | InboxSeguro">
-    <meta name="twitter:description" content="Diagnóstico completo de autenticación de correo gratis. Descubre quién puede enviar con tu dominio.">
-    <meta name="twitter:image" content="https://www.inboxseguro.com/logo.png">
+    <meta name="twitter:title" content="Diagnóstico gratuito de seguridad de correo corporativo | InboxSeguro">
+    <meta name="twitter:description" content="Verifica la higiene de correo de tu dominio en segundos.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.6">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Diagnóstico de seguridad de correo corporativo",
+  "url": "https://www.inboxseguro.com/domain-checker",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Web",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "provider": { "@type": "Organization", "name": "InboxSeguro", "url": "https://www.inboxseguro.com" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Tu cliente corporativo te pidió evidencia de seguridad de correo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Empresas grandes y reguladas empiezan a exigir a sus proveedores demostrar que su correo corporativo está bajo control. Este diagnóstico gratuito muestra el estado inicial de tu dominio."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué diferencia hay entre este checker y InboxSeguro?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El checker valida DNS puntualmente. InboxSeguro monitorea de forma continua, inventaría todos los sistemas de envío y genera un informe auditable en PDF."
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body class="bg-slate-900 text-slate-200 antialiased relative min-h-screen flex flex-col">
@@ -524,6 +560,9 @@
 
                 resultsDiv.classList.remove('hidden');
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('domain');
+                if ((failCount > 0 || warnCount > 0) && typeof window.trackCheckerHighRisk === 'function') {
+                    window.trackCheckerHighRisk(dominio);
+                }
             } catch (err) {
                 console.error(err);
                 alert('Ocurrió un error al consultar el dominio via Google DoH.');
@@ -564,8 +603,8 @@
             } else {
                 container.classList.add('bg-red-900/40', 'border-red-500/30');
                 title.textContent = '🚨 Tu dominio está desprotegido.';
-                text.textContent = 'Cualquier persona puede enviar correos haciéndose pasar por tu empresa ahora mismo. Facturas falsas, instrucciones de pago, engaños a clientes. Activa la protección hoy.';
-                btn.textContent = 'Proteger mi dominio ahora →';
+                text.textContent = 'Si un cliente corporativo te pide evidencia de seguridad de correo, hoy no podrías demostrar control. Genera el informe completo con monitoreo continuo e inventario de sistemas de envío.';
+                btn.textContent = 'Generar informe completo con InboxSeguro →';
                 btn.classList.add('bg-red-600', 'hover:bg-red-500', 'text-white', 'shadow-red-600/30');
             }
         }
@@ -675,15 +714,8 @@
             iconClose.classList.add('hidden');
         }
     </script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXX');
-    </script>
+    <script src="/analytics-config.js"></script>
+    <script src="/analytics-loader.js"></script>
     <script src="/seo-analytics.js" defer></script>
 </body>
 

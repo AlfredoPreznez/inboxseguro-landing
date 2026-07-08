@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InboxSeguro | Vigilancia de envíos y seguridad del dominio (DMARC)</title>
+    <title>InboxSeguro | Seguridad de correo corporativo para proveedores en Chile</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="InboxSeguro vigila quién envía con tu dominio: inventario de servicios, alertas, bloqueo de suplantación y DMARC en español. Seguridad del correo para PYME en Chile.">
+        content="Demuestra que tu correo corporativo está bajo control. Inventario de sistemas de envío, alertas anti-suplantación e informe auditable para due diligence de clientes corporativos. PYMEs en Chile.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/">
     <meta name="robots" content="index, follow">
@@ -17,13 +17,13 @@
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/">
-    <meta property="og:title" content="InboxSeguro | Vigilancia de envíos y seguridad del dominio (DMARC)">
-    <meta property="og:description" content="InboxSeguro vigila quién envía con tu dominio: inventario de servicios, alertas, bloqueo de suplantación y DMARC en español. Seguridad del correo para PYME en Chile.">
-    <meta property="og:image" content="https://www.inboxseguro.com/logo.png">
+    <meta property="og:title" content="InboxSeguro | Seguridad de correo corporativo para proveedores">
+    <meta property="og:description" content="Visibilidad de quién envía con tu dominio e informe auditable para tus clientes corporativos. Seguridad de correo para PYMEs en Chile.">
+    <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="InboxSeguro | Vigilancia de envíos y seguridad del dominio (DMARC)">
-    <meta name="twitter:description" content="InboxSeguro vigila quién envía con tu dominio: inventario de servicios, alertas, bloqueo de suplantación y DMARC en español. Seguridad del correo para PYME en Chile.">
-    <meta name="twitter:image" content="https://www.inboxseguro.com/logo.png">
+    <meta name="twitter:title" content="InboxSeguro | Seguridad de correo corporativo para proveedores">
+    <meta name="twitter:description" content="Visibilidad de quién envía con tu dominio e informe auditable para tus clientes corporativos.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
@@ -35,12 +35,25 @@
   "@type": "Organization",
   "name": "InboxSeguro",
   "url": "https://www.inboxseguro.com",
-  "logo": "https://www.inboxseguro.com/logo.png",
+  "logo": "https://www.inboxseguro.com/og-image.png",
   "areaServed": {
     "@type": "Country",
     "name": "Chile"
   },
-  "description": "Seguridad del correo y vigilancia de envíos del dominio para PYME: inventario, alertas DMARC y bloqueo de suplantación."
+  "description": "Seguridad de correo corporativo para PYMEs: inventario de envíos, control anti-suplantación e informe auditable para due diligence."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "InboxSeguro",
+  "url": "https://www.inboxseguro.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://www.inboxseguro.com/domain-checker?domain={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
 }
 </script>
 </head>
@@ -101,6 +114,14 @@
                             <div>
                                 <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Guías de Seguridad</span>
                                 <div class="space-y-1">
+                                    <a href="/seguridad-correo-proveedores" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-building-shield text-blue-500 text-[10px]"></i>
+                                        <span>Seguridad para proveedores</span>
+                                    </a>
+                                    <a href="/informe-higiene-correo-corporativo" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-file-shield text-indigo-500 text-[10px]"></i>
+                                        <span>Informe de higiene</span>
+                                    </a>
                                     <a href="/control-envios-dominio" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
                                         <i class="fa-solid fa-list-check text-blue-500 text-[10px]"></i>
                                         <span>Control de Envíos</span>
@@ -161,6 +182,10 @@
                                 <!-- Guías Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Guías de Seguridad</span>
+                    <a href="/seguridad-correo-proveedores" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🏢 Seguridad para proveedores</a>
+                    <a href="/informe-higiene-correo-corporativo" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">📄 Informe de higiene</a>
                     <a href="/control-envios-dominio" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">📋 Control de Envíos</a>
                     <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()"
@@ -221,15 +246,15 @@
             <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
 
                 <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-8 leading-tight text-white tracking-tight">
-                    Hoy cualquiera podría enviar correos como tu empresa.<br>
-                    <span class="text-blue-500">Tú decides quién puede.</span>
+                    Demuestra que tu correo corporativo<br>
+                    <span class="text-blue-500">está bajo control.</span>
                 </h1>
 
                 <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
-                    InboxSeguro descubre automáticamente qué sistemas envían correos con tu dominio, 
-                    detecta cambios sospechosos y te ayuda a activar DMARC sin miedo a bloquear tus correos legítimos.
+                    Tus clientes corporativos empiezan a pedir evidencia de seguridad de correo.
+                    InboxSeguro te muestra qué sistemas envían con tu dominio y genera el informe que puedes entregar en tu due diligence.
                     <br><br>
-                    <span class="text-white font-medium">No vendemos reportes DMARC. Vendemos control operativo del correo de tu empresa.</span>
+                    <span class="text-white font-medium">Sin equipo de TI. Sin interpretar reportes técnicos.</span>
                 </p>
 
                 <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-20 items-center">
@@ -643,15 +668,8 @@
             iconClose.classList.add('hidden');
         }
     </script>
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXX"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXX');
-    </script>
+    <script src="/analytics-config.js"></script>
+    <script src="/analytics-loader.js"></script>
     <script src="/seo-analytics.js" defer></script>
 </body>
 
