@@ -6,6 +6,6 @@
  * Clarity: clarity.microsoft.com → Settings → Project ID
  */
 window.INBOXSEGURO_ANALYTICS = {
-  ga4Id: '',
+  ga4Id: 'G-LGCFCD3RF7',
   clarityId: '',
 };
