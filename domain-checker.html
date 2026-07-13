@@ -404,7 +404,7 @@
                     <div class="p-5 rounded-xl bg-gradient-to-br from-blue-900/40 to-indigo-900/30 border border-blue-500/30">
                         <h2 class="text-xl font-bold text-white mb-2">El checker valida DNS. InboxSeguro te da control operativo.</h2>
                         <p class="text-slate-300 text-sm leading-relaxed mb-4">
-                            Inventario de quién envía con tu dominio, alertas cuando aparece un servicio nuevo, bloqueo de suplantación e informes mensuales — sin leer reportes XML.
+                            Inventario de quién envía con tu dominio, alertas cuando aparece un servicio nuevo, guía para política DMARC e informes mensuales — sin leer reportes XML.
                         </p>
                         <div class="flex flex-col sm:flex-row flex-wrap gap-3">
                             <a href="/plataforma" data-seo-event="cta_plataforma" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm transition">Ver quién envía con tu dominio</a>
@@ -523,19 +523,19 @@
                 const scoreEl = document.getElementById('diagScore');
 
                 if (failCount === 0 && warnCount === 0 && infoCount === 0) {
-                    scoreEl.textContent = 'Protegido';
+                    scoreEl.textContent = 'p=reject';
                     scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400';
                 } else if (failCount === 0 && warnCount === 0 && infoCount > 0) {
-                    scoreEl.textContent = 'Protección Parcial';
+                    scoreEl.textContent = 'p=quarantine';
                     scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400';
                 } else if (failCount === 0) {
                     scoreEl.textContent = 'Mejorable';
                     scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
                 } else if (okCount > 0 || infoCount > 0) {
-                    scoreEl.textContent = 'Riesgo Parcial';
+                    scoreEl.textContent = 'Riesgo parcial';
                     scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
                 } else {
-                    scoreEl.textContent = 'Sin protección';
+                    scoreEl.textContent = 'Sin política fuerte';
                     scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400';
                 }
 
@@ -584,27 +584,27 @@
 
             if (failCount === 0 && warnCount === 0 && infoCount === 0) {
                 container.classList.add('bg-emerald-900/40', 'border-emerald-500/30');
-                title.textContent = '✅ Tu dominio está completamente protegido.';
-                text.textContent = 'Nadie puede enviar correos a tus clientes haciéndose pasar por ti. Mantén esa protección activa con monitoreo continuo.';
-                btn.textContent = 'Activar Monitoreo Continuo →';
+                title.textContent = 'Tu dominio publica p=reject (enforcement DMARC).';
+                text.textContent = 'Los receptores que respetan DMARC pueden rechazar correo no autenticado. InboxSeguro no intercepta el tráfico: monitorea reportes y te ayuda a mantener la configuración.';
+                btn.textContent = 'Activar monitoreo continuo →';
                 btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'text-white', 'shadow-emerald-600/30');
             } else if (failCount === 0 && warnCount === 0 && infoCount > 0) {
                 container.classList.add('bg-blue-900/40', 'border-blue-500/30');
-                title.textContent = '🛡️ Tu dominio tiene protección parcial.';
-                text.textContent = 'Los correos fraudulentos están siendo enviados a la carpeta de spam, pero aún podrían llegar a tus clientes. Para bloquearlos por completo, debes escalar tu política a "reject".';
-                btn.textContent = 'Subir a protección máxima (p=reject) →';
+                title.textContent = 'Política DMARC en cuarentena (p=quarantine).';
+                text.textContent = 'Los receptores pueden aislar correo no autenticado. Para rechazo completo en DNS, publica p=reject cuando tu inventario esté listo.';
+                btn.textContent = 'Guía hacia p=reject →';
                 btn.classList.add('bg-blue-600', 'hover:bg-blue-500', 'text-white', 'shadow-blue-600/30');
             } else if (failCount === 0) {
                 container.classList.add('bg-amber-900/40', 'border-amber-500/30');
-                title.textContent = '⚠️ Tu dominio tiene protección incompleta.';
-                text.textContent = 'Detectamos configuraciones que aún permiten correos fraudulentos. Tu identidad corporativa no está completamente blindada — un atacante podría suplantarte ante tus clientes o proveedores.';
-                btn.textContent = 'Completar mi protección →';
+                title.textContent = 'Configuración incompleta o en monitoreo.';
+                text.textContent = 'Detectamos registros mejorables. Con p=none solo hay visibilidad; el rechazo de impostores requiere cuarentena o reject en tu DNS.';
+                btn.textContent = 'Completar configuración →';
                 btn.classList.add('bg-amber-600', 'hover:bg-amber-500', 'text-white', 'shadow-amber-600/30');
             } else {
                 container.classList.add('bg-red-900/40', 'border-red-500/30');
-                title.textContent = '🚨 Tu dominio está desprotegido.';
-                text.textContent = 'Hoy no tienes visibilidad completa ni un informe que demuestre control. InboxSeguro monitorea tus envíos y genera el documento cuando lo necesites.';
-                btn.textContent = 'Generar informe completo con InboxSeguro →';
+                title.textContent = 'Faltan piezas clave de autenticación.';
+                text.textContent = 'Hoy no tienes visibilidad completa ni una política DMARC fuerte. InboxSeguro monitorea tus envíos vía reportes y te guía a publicar SPF/DKIM/DMARC.';
+                btn.textContent = 'Ver InboxSeguro →';
                 btn.classList.add('bg-red-600', 'hover:bg-red-500', 'text-white', 'shadow-red-600/30');
             }
         }
@@ -620,11 +620,11 @@
             const policyMatch = record.match(/p=([^;\s]+)/);
             const policy = policyMatch ? policyMatch[1].toLowerCase() : 'none';
             if (policy === 'none') {
-                return { status: 'warn', label: 'Solo monitoreo', text: 'p=none: ves los ataques pero no los bloqueas. Activa p=quarantine para proteger a tus clientes.' };
+                return { status: 'warn', label: 'Solo monitoreo', text: 'p=none: recibes informes pero los receptores no rechazan impostores. Publica p=quarantine cuando el inventario esté listo.' };
             } else if (policy === 'quarantine') {
-                return { status: 'info', label: 'Protección parcial', text: 'p=quarantine: correos fraudulentos van a spam. Escala a p=reject para máxima seguridad.' };
+                return { status: 'info', label: 'Cuarentena', text: 'p=quarantine: receivers pueden aislar correo no autenticado. Escala a p=reject cuando corresponda.' };
             } else if (policy === 'reject') {
-                return { status: 'ok', label: 'Óptimo', text: 'p=reject: los correos fraudulentos son bloqueados completamente. Protección máxima.' };
+                return { status: 'ok', label: 'p=reject', text: 'p=reject: receivers que respetan DMARC pueden rechazar correo no autenticado.' };
             }
             return { status: 'ok', label: 'Configurado', text: record };
         }

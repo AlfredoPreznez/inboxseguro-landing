@@ -47,7 +47,7 @@
       "name": "¿Qué pasa si me suplantan el dominio?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Detectamos envíos sin SPF/DKIM y puedes bloquear orígenes desconocidos."
+        "text": "Detectamos envíos sin SPF/DKIM válidos, los marcamos en el inventario y te ayudamos a aplicar políticas DMARC. El rechazo del correo lo aplican los receptores según tu DNS (p=quarantine o p=reject)."
       }
     },
     {
@@ -305,7 +305,7 @@
                             ¿Qué pasa si me suplantan el dominio?
                         </h3>
                         <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            InboxSeguro no detiene el ataque en tiempo real: analiza tus informes DMARC. Si un origen envía sin SPF ni DKIM válidos, lo marcamos como suplantación, te alertamos y lo dejamos bloqueado en el inventario (no es un remitente autorizado). Que el correo falso no llegue al destinatario depende de tu política DMARC (cuarentena o rechazo). Si no reconoces el sistema, mantén el bloqueo.
+                            InboxSeguro no detiene el ataque en tiempo real: analiza tus informes DMARC. Si un origen envía sin SPF ni DKIM válidos, lo marcamos como no autorizado en el inventario, te alertamos y te ayudamos a gestionar la decisión. Que el correo falso no llegue al destinatario depende de tu política DMARC (cuarentena o rechazo), aplicada por los servidores receptores. Si no reconoces el sistema, mantenlo marcado como no autorizado y avanza la política DNS.
                             <a href="/suplantacion-correo-empresa" class="text-brand-600 hover:underline font-medium">Más sobre suplantación corporativa</a>.
                         </p>
                     </div>
@@ -340,7 +340,7 @@
             <div class="max-w-4xl mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold text-slate-900 mb-4">¿Aún tienes preguntas técnicas?</h2>
                 <p class="text-slate-600 mb-8 max-w-xl mx-auto">
-                    Conversemos directamente. Nuestro equipo técnico responderá tus dudas en menos de 24 horas.
+                    Conversemos directamente. Soporte responderá tus dudas en menos de 24 horas hábiles.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="/contacto" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">

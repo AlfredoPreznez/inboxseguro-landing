@@ -18,11 +18,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/plataforma">
     <meta property="og:title" content="Plataforma de vigilancia de envíos del dominio | InboxSeguro">
-    <meta property="og:description" content="InboxSeguro: inventario de quién envía con tu dominio, alertas DMARC, bloqueo de suplantación e informes para gerencia. Seguridad del dominio sin equipo IT.">
+    <meta property="og:description" content="InboxSeguro: inventario de quién envía con tu dominio, alertas DMARC, guía para política DMARC e informes para gerencia. Seguridad del dominio sin equipo IT.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Plataforma de vigilancia de envíos del dominio | InboxSeguro">
-    <meta name="twitter:description" content="InboxSeguro: inventario de quién envía con tu dominio, alertas DMARC, bloqueo de suplantación e informes para gerencia. Seguridad del dominio sin equipo IT.">
+    <meta name="twitter:description" content="InboxSeguro: inventario de quién envía con tu dominio, alertas DMARC, guía para política DMARC e informes para gerencia. Seguridad del dominio sin equipo IT.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -41,7 +41,7 @@
     "priceCurrency": "CLP",
     "url": "https://www.inboxseguro.com/precios"
   },
-  "description": "Plataforma de vigilancia de envíos del dominio con inventario automático, alertas DMARC y bloqueo de suplantación."
+  "description": "Plataforma de vigilancia de envíos del dominio con inventario automático, alertas DMARC e inventario de remitentes."
 }
 </script>
 </head>
@@ -223,7 +223,7 @@
                         <p class="text-slate-600 mb-6 leading-relaxed">Al entrar ves estado de control, sistemas detectados, responsables y cambios recientes. Sin abrir XML ni interpretar reportes técnicos.</p>
                         <ul class="space-y-4 text-sm text-slate-700">
                             <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span><strong>Sistemas de envío</strong> con rango mensual, responsable y sensibilidad de alertas.</span></li>
-                            <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span><strong>Fuentes detectadas</strong> para autorizar, bloquear o marcar reenvío.</span></li>
+                            <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span><strong>Fuentes detectadas</strong> para autorizar, marcar como no autorizado o marcar reenvío.</span></li>
                             <li class="flex gap-3"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i><span><strong>Analítica semanal</strong> opcional para consultar tendencias sin ruido de alertas.</span></li>
                         </ul>
                     </div>
@@ -239,7 +239,7 @@
                             </div>
                             <div class="rounded-xl bg-emerald-50 border border-emerald-200 p-4 text-center">
                                 <p class="text-2xl font-black text-emerald-700">8</p>
-                                <p class="text-[10px] uppercase font-bold text-emerald-700/80 mt-1">Bloqueados</p>
+                                <p class="text-[10px] uppercase font-bold text-emerald-700/80 mt-1">No autorizados</p>
                             </div>
                         </div>
                         <div class="space-y-2 text-sm">
@@ -253,7 +253,7 @@
                             </div>
                             <div class="flex justify-between items-center bg-white rounded-lg border border-slate-200 px-4 py-3">
                                 <span class="font-semibold text-slate-800">Infraestructura desconocida</span>
-                                <span class="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-1 rounded-full">Bloqueado</span>
+                                <span class="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-1 rounded-full">No autorizado</span>
                             </div>
                         </div>
                     </div>
@@ -267,8 +267,8 @@
                 <div class="grid lg:grid-cols-2 gap-12 items-center">
 
                     <div class="order-2 lg:order-1">
-                        <h2 class="text-3xl font-bold mb-6 text-slate-900">Toma medidas al instante para proteger tu identidad.</h2>
-                        <p class="text-lg text-slate-600 mb-6 font-normal">Una vez que tienes visibilidad, la plataforma te indica exactamente qué configurar para bloquear a los emisores no autorizados y asegurar los legítimos.</p>
+                        <h2 class="text-3xl font-bold mb-6 text-slate-900">Toma medidas al instante para reducir el riesgo de suplantación.</h2>
+                        <p class="text-lg text-slate-600 mb-6 font-normal">Una vez que tienes visibilidad, la plataforma te indica exactamente qué configurar en DNS (SPF, DKIM, DMARC) para autorizar emisores legítimos y que los receptores puedan rechazar los no autorizados.</p>
                         <ul class="space-y-8 mb-8">
                             <li class="flex items-start gap-4">
                                 <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm h-10 w-10 flex items-center justify-center brand-accent flex-shrink-0">
@@ -326,7 +326,7 @@
                             <i class="fa-solid fa-paper-plane text-lg"></i>
                         </div>
                         <h3 class="font-bold text-base text-slate-900 mb-2">Inventario y decisiones</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Autoriza proveedores legítimos, bloquea suplantación y separa reenvíos de sistemas que realmente envían en tu nombre.</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">Autoriza proveedores legítimos, marca orígenes no autorizados y separa reenvíos de sistemas que realmente envían en tu nombre.</p>
                     </div>
 
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
@@ -341,8 +341,8 @@
                         <div class="w-11 h-11 rounded-xl bg-red-100 flex items-center justify-center mb-4 text-red-600 group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-ban text-lg"></i>
                         </div>
-                        <h3 class="font-bold text-base text-slate-900 mb-2">Suplantación bloqueada</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Orígenes con SPF y DKIM fallidos se marcan y bloquean automáticamente. KPI mensual visible en el panel.</p>
+                        <h3 class="font-bold text-base text-slate-900 mb-2">Intentos de suplantación detectados</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">Orígenes con fallos SPF o DKIM se identifican automáticamente y se marcan para revisión y aplicación de políticas. KPI mensual visible en el panel.</p>
                     </div>
 
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
