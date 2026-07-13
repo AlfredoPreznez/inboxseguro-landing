@@ -1,0 +1,8 @@
+name = "inboxseguro-dns-proxy"
+main = "cloudflare-worker/dns-proxy.js"
+compatibility_date = "2024-01-01"
+
+routes = [
+  { pattern = "www.inboxseguro.com/api/dns*", zone_name = "inboxseguro.com" },
+  { pattern = "inboxseguro.com/api/dns*", zone_name = "inboxseguro.com" }
+]

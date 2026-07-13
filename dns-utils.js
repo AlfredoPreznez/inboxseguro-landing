@@ -1,6 +1,24 @@
-// DNS lookup helpers: parallel DoH resolvers with session cache
+// DNS lookup: proxy same-origin (iOS Safari) → DoH público en paralelo
 (function () {
-    const DNS_RESOLVERS = [
+    const PROXY_ENDPOINTS = [
+        {
+            name: 'SameOrigin',
+            buildUrl: function (name, type) {
+                return '/api/dns?name=' + encodeURIComponent(name) + '&type=' + type;
+            },
+            headers: {}
+        },
+        {
+            name: 'Panel',
+            buildUrl: function (name, type) {
+                return 'https://panel.inboxseguro.com/api/public/dns-resolve?name=' +
+                    encodeURIComponent(name) + '&type=' + type;
+            },
+            headers: {}
+        }
+    ];
+
+    const DOH_RESOLVERS = [
         {
             name: 'Cloudflare',
             buildUrl: function (name, type) {
@@ -24,24 +42,26 @@
         }
     ];
 
-    const DNS_TIMEOUT_MS = 4000;
-    let preferredResolverIndex = null;
+    const DNS_TIMEOUT_MS = 5000;
+    let preferredMode = null; // 'proxy' | 'doh'
+    let preferredDohIndex = null;
 
-    function queryResolver(resolver, name, type) {
+    function queryEndpoint(endpoint, name, type) {
         const controller = new AbortController();
         const timeoutId = setTimeout(function () { controller.abort(); }, DNS_TIMEOUT_MS);
 
-        return fetch(resolver.buildUrl(name, type), {
-            headers: resolver.headers,
-            signal: controller.signal
+        return fetch(endpoint.buildUrl(name, type), {
+            headers: endpoint.headers,
+            signal: controller.signal,
+            credentials: 'omit'
         }).then(function (res) {
             if (!res.ok) {
-                throw new Error(resolver.name + ' respondió HTTP ' + res.status);
+                throw new Error(endpoint.name + ' respondió HTTP ' + res.status);
             }
             return res.json();
         }).then(function (data) {
             if (typeof data.Status !== 'number') {
-                throw new Error(resolver.name + ' devolvió una respuesta inválida');
+                throw new Error(endpoint.name + ' devolvió una respuesta inválida');
             }
             return data;
         }).finally(function () {
@@ -70,29 +90,58 @@
         });
     }
 
-    async function fetchDNS(name, type) {
-        if (preferredResolverIndex !== null) {
+    async function fetchViaProxy(name, type) {
+        const attempts = PROXY_ENDPOINTS.map(function (endpoint) {
+            return queryEndpoint(endpoint, name, type);
+        });
+        return firstSuccessful(attempts);
+    }
+
+    async function fetchViaDoh(name, type) {
+        if (preferredDohIndex !== null) {
             try {
-                return await queryResolver(DNS_RESOLVERS[preferredResolverIndex], name, type);
+                return await queryEndpoint(DOH_RESOLVERS[preferredDohIndex], name, type);
             } catch (err) {
-                console.warn('Resolver preferido falló, reintentando en paralelo:', err);
-                preferredResolverIndex = null;
+                console.warn('DoH preferido falló:', err);
+                preferredDohIndex = null;
             }
         }
 
-        const attempts = DNS_RESOLVERS.map(function (resolver, index) {
-            return queryResolver(resolver, name, type).then(function (data) {
-                preferredResolverIndex = index;
+        const attempts = DOH_RESOLVERS.map(function (resolver, index) {
+            return queryEndpoint(resolver, name, type).then(function (data) {
+                preferredDohIndex = index;
                 return data;
             });
         });
 
-        try {
-            return await firstSuccessful(attempts);
-        } catch (err) {
-            console.warn('Todos los resolvers DNS fallaron para', name, err);
-            throw err;
+        return firstSuccessful(attempts);
+    }
+
+    async function fetchDNS(name, type) {
+        if (preferredMode === 'doh') {
+            return fetchViaDoh(name, type);
         }
+
+        if (preferredMode !== 'proxy') {
+            try {
+                const data = await fetchViaProxy(name, type);
+                preferredMode = 'proxy';
+                return data;
+            } catch (err) {
+                console.warn('Proxy DNS no disponible, probando DoH directo:', err);
+            }
+        } else {
+            try {
+                return await fetchViaProxy(name, type);
+            } catch (err) {
+                console.warn('Proxy DNS falló, probando DoH directo:', err);
+                preferredMode = null;
+            }
+        }
+
+        const data = await fetchViaDoh(name, type);
+        preferredMode = 'doh';
+        return data;
     }
 
     function extractTXT(data) {
@@ -103,7 +152,6 @@
     }
 
     async function checkDKIM(domain) {
-        // Fail fast if DNS lookups are unavailable (avoids scanning every selector)
         try {
             await fetchDNS('google._domainkey.' + domain, 'TXT');
         } catch (err) {
