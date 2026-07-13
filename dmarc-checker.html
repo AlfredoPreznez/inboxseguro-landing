@@ -439,9 +439,6 @@
             loadingDiv.classList.remove('hidden');
 
             try {
-                // Analysis delay for realistic feel
-                await new Promise(r => setTimeout(r, 1500));
-
                 const dmarcData = await fetchDNS('_dmarc.' + dominio, 'TXT');
                 const dmarcRecords = extractTXT(dmarcData);
                 const dmarcRecord = dmarcRecords.find(r => r.startsWith('v=DMARC1'));

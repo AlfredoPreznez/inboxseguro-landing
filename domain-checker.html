@@ -485,9 +485,6 @@
             loadingDiv.classList.remove('hidden');
 
             try {
-                // Simulate analysis delay for better UX
-                await new Promise(r => setTimeout(r, 2000));
-
                 const [spfData, dmarcData, dkimData] = await Promise.all([
                     fetchDNS(dominio, 'TXT'),
                     fetchDNS('_dmarc.' + dominio, 'TXT'),

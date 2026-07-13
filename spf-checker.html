@@ -420,9 +420,6 @@
             loadingDiv.classList.remove('hidden');
 
             try {
-                // Analysis delay for realistic feel
-                await new Promise(r => setTimeout(r, 1500));
-
                 const spfData = await fetchDNS(dominio, 'TXT');
                 const spfRecords = extractTXT(spfData);
                 const spfRecord = spfRecords.find(r => r.startsWith('v=spf1'));

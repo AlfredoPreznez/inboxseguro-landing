@@ -1,57 +1,98 @@
-// DNS lookup helpers with resolver fallbacks (Google DoH → Cloudflare DoH)
+// DNS lookup helpers: parallel DoH resolvers with session cache
 (function () {
     const DNS_RESOLVERS = [
-        {
-            name: 'Google',
-            buildUrl: function (name, type) {
-                return 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type;
-            },
-            headers: {}
-        },
         {
             name: 'Cloudflare',
             buildUrl: function (name, type) {
                 return 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(name) + '&type=' + type;
             },
             headers: { Accept: 'application/dns-json' }
+        },
+        {
+            name: 'AliDNS',
+            buildUrl: function (name, type) {
+                return 'https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type;
+            },
+            headers: {}
+        },
+        {
+            name: 'Google',
+            buildUrl: function (name, type) {
+                return 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type;
+            },
+            headers: {}
         }
     ];
 
-    const DNS_TIMEOUT_MS = 8000;
+    const DNS_TIMEOUT_MS = 4000;
+    let preferredResolverIndex = null;
+
+    function queryResolver(resolver, name, type) {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(function () { controller.abort(); }, DNS_TIMEOUT_MS);
+
+        return fetch(resolver.buildUrl(name, type), {
+            headers: resolver.headers,
+            signal: controller.signal
+        }).then(function (res) {
+            if (!res.ok) {
+                throw new Error(resolver.name + ' respondió HTTP ' + res.status);
+            }
+            return res.json();
+        }).then(function (data) {
+            if (typeof data.Status !== 'number') {
+                throw new Error(resolver.name + ' devolvió una respuesta inválida');
+            }
+            return data;
+        }).finally(function () {
+            clearTimeout(timeoutId);
+        });
+    }
+
+    function firstSuccessful(promises) {
+        if (typeof Promise.any === 'function') {
+            return Promise.any(promises);
+        }
+
+        return new Promise(function (resolve, reject) {
+            var rejected = 0;
+            var errors = [];
+
+            promises.forEach(function (promise) {
+                Promise.resolve(promise).then(resolve).catch(function (err) {
+                    errors.push(err);
+                    rejected += 1;
+                    if (rejected === promises.length) {
+                        reject(errors[0] || new Error('No hay resolvers DNS disponibles'));
+                    }
+                });
+            });
+        });
+    }
 
     async function fetchDNS(name, type) {
-        let lastError = null;
-
-        for (let i = 0; i < DNS_RESOLVERS.length; i++) {
-            const resolver = DNS_RESOLVERS[i];
-            const controller = new AbortController();
-            const timeoutId = setTimeout(function () { controller.abort(); }, DNS_TIMEOUT_MS);
-
+        if (preferredResolverIndex !== null) {
             try {
-                const res = await fetch(resolver.buildUrl(name, type), {
-                    headers: resolver.headers,
-                    signal: controller.signal
-                });
-                clearTimeout(timeoutId);
-
-                if (!res.ok) {
-                    throw new Error(resolver.name + ' respondió HTTP ' + res.status);
-                }
-
-                const data = await res.json();
-                if (typeof data.Status !== 'number') {
-                    throw new Error(resolver.name + ' devolvió una respuesta inválida');
-                }
-
-                return data;
+                return await queryResolver(DNS_RESOLVERS[preferredResolverIndex], name, type);
             } catch (err) {
-                clearTimeout(timeoutId);
-                lastError = err;
-                console.warn('Resolver DNS falló (' + resolver.name + '):', err);
+                console.warn('Resolver preferido falló, reintentando en paralelo:', err);
+                preferredResolverIndex = null;
             }
         }
 
-        throw lastError || new Error('No hay resolvers DNS disponibles');
+        const attempts = DNS_RESOLVERS.map(function (resolver, index) {
+            return queryResolver(resolver, name, type).then(function (data) {
+                preferredResolverIndex = index;
+                return data;
+            });
+        });
+
+        try {
+            return await firstSuccessful(attempts);
+        } catch (err) {
+            console.warn('Todos los resolvers DNS fallaron para', name, err);
+            throw err;
+        }
     }
 
     function extractTXT(data) {
@@ -62,6 +103,13 @@
     }
 
     async function checkDKIM(domain) {
+        // Fail fast if DNS lookups are unavailable (avoids scanning every selector)
+        try {
+            await fetchDNS('google._domainkey.' + domain, 'TXT');
+        } catch (err) {
+            throw err;
+        }
+
         const selectors = [
             'google', 'default', 'selector1', 'selector2', 'k1', 'k2', 'k3', 'dkim',
             'mail', 'zoho', 's1', 's2', 'pic', 'a', 'b', 'c', 'fm1', 'fm2', 'fm3',
