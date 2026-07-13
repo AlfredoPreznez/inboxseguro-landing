@@ -9,6 +9,14 @@
             headers: {}
         },
         {
+            name: 'Worker',
+            buildUrl: function (name, type) {
+                return 'https://inboxseguro-dns-proxy.alfredo-9d8.workers.dev/api/dns?name=' +
+                    encodeURIComponent(name) + '&type=' + type;
+            },
+            headers: {}
+        },
+        {
             name: 'Panel',
             buildUrl: function (name, type) {
                 return 'https://panel.inboxseguro.com/api/public/dns-resolve?name=' +
