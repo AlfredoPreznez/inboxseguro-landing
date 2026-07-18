@@ -40,17 +40,16 @@
         </div>
 
         <h1 class="text-3xl font-bold mb-2 text-slate-900">Términos y Condiciones de Servicio</h1>
-        <p class="text-slate-500 mb-8 text-sm">Última actualización: 18 de mayo de 2026</p>
+        <p class="text-slate-500 mb-8 text-sm">Última actualización: 17 de julio de 2026</p>
 
         <div class="prose prose-slate max-w-none text-sm text-justify leading-relaxed">
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">1. Alcance del Servicio</h3>
             <p>InboxSeguro<sup class="text-[10px] text-slate-400">TM</sup> ofrece <strong>monitoreo y asistencia técnica automatizada</strong> para dominios de clientes, incluyendo:</p>
             <ul class="list-disc pl-5 my-2 space-y-1">
-                <li>Generación de recomendaciones de registros DNS (SPF, DKIM, DMARC) con guías paso a paso para implementación manual por el cliente.</li>
-                <li>Monitoreo de reportes TLS (TLS Reporting) para <strong>monitorear el estado de seguridad y encriptación</strong> de las conexiones.</li>
-                <li>Análisis de reportes RUA (DMARC) para evaluar la autenticación y políticas aplicadas al dominio.</li>
-                <li>Generación de reportes consolidados y alertas a través de correo electrónico o canales externos como Discord.</li>
+                <li>Generación de recomendaciones de registros DNS (SPF, DKIM, DMARC) mediante la sección Configuración DNS, con guías paso a paso para implementación manual por el cliente.</li>
+                <li>Análisis de reportes RUA (DMARC) para evaluar la autenticación y políticas aplicadas al dominio, e identificar quién envía correo en nombre de la empresa.</li>
+                <li>Generación de reportes consolidados y alertas a través de correo electrónico y del panel de control (incluidas notificaciones y asistencia dentro de la plataforma).</li>
             </ul>
             <p class="bg-yellow-50 p-4 rounded-lg border border-yellow-100 text-slate-700 mt-4">
                 <span class="font-semibold text-yellow-700">Importante:</span> InboxSeguro no modifica automáticamente la configuración de DNS ni los servidores de correo; todas las acciones sugeridas deben ser ejecutadas por el cliente. El Servicio se limita a monitoreo, asistencia técnica y formación en la plataforma; InboxSeguro no es un proveedor de correo electrónico ni un filtro antispam.
@@ -58,7 +57,7 @@
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">2. Asistencia Técnica y Soporte</h3>
             <ul class="list-disc pl-5 my-2 space-y-1">
-                <li>InboxSeguro proporciona guías paso a paso dentro de la plataforma (Asistente DNS) para enseñar al cliente cómo implementar los registros técnicos.</li>
+                <li>InboxSeguro proporciona guías paso a paso dentro de la plataforma (Configuración DNS) para enseñar al cliente cómo implementar los registros técnicos.</li>
                 <li>El cliente cuenta con un canal de soporte vía email o ticket, exclusivamente para resolver dudas sobre el uso de la plataforma y la interpretación de los reportes entregados.</li>
             </ul>
 
@@ -73,6 +72,7 @@
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">4. Responsabilidades y Limitación de Responsabilidad</h3>
             <p>InboxSeguro proporciona supervisión técnica y asistencia automatizada, pero no garantiza la entregabilidad de los correos, ya que esta depende de múltiples factores externos.</p>
+            <p class="mt-3">En particular, el cliente reconoce que la implementación de políticas DMARC estrictas (p=quarantine o p=reject) puede resultar en el bloqueo o cuarentena de correos legítimos si no todos los sistemas de envío del dominio están correctamente identificados y autorizados. La decisión de aplicar estas políticas es exclusiva responsabilidad del cliente, quien deberá revisar el inventario de sistemas de envío y completar los pasos de confirmación que la plataforma presente antes de proceder.</p>
             <ul class="list-disc pl-5 my-2 space-y-1">
                 <li><strong>Daños Indirectos:</strong> InboxSeguro no será responsable por daños indirectos, incidentales o consecuenciales, incluyendo pérdida de negocio o lucro cesante.</li>
                 <li><strong>Responsabilidad Máxima:</strong> La responsabilidad total de InboxSeguro se limita al monto efectivamente pagado por el cliente por el Servicio durante los últimos tres (3) meses.</li>
@@ -88,7 +88,7 @@
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">6. Privacidad y Datos</h3>
             <ul class="list-disc pl-5 my-2 space-y-1">
-                <li>Se procesan datos de dominios monitoreados, registros DNS públicos, metadatos de reportes TLS y RUA, e información de contacto necesaria para notificaciones.</li>
+                <li>Se procesan datos de dominios monitoreados, registros DNS públicos, metadatos de reportes RUA (DMARC), e información de contacto necesaria para notificaciones.</li>
                 <li>InboxSeguro puede utilizar proveedores externos para envío de alertas y supervisión de procesos, limitando la comunicación de datos a lo estrictamente necesario. Los proveedores actúan como encargados de tratamiento y procesan los datos únicamente en nombre de InboxSeguro.</li>
                 <li>InboxSeguro no accede al contenido privado de los correos electrónicos.</li>
                 <li>El tratamiento de datos se rige por la <strong>Política de Privacidad</strong>, que forma parte integral de estos Términos.</li>

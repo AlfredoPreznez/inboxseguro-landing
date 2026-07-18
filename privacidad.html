@@ -47,7 +47,7 @@
         </div>
 
         <h1 class="text-3xl font-bold mb-2 text-slate-900">Política de Privacidad</h1>
-        <p class="text-slate-500 mb-8 text-sm">Última actualización: 18 de mayo de 2026</p>
+        <p class="text-slate-500 mb-8 text-sm">Última actualización: 17 de julio de 2026</p>
 
         <div class="prose prose-slate max-w-none text-sm text-justify leading-relaxed">
 
@@ -58,10 +58,10 @@
             <ul class="list-disc pl-5 my-2 space-y-1">
                 <li><strong>Datos de Cuenta:</strong> Información necesaria para la creación y gestión de la cuenta, como correo electrónico de contacto y datos básicos de cuenta.</li>
                 <li><strong>Datos Técnicos del Dominio:</strong> Información pública de los registros DNS de tu dominio (SPF, DKIM, DMARC).</li>
-                <li><strong>Reportes Técnicos:</strong> Reportes agregados RUA (DMARC) y metadatos de reportes TLS-RPT sobre el estado de autenticación y cifrado del correo.</li>
+                <li><strong>Reportes Técnicos:</strong> Reportes agregados RUA (DMARC) sobre el estado de autenticación y orígenes de envío del correo.</li>
             </ul>
 
-            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">2. Tratamiento de Reportes Técnicos (RUA y TLS)</h3>
+            <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">2. Tratamiento de Reportes Técnicos (RUA)</h3>
             <p>Este es el núcleo del servicio.</p>
             <p class="mt-2">InboxSeguro procesa exclusivamente reportes agregados y metadatos técnicos.</p>
             <div class="bg-blue-50 p-4 rounded-lg border border-blue-100 text-slate-700 mt-4 mb-4">
@@ -77,7 +77,6 @@
                 <li>Dominio de envío</li>
                 <li>Resultados de autenticación (pass/fail)</li>
                 <li>Volumen de mensajes</li>
-                <li>Estado de cifrado TLS</li>
             </ul>
             <p class="mt-4"><strong>Lo que NO vemos:</strong></p>
             <ul class="list-disc pl-5 my-2 space-y-1">
@@ -121,22 +120,24 @@
             <p class="mt-2">El usuario puede solicitar acceso, rectificación o eliminación de sus datos contactando a soporte.</p>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">8. Uso de Asistencia Automatizada (IA)</h3>
-            <p>InboxSeguro utiliza funciones de asistencia automatizada para interpretar y explicar información técnica relacionada con el estado del dominio.</p>
-            <p class="mt-2">Estas funciones incluyen:</p>
+            <p>InboxSeguro utiliza funciones de asistencia automatizada para interpretar y explicar información técnica relacionada con el estado del dominio. Estas funciones se basan en datos ya medidos o recopilados por el sistema (o en documentación pública), y no generan datos técnicos nuevos ni ejecutan cambios por sí solas.</p>
+            <p class="mt-2">Las funciones específicas son:</p>
             <ul class="list-disc pl-5 my-2 space-y-1">
-                <li>Explicación de configuraciones DNS (SPF, DKIM, DMARC) y su estado actual.</li>
-                <li>Interpretación de reportes RUA (DMARC) cuando el usuario lo solicita de forma individual.</li>
-                <li>Generación de recomendaciones técnicas y guías paso a paso para ayudar a los usuarios a configurar correctamente sus registros DNS.</li>
+                <li><strong>Interpretación de reportes RUA (DMARC):</strong> explica el contenido de reportes agregados ya recopilados por el sistema.</li>
+                <li><strong>Recomendaciones sobre el nivel de política DMARC:</strong> evalúa si el dominio cumple los requisitos técnicos definidos por InboxSeguro (por ejemplo, tiempo de monitoreo, volumen de reportes analizados y alineación SPF/DKIM) y sugiere si es recomendable avanzar a <code>p=quarantine</code> o <code>p=reject</code>. La recomendación es informativa; la implementación la realiza el usuario en el panel.</li>
+                <li><strong>Explicación de alertas de volumen de envío:</strong> cuando un sistema de envío (por ejemplo, Zoho Mail o Resend) supera o se proyecta a superar el rango mensual configurado por el usuario, la asistencia explica la alerta citando los datos medidos (volumen actual, rango configurado y proyección estimada a fin de mes) y sugiere caminos posibles, como ajustar el rango en Actividad de envío si el volumen es esperado, o revisar las estadísticas del proveedor si no lo es. No ajusta el rango por sí sola ni determina de forma autónoma si el volumen es «normal» o «anómalo»: presenta los datos y opciones para que el usuario decida.</li>
+                <li><strong>Guías de configuración DNS:</strong> proporciona instrucciones basadas en documentación pública de proveedores DNS (por ejemplo, Cloudflare o GoDaddy) para asistir al cliente en la publicación manual de sus propios registros. No accede, modifica ni ejecuta cambios en el panel DNS del cliente.</li>
             </ul>
-            <p class="mt-2">Dicha asistencia puede complementarse con flujos guiados dentro de la plataforma para facilitar la implementación manual de configuraciones por parte del cliente.</p>
-            <p class="mt-4"><strong>La asistencia automatizada:</strong></p>
+            <p class="mt-4"><strong>La asistencia automatizada NO hace lo siguiente:</strong></p>
             <ul class="list-disc pl-5 my-2 space-y-1">
                 <li>No modifica automáticamente registros DNS ni infraestructura del cliente.</li>
                 <li>No ejecuta cambios en sistemas externos.</li>
                 <li>No analiza contenido de correos electrónicos ni mensajes individuales.</li>
-                <li>No opera de forma autónoma sin intervención del usuario.</li>
+                <li>No genera datos técnicos nuevos: solo interpreta y organiza información ya recopilada por el sistema o disponible públicamente.</li>
+                <li>No decide de forma autónoma si un volumen o patrón es «normal» o «anómalo»; presenta los datos medidos y dos o más opciones para que el usuario decida.</li>
+                <li>No opera sin intervención del usuario.</li>
             </ul>
-            <p class="mt-2">Su objetivo es mejorar la comprensión y facilitar la correcta configuración de la infraestructura de correo del cliente.</p>
+            <p class="mt-2">Su objetivo es mejorar la comprensión y facilitar la correcta configuración y monitoreo de la infraestructura de correo del cliente.</p>
 
             <h3 class="text-lg font-bold mt-8 mb-2 text-slate-900">9. Contacto</h3>
             <p class="mt-2 font-medium text-slate-900">Para consultas sobre privacidad: contacto@inboxseguro.com</p>
