@@ -294,7 +294,7 @@
                     </p>
                 </div>
 
-                <div class="border-t border-slate-800 pt-6">
+                <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">Criptografía Asimétrica: ¿Cómo funciona DKIM en tránsito?</h2>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
                         El funcionamiento de DKIM se basa en la potencia de la criptografía asimétrica de par de claves pública y privada:
@@ -306,7 +306,7 @@
                     </ul>
                 </div>
 
-                <div class="border-t border-slate-800 pt-6">
+                <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">¿Qué es un Selector DKIM y cómo ubicarlo en el DNS?</h2>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
                         Dado que una empresa suele utilizar múltiples herramientas externas para el envío de correos corporativos (como Google para el día a día, Salesforce para CRM y ActiveCampaign para marketing), es necesario poder publicar diferentes claves públicas bajo un mismo dominio. Esto se logra gracias a los **Selectores DKIM**.
@@ -322,7 +322,7 @@
                     </p>
                 </div>
 
-                <div class="border-t border-slate-800 pt-6">
+                <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">Errores Comunes al Configurar Firmas DKIM</h2>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
                         Configurar incorrectamente tus firmas criptográficas puede dañar gravemente tu **email deliverability** y reputación de dominio. Presta atención a estos fallos recurrentes:
@@ -344,7 +344,7 @@
                 </div>
 
                 
-                <div class="border-t border-slate-800 pt-6 seo-product-cta">
+                <div class="border-t border-slate-200 pt-6 seo-product-cta">
                     <div class="p-5 rounded-xl bg-gradient-to-br from-blue-900/40 to-indigo-900/30 border border-blue-500/30">
                         <h2 class="text-xl font-bold text-slate-900 mb-2">El checker valida DNS. InboxSeguro te da control operativo.</h2>
                         <p class="text-slate-600 text-sm leading-relaxed mb-4">
@@ -352,28 +352,28 @@
                         </p>
                         <div class="flex flex-col sm:flex-row flex-wrap gap-3">
                             <a href="/plataforma" data-seo-event="cta_plataforma" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-slate-900 font-bold rounded-xl text-sm transition">Ver quién envía con tu dominio</a>
-                            <a href="/precios" data-seo-event="cta_precios" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/15 text-slate-900 font-semibold rounded-xl border border-white/20 text-sm transition">Ver planes</a>
+                            <a href="/precios" data-seo-event="cta_precios" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-semibold rounded-xl border border-slate-300 text-sm transition">Ver planes</a>
                         </div>
-                        <p class="text-slate-500 text-xs mt-4">Guías: <a href="/control-envios-dominio" class="text-blue-400 hover:underline">Control de envíos</a> · <a href="/suplantacion-correo-empresa" class="text-blue-400 hover:underline">Suplantación</a> · <a href="/dmarc-para-pymes" class="text-blue-400 hover:underline">DMARC para PYMEs</a></p>
+                        <p class="text-slate-500 text-xs mt-4">Guías: <a href="/control-envios-dominio" class="text-brand-600 hover:underline">Control de envíos</a> · <a href="/suplantacion-correo-empresa" class="text-brand-600 hover:underline">Suplantación</a> · <a href="/dmarc-para-pymes" class="text-brand-600 hover:underline">DMARC para PYMEs</a></p>
                     </div>
                 </div>
 
-                <div class="border-t border-slate-800 pt-6">
+                <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador DKIM</h2>
                     <div class="space-y-4">
-                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Por qué mi correo sigue llegando a Spam si tengo DKIM activo?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
                                 DKIM garantiza la integridad del contenido, pero no la confianza general. Si tu dominio tiene mala reputación por haber enviado correo no deseado previamente, o si no tienes alineados adecuadamente tus registros **SPF** y **DMARC**, tus correos seguirán teniendo problemas de entregabilidad y podrían caer en la carpeta de spam.
                             </p>
                         </div>
-                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Es seguro publicar mi clave pública DKIM en el DNS de forma abierta?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
                                 Sí, es completamente seguro. Por diseño técnico, la clave pública expuesta en el DNS solo sirve para verificar las firmas generadas, pero **nunca** puede ser utilizada para generar nuevas firmas fraudulentas. Tu clave privada sigue estando protegida en tus servidores de correo en todo momento.
                             </p>
                         </div>
-                        <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Qué es la rotación de llaves DKIM y cada cuánto debe hacerse?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
                                 La rotación de llaves consiste en generar un nuevo par de claves (pública y privada) y actualizar los registros DNS para evitar que una llave antigua comprometida sea descifrada a largo plazo. Las mejores prácticas de seguridad de TI aconsejan rotar tus claves DKIM cada 6 a 12 meses.
@@ -388,20 +388,20 @@
             </section>
     </main>
 
-    <footer class="bg-slate-950 border-t border-slate-800 py-10 mt-auto">
+    <footer class="bg-slate-950 border-t border-slate-200 py-10 mt-auto">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
                 <div class="text-sm text-slate-500 flex items-center gap-1">
                     © 2026
                     <span class="flex items-baseline gap-0.5 leading-none font-bold text-slate-900 select-none">
-                        <span>Inbox<span class="text-blue-400">Seguro</span></span>
-                        <sup class="text-blue-400 text-[0.6rem] font-bold relative top-[-0.4em]">TM</sup>
+                        <span>Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.4em]">TM</sup>
                     </span>
                 </div>
                 <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
-                    <a href="/terminos" class="hover:text-blue-400 transition-colors">Términos y Condiciones</a>
-                    <a href="/privacidad" class="hover:text-blue-400 transition-colors">Política de Privacidad</a>
-                    <a href="/#contacto" class="hover:text-blue-400 transition-colors">Contacto</a>
+                    <a href="/terminos" class="hover:text-brand-600 transition-colors">Términos y Condiciones</a>
+                    <a href="/privacidad" class="hover:text-brand-600 transition-colors">Política de Privacidad</a>
+                    <a href="/#contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
                 </div>
             </div>
             <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
