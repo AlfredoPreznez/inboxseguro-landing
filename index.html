@@ -275,8 +275,62 @@
                     </a>
                 </div>
 
+                <!-- Marquee de Sistemas Compatibles (Movido arriba) -->
+                <div class="mt-12 mb-16 overflow-hidden relative">
+                    <div class="max-w-7xl mx-auto px-4 text-center mb-6">
+                        <p class="text-sm font-bold uppercase tracking-wider text-slate-400">Compatible y capaz de detectar más de 50 sistemas de envío</p>
+                    </div>
+                    
+                    <!-- Contenedor del Marquee -->
+                    <div class="flex overflow-hidden group">
+                        <!-- Primer set (original) -->
+                        <div class="flex space-x-16 animate-marquee items-center whitespace-nowrap px-8">
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-google"></i> Google Workspace</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-microsoft"></i> Microsoft 365</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">SendGrid</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-mailchimp"></i> Mailchimp</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-aws"></i> Amazon SES</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-hubspot"></i> HubSpot</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-salesforce"></i> Salesforce</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Brevo</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Postmark</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Mailgun</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Zendesk</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-shopify"></i> Shopify</span>
+                        </div>
+                        <!-- Segundo set (duplicado para loop infinito) -->
+                        <div class="flex space-x-16 animate-marquee items-center whitespace-nowrap px-8" aria-hidden="true">
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-google"></i> Google Workspace</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-microsoft"></i> Microsoft 365</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">SendGrid</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-mailchimp"></i> Mailchimp</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-aws"></i> Amazon SES</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-hubspot"></i> HubSpot</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-salesforce"></i> Salesforce</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Brevo</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Postmark</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Mailgun</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Zendesk</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-shopify"></i> Shopify</span>
+                        </div>
+                    </div>
+                    
+                    <style>
+                        .animate-marquee {
+                            animation: marquee 35s linear infinite;
+                        }
+                        .group:hover .animate-marquee {
+                            animation-play-state: paused;
+                        }
+                        @keyframes marquee {
+                            0% { transform: translateX(0%); }
+                            100% { transform: translateX(-100%); }
+                        }
+                    </style>
+                </div>
+
                 <!-- AHA MOMENT UI MOCKUP -->
-                <div class="mt-16 max-w-3xl mx-auto relative group">
+                <div class="mt-8 max-w-3xl mx-auto relative group">
                     <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
                     
                     <div class="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 md:p-6 shadow-2xl text-left">
@@ -346,59 +400,7 @@
             </div>
         </section>
 
-        <!-- Marquee de Sistemas Compatibles -->
-        <section class="py-10 bg-slate-900 border-t border-slate-800 overflow-hidden relative">
-            <div class="max-w-7xl mx-auto px-4 text-center mb-8">
-                <p class="text-sm font-bold uppercase tracking-wider text-slate-400">Compatible y capaz de detectar más de 50 sistemas de envío</p>
-            </div>
-            
-            <!-- Contenedor del Marquee -->
-            <div class="flex overflow-hidden group">
-                <!-- Primer set (original) -->
-                <div class="flex space-x-16 animate-marquee items-center whitespace-nowrap px-8">
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-google"></i> Google Workspace</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-microsoft"></i> Microsoft 365</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">SendGrid</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-mailchimp"></i> Mailchimp</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-aws"></i> Amazon SES</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-hubspot"></i> HubSpot</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-salesforce"></i> Salesforce</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Brevo</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Postmark</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Mailgun</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Zendesk</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-shopify"></i> Shopify</span>
-                </div>
-                <!-- Segundo set (duplicado para loop infinito) -->
-                <div class="flex space-x-16 animate-marquee items-center whitespace-nowrap px-8" aria-hidden="true">
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-google"></i> Google Workspace</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-microsoft"></i> Microsoft 365</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">SendGrid</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-mailchimp"></i> Mailchimp</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-aws"></i> Amazon SES</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-hubspot"></i> HubSpot</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-salesforce"></i> Salesforce</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Brevo</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Postmark</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Mailgun</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Zendesk</span>
-                    <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-shopify"></i> Shopify</span>
-                </div>
-            </div>
-            
-            <style>
-                .animate-marquee {
-                    animation: marquee 35s linear infinite;
-                }
-                .group:hover .animate-marquee {
-                    animation-play-state: paused;
-                }
-                @keyframes marquee {
-                    0% { transform: translateX(0%); }
-                    100% { transform: translateX(-100%); }
-                }
-            </style>
-        </section>
+
 
         <!-- Puente narrativo marca -->
         <section class="py-16 bg-gradient-to-b from-slate-50 to-white border-b border-slate-100">
