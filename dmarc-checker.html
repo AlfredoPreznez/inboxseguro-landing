@@ -48,55 +48,63 @@
                 </a>
 
                 <div class="hidden lg:flex items-center space-x-8 text-sm font-medium">
-                    <a href="/como-funciona" class="text-slate-300 hover:text-brand-600 transition-colors">Cómo funciona</a>
-                    <a href="/plataforma" class="text-slate-300 hover:text-brand-600 transition-colors">Plataforma</a>
-                    <a href="/precios" class="text-slate-300 hover:text-brand-600 transition-colors">Precios</a>
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
                     
                                         <!-- Dropdown Recursos -->
                     <div class="relative group">
-                        <button class="flex items-center gap-1 text-slate-300 hover:text-brand-600 transition-colors focus:outline-none py-2 cursor-pointer">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
                             <span>Recursos</span>
-                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-500 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
                         </button>
-                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-slate-950/95 border border-slate-800 shadow-2xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4 backdrop-blur-md">
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
                             <!-- Columna 1: Herramientas -->
                             <div>
-                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">Herramientas Gratis</span>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
                                 <div class="space-y-1">
-                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-200 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors font-semibold">
-                                        <i class="fa-solid fa-server text-brand-500 text-[10px]"></i>
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <i class="fa-solid fa-server text-brand-600 text-[10px]"></i>
                                         <span>Diagnóstico Completo</span>
                                     </a>
-                                    <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
-                                        <i class="fa-solid fa-shield-halved text-blue-400 text-[10px]"></i>
+                                    <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-shield-halved text-blue-500 text-[10px]"></i>
                                         <span>Verificador SPF</span>
                                     </a>
-                                    <a href="/dmarc-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
-                                        <i class="fa-solid fa-lock text-indigo-400 text-[10px]"></i>
+                                    <a href="/dmarc-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-lock text-indigo-500 text-[10px]"></i>
                                         <span>Verificador DMARC</span>
                                     </a>
-                                    <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
-                                        <i class="fa-solid fa-key text-teal-400 text-[10px]"></i>
+                                    <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-key text-teal-500 text-[10px]"></i>
                                         <span>Verificador DKIM</span>
                                     </a>
                                 </div>
                             </div>
                             <!-- Columna 2: Guías -->
                             <div>
-                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-500 mb-2">Guías de Seguridad</span>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Guías de Seguridad</span>
                                 <div class="space-y-1">
-                                    <a href="/control-envios-dominio" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-200 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors font-semibold">
-                                        <i class="fa-solid fa-list-check text-blue-400 text-[10px]"></i>
+                                    <a href="/seguridad-correo-proveedores" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-building-shield text-blue-500 text-[10px]"></i>
+                                        <span>Seguridad para proveedores</span>
+                                    </a>
+                                    <a href="/informe-higiene-correo-corporativo" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-file-shield text-indigo-500 text-[10px]"></i>
+                                        <span>Informe de higiene</span>
+                                    </a>
+                                    <a href="/control-envios-dominio" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <i class="fa-solid fa-list-check text-blue-500 text-[10px]"></i>
                                         <span>Control de Envíos</span>
                                     </a>
-                                    <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
-                                        <i class="fa-solid fa-user-secret text-red-400 text-[10px]"></i>
+                                    <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-user-secret text-red-500 text-[10px]"></i>
                                         <span>Detener Suplantación</span>
                                     </a>
-                                    <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">
-                                        <i class="fa-solid fa-shield-halved text-indigo-400 text-[10px]"></i>
+                                    <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <i class="fa-solid fa-shield-halved text-indigo-500 text-[10px]"></i>
                                         <span>Guía DMARC PYMEs</span>
                                     </a>
                                 </div>
@@ -104,7 +112,7 @@
                         </div>
                     </div>
 
-                    <a href="/contacto" class="text-slate-300 hover:text-brand-600 transition-colors">Contacto</a>
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
                 </div>
 
                 <div class="flex items-center gap-3">
@@ -112,16 +120,15 @@
                         class="hidden md:block text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso
                         Clientes</a>
                     <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
-                        target="_blank" rel="noopener noreferrer"
-                        class="hidden sm:inline-flex items-center text-sm font-semibold text-emerald-200 border border-emerald-500/40 hover:bg-emerald-500/10 px-3 py-2 rounded-lg transition-colors">Agendar
+                        target="_blank" rel="noopener noreferrer" data-seo-event="cta_demo_whatsapp"
+                        class="hidden sm:inline-flex items-center text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar
                         demo</a>
                     <a href="/precios"
-                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">
-                        Ver Planes
-                    </a>
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors" data-seo-event="cta_precios">Ver
+                        planes</a>
                     <!-- Hamburger -->
                     <button id="menuBtn" onclick="toggleMobileMenu()"
-                        class="lg:hidden p-2 text-slate-400 hover:text-white cursor-pointer">
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
                         <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16"></path>
@@ -136,18 +143,22 @@
             </div>
         </div>
         <!-- Mobile menu -->
-        <div id="mobileMenu" class="hidden lg:hidden bg-slate-950 border-t border-slate-800 shadow-lg">
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
             <div class="px-4 py-4 space-y-1">
                 <a href="/como-funciona" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">Cómo funciona</a>
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
                 <a href="/plataforma" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">Plataforma</a>
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
                 <a href="/precios" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">Precios</a>
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
                 
                                 <!-- Guías Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Guías de Seguridad</span>
+                    <a href="/seguridad-correo-proveedores" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🏢 Seguridad para proveedores</a>
+                    <a href="/informe-higiene-correo-corporativo" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">📄 Informe de higiene</a>
                     <a href="/control-envios-dominio" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">📋 Control de Envíos</a>
                     <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()"
@@ -157,32 +168,33 @@
                 </div>
 
                 <!-- Herramientas Gratuitas Mobile Section -->
-                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-white/5 rounded-r-lg">
-                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Herramientas Gratuitas</span>
+                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-200 hover:text-brand-400 transition-colors">🔍 Diagnóstico Completo</a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">🔍 Diagnóstico Completo</a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm text-slate-300 hover:text-brand-400 transition-colors">🛡️ Verificador SPF</a>
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🛡️ Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm text-slate-300 hover:text-brand-400 transition-colors">🔒 Verificador DMARC</a>
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🔒 Verificador DMARC</a>
                     <a href="/dkim-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm text-slate-300 hover:text-brand-400 transition-colors">🔑 Verificador DKIM</a>
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">🔑 Verificador DKIM</a>
                 </div>
 
                 <a href="/contacto" onclick="closeMobileMenu()"
-                    class="block px-4 py-3 text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-brand-400 rounded-lg transition-colors">Contacto</a>
-                <div class="pt-2 border-t border-slate-800 space-y-1">
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
                     <a href="https://panel.inboxseguro.com/login"
-                        class="block px-4 py-3 text-sm font-medium text-brand-400 hover:bg-white/5 rounded-lg transition-colors">Acceso Clientes</a>
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
                     <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro." target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()"
-                        class="block px-4 py-3 text-sm font-medium text-emerald-400 hover:bg-white/5 rounded-lg transition-colors">Agendar demo</a>
+                        class="block px-4 py-3 text-sm font-medium text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors">Agendar demo</a>
                 </div>
             </div>
         </div>
     </nav>
 
     <!-- Main Tool Section -->
-    <main class="flex-grow relative overflow-hidden pt-28 pb-16">
+    <main class="flex-grow flex flex-col bg-white">
+        <section class="relative pt-28 pb-16 overflow-hidden bg-slate-900 shrink-0">
         <!-- Dynamic Background -->
         <div class="absolute inset-0 bg-slate-900 pointer-events-none">
             <div
@@ -265,39 +277,44 @@
                 </div>
             </div>
 
-            <!-- SSR/SEO Static Informative Content -->
-            <div class="text-left bg-slate-900/60 rounded-2xl border border-slate-800 p-6 md:p-8 space-y-8">
+                    </div> <!-- close max-w-3xl -->
+        </section> <!-- close dark section -->
+
+        <section class="py-16 bg-white border-t border-slate-100 flex-grow">
+            <div class="max-w-3xl w-full mx-auto px-4 text-left space-y-8">
+                <!-- SSR/SEO Static Informative Content -->
+                <div class="space-y-8">
                 <div>
-                    <h2 class="text-2xl font-bold text-white mb-3">¿Qué es DMARC (Domain-based Message Authentication, Reporting, and Conformance) y por qué es fundamental?</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">¿Qué es DMARC (Domain-based Message Authentication, Reporting, and Conformance) y por qué es fundamental?</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
                         <strong>DMARC (Domain-based Message Authentication, Reporting, and Conformance)</strong> es una potente política de seguridad y protocolo de **email authentication** publicado en los registros TXT de tu sistema DNS. Actúa como la capa superior de gobernanza de correo corporativo, vinculando y alineando los resultados obtenidos por las validaciones previas de **SPF** y **DKIM**.
                     </p>
-                    <p class="text-slate-400 text-sm leading-relaxed">
+                    <p class="text-slate-600 text-sm leading-relaxed">
                         Su función principal es dar instrucciones precisas y vinculantes a los servidores receptores (como Gmail, Outlook o Yahoo) sobre qué hacer exactamente cuando reciben un mensaje sospechoso que pretende provenir de tu empresa, pero que falla las pruebas de autenticidad. Sin una política DMARC activa, las firmas SPF y DKIM pierden gran parte de su efectividad defensiva.
                     </p>
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h2 class="text-2xl font-bold text-white mb-3">Las 3 Políticas de Protección DMARC</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Las 3 Políticas de Protección DMARC</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
                         A través de la etiqueta de política obligatoria <code class="text-indigo-300 font-mono">p=</code>, le indicas al destinatario de tu correo qué nivel de acción tomar ante mensajes no autorizados:
                     </p>
                     <div class="space-y-4">
-                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
-                            <h4 class="text-white font-bold text-sm mb-1">1. Monitoreo (p=none)</h4>
-                            <p class="text-slate-400 text-xs leading-relaxed">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h4 class="text-slate-900 font-bold text-sm mb-1">1. Monitoreo (p=none)</h4>
+                            <p class="text-slate-600 text-xs leading-relaxed">
                                 Es la política inicial recomendada. Los servidores de destino entregan los correos no verificados directamente a la bandeja de entrada, pero envían informes a tu dominio detallando la procedencia de esos mensajes. Sirve para analizar tu ecosistema de envíos sin arriesgar la pérdida de correos legítimos, aunque **no ofrece prevención activa contra el fraude**.
                             </p>
                         </div>
-                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
-                            <h4 class="text-white font-bold text-sm mb-1">2. Cuarentena (p=quarantine)</h4>
-                            <p class="text-slate-400 text-xs leading-relaxed">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h4 class="text-slate-900 font-bold text-sm mb-1">2. Cuarentena (p=quarantine)</h4>
+                            <p class="text-slate-600 text-xs leading-relaxed">
                                 Indica a los servidores receptores que, si un correo falla la autenticación, debe ser tratado con alta sospecha y enviado inmediatamente a la carpeta de correo no deseado o **Spam** del usuario. Representa un nivel de protección intermedia ideal durante la transición a la seguridad total.
                             </p>
                         </div>
-                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
-                            <h4 class="text-white font-bold text-sm mb-1">3. Rechazo (p=reject)</h4>
-                            <p class="text-slate-400 text-xs leading-relaxed">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h4 class="text-slate-900 font-bold text-sm mb-1">3. Rechazo (p=reject)</h4>
+                            <p class="text-slate-600 text-xs leading-relaxed">
                                 Es el estándar de oro en seguridad. Instruye a los destinatarios a rechazar o descartar correos no autenticados según tu política. Con <code>p=reject</code>, reduce el riesgo de spoofing y ayuda a prevenir que mensajes no autorizados lleguen a clientes o proveedores.
                             </p>
                         </div>
@@ -305,11 +322,11 @@
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h2 class="text-2xl font-bold text-white mb-3">Importancia de DMARC para la Entregabilidad y Seguridad de Correo Corporativo</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Importancia de DMARC para la Entregabilidad y Seguridad de Correo Corporativo</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
                         El uso periódico de un **DMARC checker** o **verificador DMARC** en tus auditorías de TI es vital para asegurar que no se produzcan bloqueos inesperados. Al mantener una política DMARC alineada en tus **DNS records**, tu negocio obtiene:
                     </p>
-                    <ul class="list-disc pl-5 space-y-2 text-slate-400 text-sm leading-relaxed">
+                    <ul class="list-disc pl-5 space-y-2 text-slate-600 text-sm leading-relaxed">
                         <li><strong>Prevención de Spoofing y Ransomware:</strong> Con una política estricta, ayuda a prevenir ataques en los que cibercriminales intentan utilizar tu dominio para enviar campañas fraudulentas a gran escala.</li>
                         <li><strong>Mejora de la Entregabilidad (Email Deliverability):</strong> Los proveedores de correo confían plenamente en los dominios que adoptan políticas DMARC estrictas, lo que incrementa el éxito de colocación de tus mensajes de marketing y transaccionales en la bandeja principal.</li>
                         <li><strong>Visibilidad Total con Reportes RUA:</strong> Te permite recolectar datos detallados en formato XML para auditar si hay proveedores legítimos mal configurados en tu empresa.</li>
@@ -317,17 +334,17 @@
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h2 class="text-2xl font-bold text-white mb-3">Ejemplo de sintaxis DMARC con política de rechazo (<code>p=reject</code>)</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Ejemplo de sintaxis DMARC con política de rechazo (<code>p=reject</code>)</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
                         Un registro DMARC bien estructurado y seguro se define de la siguiente manera:
                     </p>
-                    <div class="p-4 bg-white/5 border border-white/5 rounded-lg font-mono text-sm text-blue-300 mb-4 break-all">
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg font-mono text-sm text-blue-600 mb-4 break-all">
                         v=DMARC1; p=reject; rua=mailto:reportes@inboxseguro.com; pct=100; aspf=r; adkim=r
                     </div>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-3">
+                    <p class="text-slate-600 text-sm leading-relaxed mb-3">
                         Desglose de etiquetas esenciales:
                     </p>
-                    <ul class="list-none space-y-2 text-slate-400 text-xs leading-relaxed pl-2">
+                    <ul class="list-none space-y-2 text-slate-600 text-xs leading-relaxed pl-2">
                         <li>📌 <code class="text-indigo-300 font-mono">v=DMARC1</code>: Identifica la versión del protocolo (debe ser la primera etiqueta).</li>
                         <li>📌 <code class="text-indigo-300 font-mono">p=reject</code>: Política estricta de rechazo de correos no autorizados.</li>
                         <li>📌 <code class="text-indigo-300 font-mono">rua=mailto:reportes@inboxseguro.com</code>: Dirección donde se recibirán los informes agregados sobre el estado de la autenticación.</li>
@@ -337,20 +354,20 @@
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h2 class="text-2xl font-bold text-white mb-3">Errores Frecuentes al Configurar DMARC</h2>
-                    <p class="text-slate-400 text-sm leading-relaxed mb-4">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Errores Frecuentes al Configurar DMARC</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
                         Nuestra experiencia como especialistas en entregabilidad nos demuestra que los siguientes fallos son muy habituales en organizaciones de LATAM:
                     </p>
                     <div class="grid md:grid-cols-2 gap-4">
-                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
-                            <h4 class="text-white font-bold text-sm mb-2">1. Dejar la política en "none" para siempre</h4>
-                            <p class="text-slate-400 text-xs leading-relaxed">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h4 class="text-slate-900 font-bold text-sm mb-2">1. Dejar la política en "none" para siempre</h4>
+                            <p class="text-slate-600 text-xs leading-relaxed">
                                 Establecer <code class="text-indigo-300 font-mono">p=none</code> sirve para recopilar reportes al inicio, pero si no escalas a <code class="text-indigo-300 font-mono">quarantine</code> o <code class="text-indigo-300 font-mono">reject</code> a mediano plazo, tu dominio seguirá estando desprotegido frente a ataques de suplantación.
                             </p>
                         </div>
-                        <div class="p-4 bg-white/5 border border-white/5 rounded-xl">
-                            <h4 class="text-white font-bold text-sm mb-2">2. Desalineación de Dominios (Domain Alignment Failures)</h4>
-                            <p class="text-slate-400 text-xs leading-relaxed">
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h4 class="text-slate-900 font-bold text-sm mb-2">2. Desalineación de Dominios (Domain Alignment Failures)</h4>
+                            <p class="text-slate-600 text-xs leading-relaxed">
                                 Para que DMARC apruebe un correo, el dominio del remitente visible (cabecera From) debe coincidir con el dominio utilizado por SPF (Return-Path) o por DKIM (firma d=). Si no están correctamente alineados, DMARC fallará aunque los registros individuales sean válidos.
                             </p>
                         </div>
@@ -360,36 +377,36 @@
                 
                 <div class="border-t border-slate-800 pt-6 seo-product-cta">
                     <div class="p-5 rounded-xl bg-gradient-to-br from-blue-900/40 to-indigo-900/30 border border-blue-500/30">
-                        <h2 class="text-xl font-bold text-white mb-2">El checker valida DNS. InboxSeguro te da control operativo.</h2>
-                        <p class="text-slate-300 text-sm leading-relaxed mb-4">
+                        <h2 class="text-xl font-bold text-slate-900 mb-2">El checker valida DNS. InboxSeguro te da control operativo.</h2>
+                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
                             Inventario de quién envía con tu dominio, alertas cuando aparece un servicio nuevo, guía para política DMARC e informes mensuales — sin leer reportes XML.
                         </p>
                         <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-                            <a href="/plataforma" data-seo-event="cta_plataforma" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm transition">Ver quién envía con tu dominio</a>
-                            <a href="/precios" data-seo-event="cta_precios" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/15 text-white font-semibold rounded-xl border border-white/20 text-sm transition">Ver planes</a>
+                            <a href="/plataforma" data-seo-event="cta_plataforma" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-slate-900 font-bold rounded-xl text-sm transition">Ver quién envía con tu dominio</a>
+                            <a href="/precios" data-seo-event="cta_precios" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/15 text-slate-900 font-semibold rounded-xl border border-white/20 text-sm transition">Ver planes</a>
                         </div>
                         <p class="text-slate-500 text-xs mt-4">Guías: <a href="/control-envios-dominio" class="text-blue-400 hover:underline">Control de envíos</a> · <a href="/suplantacion-correo-empresa" class="text-blue-400 hover:underline">Suplantación</a> · <a href="/dmarc-para-pymes" class="text-blue-400 hover:underline">DMARC para PYMEs</a></p>
                     </div>
                 </div>
 
                 <div class="border-t border-slate-800 pt-6">
-                    <h2 class="text-2xl font-bold text-white mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador DMARC</h2>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador DMARC</h2>
                     <div class="space-y-4">
                         <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
-                            <h3 class="text-white font-bold text-sm mb-2">¿DMARC funciona si no tengo SPF o DKIM configurados?</h3>
-                            <p class="text-slate-400 text-xs leading-relaxed">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿DMARC funciona si no tengo SPF o DKIM configurados?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
                                 No de forma efectiva. DMARC requiere obligatoriamente apoyarse en los resultados de SPF o DKIM. Si implementas DMARC sin tener SPF o DKIM activos y alineados, todos tus correos legítimos podrían ser rechazados o enviados a spam al no poder verificarse.
                             </p>
                         </div>
                         <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
-                            <h3 class="text-white font-bold text-sm mb-2">¿Qué son los reportes agregados RUA y en qué se diferencian de RUF?</h3>
-                            <p class="text-slate-400 text-xs leading-relaxed">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Qué son los reportes agregados RUA y en qué se diferencian de RUF?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
                                 Los reportes **RUA** (Agregados) proveen estadísticas generales diarias sobre los servidores de correo que envían mensajes a tu nombre. Los reportes **RUF** (Forenses o a nivel de falla) son notificaciones en tiempo real que se envían ante cada correo específico que falla la autenticación (contienen detalles más invasivos y a veces información confidencial, por lo que muchos proveedores ya no los envían).
                             </p>
                         </div>
                         <div class="p-4 bg-slate-900/80 border border-slate-800 rounded-xl">
-                            <h3 class="text-white font-bold text-sm mb-2">¿Cómo paso de p=none a p=reject de manera segura?</h3>
-                            <p class="text-slate-400 text-xs leading-relaxed">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Cómo paso de p=none a p=reject de manera segura?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
                                 El proceso seguro recomendado consiste en: 1) Publicar <code class="text-indigo-300 font-mono">p=none</code> y analizar los reportes RUA durante varias semanas para identificar todos tus remitentes válidos. 2) Configurar SPF y DKIM para cada remitente legítimo. 3) Escalar gradualmente a <code class="text-indigo-300 font-mono">p=quarantine</code> con porcentajes parciales (ej: <code class="text-indigo-300 font-mono">pct=25</code>). 4) Finalmente, definir <code class="text-indigo-300 font-mono">p=reject</code> al 100%.
                             </p>
                         </div>
@@ -398,6 +415,8 @@
             </div>
 
         </div>
+    </div>
+            </section>
     </main>
 
     <footer class="bg-slate-950 border-t border-slate-800 py-10 mt-auto">
@@ -405,7 +424,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
                 <div class="text-sm text-slate-500 flex items-center gap-1">
                     © 2026
-                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-slate-900 select-none">
                         <span>Inbox<span class="text-blue-400">Seguro</span></span>
                         <sup class="text-blue-400 text-[0.6rem] font-bold relative top-[-0.4em]">TM</sup>
                     </span>
