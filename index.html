@@ -61,27 +61,27 @@
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
 
     <!-- Header Light -->
-    <nav class="fixed w-full z-40 bg-white/95 backdrop-blur-md border-b border-slate-100">
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16 md:h-20 items-center">
 
                 <a href="/" class="flex items-center gap-1.5 cursor-pointer">
                     <img src="/logo.png" alt=""
                         class="h-8 md:h-9 w-auto object-contain">
-                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-slate-900 select-none">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
                         <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
                         <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
                     </span>
                 </a>
 
                 <div class="hidden lg:flex items-center space-x-8 text-sm font-medium">
-                    <a href="/como-funciona" class="text-slate-500 hover:text-brand-600 transition-colors">Cómo funciona</a>
-                    <a href="/plataforma" class="text-slate-500 hover:text-brand-600 transition-colors">Plataforma</a>
-                    <a href="/precios" class="text-slate-500 hover:text-brand-600 transition-colors">Precios</a>
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
                     
                                         <!-- Dropdown Recursos -->
                     <div class="relative group">
-                        <button class="flex items-center gap-1 text-slate-500 hover:text-brand-600 transition-colors focus:outline-none py-2 cursor-pointer">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
                             <span>Recursos</span>
                             <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
@@ -139,23 +139,23 @@
                         </div>
                     </div>
 
-                    <a href="/contacto" class="text-slate-500 hover:text-brand-600 transition-colors">Contacto</a>
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
                 </div>
 
                 <div class="flex items-center gap-3">
                     <a href="https://panel.inboxseguro.com/login"
-                        class="hidden md:block text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">Acceso
+                        class="hidden md:block text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso
                         Clientes</a>
                     <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
                         target="_blank" rel="noopener noreferrer" data-seo-event="cta_demo_whatsapp"
-                        class="hidden sm:inline-flex items-center text-sm font-semibold text-emerald-700 hover:text-emerald-800 border border-emerald-200 hover:border-emerald-300 bg-emerald-50/80 hover:bg-emerald-50 px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar
+                        class="hidden sm:inline-flex items-center text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar
                         demo</a>
                     <a href="/precios"
                         class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors" data-seo-event="cta_precios">Ver
                         planes</a>
                     <!-- Hamburger -->
                     <button id="menuBtn" onclick="toggleMobileMenu()"
-                        class="lg:hidden p-2 text-slate-600 hover:text-slate-900 cursor-pointer">
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
                         <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M4 6h16M4 12h16M4 18h16"></path>
@@ -227,6 +227,24 @@
 
             <!-- Dynamic Background -->
             <div class="absolute inset-0 bg-slate-900 pointer-events-none">
+                <!-- Textura de fondo SVG -->
+                <svg class="absolute inset-0 w-full h-full text-blue-500 opacity-30" style="pointer-events: none; z-index: 1;" xmlns="http://www.w3.org/2000/svg">
+                    <g stroke="currentColor" stroke-width="0.6" fill="currentColor">
+                        <!-- Líneas -->
+                        <line x1="15%" y1="20%" x2="25%" y2="50%" />
+                        <line x1="25%" y1="50%" x2="65%" y2="35%" />
+                        <line x1="65%" y1="35%" x2="85%" y2="60%" />
+                        <line x1="25%" y1="50%" x2="20%" y2="75%" />
+                        <line x1="65%" y1="35%" x2="80%" y2="20%" />
+                        <!-- Nodos -->
+                        <circle cx="15%" cy="20%" r="3" />
+                        <circle cx="25%" cy="50%" r="3.5" />
+                        <circle cx="65%" cy="35%" r="3" />
+                        <circle cx="85%" cy="60%" r="3" />
+                        <circle cx="20%" cy="75%" r="2.5" />
+                        <circle cx="80%" cy="20%" r="2" />
+                    </g>
+                </svg>
                 <div
                     class="absolute top-0 right-0 -mr-20 -mt-20 w-[600px] h-[600px] bg-blue-600/30 rounded-full mix-blend-screen filter blur-[100px] animate-blob">
                 </div>
@@ -245,19 +263,22 @@
 
             <div class="max-w-7xl mx-auto px-4 text-center relative z-10">
 
-                <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-8 leading-tight text-white tracking-tight">
+                <!-- Eyebrow Badge -->
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-500 text-xs font-bold uppercase tracking-wide mb-8">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
+                    Monitoreo activo · Programa Fundador abierto
+                </div>
+
+                <h1 class="text-4xl md:text-5xl lg:text-7xl font-extrabold mb-10 leading-tight text-white tracking-tight">
                     Recupera el control<br>
                     <span class="text-blue-500">del correo de tu empresa.</span>
                 </h1>
 
-                <p class="text-lg md:text-xl text-slate-300 mb-10 max-w-3xl mx-auto font-light leading-relaxed">
-                    Descubre qué sistemas envían correos usando tu dominio, te guía a activar la protección sin interrumpir tu operación,
-                    y genera evidencia de control operativo cuando tus clientes la necesiten.
-                    <br><br>
-                    <span class="text-white font-medium">Sin equipo de TI. Sin interpretar reportes técnicos.</span>
+                <p class="text-lg md:text-xl text-slate-300 mb-14 max-w-3xl mx-auto font-light leading-relaxed px-4">
+                    La seguridad de tu correo empieza por saber quién envía. Identifica todo tu inventario de envíos y toma decisiones de negocio, sin depender del área de TI.
                 </p>
 
-                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-20 items-center">
+                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-16 items-center">
                     <a href="/domain-checker"
                         class="group relative px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 transition-all hover:-translate-y-1 overflow-hidden">
                         <span class="relative z-10 flex items-center gap-2">
@@ -270,13 +291,13 @@
                     </a>
                     <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
                         target="_blank" rel="noopener noreferrer"
-                        class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white text-lg font-semibold rounded-xl border border-white/20 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
+                        class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white text-lg font-semibold rounded-xl border border-white/10 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
                         <i class="fa-regular fa-calendar-check"></i> Agendar una demo
                     </a>
                 </div>
 
                 <!-- Marquee de Sistemas Compatibles (Movido arriba) -->
-                <div class="mt-12 mb-16 overflow-hidden relative">
+                <div class="mt-12 mb-6 overflow-hidden relative">
                     <div class="max-w-7xl mx-auto px-4 text-center mb-6">
                         <p class="text-sm font-bold uppercase tracking-wider text-slate-400">Compatible y capaz de detectar más de 50 sistemas de envío</p>
                     </div>
@@ -284,34 +305,34 @@
                     <!-- Contenedor del Marquee -->
                     <div class="flex overflow-hidden group">
                         <!-- Primer set (original) -->
-                        <div class="flex space-x-16 animate-marquee items-center whitespace-nowrap px-8">
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-google"></i> Google Workspace</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-microsoft"></i> Microsoft 365</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">SendGrid</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-mailchimp"></i> Mailchimp</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-aws"></i> Amazon SES</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-hubspot"></i> HubSpot</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-salesforce"></i> Salesforce</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Brevo</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Postmark</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Mailgun</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Zendesk</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-shopify"></i> Shopify</span>
+                        <div class="flex space-x-24 animate-marquee items-center whitespace-nowrap px-12">
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-google"></i> Google Workspace</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-microsoft"></i> Microsoft 365</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">SendGrid</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-mailchimp"></i> Mailchimp</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-aws"></i> Amazon SES</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-hubspot"></i> HubSpot</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-salesforce"></i> Salesforce</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Brevo</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Postmark</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Mailgun</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Zendesk</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-shopify"></i> Shopify</span>
                         </div>
                         <!-- Segundo set (duplicado para loop infinito) -->
-                        <div class="flex space-x-16 animate-marquee items-center whitespace-nowrap px-8" aria-hidden="true">
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-google"></i> Google Workspace</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-microsoft"></i> Microsoft 365</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">SendGrid</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-mailchimp"></i> Mailchimp</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-aws"></i> Amazon SES</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-hubspot"></i> HubSpot</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-salesforce"></i> Salesforce</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Brevo</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Postmark</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Mailgun</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Zendesk</span>
-                            <span class="text-2xl font-bold text-slate-300 opacity-60 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-shopify"></i> Shopify</span>
+                        <div class="flex space-x-24 animate-marquee items-center whitespace-nowrap px-12" aria-hidden="true">
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-google"></i> Google Workspace</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-microsoft"></i> Microsoft 365</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">SendGrid</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-mailchimp"></i> Mailchimp</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-aws"></i> Amazon SES</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-hubspot"></i> HubSpot</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-salesforce"></i> Salesforce</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Brevo</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Postmark</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Mailgun</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2">Zendesk</span>
+                            <span class="text-2xl font-bold text-slate-300 opacity-40 hover:opacity-100 transition-opacity cursor-default flex items-center gap-2"><i class="fa-brands fa-shopify"></i> Shopify</span>
                         </div>
                     </div>
                     
@@ -329,82 +350,15 @@
                     </style>
                 </div>
 
-                <!-- AHA MOMENT UI MOCKUP -->
-                <div class="mt-8 max-w-3xl mx-auto relative group">
-                    <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
-                    
-                    <div class="relative bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-2xl p-4 md:p-6 shadow-2xl text-left">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-t-2xl"></div>
-                        
-                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 border-b border-slate-700/50 pb-4 gap-4">
-                            <div>
-                                <h3 class="text-white font-bold text-lg md:text-xl flex items-center gap-2">
-                                    <i class="fa-solid fa-paper-plane text-blue-400"></i> Inventario de envíos detectado
-                                </h3>
-                                <p class="text-slate-400 text-sm">dominio-cliente.com · control en tiempo real</p>
-                            </div>
-                            <div class="px-3 py-1.5 bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full text-xs font-bold flex items-center gap-2">
-                                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                                ⚠️ 2 alertas de seguridad pendientes
-                            </div>
-                        </div>
-                        
-                        <div class="space-y-3">
-                            <!-- Fila 1: Autorizado -->
-                            <div class="flex items-center justify-between p-3 bg-white/5 rounded-lg border border-white/5 hover:bg-white/10 transition-colors">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center text-white">
-                                        <i class="fa-brands fa-google text-lg"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-white text-sm font-bold">Google Workspace</p>
-                                        <p class="text-slate-400 text-xs">24,500 correos enviados · Todo OK</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-1.5 text-emerald-400 text-xs md:text-sm font-bold bg-emerald-400/10 px-2.5 md:px-3 py-1 rounded-md">
-                                    <i class="fa-solid fa-check-circle"></i> <span>Autorizado</span>
-                                </div>
-                            </div>
-                            
 
-                            <div class="p-3 bg-red-500/10 rounded-lg border border-red-500/25">
-                                <div class="flex items-center justify-between gap-3 mb-3">
-                                    <div class="flex items-center gap-3 min-w-0">
-                                        <div class="w-10 h-10 rounded-lg bg-red-500/20 flex items-center justify-center text-red-400 shrink-0">
-                                            <i class="fa-solid fa-user-secret text-lg"></i>
-                                        </div>
-                                        <div class="min-w-0 text-left">
-                                            <p class="text-white text-sm font-bold">Servidor no reconocido</p>
-                                            <p class="text-slate-400 text-xs">Nunca había enviado antes · 340 correos</p>
-                                        </div>
-                                    </div>
-                                    <span class="text-red-400 text-xs font-bold bg-red-400/10 px-2 py-1 rounded-md shrink-0">No autorizado</span>
-                                </div>
-                                <div class="flex flex-col sm:flex-row gap-2">
-                                    <span class="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-white/10 text-white border border-white/10">
-                                        <i class="fa-solid fa-circle-check text-emerald-400"></i> Fui yo, todo bien
-                                    </span>
-                                    <span class="inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold bg-slate-900 text-white border border-slate-700">
-                                        <i class="fa-solid fa-life-ring"></i> No reconozco esto
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="mt-4 pt-4 border-t border-slate-700/50 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-slate-400">
-                            <span><span class="text-white font-semibold">Vigilancia de envíos, no solo reportes DMARC.</span> Decisiones claras: autorizar, marcar como no autorizado y auditar.</span>
-                            <a href="/plataforma" class="text-blue-400 hover:text-blue-300 font-semibold whitespace-nowrap">Ver plataforma →</a>
-                        </div>
-                    </div>
-                </div>
             </div>
         </section>
 
 
 
         <!-- Puente narrativo marca -->
-        <section class="py-16 bg-gradient-to-b from-slate-50 to-white border-b border-slate-100">
-            <div class="max-w-3xl mx-auto px-4 text-center">
+        <section class="py-16 bg-gradient-to-b from-slate-50 to-white border-b border-slate-100 overflow-hidden">
+            <div class="max-w-3xl mx-auto px-4 text-center mb-12">
                 <span class="inline-block px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold uppercase tracking-wider mb-4">Control de envíos</span>
                 <h2 class="text-2xl md:text-3xl font-bold text-slate-900 mb-4">Sin inventario no hay control real del correo</h2>
                 <p class="text-slate-600 leading-relaxed mb-4">
@@ -414,6 +368,134 @@
                     InboxSeguro crea un <strong>inventario con responsable por sistema</strong>. Cuando tienes control, puedes activar protección anti-suplantación con confianza y generar evidencia para clientes corporativos.
                 </p>
             </div>
+            
+            <div class="max-w-5xl mx-auto px-4 mt-8 relative z-10">
+                <!-- Tarjeta: Sistemas de envío -->
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden text-left">
+                    <!-- Header -->
+                    <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white">
+                        <div>
+                            <h3 class="font-bold text-slate-900 text-lg mb-1">Sistemas de envío</h3>
+                            <p class="text-slate-500 text-sm">Quién envía con tu dominio, quién es responsable y qué requiere acción. Los nombres de proveedor se infieren por DNS inverso (PTR) y pueden no ser exactos.</p>
+                        </div>
+                        <div class="flex items-center gap-3 shrink-0">
+                            <button id="advanced-toggle-btn" onclick="toggleAdvancedView()" class="text-blue-600 font-semibold text-sm cursor-pointer hover:underline focus:outline-none transition-colors">Vista avanzada</button>
+                            <span class="bg-slate-100 text-slate-600 w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold">2</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Table -->
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
+                            <thead>
+                                <tr class="border-b border-slate-100 bg-white">
+                                    <th class="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Sistema</th>
+                                    <th class="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-wider hidden sm:table-cell">Responsable</th>
+                                    <th class="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Estado</th>
+                                    <th class="py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-wider hidden md:table-cell">Última actividad</th>
+                                    <!-- Advanced Columns -->
+                                    <th class="adv-col hidden py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Área</th>
+                                    <th class="adv-col hidden py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Rango</th>
+                                    <th class="adv-col hidden py-4 px-6 text-[10px] font-bold text-slate-400 uppercase tracking-wider text-center">Volumen <span class="normal-case text-slate-400">(mes)</span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 bg-white">
+                                <!-- Row 1 -->
+                                <tr class="hover:bg-slate-50 transition-colors cursor-pointer group">
+                                    <td class="py-4 px-6">
+                                        <div class="font-bold text-slate-900 text-sm flex items-center gap-2 group-hover:text-blue-600 transition-colors">
+                                            <i class="fa-brands fa-google text-slate-400 group-hover:text-blue-500"></i> Google Workspace
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 text-sm text-slate-600 hidden sm:table-cell">TI Interno</td>
+                                    <td class="py-4 px-6">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-100 uppercase tracking-wide">
+                                            Aprobado
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-6 text-sm text-slate-500 hidden md:table-cell">hace 2 horas</td>
+                                    <!-- Advanced Data -->
+                                    <td class="adv-col hidden py-4 px-6 text-sm text-slate-600">Corporativo</td>
+                                    <td class="adv-col hidden py-4 px-6 text-center">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-600">192-271 /mes</span>
+                                    </td>
+                                    <td class="adv-col hidden py-4 px-6 text-center">
+                                        <div class="font-bold text-slate-900">4,520</div>
+                                        <div class="text-[10px] text-slate-400">~5,000 /mes est.</div>
+                                    </td>
+                                </tr>
+                                <!-- Row 2 -->
+                                <tr class="hover:bg-slate-50 transition-colors cursor-pointer group">
+                                    <td class="py-4 px-6">
+                                        <div class="font-bold text-slate-900 text-sm flex items-center gap-2 group-hover:text-blue-600 transition-colors">
+                                            <i class="fa-brands fa-mailchimp text-slate-400 group-hover:text-blue-500"></i> Mailchimp
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 text-sm text-slate-600 hidden sm:table-cell">Marketing</td>
+                                    <td class="py-4 px-6">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-50 text-emerald-600 border border-emerald-100 uppercase tracking-wide">
+                                            Aprobado
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-6 text-sm text-slate-500 hidden md:table-cell">hace 5 horas</td>
+                                    <!-- Advanced Data -->
+                                    <td class="adv-col hidden py-4 px-6 text-sm text-slate-600">Marketing</td>
+                                    <td class="adv-col hidden py-4 px-6 text-center">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">5-20 /mes</span>
+                                    </td>
+                                    <td class="adv-col hidden py-4 px-6 text-center">
+                                        <div class="font-bold text-slate-900">150,000</div>
+                                        <div class="text-[10px] text-slate-400">~150k /mes est.</div>
+                                    </td>
+                                </tr>
+                                <!-- Row 3 -->
+                                <tr class="hover:bg-slate-50 transition-colors cursor-pointer group">
+                                    <td class="py-4 px-6">
+                                        <div class="font-bold text-slate-900 text-sm flex items-center gap-2 group-hover:text-blue-600 transition-colors">
+                                            <i class="fa-solid fa-paper-plane text-slate-400 group-hover:text-blue-500"></i> SendGrid
+                                        </div>
+                                    </td>
+                                    <td class="py-4 px-6 text-sm text-slate-400 italic hidden sm:table-cell">Sin asignar</td>
+                                    <td class="py-4 px-6">
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-50 text-amber-600 border border-amber-100 uppercase tracking-wide">
+                                            Revisar
+                                        </span>
+                                    </td>
+                                    <td class="py-4 px-6 text-sm text-slate-500 hidden md:table-cell">hace 1 día</td>
+                                    <!-- Advanced Data -->
+                                    <td class="adv-col hidden py-4 px-6 text-sm text-slate-400 italic">—</td>
+                                    <td class="adv-col hidden py-4 px-6 text-center">
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">18-80 /mes</span>
+                                    </td>
+                                    <td class="adv-col hidden py-4 px-6 text-center">
+                                        <div class="font-bold text-slate-900">0</div>
+                                        <div class="text-[10px] text-slate-400">/mes est.</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function toggleAdvancedView() {
+                    const btn = document.getElementById('advanced-toggle-btn');
+                    const isAdvanced = btn.innerText.toLowerCase().includes('simple');
+                    
+                    if (isAdvanced) {
+                        btn.innerText = 'Vista avanzada';
+                    } else {
+                        btn.innerText = 'Vista simple';
+                    }
+                    
+                    const advCols = document.querySelectorAll('.adv-col');
+                    advCols.forEach(col => {
+                        col.classList.toggle('hidden');
+                    });
+                }
+            </script>
+
         </section>
 
         <!-- CORE: Antes vs Después + 3 pilares -->
