@@ -106,7 +106,7 @@
       '<div class="flex-1 min-w-0">' +
       '<p class="text-base text-slate-200 leading-relaxed">' +
       'Usamos cookies <span class="font-semibold text-white">esenciales</span> para el funcionamiento ' +
-      'del sitio y, si aceptás, ' +
+      'del sitio y, si aceptas, ' +
       '<span class="font-semibold text-white">analíticas (Google Analytics)</span> para mejorar InboxSeguro. ' +
       'Más info en nuestra ' +
       '<a href="/privacidad" class="text-blue-400 hover:text-blue-300 underline underline-offset-2">Política de privacidad</a>.' +
