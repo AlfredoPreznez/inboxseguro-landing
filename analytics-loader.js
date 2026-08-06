@@ -92,32 +92,36 @@
     wrap.id = BANNER_ID;
     wrap.setAttribute('role', 'dialog');
     wrap.setAttribute('aria-label', 'Aviso de cookies');
-    // Inline z-index + pointer-events: Tailwind no scanea este JS, así que
-    // clases como pointer-events-auto no existen en styles.css y el click
-    // atravesaba el banner hacia el main (hero z-10).
-    wrap.className = 'fixed bottom-0 inset-x-0 p-4 md:p-6';
+    // Estilos inline: Tailwind no scanea este JS (clases flex/gap/etc. no
+    // llegan a styles.css) y el click atravesaba el banner al hero.
     wrap.style.cssText =
-      'position:fixed;bottom:0;left:0;right:0;z-index:9999;pointer-events:none;';
+      'position:fixed;bottom:0;left:0;right:0;z-index:9999;pointer-events:none;' +
+      'padding:12px 16px;box-sizing:border-box;';
     wrap.innerHTML =
-      '<div class="mx-auto max-w-5xl rounded-2xl border border-slate-700/80 ' +
-      'bg-slate-900/95 backdrop-blur-md shadow-2xl shadow-slate-900/40 ' +
-      'px-5 py-5 md:px-8 md:py-6 flex flex-col md:flex-row md:items-center gap-5" ' +
-      'style="pointer-events:auto;position:relative;z-index:1;">' +
-      '<div class="flex-1 min-w-0">' +
-      '<p class="text-base text-slate-200 leading-relaxed">' +
-      'Usamos cookies <span class="font-semibold text-white">esenciales</span> para el funcionamiento ' +
-      'del sitio y, si aceptas, ' +
-      '<span class="font-semibold text-white">analíticas (Google Analytics)</span> para mejorar InboxSeguro. ' +
-      'Más info en nuestra ' +
-      '<a href="/privacidad" class="text-blue-400 hover:text-blue-300 underline underline-offset-2">Política de privacidad</a>.' +
-      '</p></div>' +
-      '<div class="flex flex-shrink-0 flex-wrap items-center gap-3 w-full md:w-auto">' +
+      '<div style="pointer-events:auto;position:relative;z-index:1;' +
+      'max-width:42rem;margin:0 auto;border-radius:12px;' +
+      'border:1px solid rgba(51,65,85,0.85);background:rgba(15,23,42,0.96);' +
+      'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);' +
+      'box-shadow:0 10px 30px rgba(2,6,23,0.45);' +
+      'padding:12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;' +
+      'font-family:inherit;">' +
+      '<p style="flex:1 1 14rem;margin:0;min-width:0;font-size:13px;line-height:1.45;' +
+      'color:#e2e8f0;">' +
+      'Usamos cookies <strong style="color:#fff;font-weight:600;">esenciales</strong> ' +
+      'para el sitio y, si aceptas, ' +
+      '<strong style="color:#fff;font-weight:600;">analíticas (Google Analytics)</strong>. ' +
+      '<a href="/privacidad" style="color:#60a5fa;text-decoration:underline;' +
+      'text-underline-offset:2px;">Política de privacidad</a>.' +
+      '</p>' +
+      '<div style="display:flex;flex:0 0 auto;flex-wrap:wrap;align-items:center;gap:8px;">' +
       '<button type="button" data-cookie-choice="essential" ' +
-      'class="flex-1 md:flex-none px-5 py-2.5 rounded-lg text-base font-semibold text-slate-300 ' +
-      'border border-slate-600 hover:bg-slate-800 transition">Solo esenciales</button>' +
+      'style="cursor:pointer;padding:7px 12px;border-radius:8px;font-size:13px;' +
+      'font-weight:600;color:#cbd5e1;background:transparent;' +
+      'border:1px solid #475569;">Solo esenciales</button>' +
       '<button type="button" data-cookie-choice="accepted" ' +
-      'class="flex-1 md:flex-none px-5 py-2.5 rounded-lg text-base font-semibold text-white ' +
-      'bg-brand-600 hover:bg-brand-700 shadow-lg shadow-blue-600/20 transition">Aceptar</button>' +
+      'style="cursor:pointer;padding:7px 14px;border-radius:8px;font-size:13px;' +
+      'font-weight:600;color:#fff;background:#2563eb;border:1px solid #2563eb;">' +
+      'Aceptar</button>' +
       '</div></div>';
 
     wrap.addEventListener('click', function (e) {
