@@ -99,29 +99,30 @@
       'padding:12px 16px;box-sizing:border-box;';
     wrap.innerHTML =
       '<div style="pointer-events:auto;position:relative;z-index:1;' +
-      'max-width:42rem;margin:0 auto;border-radius:12px;' +
-      'border:1px solid rgba(51,65,85,0.85);background:rgba(15,23,42,0.96);' +
-      'backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);' +
-      'box-shadow:0 10px 30px rgba(2,6,23,0.45);' +
-      'padding:12px 14px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;' +
+      'max-width:48rem;margin:0 auto;border-radius:12px;' +
+      'border:1px solid rgba(148,163,184,0.55);background:rgba(30,41,59,0.98);' +
+      'backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);' +
+      'box-shadow:0 12px 36px rgba(2,6,23,0.55),0 0 0 1px rgba(96,165,250,0.12);' +
+      'padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 14px;' +
       'font-family:inherit;">' +
-      '<p style="flex:1 1 14rem;margin:0;min-width:0;font-size:13px;line-height:1.45;' +
-      'color:#e2e8f0;">' +
+      '<p style="flex:1 1 16rem;margin:0;min-width:0;font-size:14px;line-height:1.45;' +
+      'color:#f1f5f9;">' +
       'Usamos cookies <strong style="color:#fff;font-weight:600;">esenciales</strong> ' +
-      'para el sitio y, si aceptas, ' +
-      '<strong style="color:#fff;font-weight:600;">analíticas (Google Analytics)</strong>. ' +
-      '<a href="/privacidad" style="color:#60a5fa;text-decoration:underline;' +
+      'para que el sitio funcione. Si aceptas, también activamos ' +
+      '<strong style="color:#fff;font-weight:600;">Google Analytics</strong> ' +
+      'para mejorar el producto. ' +
+      '<a href="/privacidad" style="color:#93c5fd;text-decoration:underline;' +
       'text-underline-offset:2px;">Política de privacidad</a>.' +
       '</p>' +
       '<div style="display:flex;flex:0 0 auto;flex-wrap:wrap;align-items:center;gap:8px;">' +
       '<button type="button" data-cookie-choice="essential" ' +
-      'style="cursor:pointer;padding:7px 12px;border-radius:8px;font-size:13px;' +
-      'font-weight:600;color:#cbd5e1;background:transparent;' +
-      'border:1px solid #475569;">Solo esenciales</button>' +
+      'style="cursor:pointer;padding:8px 12px;border-radius:8px;font-size:13px;' +
+      'font-weight:600;color:#e2e8f0;background:rgba(15,23,42,0.55);' +
+      'border:1px solid #64748b;">Solo esenciales</button>' +
       '<button type="button" data-cookie-choice="accepted" ' +
-      'style="cursor:pointer;padding:7px 14px;border-radius:8px;font-size:13px;' +
-      'font-weight:600;color:#fff;background:#2563eb;border:1px solid #2563eb;">' +
-      'Aceptar</button>' +
+      'style="cursor:pointer;padding:8px 14px;border-radius:8px;font-size:13px;' +
+      'font-weight:600;color:#fff;background:#2563eb;border:1px solid #3b82f6;">' +
+      'Aceptar Analytics</button>' +
       '</div></div>';
 
     wrap.addEventListener('click', function (e) {
