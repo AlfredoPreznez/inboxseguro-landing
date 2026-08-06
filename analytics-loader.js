@@ -95,28 +95,28 @@
     // Inline z-index + pointer-events: Tailwind no scanea este JS, así que
     // clases como pointer-events-auto no existen en styles.css y el click
     // atravesaba el banner hacia el main (hero z-10).
-    wrap.className = 'fixed bottom-0 inset-x-0 p-4 md:p-5';
+    wrap.className = 'fixed bottom-0 inset-x-0 p-4 md:p-6';
     wrap.style.cssText =
       'position:fixed;bottom:0;left:0;right:0;z-index:9999;pointer-events:none;';
     wrap.innerHTML =
-      '<div class="mx-auto max-w-4xl rounded-2xl border border-slate-700/80 ' +
+      '<div class="mx-auto max-w-5xl rounded-2xl border border-slate-700/80 ' +
       'bg-slate-900/95 backdrop-blur-md shadow-2xl shadow-slate-900/40 ' +
-      'px-4 py-4 md:px-6 md:py-4 flex flex-col md:flex-row md:items-center gap-4" ' +
+      'px-5 py-5 md:px-8 md:py-6 flex flex-col md:flex-row md:items-center gap-5" ' +
       'style="pointer-events:auto;position:relative;z-index:1;">' +
       '<div class="flex-1 min-w-0">' +
-      '<p class="text-sm text-slate-200 leading-relaxed">' +
+      '<p class="text-base text-slate-200 leading-relaxed">' +
       'Usamos cookies <span class="font-semibold text-white">esenciales</span> para el funcionamiento ' +
       'del sitio y, si aceptás, ' +
       '<span class="font-semibold text-white">analíticas (Google Analytics)</span> para mejorar InboxSeguro. ' +
       'Más info en nuestra ' +
       '<a href="/privacidad" class="text-blue-400 hover:text-blue-300 underline underline-offset-2">Política de privacidad</a>.' +
       '</p></div>' +
-      '<div class="flex flex-shrink-0 flex-wrap items-center gap-2">' +
+      '<div class="flex flex-shrink-0 flex-wrap items-center gap-3 w-full md:w-auto">' +
       '<button type="button" data-cookie-choice="essential" ' +
-      'class="px-4 py-2 rounded-lg text-sm font-semibold text-slate-300 ' +
+      'class="flex-1 md:flex-none px-5 py-2.5 rounded-lg text-base font-semibold text-slate-300 ' +
       'border border-slate-600 hover:bg-slate-800 transition">Solo esenciales</button>' +
       '<button type="button" data-cookie-choice="accepted" ' +
-      'class="px-4 py-2 rounded-lg text-sm font-semibold text-white ' +
+      'class="flex-1 md:flex-none px-5 py-2.5 rounded-lg text-base font-semibold text-white ' +
       'bg-brand-600 hover:bg-brand-700 shadow-lg shadow-blue-600/20 transition">Aceptar</button>' +
       '</div></div>';
 
