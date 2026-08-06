@@ -92,11 +92,17 @@
     wrap.id = BANNER_ID;
     wrap.setAttribute('role', 'dialog');
     wrap.setAttribute('aria-label', 'Aviso de cookies');
-    wrap.className = 'fixed bottom-0 inset-x-0 z-50 p-4 md:p-5 pointer-events-none';
+    // Inline z-index + pointer-events: Tailwind no scanea este JS, así que
+    // clases como pointer-events-auto no existen en styles.css y el click
+    // atravesaba el banner hacia el main (hero z-10).
+    wrap.className = 'fixed bottom-0 inset-x-0 p-4 md:p-5';
+    wrap.style.cssText =
+      'position:fixed;bottom:0;left:0;right:0;z-index:9999;pointer-events:none;';
     wrap.innerHTML =
-      '<div class="pointer-events-auto mx-auto max-w-4xl rounded-2xl border border-slate-700/80 ' +
+      '<div class="mx-auto max-w-4xl rounded-2xl border border-slate-700/80 ' +
       'bg-slate-900/95 backdrop-blur-md shadow-2xl shadow-slate-900/40 ' +
-      'px-4 py-4 md:px-6 md:py-4 flex flex-col md:flex-row md:items-center gap-4">' +
+      'px-4 py-4 md:px-6 md:py-4 flex flex-col md:flex-row md:items-center gap-4" ' +
+      'style="pointer-events:auto;position:relative;z-index:1;">' +
       '<div class="flex-1 min-w-0">' +
       '<p class="text-sm text-slate-200 leading-relaxed">' +
       'Usamos cookies <span class="font-semibold text-white">esenciales</span> para el funcionamiento ' +
