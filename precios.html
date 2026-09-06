@@ -233,53 +233,118 @@
                 <div class="text-center mb-10">
                     <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">Planes sencillos, precios transparentes</span>
                     <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900 tracking-tight">Control y visibilidad de tu correo corporativo</h2>
-                    <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto font-light">Programa Fundadores: $24.900 CLP/mes. Configuración guiada en el panel.</p>
+                    <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto font-light">Programa Fundadores: US$25/mes. Configuración guiada en el panel.</p>
                 </div>
 
-                <!-- Banner Cupón Fundador -->
-                <div class="max-w-2xl mx-auto mb-10 p-4 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center justify-between gap-4" data-seo-event="cta_fundador" onclick="if(window.trackCtaFundador) trackCtaFundador();">
-                    <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-600 flex-shrink-0">
-                            <i class="fa-solid fa-ticket text-lg animate-pulse"></i>
-                        </div>
-                        <div>
-                            <p class="text-xs font-bold text-slate-900">Programa Fundador — cupos limitados</p>
-                            <p class="text-xxs text-slate-500">Al activar tu plan, usa el código <strong class="text-emerald-700">FUNDADOR</strong> en el checkout para acceder a <strong class="text-emerald-700">$24.900 CLP/mes</strong> durante el programa fundadores.</p>
-                        </div>
-                    </div>
-                    <div class="text-right hidden sm:block flex-shrink-0">
-                        <span class="inline-block px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[9px] font-bold uppercase tracking-wider">
-                            Solo 20 cupos
-                        </span>
-                    </div>
-                </div>
-
-                <!-- Tarjeta Única Centrada -->
-                <div class="max-w-2xl mx-auto bg-white rounded-3xl shadow-2xl border-2 border-brand-600 overflow-hidden relative transform hover:-translate-y-1 transition-all duration-300 mb-12">
+                <!-- Contenedor Principal de Precios -->
+                <div class="max-w-4xl mx-auto bg-white rounded-3xl shadow-2xl border-2 border-brand-600 overflow-hidden relative mb-12">
                     
-                    <div class="absolute top-0 right-6 translate-y-6 bg-brand-600 text-white text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider">
-                        Recomendado
-                    </div>
-                    
-                    <div class="p-6 md:p-8 border-b border-slate-100">
-                        <h3 class="text-xl font-bold text-slate-900 mb-2">Plan Profesional</h3>
-                        <p class="text-xs text-slate-500 leading-relaxed max-w-md">Documento de gobernanza descargable, inventario con responsables, alertas de cambios y monitoreo continuo.</p>
+                    <!-- Encabezados de Planes -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 border-b border-slate-100">
+                        <!-- Columna vacía para alinear en desktop -->
+                        <div class="hidden md:block p-6 md:p-8 bg-slate-50/50"></div>
                         
-                        <div class="my-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <!-- Columna Starter -->
+                        <div class="p-6 md:p-8 border-b md:border-b-0 md:border-l border-slate-100 text-center relative flex flex-col justify-between">
                             <div>
-                                <div class="flex items-baseline gap-1">
-                                    <span class="text-sm font-bold text-slate-500">$</span>
-                                    <span class="text-5xl font-extrabold text-slate-900">39.900</span>
-                                    <span class="text-sm text-slate-500 font-medium">CLP / mes</span>
+                                <h3 class="text-xl font-bold text-slate-900 mb-2">Starter</h3>
+                                <div class="my-4">
+                                    <div class="flex items-baseline justify-center gap-1">
+                                        <span class="text-sm font-bold text-slate-500">US$</span>
+                                        <span class="text-4xl font-extrabold text-slate-900">39</span>
+                                        <span class="text-sm text-slate-500 font-medium">/ mes</span>
+                                    </div>
+                                    <p class="text-xxs text-slate-400 mt-1">facturado mensualmente</p>
                                 </div>
-                                <p class="text-xxs text-slate-400 mt-1">facturado mensualmente</p>
                             </div>
-                            <div class="self-start sm:self-center">
-                                <span class="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-100 text-indigo-700 rounded-full text-xs font-bold">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
-                                    Empieza gratis, sin tarjeta
+                            <div class="mt-4">
+                                <a href="https://panel.inboxseguro.com/register?plan=starter" class="block w-full bg-white hover:bg-slate-50 text-slate-800 border border-slate-200 font-bold py-3 rounded-xl text-center text-sm transition-all transform hover:scale-[1.01]">
+                                    Elegir Starter
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Columna Founding Customer -->
+                        <div class="p-6 md:p-8 md:border-l border-slate-100 text-center relative bg-brand-50/30 flex flex-col justify-between">
+                            <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-600 text-white text-[9px] px-3 py-1 rounded-full font-bold uppercase tracking-wider whitespace-nowrap shadow-sm">
+                                Recomendado
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold text-brand-700 mb-2 flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-crown text-amber-500"></i> Founding Customer
+                                </h3>
+                                <span class="inline-block px-2.5 py-1 mb-2 rounded-full bg-brand-100 text-brand-800 text-[10px] font-bold uppercase tracking-wider">
+                                    14/20 cupos disponibles
                                 </span>
+                                <div class="my-2">
+                                    <div class="flex items-baseline justify-center gap-1">
+                                        <span class="text-sm font-bold text-slate-500">US$</span>
+                                        <span class="text-4xl font-extrabold text-slate-900">25</span>
+                                        <span class="text-sm text-slate-500 font-medium">/ mes</span>
+                                    </div>
+                                    <p class="text-xxs text-slate-400 mt-1">facturado mensualmente</p>
+                                </div>
                             </div>
+                            <div class="mt-4">
+                                <a href="https://panel.inboxseguro.com/register?plan=founding" class="block w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-3 rounded-xl text-center text-sm shadow-lg shadow-brand-600/20 transition-all transform hover:scale-[1.01]">
+                                    Elegir Founding
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tabla Comparativa de Features -->
+                    <div class="border-b border-slate-100">
+                        <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-slate-100 text-sm">
+                            
+                            <!-- Fila 1 -->
+                            <div class="hidden md:flex items-center p-4 text-slate-600 font-medium bg-slate-50/30">Monitoreo continuo</div>
+                            <div class="flex md:hidden items-center justify-center p-2 bg-slate-50/80 text-xs font-bold text-slate-500 uppercase tracking-wider">Monitoreo continuo</div>
+                            <div class="flex items-center justify-center p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i><span class="ml-2 md:hidden text-slate-600 text-xs">Starter</span></div>
+                            <div class="flex items-center justify-center p-4 text-center bg-brand-50/10"><i class="fa-solid fa-check text-emerald-500"></i><span class="ml-2 md:hidden text-slate-600 text-xs">Founding</span></div>
+
+                            <!-- Fila 2 -->
+                            <div class="hidden md:flex items-center p-4 text-slate-600 font-medium bg-slate-50/30 border-t border-slate-100">Inventario de fuentes</div>
+                            <div class="flex md:hidden items-center justify-center p-2 bg-slate-50/80 border-t border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">Inventario de fuentes</div>
+                            <div class="flex items-center justify-center p-4 text-center border-t border-slate-100"><i class="fa-solid fa-check text-emerald-500"></i></div>
+                            <div class="flex items-center justify-center p-4 text-center bg-brand-50/10 border-t border-slate-100"><i class="fa-solid fa-check text-emerald-500"></i></div>
+
+                            <!-- Fila 3 -->
+                            <div class="hidden md:flex items-center p-4 text-slate-600 font-medium bg-slate-50/30 border-t border-slate-100">Alertas y cambios</div>
+                            <div class="flex md:hidden items-center justify-center p-2 bg-slate-50/80 border-t border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">Alertas y cambios</div>
+                            <div class="flex items-center justify-center p-4 text-center border-t border-slate-100"><i class="fa-solid fa-check text-emerald-500"></i></div>
+                            <div class="flex items-center justify-center p-4 text-center bg-brand-50/10 border-t border-slate-100"><i class="fa-solid fa-check text-emerald-500"></i></div>
+
+                            <!-- Fila 4 -->
+                            <div class="hidden md:flex items-center p-4 text-slate-600 font-medium bg-slate-50/30 border-t border-slate-100">Gestión DMARC</div>
+                            <div class="flex md:hidden items-center justify-center p-2 bg-slate-50/80 border-t border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">Gestión DMARC</div>
+                            <div class="flex items-center justify-center p-4 text-center border-t border-slate-100"><i class="fa-solid fa-check text-emerald-500"></i></div>
+                            <div class="flex items-center justify-center p-4 text-center bg-brand-50/10 border-t border-slate-100"><i class="fa-solid fa-check text-emerald-500"></i></div>
+
+                            <!-- Fila 5 -->
+                            <div class="hidden md:flex items-center p-4 text-slate-600 font-medium bg-slate-50/30 border-t border-slate-100">Precio preferencial</div>
+                            <div class="flex md:hidden items-center justify-center p-2 bg-slate-50/80 border-t border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">Precio preferencial</div>
+                            <div class="flex items-center justify-center p-4 text-center text-slate-400 border-t border-slate-100">—</div>
+                            <div class="flex items-center justify-center p-4 text-center bg-brand-50/10 border-t border-slate-100 text-xs text-brand-700 font-medium px-2">Mientras mantengas tu suscripción activa</div>
+
+                            <!-- Fila 6 -->
+                            <div class="hidden md:flex items-center p-4 text-slate-600 font-medium bg-slate-50/30 border-t border-slate-100">Acceso anticipado a funciones</div>
+                            <div class="flex md:hidden items-center justify-center p-2 bg-slate-50/80 border-t border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">Acceso anticipado a funciones</div>
+                            <div class="flex items-center justify-center p-4 text-center text-slate-400 border-t border-slate-100">—</div>
+                            <div class="flex items-center justify-center p-4 text-center bg-brand-50/10 border-t border-slate-100"><i class="fa-solid fa-check text-emerald-500"></i></div>
+
+                            <!-- Fila 7 -->
+                            <div class="hidden md:flex items-center p-4 text-slate-600 font-medium bg-slate-50/30 border-t border-slate-100">Influencia en el roadmap</div>
+                            <div class="flex md:hidden items-center justify-center p-2 bg-slate-50/80 border-t border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">Influencia en el roadmap</div>
+                            <div class="flex items-center justify-center p-4 text-center text-slate-400 border-t border-slate-100">—</div>
+                            <div class="flex items-center justify-center p-4 text-center bg-brand-50/10 border-t border-slate-100"><i class="fa-solid fa-check text-emerald-500"></i></div>
+
+                            <!-- Fila 8 -->
+                            <div class="hidden md:flex items-center p-4 text-slate-600 font-medium bg-slate-50/30 border-t border-slate-100">Contacto con el equipo</div>
+                            <div class="flex md:hidden items-center justify-center p-2 bg-slate-50/80 border-t border-slate-100 text-xs font-bold text-slate-500 uppercase tracking-wider">Contacto con el equipo</div>
+                            <div class="flex items-center justify-center p-4 text-center text-slate-600 border-t border-slate-100 text-xs">Estándar</div>
+                            <div class="flex items-center justify-center p-4 text-center bg-brand-50/10 border-t border-slate-100 font-semibold text-brand-700 text-xs">Prioritario</div>
+
                         </div>
                     </div>
 
@@ -326,14 +391,10 @@
                             </div>
                         </div>
 
-                        <a href="https://panel.inboxseguro.com/register" class="block w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-xl text-center text-sm shadow-lg shadow-brand-600/20 transition-all transform hover:scale-[1.01]">
-                            Crear cuenta — 7 días gratis, sin tarjeta
-                        </a>
-
-                        <div class="flex justify-center gap-5 mt-5 text-xxs text-slate-400 flex-wrap">
+                        <div class="flex justify-center gap-5 text-xxs text-slate-400 flex-wrap mt-2">
                             <span class="flex items-center gap-1"><i class="fa-solid fa-check text-emerald-500"></i> Sin contratos</span>
                             <span class="flex items-center gap-1"><i class="fa-solid fa-check text-emerald-500"></i> Cancela cuando quieras</span>
-                            <span class="flex items-center gap-1"><i class="fa-solid fa-check text-emerald-500"></i> Activación en 5 minutos</span>
+                            <span class="flex items-center gap-1"><i class="fa-solid fa-check text-emerald-500"></i> Empieza con 7 días gratis</span>
                         </div>
                     </div>
                 </div>
