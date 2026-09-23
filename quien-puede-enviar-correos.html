@@ -24,9 +24,9 @@
     <link rel="stylesheet" href="/styles.css?v=1.0.6">
     <style>
       .tool-card{background:rgba(255,255,255,.055);border:1px solid rgba(148,163,184,.18);border-radius:1rem}
-      .system-card{background:#fff;border:1px solid #e2e8f0;border-radius:1rem;padding:1rem;box-shadow:0 1px 2px rgba(15,23,42,.04)}
-      .evidence-pill{display:inline-flex;padding:.2rem .55rem;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:.68rem;font-weight:700}
-      @media(max-width:640px){.tool-result-head{align-items:flex-start;flex-direction:column}.system-grid{grid-template-columns:1fr!important}}
+      .system-card{display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:#fff;border:1px solid #e2e8f0;border-radius:.85rem;padding:.8rem 1rem;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+      .evidence-pill{display:inline-flex;padding:.18rem .5rem;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:.65rem;font-weight:700}
+      .system-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}@media(max-width:640px){.tool-result-head{align-items:flex-start;flex-direction:column}.system-grid{grid-template-columns:1fr}.sender-hero{padding-top:7.5rem!important}}
     </style>
     <script type="application/ld+json">
     {
@@ -207,7 +207,7 @@
         </div>
     </nav>
     <main class="flex-grow flex flex-col bg-white">
-      <section class="relative pt-32 pb-16 md:pt-36 md:pb-24 overflow-hidden bg-slate-950">
+      <section class="sender-hero relative pb-16 md:pb-24 overflow-hidden bg-slate-950" style="padding-top:9rem">
         <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 pointer-events-none"></div>
         <div class="absolute top-0 right-0 w-[520px] h-[520px] bg-blue-600/15 rounded-full blur-[110px] pointer-events-none"></div>
         <div class="max-w-4xl w-full mx-auto px-4 relative z-10 text-center">
@@ -219,7 +219,7 @@
             <form id="systemsForm" class="flex flex-col sm:flex-row gap-3" novalidate>
               <label for="systemsDomain" class="sr-only">Dominio de tu empresa</label>
               <input id="systemsDomain" name="domain" type="text" inputmode="url" autocomplete="off" spellcheck="false" placeholder="tuempresa.com" aria-describedby="domainHelp" required class="flex-1 px-5 py-4 rounded-xl bg-slate-900/70 border border-white/15 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg">
-              <button id="systemsBtn" type="submit" class="px-7 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg transition whitespace-nowrap">Descubrir quién puede enviar</button>
+              <button id="systemsBtn" type="submit" class="px-7 py-4 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl shadow-lg transition whitespace-nowrap">Analizar dominio</button>
             </form>
             <p id="domainHelp" class="text-xs text-slate-400 mt-3">Solo consultamos registros DNS públicos. No pedimos acceso al correo ni guardamos mensajes.</p>
             <div id="systemsError" class="hidden mt-5 p-4 rounded-xl bg-red-500/10 border border-red-400/25 text-red-200 text-sm" role="alert"></div>
@@ -236,17 +236,13 @@
                 </div>
                 <span id="resultCount" class="px-3 py-1.5 rounded-full bg-blue-500/15 text-blue-200 text-sm font-bold border border-blue-400/20"></span>
               </div>
-              <div id="systemsList" class="system-grid grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+              <div id="systemsList" class="system-grid"></div>
               <div id="emptySystems" class="hidden p-5 rounded-xl bg-slate-900/60 border border-white/10 text-slate-300 text-sm"></div>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-5">
-                <div class="p-3 rounded-xl bg-white/5 border border-white/10"><span class="block text-xs text-slate-400">SPF</span><strong id="signalSpf" class="text-white text-sm"></strong></div>
-                <div class="p-3 rounded-xl bg-white/5 border border-white/10"><span class="block text-xs text-slate-400">DMARC</span><strong id="signalDmarc" class="text-white text-sm"></strong></div>
-                <div class="p-3 rounded-xl bg-white/5 border border-white/10"><span class="block text-xs text-slate-400">Tipo de análisis</span><strong class="text-white text-sm">DNS público</strong></div>
-              </div>
-              <div class="mt-5 p-4 rounded-xl bg-amber-500/10 border border-amber-400/20 text-amber-100 text-xs leading-relaxed"><strong>Qué significa:</strong> estas señales muestran quién podría estar autorizado. Para confirmar quién envió realmente y detectar fuentes nuevas necesitas observar reportes DMARC durante varios días.</div>
-              <div class="mt-5 flex flex-col sm:flex-row gap-3">
-                <a href="https://panel.inboxseguro.com/register" class="inline-flex justify-center px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-sm">Ver quién envía realmente</a>
-                <a href="/domain-checker" class="inline-flex justify-center px-5 py-3 bg-white/5 hover:bg-white/10 text-white font-semibold rounded-xl border border-white/10 text-sm">Revisar SPF, DKIM y DMARC</a>
+              <p id="technicalSummary" class="mt-4 text-xs text-slate-400"></p>
+              <div class="mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-400/20 text-amber-100 text-xs leading-relaxed">Este resultado muestra servicios reconocibles en DNS. Puede omitir configuraciones personalizadas y no confirma cuáles enviaron correos recientemente.</div>
+              <div class="mt-5 flex flex-col sm:flex-row gap-3 items-center">
+                <a href="https://panel.inboxseguro.com/register" class="inline-flex justify-center px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-sm">Monitorear actividad real</a>
+                <a href="/domain-checker" class="text-blue-200 hover:text-white font-semibold text-sm">Revisar autenticación del dominio</a>
               </div>
             </section>
           </div>
@@ -323,7 +319,7 @@
         const results=document.getElementById('systemsResults');
         const error=document.getElementById('systemsError');
         function normalizeDomain(value){return String(value||'').trim().toLowerCase().replace(/^https?:\/\//,'').replace(/^www\./,'').split('/')[0].split(':')[0];}
-        function setBusy(busy){button.disabled=busy;button.textContent=busy?'Analizando DNS…':'Descubrir quién puede enviar';loading.classList.toggle('hidden',!busy);}
+        function setBusy(busy){button.disabled=busy;button.textContent=busy?'Analizando DNS…':'Analizar dominio';loading.classList.toggle('hidden',!busy);}
         function showError(message){error.textContent=message;error.classList.remove('hidden');results.classList.add('hidden');}
         form.addEventListener('submit',async function(event){
           event.preventDefault(); error.classList.add('hidden'); results.classList.add('hidden');
@@ -337,21 +333,22 @@
             if(response.status===429)throw new Error('Se alcanzó el límite temporal de consultas. Intenta nuevamente en unos minutos.');
             if(!response.ok||!data.ok)throw new Error('No pudimos completar el análisis en este momento. Intenta nuevamente.');
             document.getElementById('resultDomain').textContent=data.domain;
-            document.getElementById('resultHeadline').textContent=data.count===1?'Detectamos 1 posible servicio de envío':'Detectamos '+data.count+' posibles servicios de envío';
+            document.getElementById('resultHeadline').textContent=data.count===1?'Encontramos 1 servicio reconocible':'Encontramos '+data.count+' servicios reconocibles';
             document.getElementById('resultCount').textContent=data.count+' detectado'+(data.count===1?'':'s');
             const list=document.getElementById('systemsList');list.textContent='';
             const empty=document.getElementById('emptySystems');
             (data.systems||[]).forEach(function(system){
               const card=document.createElement('article');card.className='system-card';
               const name=document.createElement('h3');name.className='font-bold text-slate-900';name.textContent=system.name;card.appendChild(name);
-              const meta=document.createElement('p');meta.className='text-xs text-slate-500 mt-1 mb-3';meta.textContent='Señal pública detectada';card.appendChild(meta);
-              (system.evidence||[]).forEach(function(source){const pill=document.createElement('span');pill.className='evidence-pill mr-1';pill.textContent=source;card.appendChild(pill);});
+              const evidence=document.createElement('div');evidence.className='flex flex-wrap gap-1';card.appendChild(evidence);
+              (system.evidence||[]).forEach(function(source){const pill=document.createElement('span');pill.className='evidence-pill mr-1';pill.textContent=source;evidence.appendChild(pill);});
               list.appendChild(card);
             });
             empty.classList.toggle('hidden',data.count!==0);
             empty.textContent='No reconocimos proveedores conocidos en las señales públicas consultadas. Esto no demuestra que el dominio no envíe correo: puede utilizar configuraciones personalizadas o servicios sin señales detectables.';
-            document.getElementById('signalSpf').textContent=data.signals.spf_exists?'Configurado · '+data.signals.spf_lookups+' consultas':'No detectado';
-            document.getElementById('signalDmarc').textContent=data.signals.dmarc_exists?'Política '+data.signals.dmarc_policy:'No detectado';
+            const spfText=data.signals.spf_exists?'SPF configurado':'SPF no detectado';
+            const dmarcText=data.signals.dmarc_exists?'DMARC: política '+data.signals.dmarc_policy:'DMARC no detectado';
+            document.getElementById('technicalSummary').textContent=spfText+' · '+dmarcText;
             results.classList.remove('hidden');
             if(typeof window.trackCheckerSubmit==='function')window.trackCheckerSubmit('sending_systems');
           }catch(err){showError(err.name==='AbortError'?'El análisis tardó demasiado. Intenta otra vez en unos segundos.':err.message);}
