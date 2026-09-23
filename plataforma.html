@@ -46,6 +46,26 @@
   "description": "Plataforma de vigilancia de envíos del dominio con inventario automático, alertas DMARC e inventario de remitentes."
 }
 </script>
+
+    <style>
+        .product-demo{background:#fff;border:1px solid #dbe3ef;border-radius:20px;box-shadow:0 24px 60px rgba(15,23,42,.16);overflow:hidden}
+        .product-demo__top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid #e2e8f0;background:#f8fafc}
+        .product-demo__dot{width:8px;height:8px;border-radius:999px;background:#10b981;box-shadow:0 0 0 4px #d1fae5}
+        .product-demo__tabs{display:flex;gap:6px;padding:12px 14px;border-bottom:1px solid #e2e8f0;overflow-x:auto}
+        .product-demo__tab{border:0;background:transparent;color:#64748b;font-weight:700;font-size:12px;padding:9px 12px;border-radius:9px;white-space:nowrap;cursor:pointer}
+        .product-demo__tab[aria-selected="true"]{background:#e8f0ff;color:#1d4ed8}
+        .product-demo__body{padding:18px;min-height:330px;background:#f8fafc}
+        .product-demo__panel[hidden]{display:none}
+        .product-demo__card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;padding:15px}
+        .product-demo__metric{font-size:28px;line-height:1;font-weight:800;color:#0f172a}
+        .product-demo__bar{height:7px;border-radius:999px;background:#e2e8f0;overflow:hidden}
+        .product-demo__bar span{display:block;height:100%;border-radius:inherit;background:#2563eb}
+        .product-demo__row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #eef2f7}
+        .product-demo__row:last-child{border-bottom:0}
+        .product-demo__status{font-size:11px;font-weight:800;padding:5px 8px;border-radius:999px;white-space:nowrap}
+        .product-demo__status--ok{color:#047857;background:#d1fae5}.product-demo__status--warn{color:#a16207;background:#fef3c7}
+        @media (max-width:640px){.product-demo__body{min-height:370px;padding:13px}.product-demo__top{align-items:flex-start}.product-demo__metric{font-size:24px}}
+    </style>
 </head>
 
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
@@ -307,8 +327,40 @@
                     </div>
 
                     <div class="order-1 lg:order-2">
-                        <img src="/dashboard-screenshot.png" alt="Captura de pantalla del Asistente DNS de InboxSeguro"
-                            class="rounded-xl border border-slate-200 dashboard-card lg:rotate-1 transition-transform hover:rotate-0 w-full h-auto shadow-2xl">
+                        <div class="product-demo" data-product-demo>
+                            <div class="product-demo__top">
+                                <div>
+                                    <p class="text-[10px] uppercase tracking-wider font-bold text-blue-600">Demo interactiva</p>
+                                    <p class="text-sm font-bold text-slate-900 mt-1">empresa-demo.com</p>
+                                </div>
+                                <div class="flex items-center gap-2 text-xs font-bold text-emerald-700"><span class="product-demo__dot"></span> Monitoreo activo</div>
+                            </div>
+                            <div class="product-demo__tabs" role="tablist" aria-label="Vistas de la plataforma">
+                                <button type="button" class="product-demo__tab" role="tab" aria-selected="true" aria-controls="demo-resumen" id="tab-resumen" data-demo-tab="resumen">Resumen</button>
+                                <button type="button" class="product-demo__tab" role="tab" aria-selected="false" aria-controls="demo-remitentes" id="tab-remitentes" data-demo-tab="remitentes">Quién envía</button>
+                                <button type="button" class="product-demo__tab" role="tab" aria-selected="false" aria-controls="demo-dns" id="tab-dns" data-demo-tab="dns">Configuración DNS</button>
+                            </div>
+                            <div class="product-demo__body">
+                                <div class="product-demo__panel" id="demo-resumen" role="tabpanel" aria-labelledby="tab-resumen" data-demo-panel="resumen">
+                                    <p class="text-xs text-slate-500 mb-3">Datos de ejemplo</p>
+                                    <div class="grid grid-cols-2 gap-3 mb-3">
+                                        <div class="product-demo__card"><p class="text-xs text-slate-500 mb-2">InboxScore</p><p class="product-demo__metric">86<span class="text-sm text-slate-400">/100</span></p><div class="product-demo__bar mt-3"><span style="width:86%"></span></div></div>
+                                        <div class="product-demo__card"><p class="text-xs text-slate-500 mb-2">Servicios detectados</p><p class="product-demo__metric">4</p><p class="text-xs text-emerald-700 font-semibold mt-3">3 autorizados</p></div>
+                                    </div>
+                                    <div class="product-demo__card"><div class="product-demo__row"><span class="text-sm font-semibold text-slate-700">SPF</span><span class="product-demo__status product-demo__status--ok">Correcto</span></div><div class="product-demo__row"><span class="text-sm font-semibold text-slate-700">DKIM</span><span class="product-demo__status product-demo__status--warn">1 pendiente</span></div><div class="product-demo__row"><span class="text-sm font-semibold text-slate-700">DMARC</span><span class="product-demo__status product-demo__status--ok">Cuarentena</span></div></div>
+                                </div>
+                                <div class="product-demo__panel" id="demo-remitentes" role="tabpanel" aria-labelledby="tab-remitentes" data-demo-panel="remitentes" hidden>
+                                    <p class="text-xs text-slate-500 mb-3">Inventario de remitentes · Datos de ejemplo</p>
+                                    <div class="product-demo__card"><div class="product-demo__row"><div><p class="text-sm font-bold text-slate-800">Google Workspace</p><p class="text-xs text-slate-500 mt-1">Correo corporativo</p></div><span class="product-demo__status product-demo__status--ok">Autorizado</span></div><div class="product-demo__row"><div><p class="text-sm font-bold text-slate-800">HubSpot</p><p class="text-xs text-slate-500 mt-1">Marketing y ventas</p></div><span class="product-demo__status product-demo__status--ok">Autorizado</span></div><div class="product-demo__row"><div><p class="text-sm font-bold text-slate-800">Servicio nuevo</p><p class="text-xs text-slate-500 mt-1">Detectado hoy</p></div><span class="product-demo__status product-demo__status--warn">Revisar</span></div></div>
+                                    <p class="text-xs text-slate-600 mt-4 leading-relaxed">InboxSeguro te muestra qué cambió para que puedas decidir si un remitente pertenece a tu empresa.</p>
+                                </div>
+                                <div class="product-demo__panel" id="demo-dns" role="tabpanel" aria-labelledby="tab-dns" data-demo-panel="dns" hidden>
+                                    <p class="text-xs text-slate-500 mb-3">Próximo paso recomendado · Datos de ejemplo</p>
+                                    <div class="product-demo__card"><p class="text-xs font-bold uppercase tracking-wider text-blue-600">DKIM · HubSpot</p><h3 class="text-base font-bold text-slate-900 mt-2">Activa la firma del servicio</h3><p class="text-sm text-slate-600 mt-2 leading-relaxed">Copia el registro indicado en tu proveedor DNS. El panel verificará el cambio automáticamente.</p><div class="mt-4 rounded-lg bg-slate-900 p-3"><p class="text-[10px] text-slate-400">Nombre</p><p class="text-xs text-white font-mono mt-1 break-all">hs1._domainkey</p></div><a href="https://panel.inboxseguro.com/register" class="inline-flex mt-4 text-xs font-bold text-blue-700 bg-blue-50 px-3 py-2 rounded-lg">Probar con mi dominio</a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-center text-xs text-slate-500 mt-4">Explora una muestra de la experiencia. Los datos son ficticios.</p>
                     </div>
 
                 </div>
@@ -506,6 +558,16 @@
             iconOpen.classList.remove('hidden');
             iconClose.classList.add('hidden');
         }
+
+        document.querySelectorAll('[data-product-demo]').forEach((demo) => {
+            const tabs = Array.from(demo.querySelectorAll('[data-demo-tab]'));
+            const panels = Array.from(demo.querySelectorAll('[data-demo-panel]'));
+            tabs.forEach((tab) => tab.addEventListener('click', () => {
+                const target = tab.dataset.demoTab;
+                tabs.forEach((item) => item.setAttribute('aria-selected', String(item === tab)));
+                panels.forEach((panel) => { panel.hidden = panel.dataset.demoPanel !== target; });
+            }));
+        });
     </script>
     <script src="/analytics-config.js"></script>
     <script src="/analytics-loader.js"></script>
