@@ -4,32 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador DKIM Gratuito | InboxSeguro</title>
+    <title>Verificador DKIM gratis: comprueba firmas de tu dominio</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <meta name="description"
-        content="Valida firmas DKIM de tu dominio gratis. Protege la integridad del correo corporativo.">
+    <meta name="description" content="Busca selectores DKIM comunes y comprueba si tu dominio publica una clave de verificación. Análisis DNS gratuito y sin registro.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/dkim-checker">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="InboxSeguro">
-    <meta property="og:locale" content="es_CL">
+    <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/dkim-checker">
-    <meta property="og:title" content="Verificador DKIM Gratuito | InboxSeguro">
-    <meta property="og:description" content="Valida firmas DKIM de tu dominio gratis. Protege la integridad del correo corporativo.">
+    <meta property="og:title" content="Verificador DKIM gratis: comprueba firmas de tu dominio">
+    <meta property="og:description" content="Busca selectores DKIM comunes y comprueba si tu dominio publica una clave de verificación. Análisis DNS gratuito y sin registro.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Verificador DKIM Gratuito | InboxSeguro">
-    <meta name="twitter:description" content="Valida firmas DKIM de tu dominio gratis. Protege la integridad del correo corporativo.">
+    <meta name="twitter:title" content="Verificador DKIM gratis: comprueba firmas de tu dominio">
+    <meta name="twitter:description" content="Busca selectores DKIM comunes y comprueba si tu dominio publica una clave de verificación. Análisis DNS gratuito y sin registro.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.6">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Verificador DKIM","url":"https://www.inboxseguro.com/dkim-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Verificador DKIM","url":"https://www.inboxseguro.com/dkim-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+
+<style>
+@media (max-width:640px){
+  #diagResults [id^="row-"]{display:grid;grid-template-columns:2rem 3.25rem minmax(0,1fr);gap:.65rem;align-items:center}
+  #diagResults [id^="badge-"]{grid-column:2/4;justify-self:start}
+  #diagResults [id^="txt-"]{padding-right:0}
+  #diagResults h3{overflow-wrap:anywhere}
+}
+</style>
 </head>
 
 <body class="bg-slate-900 text-slate-200 antialiased relative min-h-screen flex flex-col">
@@ -68,6 +76,7 @@
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
                                         <span>Diagnóstico Completo</span>
                                     </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Quién puede enviar</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -163,6 +172,7 @@
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Diagnóstico Completo</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Quién puede enviar</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
@@ -206,14 +216,15 @@
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
                 Herramienta DKIM</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador DKIM y Analizador de Firmas Criptográficas de Email</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador DKIM gratuito para tu dominio</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Usa nuestro DKIM checker gratuito para verificar tus llaves públicas DNS en tiempo real y garantizar que tus correos electrónicos no sean alterados en tránsito.
+                Busca firmas DKIM publicadas en selectores habituales y comprueba si pueden verificarse desde el DNS público.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
                 <form onsubmit="handleDiagnostico(event)" class="flex flex-col sm:flex-row gap-3" id="diagForm">
-                    <input type="text" id="dominioInput" placeholder="ej: tuempresa.com"
+                    <label for="dominioInput" class="sr-only">Dominio de tu empresa</label>
+                    <input type="text" id="dominioInput" inputmode="url" autocomplete="off" spellcheck="false" placeholder="ej: tuempresa.com"
                         class="flex-1 px-5 py-4 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-lg transition-all"
                         required>
                     <button type="submit" id="diagBtn"
@@ -235,7 +246,7 @@
                 </div>
 
                 <!-- Results Container -->
-                <div id="diagResults"
+                <div id="diagResults" aria-live="polite"
                     class="hidden mt-8 text-left border-t border-white/10 pt-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="text-white font-bold text-lg">Resultados DKIM para <span id="diagDomain"
@@ -258,7 +269,7 @@
                     <div class="p-5 rounded-xl bg-brand-900/40 border border-brand-500/30 text-center">
                         <h4 class="text-white font-bold mb-2">🛡️ ¿Quieres el diagnóstico de seguridad completo?</h4>
                         <p class="text-slate-300 text-sm mb-4">
-                            DKIM firma digitalmente el correo, pero necesitas **DMARC** para obligar a que se aplique y **SPF** para declarar tus servidores autorizados. Realiza una auditoría completa.
+                            DKIM firma digitalmente el correo, pero necesitas <strong>DMARC</strong> para obligar a que se aplique y <strong>SPF</strong> para declarar tus servidores autorizados. Realiza una auditoría completa.
                         </p>
                         <a href="/domain-checker"
                             class="inline-block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 text-sm">
@@ -278,7 +289,7 @@
                 <div>
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">¿Qué es una firma DKIM (DomainKeys Identified Mail) y por qué es crucial?</h2>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                        <strong>DKIM (DomainKeys Identified Mail)</strong> es un estándar técnico y método avanzado de **email authentication** publicado en tus **DNS records**. Permite a los propietarios de dominios asociar de forma inequívoca el nombre de su marca a un mensaje de correo electrónico saliente mediante el uso de firmas criptográficas digitales.
+                        <strong>DKIM (DomainKeys Identified Mail)</strong> es un estándar técnico y método avanzado de <strong>email authentication</strong> publicado en tus <strong>DNS records</strong>. Permite a los propietarios de dominios asociar de forma inequívoca el nombre de su marca a un mensaje de correo electrónico saliente mediante el uso de firmas criptográficas digitales.
                     </p>
                     <p class="text-slate-600 text-sm leading-relaxed">
                         A diferencia de SPF, que valida únicamente el servidor IP de origen, DKIM proporciona un sello de integridad sobre el contenido del mensaje. Esto asegura a los servidores destinatarios (como Gmail, Outlook o Apple Mail) que ni las cabeceras principales ni el cuerpo del correo electrónico han sido modificados, alterados o manipulados maliciosamente por terceros durante su tránsito por Internet.
@@ -300,7 +311,7 @@
                 <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">¿Qué es un Selector DKIM y cómo ubicarlo en el DNS?</h2>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                        Dado que una empresa suele utilizar múltiples herramientas externas para el envío de correos corporativos (como Google para el día a día, Salesforce para CRM y ActiveCampaign para marketing), es necesario poder publicar diferentes claves públicas bajo un mismo dominio. Esto se logra gracias a los **Selectores DKIM**.
+                        Dado que una empresa suele utilizar múltiples herramientas externas para el envío de correos corporativos (como Google para el día a día, Salesforce para CRM y ActiveCampaign para marketing), es necesario poder publicar diferentes claves públicas bajo un mismo dominio. Esto se logra gracias a los <strong>Selectores DKIM</strong>.
                     </p>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
                         Cada selector apunta a un registro DNS TXT único ubicado con la siguiente estructura:
@@ -309,20 +320,20 @@
                         [selector]._domainkey.tudominio.com
                     </div>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        Nuestro **DKIM checker** o **verificador DKIM** gratuito escanea simultáneamente más de 30 selectores comunes de la industria (como <code class="text-indigo-300 font-mono">google</code>, <code class="text-indigo-300 font-mono">default</code>, <code class="text-indigo-300 font-mono">zoho</code>, <code class="text-indigo-300 font-mono">s1</code>, <code class="text-indigo-300 font-mono">mail</code>, <code class="text-indigo-300 font-mono">k1</code>, etc.) para auditar la correcta publicación y disponibilidad de tus registros criptográficos.
+                        Nuestro <strong>DKIM checker</strong> o <strong>verificador DKIM</strong> gratuito escanea simultáneamente más de 30 selectores comunes de la industria (como <code class="text-indigo-300 font-mono">google</code>, <code class="text-indigo-300 font-mono">default</code>, <code class="text-indigo-300 font-mono">zoho</code>, <code class="text-indigo-300 font-mono">s1</code>, <code class="text-indigo-300 font-mono">mail</code>, <code class="text-indigo-300 font-mono">k1</code>, etc.) para auditar la correcta publicación y disponibilidad de tus registros criptográficos.
                     </p>
                 </div>
 
                 <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">Errores Comunes al Configurar Firmas DKIM</h2>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                        Configurar incorrectamente tus firmas criptográficas puede dañar gravemente tu **email deliverability** y reputación de dominio. Presta atención a estos fallos recurrentes:
+                        Configurar incorrectamente tus firmas criptográficas puede dañar gravemente tu <strong>email deliverability</strong> y reputación de dominio. Presta atención a estos fallos recurrentes:
                     </p>
                     <div class="grid md:grid-cols-2 gap-4">
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
                             <h4 class="text-slate-900 font-bold text-sm mb-2">1. Uso de Llaves de 512 o 1024 bits (Obsoletas)</h4>
                             <p class="text-slate-600 text-xs leading-relaxed">
-                                Las llaves de longitud corta son vulnerables a ataques criptográficos de factoraje. Actualmente, los principales proveedores de correo consideran inseguras las firmas menores de 1024 bits. El estándar recomendado es utilizar llaves robustas de **2048 bits**.
+                                Las llaves de longitud corta son vulnerables a ataques criptográficos de factoraje. Actualmente, los principales proveedores de correo consideran inseguras las firmas menores de 1024 bits. El estándar recomendado es utilizar llaves robustas de <strong>2048 bits</strong>.
                             </p>
                         </div>
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
@@ -342,7 +353,7 @@
                             Inventario de quién envía con tu dominio, alertas cuando aparece un servicio nuevo, guía para política DMARC e informes mensuales — sin leer reportes XML.
                         </p>
                         <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-                            <a href="/plataforma" data-seo-event="cta_plataforma" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm transition">Ver quién envía con tu dominio</a>
+                            <a href="/quien-puede-enviar-correos" data-seo-event="cta_sending_systems" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm transition">Descubrir posibles remitentes</a>
                             <a href="/precios" data-seo-event="cta_precios" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-semibold rounded-xl border border-slate-300 text-sm transition">Ver planes</a>
                         </div>
                         <p class="text-slate-500 text-xs mt-4">Guías: <a href="/control-envios-dominio" class="text-brand-600 hover:underline">Control de envíos</a> · <a href="/suplantacion-correo-empresa" class="text-brand-600 hover:underline">Suplantación</a> · <a href="/dmarc-para-pymes" class="text-brand-600 hover:underline">DMARC para PYMEs</a></p>
@@ -355,13 +366,13 @@
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Por qué mi correo sigue llegando a Spam si tengo DKIM activo?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
-                                DKIM garantiza la integridad del contenido, pero no la confianza general. Si tu dominio tiene mala reputación por haber enviado correo no deseado previamente, o si no tienes alineados adecuadamente tus registros **SPF** y **DMARC**, tus correos seguirán teniendo problemas de entregabilidad y podrían caer en la carpeta de spam.
+                                DKIM garantiza la integridad del contenido, pero no la confianza general. Si tu dominio tiene mala reputación por haber enviado correo no deseado previamente, o si no tienes alineados adecuadamente tus registros <strong>SPF</strong> y <strong>DMARC</strong>, tus correos seguirán teniendo problemas de entregabilidad y podrían caer en la carpeta de spam.
                             </p>
                         </div>
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Es seguro publicar mi clave pública DKIM en el DNS de forma abierta?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
-                                Sí, es completamente seguro. Por diseño técnico, la clave pública expuesta en el DNS solo sirve para verificar las firmas generadas, pero **nunca** puede ser utilizada para generar nuevas firmas fraudulentas. Tu clave privada sigue estando protegida en tus servidores de correo en todo momento.
+                                Sí, es completamente seguro. Por diseño técnico, la clave pública expuesta en el DNS solo sirve para verificar las firmas generadas, pero <strong>nunca</strong> puede ser utilizada para generar nuevas firmas fraudulentas. Tu clave privada sigue estando protegida en tus servidores de correo en todo momento.
                             </p>
                         </div>
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
@@ -396,7 +407,7 @@
                 </div>
             </div>
             <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
-                <p>Herramientas Gratuitas: <a href="/domain-checker" class="hover:underline text-blue-500/80">Diagnóstico Completo</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80 font-bold">Verificador DKIM</a></p>
+                <p>Herramientas Gratuitas: <a href="/quien-puede-enviar-correos" class="hover:underline text-blue-500/80">Quién puede enviar</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80">Diagnóstico Completo</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80 font-bold">Verificador DKIM</a></p>
             </div>
         </div>
     </footer>
