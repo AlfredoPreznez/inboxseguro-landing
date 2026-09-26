@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador DKIM gratis: comprueba firmas de tu dominio</title>
+    <title>DKIM Checker: lookup para verificar tu dominio | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <meta name="description" content="Busca selectores DKIM comunes y comprueba si tu dominio publica una clave de verificación. Análisis DNS gratuito y sin registro.">
+    <meta name="description" content="DKIM Lookup gratuito para verificar un selector o buscar los habituales. No encontrarlos no demuestra que falte DKIM.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/dkim-checker">
     <meta name="robots" content="index, follow">
@@ -16,19 +16,19 @@
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/dkim-checker">
-    <meta property="og:title" content="Verificador DKIM gratis: comprueba firmas de tu dominio">
-    <meta property="og:description" content="Busca selectores DKIM comunes y comprueba si tu dominio publica una clave de verificación. Análisis DNS gratuito y sin registro.">
+    <meta property="og:title" content="DKIM Checker: lookup para verificar tu dominio | InboxSeguro">
+    <meta property="og:description" content="DKIM Lookup gratuito para verificar un selector o buscar los habituales. No encontrarlos no demuestra que falte DKIM.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Verificador DKIM gratis: comprueba firmas de tu dominio">
-    <meta name="twitter:description" content="Busca selectores DKIM comunes y comprueba si tu dominio publica una clave de verificación. Análisis DNS gratuito y sin registro.">
+    <meta name="twitter:title" content="DKIM Checker: lookup para verificar tu dominio | InboxSeguro">
+    <meta name="twitter:description" content="DKIM Lookup gratuito para verificar un selector o buscar los habituales. No encontrarlos no demuestra que falte DKIM.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.6">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Verificador DKIM","url":"https://www.inboxseguro.com/dkim-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DKIM Checker","url":"https://www.inboxseguro.com/dkim-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 
 <style>
 @media (max-width:640px){
@@ -55,10 +55,11 @@
                     </span>
                 </a>
 
-                <div class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
                     <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
                     <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
                     <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
                     
                                         <!-- Dropdown Recursos -->
                     <div class="relative group">
@@ -72,11 +73,12 @@
                             <!-- Columna 1: Herramientas -->
                             <div>
                                 <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
                                 <div class="space-y-1">
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
-                                        <span>Diagnóstico Completo</span>
+                                        <span>Email Security Check</span>
                                     </a>
-                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Quién puede enviar</span></a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -85,6 +87,9 @@
                                     </a>
                                     <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
                                     </a>
                                 </div>
                             </div>
@@ -151,6 +156,8 @@
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
                 <a href="/precios" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
                 
                                 <!-- Guías Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
@@ -170,15 +177,17 @@
                 <!-- Herramientas Gratuitas Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Diagnóstico Completo</a>
-                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Quién puede enviar</span></a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
                     <a href="/dkim-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
                 </div>
 
                 <a href="/contacto" onclick="closeMobileMenu()"
@@ -214,27 +223,33 @@
 
             <div
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
-                Herramienta DKIM</div>
+                DKIM Checker gratuito</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador DKIM gratuito para tu dominio</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">DKIM Checker para verificar tu dominio</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Busca firmas DKIM publicadas en selectores habituales y comprueba si pueden verificarse desde el DNS público.
+                DKIM Lookup para verificar un selector concreto o buscar los habituales. Si no aparecen, DKIM puede existir igual.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
-                <form onsubmit="handleDiagnostico(event)" class="flex flex-col sm:flex-row gap-3" id="diagForm">
-                    <label for="dominioInput" class="sr-only">Dominio de tu empresa</label>
-                    <input type="text" id="dominioInput" inputmode="url" autocomplete="off" spellcheck="false" placeholder="ej: tuempresa.com"
-                        class="flex-1 px-5 py-4 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-lg transition-all"
-                        required>
-                    <button type="submit" id="diagBtn"
-                        class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">
-                        Analizar DKIM
-                    </button>
+                <form onsubmit="handleDiagnostico(event)" class="flex flex-col gap-3" id="diagForm">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <label for="dominioInput" class="sr-only">Dominio de tu empresa</label>
+                        <input type="text" id="dominioInput" inputmode="url" autocomplete="off" spellcheck="false" placeholder="ej: tuempresa.com"
+                            class="flex-1 px-5 py-4 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-lg transition-all"
+                            required>
+                        <button type="submit" id="diagBtn"
+                            class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">
+                            Verificar DKIM
+                        </button>
+                    </div>
+                    <label for="selectorInput" class="sr-only">Selector DKIM, opcional</label>
+                    <input type="text" id="selectorInput" autocomplete="off" spellcheck="false" placeholder="Selector opcional, por ejemplo google"
+                        class="w-full px-5 py-3 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 text-base">
                 </form>
+                <p id="dkimError" class="hidden mt-4 p-3 rounded-xl bg-red-500/10 border border-red-400/25 text-red-200 text-sm text-left" role="alert"></p>
 
                 <p class="text-xs text-slate-500 mt-4 text-left">
-                    <i class="fa-solid fa-lock mr-1"></i> Consultas DNS concurrentes a selectores comunes a través de tecnología segura DoH.
+                    Si dejas el selector vacío, buscamos los habituales. No encontrarlos no demuestra que falte DKIM.
                 </p>
 
                 <!-- Loading Spinner -->
@@ -266,15 +281,10 @@
                     </div>
 
                     <!-- SEO/UX CTA Box leading to domain-checker -->
-                    <div class="p-5 rounded-xl bg-brand-900/40 border border-brand-500/30 text-center">
-                        <h4 class="text-white font-bold mb-2">🛡️ ¿Quieres el diagnóstico de seguridad completo?</h4>
-                        <p class="text-slate-300 text-sm mb-4">
-                            DKIM firma digitalmente el correo, pero necesitas <strong>DMARC</strong> para obligar a que se aplique y <strong>SPF</strong> para declarar tus servidores autorizados. Realiza una auditoría completa.
-                        </p>
-                        <a href="/domain-checker"
-                            class="inline-block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 text-sm">
-                            Obtener Análisis Completo →
-                        </a>
+                    <div class="p-5 rounded-xl bg-slate-900/60 border border-white/10 text-left">
+                        <h4 class="text-white font-bold mb-2">DKIM es una de las piezas</h4>
+                        <p class="text-slate-300 text-sm mb-4">El Email Security Check junta esta verificación con SPF, DMARC y MX.</p>
+                        <a href="/domain-checker" data-seo-event="cta_related_tool" class="inline-flex px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm">Abrir Email Security Check</a>
                     </div>
                 </div>
             </div>
@@ -320,7 +330,7 @@
                         [selector]._domainkey.tudominio.com
                     </div>
                     <p class="text-slate-600 text-sm leading-relaxed">
-                        Nuestro <strong>DKIM checker</strong> o <strong>verificador DKIM</strong> gratuito escanea simultáneamente más de 30 selectores comunes de la industria (como <code class="text-indigo-300 font-mono">google</code>, <code class="text-indigo-300 font-mono">default</code>, <code class="text-indigo-300 font-mono">zoho</code>, <code class="text-indigo-300 font-mono">s1</code>, <code class="text-indigo-300 font-mono">mail</code>, <code class="text-indigo-300 font-mono">k1</code>, etc.) para auditar la correcta publicación y disponibilidad de tus registros criptográficos.
+                        Si dejas el selector vacío, este <strong>DKIM checker</strong> busca claves en selectores habituales, como <code class="text-indigo-300 font-mono">google</code>, <code class="text-indigo-300 font-mono">default</code>, <code class="text-indigo-300 font-mono">zoho</code>, <code class="text-indigo-300 font-mono">s1</code> o <code class="text-indigo-300 font-mono">k1</code>. Si conoces el selector, el <strong>DKIM lookup</strong> consulta exactamente esa etiqueta. No encontrar los habituales no demuestra que falte DKIM.
                     </p>
                 </div>
 
@@ -361,6 +371,8 @@
                 </div>
 
                 <div class="border-t border-slate-200 pt-6">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Verificar DKIM con el resto</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">El <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Email Security Check</a> junta este DKIM Lookup con SPF, DMARC y MX.</p>
                     <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador DKIM</h2>
                     <div class="space-y-4">
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
@@ -373,6 +385,12 @@
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Es seguro publicar mi clave pública DKIM en el DNS de forma abierta?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
                                 Sí, es completamente seguro. Por diseño técnico, la clave pública expuesta en el DNS solo sirve para verificar las firmas generadas, pero <strong>nunca</strong> puede ser utilizada para generar nuevas firmas fraudulentas. Tu clave privada sigue estando protegida en tus servidores de correo en todo momento.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Si no aparece un selector habitual, mi dominio no tiene DKIM?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                No. La búsqueda sin selector solo recorre nombres habituales. Un selector propio puede existir igual. Indícalo en el campo opcional para verificar ese registro concreto.
                             </p>
                         </div>
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
@@ -403,61 +421,92 @@
                 <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
                     <a href="/terminos" class="hover:text-brand-600 transition-colors">Términos y Condiciones</a>
                     <a href="/privacidad" class="hover:text-brand-600 transition-colors">Política de Privacidad</a>
-                    <a href="/#contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
+                    <a href="/contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
                 </div>
             </div>
             <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
-                <p>Herramientas Gratuitas: <a href="/quien-puede-enviar-correos" class="hover:underline text-blue-500/80">Quién puede enviar</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80">Diagnóstico Completo</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80 font-bold">Verificador DKIM</a></p>
+                <p>Herramientas Gratuitas: <a href="/herramientas" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Todas</a> | <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Email Sender Checker</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80">Email Security Check</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80 font-bold">Verificador DKIM</a> | <a href="/mx-lookup" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">MX Lookup</a></p>
             </div>
         </div>
     </footer>
 
-    <script src="/dns-utils.js?v=1.0.2"></script>
+    <script src="/dns-utils.js?v=1.0.3"></script>
+    <script src="/dkim-lookup.js?v=1"></script>
     <script>
+        function showDkimError(message) {
+            const box = document.getElementById('dkimError');
+            if (!message) {
+                box.textContent = '';
+                box.classList.add('hidden');
+                return;
+            }
+            box.textContent = message;
+            box.classList.remove('hidden');
+        }
+
         async function handleDiagnostico(event) {
             event.preventDefault();
             const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+            const selectorInput = document.getElementById('selectorInput').value;
             if (!dominio) return;
 
             const btn = document.getElementById('diagBtn');
             const resultsDiv = document.getElementById('diagResults');
             const loadingDiv = document.getElementById('diagLoading');
+            const parsed = window.InboxDkimLookup.normalizeDkimSelector(selectorInput);
+            showDkimError('');
+            if (!parsed.ok) {
+                showDkimError('El selector debe ser una sola etiqueta DNS, sin puntos ni espacios. Ejemplo: google.');
+                if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('dkim', 'invalid');
+                return;
+            }
 
             btn.disabled = true;
-            btn.innerText = 'Analizando...';
+            btn.innerText = 'Verificando...';
             resultsDiv.classList.add('hidden');
             loadingDiv.classList.remove('hidden');
 
             try {
-                const dkimData = await checkDKIM(dominio);
+                let dkimResult;
+                if (parsed.selector) {
+                    let records = null;
+                    let queryOk = true;
+                    try {
+                        const response = await lookupDkimSelector(dominio, parsed.selector);
+                        records = extractTXT(response);
+                    } catch (queryErr) {
+                        queryOk = false;
+                    }
+                    dkimResult = window.InboxDkimLookup.interpretSelectorQuery(records, parsed.selector, queryOk);
+                } else {
+                    const dkimData = await checkDKIM(dominio);
+                    dkimResult = window.InboxDkimLookup.interpretCommonScan(dkimData.found, dkimData.selector);
+                }
 
-                const dkimResult = {
-                    status: dkimData.found ? 'ok' : 'warn',
-                    label: dkimData.found ? 'Configurado' : 'Oculto / Personalizado',
-                    text: dkimData.found ? 'Selector detectado: ' + dkimData.selector : 'No detectado en selectores comunes. Si usas un selector personalizado, podría estar activo.'
-                };
-
-                // Render result
                 setResult('dkim', dkimResult);
                 document.getElementById('diagDomain').textContent = dominio;
 
                 const scoreEl = document.getElementById('diagScore');
-                if (dkimResult.status === 'ok') {
-                    scoreEl.textContent = 'Correcto';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400';
-                } else {
-                    scoreEl.textContent = 'Incompleto';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
-                }
+                const styles = {
+                    ok: ['Correcto', 'bg-emerald-500/20 text-emerald-400'],
+                    attention: ['Requiere atención', 'bg-amber-500/20 text-amber-400'],
+                    missing: ['No detectado', 'bg-slate-500/20 text-slate-300'],
+                    unknown: ['No verificable', 'bg-slate-500/20 text-slate-300']
+                };
+                const style = styles[dkimResult.status] || styles.unknown;
+                scoreEl.textContent = style[0];
+                scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + style[1];
 
                 resultsDiv.classList.remove('hidden');
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('dkim');
+                if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('dkim', 'success');
             } catch (err) {
                 console.error(err);
-                alert('No pudimos consultar los registros DNS. Verifica tu conexión e inténtalo de nuevo.');
+                if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('dkim', 'error');
+                showDkimError('No pudimos consultar los registros DNS. Verifica tu conexión e inténtalo de nuevo.');
             } finally {
                 btn.disabled = false;
-                btn.innerText = 'Analizar DKIM';
+                btn.innerText = 'Verificar DKIM';
                 loadingDiv.classList.add('hidden');
             }
         }
@@ -466,17 +515,17 @@
             const icon = document.getElementById('icon-' + key);
             const txt = document.getElementById('txt-' + key);
             const badge = document.getElementById('badge-' + key);
-            if (result.status === 'ok') {
-                icon.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
-                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-emerald-500/20';
-                badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-emerald-500/20 text-emerald-400';
-            } else {
-                icon.innerHTML = '<i class="fa-solid fa-exclamation text-xs text-amber-400"></i>';
-                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-500/20';
-                badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-amber-500/20 text-amber-400';
-            }
+            const tones = {
+                ok: ['fa-check', 'text-emerald-400', 'bg-emerald-500/20'],
+                attention: ['fa-exclamation', 'text-amber-400', 'bg-amber-500/20'],
+                missing: ['fa-minus', 'text-slate-300', 'bg-slate-500/20'],
+                unknown: ['fa-question', 'text-slate-300', 'bg-slate-500/20']
+            };
+            const tone = tones[result.status] || tones.unknown;
+            icon.innerHTML = '<i class="fa-solid ' + tone[0] + ' text-xs ' + tone[1] + '"></i>';
+            icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ' + tone[2];
+            badge.textContent = result.label;
+            badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 ' + tone[2] + ' ' + tone[1];
             txt.textContent = result.text;
         }
 

@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador DMARC gratis: revisa la política de tu dominio</title>
+    <title>DMARC Checker: prueba la política de tu dominio | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <meta name="description" content="Comprueba gratis si tu dominio tiene DMARC y qué política aplica: none, quarantine o reject. Resultado explicado en español.">
+    <meta name="description" content="DMARC Tester gratuito. Comprueba si tu dominio publica none, quarantine o reject y sigue al Email Security Check para ver SPF, DKIM y MX.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/dmarc-checker">
     <meta name="robots" content="index, follow">
@@ -16,19 +16,19 @@
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/dmarc-checker">
-    <meta property="og:title" content="Verificador DMARC gratis: revisa la política de tu dominio">
-    <meta property="og:description" content="Comprueba gratis si tu dominio tiene DMARC y qué política aplica: none, quarantine o reject. Resultado explicado en español.">
+    <meta property="og:title" content="DMARC Checker: prueba la política de tu dominio | InboxSeguro">
+    <meta property="og:description" content="DMARC Tester gratuito. Comprueba si tu dominio publica none, quarantine o reject y sigue al Email Security Check para ver SPF, DKIM y MX.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Verificador DMARC gratis: revisa la política de tu dominio">
-    <meta name="twitter:description" content="Comprueba gratis si tu dominio tiene DMARC y qué política aplica: none, quarantine o reject. Resultado explicado en español.">
+    <meta name="twitter:title" content="DMARC Checker: prueba la política de tu dominio | InboxSeguro">
+    <meta name="twitter:description" content="DMARC Tester gratuito. Comprueba si tu dominio publica none, quarantine o reject y sigue al Email Security Check para ver SPF, DKIM y MX.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.6">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Verificador DMARC","url":"https://www.inboxseguro.com/dmarc-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DMARC Checker","url":"https://www.inboxseguro.com/dmarc-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 
 <style>
 @media (max-width:640px){
@@ -55,10 +55,11 @@
                     </span>
                 </a>
 
-                <div class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
                     <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
                     <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
                     <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
                     
                                         <!-- Dropdown Recursos -->
                     <div class="relative group">
@@ -72,11 +73,12 @@
                             <!-- Columna 1: Herramientas -->
                             <div>
                                 <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
                                 <div class="space-y-1">
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
-                                        <span>Diagnóstico Completo</span>
+                                        <span>Email Security Check</span>
                                     </a>
-                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Quién puede enviar</span></a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -85,6 +87,9 @@
                                     </a>
                                     <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
                                     </a>
                                 </div>
                             </div>
@@ -151,6 +156,8 @@
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
                 <a href="/precios" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
                 
                                 <!-- Guías Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
@@ -170,15 +177,17 @@
                 <!-- Herramientas Gratuitas Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Diagnóstico Completo</a>
-                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Quién puede enviar</span></a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
                     <a href="/dkim-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
                 </div>
 
                 <a href="/contacto" onclick="closeMobileMenu()"
@@ -214,11 +223,11 @@
 
             <div
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
-                Herramienta DMARC</div>
+                DMARC Checker gratuito</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador DMARC gratuito para tu dominio</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">DMARC Checker para probar tu dominio</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Comprueba si DMARC está publicado y entiende qué tratamiento solicita tu dominio para los mensajes que no superan la autenticación.
+                Este DMARC Tester comprueba si la política está publicada y qué tratamiento pide: none, quarantine o reject.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
@@ -266,15 +275,13 @@
                     </div>
 
                     <!-- SEO/UX CTA Box leading to domain-checker -->
-                    <div class="p-5 rounded-xl bg-brand-900/40 border border-brand-500/30 text-center">
-                        <h4 class="text-white font-bold mb-2">🛡️ ¿Quieres el diagnóstico de seguridad completo?</h4>
-                        <p class="text-slate-300 text-sm mb-4">
-                            DMARC requiere apoyarse en las firmas <strong>SPF</strong> y <strong>DKIM</strong> alineadas para funcionar correctamente y permitir que los receptores rechacen el fraude. Asegúrate de verificar todo el ecosistema DNS de tu correo.
-                        </p>
-                        <a href="/domain-checker"
-                            class="inline-block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 text-sm">
-                            Obtener Análisis Completo →
-                        </a>
+                    <div class="p-5 rounded-xl bg-slate-900/60 border border-white/10 text-left">
+                        <h4 class="text-white font-bold mb-2">DMARC no se lee solo</h4>
+                        <p class="text-slate-300 text-sm mb-4">El Email Security Check muestra SPF, DKIM, DMARC y MX juntos. Esta prueba no recomienda pasar a p=reject por sí sola.</p>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <a href="/domain-checker" data-seo-event="cta_related_tool" class="inline-flex justify-center px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm">Abrir Email Security Check</a>
+                            <a href="/precios" data-seo-event="cta_precios" class="inline-flex justify-center px-5 py-2.5 text-blue-200 font-semibold text-sm">Ver monitoreo continuo</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -392,6 +399,8 @@
                 </div>
 
                 <div class="border-t border-slate-200 pt-6">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Probar DMARC en contexto</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Este DMARC Tester lee la política publicada. El <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Email Security Check</a> la muestra junto a SPF, DKIM y MX.</p>
                     <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador DMARC</h2>
                     <div class="space-y-4">
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
@@ -434,11 +443,11 @@
                 <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
                     <a href="/terminos" class="hover:text-brand-600 transition-colors">Términos y Condiciones</a>
                     <a href="/privacidad" class="hover:text-brand-600 transition-colors">Política de Privacidad</a>
-                    <a href="/#contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
+                    <a href="/contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
                 </div>
             </div>
             <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
-                <p>Herramientas Gratuitas: <a href="/quien-puede-enviar-correos" class="hover:underline text-blue-500/80">Quién puede enviar</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80">Diagnóstico Completo</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80 font-bold">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80">Verificador DKIM</a></p>
+                <p>Herramientas Gratuitas: <a href="/herramientas" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Todas</a> | <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Email Sender Checker</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80">Email Security Check</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80 font-bold">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80">Verificador DKIM</a> | <a href="/mx-lookup" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">MX Lookup</a></p>
             </div>
         </div>
     </footer>
@@ -461,33 +470,30 @@
 
             try {
                 const dmarcData = await fetchDNS('_dmarc.' + dominio, 'TXT');
+                const queryOk = !!(dmarcData && (dmarcData.Status === 0 || dmarcData.Status === 3));
                 const dmarcRecords = extractTXT(dmarcData);
-                const dmarcRecord = dmarcRecords.find(r => r.startsWith('v=DMARC1'));
-                const dmarcResult = analyzeDmarc(dmarcRecord);
+                const dmarcRecord = dmarcRecords.find(r => r.toLowerCase().startsWith('v=dmarc1'));
+                const dmarcResult = analyzeDmarc(dmarcRecord, queryOk);
 
-                // Render result
                 setResult('dmarc', dmarcResult);
                 document.getElementById('diagDomain').textContent = dominio;
 
                 const scoreEl = document.getElementById('diagScore');
-                if (dmarcResult.status === 'ok') {
-                    scoreEl.textContent = 'Correcto';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400';
-                } else if (dmarcResult.status === 'warn') {
-                    scoreEl.textContent = 'Mejorable';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
-                } else if (dmarcResult.status === 'info') {
-                    scoreEl.textContent = 'Parcial';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-brand-600';
-                } else {
-                    scoreEl.textContent = 'Inseguro';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400';
-                }
+                const scoreStyles = {
+                    ok: ['Correcto', 'bg-emerald-500/20 text-emerald-400'],
+                    warn: ['Requiere atención', 'bg-amber-500/20 text-amber-400'],
+                    unknown: ['No verificable', 'bg-slate-500/20 text-slate-300']
+                };
+                const scoreStyle = scoreStyles[dmarcResult.status] || ['No detectado', 'bg-slate-500/20 text-slate-300'];
+                scoreEl.textContent = scoreStyle[0];
+                scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + scoreStyle[1];
 
                 resultsDiv.classList.remove('hidden');
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('dmarc');
+                if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('dmarc', 'success');
             } catch (err) {
                 console.error(err);
+                if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('dmarc', 'error');
                 alert('No pudimos consultar los registros DNS. Verifica tu conexión e inténtalo de nuevo.');
             } finally {
                 btn.disabled = false;
@@ -496,18 +502,20 @@
             }
         }
 
-        function analyzeDmarc(record) {
-            if (!record) return { status: 'fail', label: 'No configurado', text: 'Sin DMARC — no hay control sobre quién puede usar tu dominio para enviar correos' };
-            const policyMatch = record.match(/p=([^;\s]+)/);
-            const policy = policyMatch ? policyMatch[1].toLowerCase() : 'none';
+        function analyzeDmarc(record, queryOk) {
+            if (!queryOk) return { status: 'unknown', label: 'No verificable', text: 'No pudimos consultar el registro DMARC, así que no afirmamos si existe.' };
+            if (!record) return { status: 'fail', label: 'No detectado', text: 'No hay un registro DMARC. El dominio no publica una política para el correo que no supera la autenticación.' };
+            const policyMatch = record.match(/(?:^|;)\s*p\s*=\s*([^;\s]+)/i);
+            if (!policyMatch) return { status: 'unknown', label: 'No verificable', text: 'Hay un TXT DMARC, pero no publica una política p= legible.' };
+            const policy = policyMatch[1].toLowerCase();
             if (policy === 'none') {
-                return { status: 'warn', label: 'Solo monitoreo', text: 'p=none: recibes informes pero los receptores no rechazan impostores. Publica p=quarantine cuando el inventario esté listo.' };
+                return { status: 'warn', label: 'Requiere atención', text: 'p=none: la política publicada pide monitoreo. No ordena cuarentena ni rechazo.' };
             } else if (policy === 'quarantine') {
-                return { status: 'info', label: 'Cuarentena', text: 'p=quarantine: receivers pueden aislar correo no autenticado. Escala a p=reject cuando corresponda.' };
+                return { status: 'ok', label: 'Correcto', text: 'p=quarantine: la política publicada pide aislar el correo que no supera la autenticación.' };
             } else if (policy === 'reject') {
-                return { status: 'ok', label: 'p=reject', text: 'p=reject: receivers que respetan DMARC pueden rechazar correo no autenticado.' };
+                return { status: 'ok', label: 'Correcto', text: 'p=reject: la política publicada pide rechazar el correo que no supera la autenticación, en los receptores que la respetan.' };
             }
-            return { status: 'ok', label: 'Configurado', text: record };
+            return { status: 'unknown', label: 'No verificable', text: 'La política p= publicada no es none, quarantine ni reject.' };
         }
 
         function setResult(key, result) {
@@ -524,16 +532,16 @@
                 icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-500/20';
                 badge.textContent = result.label;
                 badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-amber-500/20 text-amber-400';
-            } else if (result.status === 'info') {
-                icon.innerHTML = '<i class="fa-solid fa-shield-halved text-xs text-brand-600"></i>';
-                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-blue-500/20';
+            } else if (result.status === 'unknown') {
+                icon.innerHTML = '<i class="fa-solid fa-question text-xs text-slate-300"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-slate-500/20';
                 badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-blue-500/20 text-brand-600';
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-slate-500/20 text-slate-300';
             } else {
-                icon.innerHTML = '<i class="fa-solid fa-xmark text-xs text-red-400"></i>';
-                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-red-500/20';
+                icon.innerHTML = '<i class="fa-solid fa-minus text-xs text-slate-300"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-slate-500/20';
                 badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-red-500/20 text-red-400';
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-slate-500/20 text-slate-300';
             }
             txt.textContent = result.text;
         }

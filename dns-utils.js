@@ -195,7 +195,12 @@
         return { found: false, selector: null };
     }
 
+    async function lookupDkimSelector(domain, selector) {
+        return fetchDNS(selector + '._domainkey.' + domain, 'TXT');
+    }
+
     window.fetchDNS = fetchDNS;
     window.extractTXT = extractTXT;
     window.checkDKIM = checkDKIM;
+    window.lookupDkimSelector = lookupDkimSelector;
 })();

@@ -4,12 +4,15 @@
  */
 (function () {
     function track(name, params) {
+        var payload = Object.assign({
+            page_path: (window.location && window.location.pathname) || ''
+        }, params || {});
         if (typeof window.gtag === 'function') {
-            window.gtag('event', name, params || {});
+            window.gtag('event', name, payload);
             return;
         }
         window.dataLayer = window.dataLayer || [];
-        window.dataLayer.push(Object.assign({ event: name }, params || {}));
+        window.dataLayer.push(Object.assign({ event: name }, payload));
     }
 
     document.addEventListener('click', function (e) {
@@ -23,6 +26,13 @@
 
     window.trackCheckerSubmit = function (toolName) {
         track('checker_submit', { tool_name: toolName || 'unknown' });
+    };
+
+    window.trackCheckerOutcome = function (toolName, status, extra) {
+        track('checker_outcome', Object.assign({
+            tool_name: toolName || 'unknown',
+            status: status || 'unknown'
+        }, extra || {}));
     };
 
     window.trackCheckerHighRisk = function (domain) {

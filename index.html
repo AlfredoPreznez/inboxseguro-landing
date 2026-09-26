@@ -74,10 +74,11 @@
                     </span>
                 </a>
 
-                <div class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
                     <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
                     <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
                     <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
                     
                                         <!-- Dropdown Recursos -->
                     <div class="relative group">
@@ -91,11 +92,12 @@
                             <!-- Columna 1: Herramientas -->
                             <div>
                                 <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
                                 <div class="space-y-1">
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
-                                        <span>Diagnóstico Completo</span>
+                                        <span>Email Security Check</span>
                                     </a>
-                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Quién puede enviar</span></a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -104,6 +106,9 @@
                                     </a>
                                     <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
                                     </a>
                                 </div>
                             </div>
@@ -170,6 +175,8 @@
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
                 <a href="/precios" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
                 
                                 <!-- Guías Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
@@ -189,15 +196,17 @@
                 <!-- Herramientas Gratuitas Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Diagnóstico Completo</a>
-                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Quién puede enviar</span></a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
                     <a href="/dkim-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
                 </div>
 
                 <a href="/contacto" onclick="closeMobileMenu()"
@@ -569,19 +578,16 @@
                 <!-- 4 Grid of Premium Glassmorphic Cards -->
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     
-                    <!-- Card 1: Diagnóstico Completo -->
+                    <!-- Card 1: Email Security Check -->
                     <div class="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full">
                         <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-300 -z-10"></div>
                         <div>
                             <div class="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center mb-6 text-brand-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
                                 <i class="fa-solid fa-server text-xl"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-900 mb-2 flex items-center gap-2">
-                                Diagnóstico
-                                <span class="text-[0.65rem] bg-brand-100 text-brand-700 font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Completo</span>
-                            </h3>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Email Security Check</h3>
                             <p class="text-slate-500 text-sm leading-relaxed font-light mb-6">
-                                Escanea SPF, DKIM y DMARC de una sola vez. Obtén un diagnóstico consolidado del estado de seguridad de tu dominio corporativo.
+                                Revisa SPF, DKIM, DMARC y el MX en una sola fotografía DNS. Estados claros, sin puntaje inventado.
                             </p>
                         </div>
                         <a href="/domain-checker" class="inline-flex items-center gap-2 text-sm font-bold text-brand-600 hover:text-brand-700 transition-colors mt-auto">
@@ -598,7 +604,7 @@
                             </div>
                             <h3 class="text-xl font-bold text-slate-900 mb-2">Verificador SPF</h3>
                             <p class="text-slate-500 text-sm leading-relaxed font-light mb-6">
-                                Comprueba los servidores de correo autorizados para enviar correos en nombre de tu dominio y evita problemas de rebote de emails.
+                                Lee el registro SPF publicado. Muestra la autorización declarada, no los envíos que están ocurriendo.
                             </p>
                         </div>
                         <a href="/spf-checker" class="inline-flex items-center gap-2 text-sm font-bold text-blue-600 hover:text-blue-700 transition-colors mt-auto">
@@ -615,7 +621,7 @@
                             </div>
                             <h3 class="text-xl font-bold text-slate-900 mb-2">Verificador DMARC</h3>
                             <p class="text-slate-500 text-sm leading-relaxed font-light mb-6">
-                                Analiza tus políticas DMARC para asegurar que proveedores como Gmail y Outlook rechacen correos fraudulentos remitidos a tu nombre.
+                                Muestra la política DMARC publicada. Leerla no hace que los receptores rechacen correo.
                             </p>
                         </div>
                         <a href="/dmarc-checker" class="inline-flex items-center gap-2 text-sm font-bold text-indigo-600 hover:text-indigo-700 transition-colors mt-auto">
@@ -632,7 +638,7 @@
                             </div>
                             <h3 class="text-xl font-bold text-slate-900 mb-2">Verificador DKIM</h3>
                             <p class="text-slate-500 text-sm leading-relaxed font-light mb-6">
-                                Valida si las firmas criptográficas de tus correos salientes son correctas, para verificar la integridad de tus mensajes.
+                                Busca una clave DKIM publicada en DNS. No revisa los mensajes que ya salieron.
                             </p>
                         </div>
                         <a href="/dkim-checker" class="inline-flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700 transition-colors mt-auto">
@@ -755,10 +761,13 @@
                     <div>
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas Gratuitas</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
-                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors font-semibold">Diagnóstico Completo</a></li>
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Email Sender Checker</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Email Security Check</a></li>
                             <li><a href="/spf-checker" class="hover:text-blue-400 transition-colors">Verificador SPF</a></li>
                             <li><a href="/dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
                             <li><a href="/dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>
+                            <li><a href="/mx-lookup" class="hover:text-blue-400 transition-colors">MX Lookup</a></li>
                         </ul>
                     </div>
                     <div>

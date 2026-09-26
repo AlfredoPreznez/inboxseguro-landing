@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¿Quién puede enviar correos con mi dominio? | InboxSeguro</title>
-    <meta name="description" content="Descubre gratis qué plataformas podrían estar autorizadas para enviar correos con tu dominio. Analizamos señales públicas SPF y DKIM en segundos.">
+    <title>Email Sender Checker: analiza tu dominio | InboxSeguro</title>
+    <meta name="description" content="Analiza gratis tu dominio e identifica servicios que podrían estar autorizados para enviar correo, como Google Workspace, Microsoft 365, Amazon SES y más.">
     <link rel="canonical" href="https://www.inboxseguro.com/quien-puede-enviar-correos">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/quien-puede-enviar-correos">
-    <meta property="og:title" content="¿Quién puede enviar correos con tu dominio?">
-    <meta property="og:description" content="Detecta Google Workspace, Microsoft 365, Mailchimp, HubSpot y otros posibles remitentes autorizados en tu DNS.">
+    <meta property="og:title" content="Email Sender Checker: analiza tu dominio | InboxSeguro">
+    <meta property="og:description" content="Analiza gratis tu dominio e identifica servicios que podrían estar autorizados para enviar correo, como Google Workspace, Microsoft 365, Amazon SES y más.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="¿Quién puede enviar correos con tu dominio?">
-    <meta name="twitter:description" content="Analiza gratis los posibles servicios autorizados en SPF y DKIM.">
+    <meta name="twitter:title" content="Email Sender Checker: analiza tu dominio | InboxSeguro">
+    <meta name="twitter:description" content="Analiza gratis tu dominio e identifica servicios que podrían estar autorizados para enviar correo, como Google Workspace, Microsoft 365, Amazon SES y más.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
     <link rel="icon" type="image/png" href="/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,7 +24,7 @@
     <link rel="stylesheet" href="/styles.css?v=1.0.6">
     <style>
       .tool-card{background:rgba(255,255,255,.055);border:1px solid rgba(148,163,184,.18);border-radius:1rem}
-      .system-card{display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:#fff;border:1px solid #e2e8f0;border-radius:.85rem;padding:.8rem 1rem;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+      .system-card{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem;background:#fff;border:1px solid #e2e8f0;border-radius:.85rem;padding:.8rem 1rem;box-shadow:0 1px 2px rgba(15,23,42,.04)}
       .evidence-pill{display:inline-flex;padding:.18rem .5rem;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:.65rem;font-weight:700}
       .system-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.65rem}@media(max-width:640px){.tool-result-head{align-items:flex-start;flex-direction:column}.system-grid{grid-template-columns:1fr}.sender-hero{padding-top:7.5rem!important}}
     </style>
@@ -32,13 +32,13 @@
     {
       "@context":"https://schema.org",
       "@type":"WebApplication",
-      "name":"Analizador de remitentes autorizados del dominio",
+      "name":"Email Sender Checker",
       "url":"https://www.inboxseguro.com/quien-puede-enviar-correos",
       "applicationCategory":"SecurityApplication",
       "operatingSystem":"Web",
       "isAccessibleForFree":true,
-      "description":"Herramienta gratuita que identifica posibles plataformas autorizadas para enviar correo mediante señales DNS públicas SPF y DKIM.",
-      "featureList":["Detección de proveedores en SPF","Detección de selectores DKIM conocidos","Estado básico de DMARC"],
+      "description":"Herramienta gratuita que identifica servicios reconocibles en el DNS público de un dominio, a partir de SPF, DKIM y MX. No confirma qué servicios están enviando correo en este momento.",
+      "featureList":["Servicios reconocibles en SPF","Selectores DKIM conocidos","Proveedor de correo reconocible en MX"],
       "offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},
       "provider":{"@type":"Organization","name":"InboxSeguro","url":"https://www.inboxseguro.com"}
     }
@@ -48,9 +48,10 @@
       "@context":"https://schema.org",
       "@type":"FAQPage",
       "mainEntity":[
-        {"@type":"Question","name":"¿Cómo saber quién puede enviar correos con mi dominio?","acceptedAnswer":{"@type":"Answer","text":"Los registros públicos SPF y DKIM permiten inferir qué plataformas podrían estar autorizadas. Los reportes DMARC confirman posteriormente cuáles enviaron mensajes realmente."}},
-        {"@type":"Question","name":"¿El resultado muestra todos los servicios de envío?","acceptedAnswer":{"@type":"Answer","text":"No necesariamente. Algunos servicios usan configuraciones personalizadas o no publican señales fáciles de identificar. El resultado es una fotografía de las señales DNS detectables, no un registro de actividad real."}},
-        {"@type":"Question","name":"¿Es seguro analizar un dominio?","acceptedAnswer":{"@type":"Answer","text":"Sí. La herramienta consulta únicamente registros DNS públicos y no solicita acceso al correo, contraseñas ni mensajes."}}
+        {"@type":"Question","name":"¿Cómo saber quién puede enviar correos con mi dominio?","acceptedAnswer":{"@type":"Answer","text":"Revisa el SPF para ver autorizaciones publicadas, los selectores DKIM conocidos y el MX del buzón. Para saber quién envió de verdad hace falta monitoreo, no solo esta consulta."}},
+        {"@type":"Question","name":"¿El análisis encuentra todos los servicios?","acceptedAnswer":{"@type":"Answer","text":"No. DKIM no se puede listar entero: cada proveedor puede usar un selector distinto. Por eso el resultado habla de servicios reconocibles, no de un inventario definitivo."}},
+        {"@type":"Question","name":"¿Un registro MX demuestra que ese servicio está enviando?","acceptedAnswer":{"@type":"Answer","text":"No. El MX dice dónde se recibe el correo. Puede ser el mismo proveedor que envía, pero la autorización está en SPF y la actividad real solo se ve con seguimiento."}},
+        {"@type":"Question","name":"¿Analizar un dominio afecta el correo?","acceptedAnswer":{"@type":"Answer","text":"No. Son consultas pasivas a DNS público. No cambiamos registros, no enviamos mensajes y no accedemos a buzones."}}
       ]
     }
     </script>
@@ -69,10 +70,11 @@
                     </span>
                 </a>
 
-                <div class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
                     <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
                     <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
                     <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
 
                                         <!-- Dropdown Recursos -->
                     <div class="relative group">
@@ -86,11 +88,12 @@
                             <!-- Columna 1: Herramientas -->
                             <div>
                                 <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
                                 <div class="space-y-1">
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
-                                        <span>Diagnóstico Completo</span>
+                                        <span>Email Security Check</span>
                                     </a>
-                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Quién puede enviar</span></a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -99,6 +102,9 @@
                                     </a>
                                     <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
                                     </a>
                                 </div>
                             </div>
@@ -165,6 +171,8 @@
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
                 <a href="/precios" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
 
                                 <!-- Guías Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
@@ -184,15 +192,17 @@
                 <!-- Herramientas Gratuitas Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Diagnóstico Completo</a>
-                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Quién puede enviar</span></a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
                     <a href="/dkim-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
                 </div>
 
                 <a href="/contacto" onclick="closeMobileMenu()"
@@ -211,9 +221,9 @@
         <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 pointer-events-none"></div>
         <div class="absolute top-0 right-0 w-[520px] h-[520px] bg-blue-600/15 rounded-full blur-[110px] pointer-events-none"></div>
         <div class="max-w-4xl w-full mx-auto px-4 relative z-10 text-center">
-          <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">Herramienta gratuita · DNS público</div>
-          <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-5 leading-tight">¿Quién envía correos en nombre de tu empresa?</h1>
-          <p class="text-base md:text-xl text-slate-300 mb-9 max-w-2xl mx-auto leading-relaxed">Descubre qué plataformas podrían estar autorizadas para usar tu dominio: Google Workspace, Microsoft 365, Mailchimp, HubSpot y más.</p>
+          <p class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">Email Sender Checker gratuito</p>
+          <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-5 leading-tight">¿Quién puede enviar correos con tu dominio?</h1>
+          <p class="text-base md:text-xl text-slate-300 mb-9 max-w-2xl mx-auto leading-relaxed">Descubre qué plataformas podrían estar autorizadas para enviar con tu dominio: Google Workspace, Microsoft 365, Amazon SES, HubSpot y otras señales reconocibles en DNS público.</p>
 
           <div class="tool-card p-5 md:p-8 shadow-2xl text-left">
             <form id="systemsForm" class="flex flex-col sm:flex-row gap-3" novalidate>
@@ -225,7 +235,7 @@
             <div id="systemsError" class="hidden mt-5 p-4 rounded-xl bg-red-500/10 border border-red-400/25 text-red-200 text-sm" role="alert"></div>
             <div id="systemsLoading" class="hidden mt-7 text-center" aria-live="polite">
               <div class="inline-block w-9 h-9 border-4 border-blue-400 border-t-transparent rounded-full animate-spin"></div>
-              <p class="mt-3 text-slate-300 text-sm">Buscando señales SPF y DKIM públicas…</p>
+              <p class="mt-3 text-slate-300 text-sm">Buscando señales públicas de SPF, DKIM y MX…</p>
             </div>
 
             <section id="systemsResults" class="hidden mt-7 border-t border-white/10 pt-6" aria-live="polite">
@@ -239,13 +249,14 @@
               <div id="systemsList" class="system-grid"></div>
               <div id="emptySystems" class="hidden p-5 rounded-xl bg-slate-900/60 border border-white/10 text-slate-300 text-sm"></div>
               <p id="technicalSummary" class="mt-4 text-xs text-slate-400"></p>
-              <div class="mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-400/20 text-amber-100 text-xs leading-relaxed">Este resultado muestra servicios reconocibles en DNS. Puede omitir configuraciones personalizadas y no confirma cuáles enviaron correos recientemente.</div>
+              <p class="mt-3 text-xs text-slate-400 leading-relaxed">SPF es una autorización publicada. DKIM es una clave de firma en un selector conocido. MX identifica la infraestructura donde el dominio recibe correo: no demuestra que ese proveedor esté autorizado para enviar ni que esté enviando.</p>
+              <div class="mt-4 p-4 rounded-xl bg-amber-500/10 border border-amber-400/20 text-amber-100 text-xs leading-relaxed">Este análisis utiliza información DNS pública. Puede detectar servicios configurados o reconocibles, pero no confirma necesariamente cuáles están enviando correos actualmente.</div>
               <div class="mt-7 pt-6 border-t border-white/10 pb-2">
-                <p class="text-sm font-bold text-white">¿Quieres confirmar cuáles envían realmente?</p>
-                <p class="mt-1 text-xs text-slate-400">El plan Fundador incluye monitoreo continuo por US$25/mes mientras mantengas tu suscripción. Cupos limitados.</p>
+                <p class="text-sm font-bold text-white">¿Quieres saber cuáles están enviando realmente?</p>
+                <p class="mt-1 text-xs text-slate-400 leading-relaxed">Un análisis puntual no sustituye el monitoreo. InboxSeguro ofrece visibilidad continua sobre las fuentes de envío del dominio y avisa cuando aparece algo que requiere atención. El plan Fundador cuesta US$25/mes mientras mantengas la suscripción.</p>
                 <div class="mt-4 flex flex-col sm:flex-row gap-3 sm:items-center">
-                  <a href="https://panel.inboxseguro.com/register?plan=founding" class="inline-flex justify-center px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-sm">Probar el plan Fundador</a>
-                  <a href="/domain-checker" class="inline-flex justify-center px-3 py-2 text-blue-200 hover:text-white font-semibold text-sm">Revisar autenticación del dominio</a>
+                  <a href="https://panel.inboxseguro.com/register?plan=founding" data-seo-event="cta_register" class="inline-flex justify-center px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-sm">Probar el plan Fundador</a>
+                  <a href="/domain-checker" data-seo-event="cta_related_tool" class="inline-flex justify-center px-3 py-2 text-blue-200 hover:text-white font-semibold text-sm">Revisar SPF, DKIM y DMARC</a>
                 </div>
               </div>
             </section>
@@ -256,38 +267,50 @@
       <section class="py-16 bg-white">
         <div class="max-w-5xl mx-auto px-4">
           <div class="max-w-3xl mx-auto text-center mb-12">
-            <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-3">Inventario de remitentes</p>
-            <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Tus correos pueden salir desde más lugares de los que imaginas</h2>
-            <p class="text-slate-600 leading-relaxed">Además del correo habitual, una empresa puede usar un CRM, una tienda, facturación, soporte y campañas. Cada servicio agrega una posible fuente de envío que conviene identificar y mantener bajo control.</p>
+            <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-3">Qué comprueba</p>
+            <h2 class="text-3xl font-extrabold text-slate-900 mb-4">Una fotografía de los servicios reconocibles en tu DNS</h2>
+            <p class="text-slate-600 leading-relaxed">Además del buzón, una empresa suele conectar un CRM, una tienda, facturación o campañas. Esta herramienta traduce señales DNS públicas a nombres de servicios. Sirve para ver qué podría estar configurado, no para afirmar qué envió correo hoy.</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14">
-            <article class="p-6 rounded-2xl border border-slate-200 bg-slate-50"><span class="text-xs font-bold text-blue-600">1 · SPF</span><h3 class="font-bold text-slate-900 mt-2 mb-2">Leemos autorizaciones públicas</h3><p class="text-sm text-slate-600 leading-relaxed">SPF enumera servidores e infraestructuras que pueden estar habilitados para enviar.</p></article>
-            <article class="p-6 rounded-2xl border border-slate-200 bg-slate-50"><span class="text-xs font-bold text-blue-600">2 · DKIM</span><h3 class="font-bold text-slate-900 mt-2 mb-2">Buscamos firmas conocidas</h3><p class="text-sm text-slate-600 leading-relaxed">Los selectores DKIM públicos aportan señales de plataformas configuradas para firmar mensajes.</p></article>
-            <article class="p-6 rounded-2xl border border-slate-200 bg-slate-50"><span class="text-xs font-bold text-blue-600">3 · Resultado</span><h3 class="font-bold text-slate-900 mt-2 mb-2">Traducimos DNS a nombres</h3><p class="text-sm text-slate-600 leading-relaxed">Convertimos registros técnicos en proveedores reconocibles y explicamos de dónde salió cada señal.</p></article>
+            <article class="p-6 rounded-2xl border border-slate-200 bg-slate-50"><span class="text-xs font-bold text-blue-600">SPF</span><h3 class="font-bold text-slate-900 mt-2 mb-2">Autorización publicada</h3><p class="text-sm text-slate-600 leading-relaxed">El registro SPF enumera includes y servidores que podrían estar autorizados para enviar. Es la señal más directa de proveedores autorizados SPF.</p></article>
+            <article class="p-6 rounded-2xl border border-slate-200 bg-slate-50"><span class="text-xs font-bold text-blue-600">DKIM</span><h3 class="font-bold text-slate-900 mt-2 mb-2">Clave de firma conocida</h3><p class="text-sm text-slate-600 leading-relaxed">Si aparece un selector habitual, el dominio publicó una clave para que ese servicio firme mensajes. Un selector a medida puede existir y no mostrarse aquí.</p></article>
+            <article class="p-6 rounded-2xl border border-slate-200 bg-slate-50"><span class="text-xs font-bold text-blue-600">MX</span><h3 class="font-bold text-slate-900 mt-2 mb-2">Dónde se recibe el correo</h3><p class="text-sm text-slate-600 leading-relaxed">El MX identifica la infraestructura o el proveedor que recibe el correo del dominio. No demuestra autorización de envío ni actividad real.</p></article>
           </div>
 
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
             <div class="p-7 rounded-2xl border border-slate-200">
-              <h2 class="text-2xl font-bold text-slate-900 mb-4">Lo que esta herramienta puede confirmar</h2>
+              <h2 class="text-2xl font-bold text-slate-900 mb-4">Cómo leer el resultado</h2>
               <ul class="space-y-3 text-sm text-slate-600">
-                <li><strong class="text-slate-900">Proveedores reconocibles:</strong> servicios identificados mediante SPF o selectores DKIM conocidos.</li>
-                <li><strong class="text-slate-900">Estado básico:</strong> existencia de SPF y política DMARC pública.</li>
-                <li><strong class="text-slate-900">Evidencia:</strong> indicación de si cada hallazgo proviene de SPF, DKIM o ambos.</li>
+                <li><strong class="text-slate-900">Nombre del servicio:</strong> un proveedor que pudimos reconocer, como Amazon SES, Resend o Zoho Mail.</li>
+                <li><strong class="text-slate-900">Origen de la señal:</strong> SPF, DKIM, MX o una combinación. Cada pastilla dice de dónde salió el hallazgo.</li>
+                <li><strong class="text-slate-900">Resumen técnico:</strong> si hay SPF y qué política DMARC está publicada. Eso no reemplaza un <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">verificador de SPF, DKIM y DMARC</a>.</li>
               </ul>
             </div>
             <div class="p-7 rounded-2xl border border-amber-200 bg-amber-50">
-              <h2 class="text-2xl font-bold text-slate-900 mb-4">Lo que DNS no puede confirmar</h2>
-              <p class="text-sm text-slate-700 leading-relaxed mb-3">Un servicio configurado podría estar abandonado y un servicio activo podría usar señales personalizadas que no podamos reconocer.</p>
-              <p class="text-sm text-slate-700 leading-relaxed">Solo los reportes DMARC recibidos desde Gmail, Microsoft y otros receptores muestran qué fuentes enviaron mensajes realmente.</p>
+              <h2 class="text-2xl font-bold text-slate-900 mb-4">Limitaciones de un análisis DNS puntual</h2>
+              <p class="text-sm text-slate-700 leading-relaxed mb-3">Un servicio configurado puede estar en desuso. Otro puede enviar con un selector DKIM propio que esta consulta no recorre. El MX tampoco prueba actividad.</p>
+              <p class="text-sm text-slate-700 leading-relaxed">Saber qué servicios envían correo desde el dominio exige observar el tráfico a lo largo del tiempo. InboxSeguro hace ese seguimiento continuo; esta página muestra la configuración pública del momento.</p>
             </div>
+          </div>
+
+          <div class="mt-14">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6 text-center">Herramientas relacionadas</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <a href="/domain-checker" data-seo-event="cta_related_tool" class="p-5 rounded-xl border border-slate-200 hover:border-blue-300 transition-colors"><h3 class="font-bold text-slate-900 mb-1">Email Security Check</h3><p class="text-sm text-slate-600">SPF, DKIM, DMARC y MX en una sola fotografía.</p></a>
+              <a href="/spf-checker" data-seo-event="cta_related_tool" class="p-5 rounded-xl border border-slate-200 hover:border-blue-300 transition-colors"><h3 class="font-bold text-slate-900 mb-1">SPF Checker</h3><p class="text-sm text-slate-600">Lee el registro SPF publicado.</p></a>
+              <a href="/dmarc-checker" data-seo-event="cta_related_tool" class="p-5 rounded-xl border border-slate-200 hover:border-blue-300 transition-colors"><h3 class="font-bold text-slate-900 mb-1">DMARC Checker</h3><p class="text-sm text-slate-600">Muestra la política DMARC pública.</p></a>
+              <a href="/dkim-checker" data-seo-event="cta_related_tool" class="p-5 rounded-xl border border-slate-200 hover:border-blue-300 transition-colors"><h3 class="font-bold text-slate-900 mb-1">DKIM Checker</h3><p class="text-sm text-slate-600">Busca selectores DKIM habituales.</p></a>
+            </div>
+            <p class="text-center text-sm text-slate-500 mt-4"><a href="/herramientas" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">Ver todas las herramientas gratuitas</a></p>
           </div>
 
           <div class="mt-14 max-w-3xl mx-auto">
             <h2 class="text-2xl font-bold text-slate-900 mb-6 text-center">Preguntas frecuentes</h2>
             <div class="space-y-4">
-              <article class="p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿Cómo saber quién puede enviar correos con mi dominio?</h3><p class="text-sm text-slate-600 leading-relaxed">Puedes revisar SPF y DKIM para detectar autorizaciones públicas. Para confirmar actividad real necesitas recopilar y analizar reportes DMARC.</p></article>
-              <article class="p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿El análisis encuentra todos los servicios?</h3><p class="text-sm text-slate-600 leading-relaxed">No siempre. DKIM no puede enumerarse completamente porque cada proveedor puede usar selectores personalizados. Por eso presentamos el resultado como servicios detectables, no como un inventario definitivo.</p></article>
-              <article class="p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿Analizar un dominio afecta su correo?</h3><p class="text-sm text-slate-600 leading-relaxed">No. Son consultas pasivas a información DNS pública. No cambiamos registros, no enviamos mensajes y no accedemos a buzones.</p></article>
+              <article class="p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿Cómo saber quién puede enviar correos con mi dominio?</h3><p class="text-sm text-slate-600 leading-relaxed">Revisa el SPF para ver autorizaciones publicadas, los selectores DKIM conocidos y el MX del buzón. Para saber quién envió de verdad hace falta monitoreo, no solo esta consulta.</p></article>
+              <article class="p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿El análisis encuentra todos los servicios?</h3><p class="text-sm text-slate-600 leading-relaxed">No. DKIM no se puede listar entero: cada proveedor puede usar un selector distinto. Por eso el resultado habla de servicios reconocibles, no de un inventario definitivo.</p></article>
+              <article class="p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿Un registro MX demuestra que ese servicio está enviando?</h3><p class="text-sm text-slate-600 leading-relaxed">No. El MX dice dónde se recibe el correo. Puede ser el mismo proveedor que envía, pero la autorización está en SPF y la actividad real solo se ve con seguimiento.</p></article>
+              <article class="p-5 rounded-xl border border-slate-200"><h3 class="font-bold text-slate-900 mb-2">¿Analizar un dominio afecta el correo?</h3><p class="text-sm text-slate-600 leading-relaxed">No. Son consultas pasivas a DNS público. No cambiamos registros, no enviamos mensajes y no accedemos a buzones.</p></article>
             </div>
           </div>
         </div>
@@ -298,7 +321,7 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
                 <div class="text-sm text-slate-500 flex items-center gap-1">
                     © 2026
-                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-slate-900 select-none">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
                         <span>Inbox<span class="text-brand-600">Seguro</span></span>
                         <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.4em]">TM</sup>
                     </span>
@@ -306,11 +329,11 @@
                 <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
                     <a href="/terminos" class="hover:text-brand-600 transition-colors">Términos y Condiciones</a>
                     <a href="/privacidad" class="hover:text-brand-600 transition-colors">Política de Privacidad</a>
-                    <a href="/#contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
+                    <a href="/contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
                 </div>
             </div>
             <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
-                <p>Herramientas Gratuitas: <a href="/quien-puede-enviar-correos" class="hover:underline text-blue-500/80 font-bold">Quién puede enviar</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80">Diagnóstico Completo</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80">Verificador DKIM</a></p>
+                <p>Herramientas Gratuitas: <a href="/herramientas" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Todas</a> | <a href="/quien-puede-enviar-correos" class="hover:underline text-blue-500/80 font-bold">Email Sender Checker</a> | <a href="/domain-checker" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Email Security Check</a> | <a href="/spf-checker" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">SPF Checker</a> | <a href="/dmarc-checker" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">DMARC Checker</a> | <a href="/dkim-checker" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">DKIM Checker</a></p>
             </div>
         </div>
     </footer>
@@ -328,7 +351,7 @@
         form.addEventListener('submit',async function(event){
           event.preventDefault(); error.classList.add('hidden'); results.classList.add('hidden');
           const domain=normalizeDomain(input.value);
-          if(!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/i.test(domain)){showError('Escribe un dominio válido, por ejemplo tuempresa.com.');return;}
+          if(!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/i.test(domain)){if(typeof window.trackCheckerOutcome==='function')window.trackCheckerOutcome('sending_systems','invalid');showError('Escribe un dominio válido, por ejemplo tuempresa.com.');return;}
           input.value=domain;setBusy(true);
           const controller=new AbortController();const timeout=setTimeout(function(){controller.abort();},25000);
           try{
@@ -337,7 +360,7 @@
             if(response.status===429)throw new Error('Se alcanzó el límite temporal de consultas. Intenta nuevamente en unos minutos.');
             if(!response.ok||!data.ok)throw new Error('No pudimos completar el análisis en este momento. Intenta nuevamente.');
             document.getElementById('resultDomain').textContent=data.domain;
-            document.getElementById('resultHeadline').textContent=data.count===1?'Encontramos 1 servicio reconocible':'Encontramos '+data.count+' servicios reconocibles';
+            document.getElementById('resultHeadline').textContent=data.count===0?'No reconocimos servicios habituales':(data.count===1?'Encontramos 1 servicio reconocible':'Encontramos '+data.count+' servicios reconocibles');
             document.getElementById('resultCount').textContent=data.count+' detectado'+(data.count===1?'':'s');
             const list=document.getElementById('systemsList');list.textContent='';
             const empty=document.getElementById('emptySystems');
@@ -345,7 +368,8 @@
               const card=document.createElement('article');card.className='system-card';
               const name=document.createElement('h3');name.className='font-bold text-slate-900';name.textContent=system.name;card.appendChild(name);
               const evidence=document.createElement('div');evidence.className='flex flex-wrap gap-1';card.appendChild(evidence);
-              (system.evidence||[]).forEach(function(source){const pill=document.createElement('span');pill.className='evidence-pill mr-1';pill.textContent=source;evidence.appendChild(pill);});
+              (system.evidence||[]).forEach(function(source){if(source!=='SPF'&&source!=='DKIM'&&source!=='MX')return;const pill=document.createElement('span');pill.className='evidence-pill mr-1';pill.textContent=source;evidence.appendChild(pill);});
+              if((system.evidence||[]).indexOf('MX')!==-1){const note=document.createElement('p');note.className='w-full text-[11px] text-slate-500 leading-relaxed';note.textContent='La señal MX marca infraestructura de recepción. No confirma autorización ni actividad de envío.';card.appendChild(note);}
               list.appendChild(card);
             });
             empty.classList.toggle('hidden',data.count!==0);
@@ -355,7 +379,11 @@
             document.getElementById('technicalSummary').textContent=spfText+' · '+dmarcText;
             results.classList.remove('hidden');
             if(typeof window.trackCheckerSubmit==='function')window.trackCheckerSubmit('sending_systems');
-          }catch(err){showError(err.name==='AbortError'?'El análisis tardó demasiado. Intenta otra vez en unos segundos.':err.message);}
+            if(typeof window.trackCheckerOutcome==='function')window.trackCheckerOutcome('sending_systems','success',{result_count:data.count});
+          }catch(err){
+            if(typeof window.trackCheckerOutcome==='function')window.trackCheckerOutcome('sending_systems','error');
+            showError(err.name==='AbortError'?'El análisis tardó demasiado. Intenta otra vez en unos segundos.':err.message);
+          }
           finally{clearTimeout(timeout);setBusy(false);}
         });
       })();

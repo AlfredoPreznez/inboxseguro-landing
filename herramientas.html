@@ -1,79 +1,71 @@
 <!DOCTYPE html>
 <html lang="es" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FAQ vigilancia de envíos, DMARC y seguridad del dominio | InboxSeguro</title>
-
-    <link rel="icon" type="image/png" href="/favicon.png">
-
-    <meta name="description"
-        content="Respuestas sobre vigilancia de envíos, suplantación, SPF, DKIM y DMARC para empresas en Chile. Seguridad del dominio sin jerga técnica.">
-
-        <link rel="canonical" href="https://www.inboxseguro.com/faq">
+    <title>Herramientas gratuitas de seguridad de correo | InboxSeguro</title>
+    <meta name="description" content="Elige una herramienta gratuita: Email Sender Checker, Email Security Check, SPF, DMARC, DKIM y MX Lookup.">
+    <link rel="canonical" href="https://www.inboxseguro.com/herramientas">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="InboxSeguro">
-    <meta property="og:locale" content="es_CL">
-    <meta property="og:url" content="https://www.inboxseguro.com/faq">
-    <meta property="og:title" content="FAQ vigilancia de envíos, DMARC y seguridad del dominio | InboxSeguro">
-    <meta property="og:description" content="Respuestas sobre vigilancia de envíos, suplantación, SPF, DKIM y DMARC para empresas en Chile. Seguridad del dominio sin jerga técnica.">
+    <meta property="og:locale" content="es_419">
+    <meta property="og:url" content="https://www.inboxseguro.com/herramientas">
+    <meta property="og:title" content="Herramientas gratuitas de seguridad de correo | InboxSeguro">
+    <meta property="og:description" content="Elige una herramienta gratuita: Email Sender Checker, Email Security Check, SPF, DMARC, DKIM y MX Lookup.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="FAQ vigilancia de envíos, DMARC y seguridad del dominio | InboxSeguro">
-    <meta name="twitter:description" content="Respuestas sobre vigilancia de envíos, suplantación, SPF, DKIM y DMARC para empresas en Chile. Seguridad del dominio sin jerga técnica.">
+    <meta name="twitter:title" content="Herramientas gratuitas de seguridad de correo | InboxSeguro">
+    <meta name="twitter:description" content="Elige una herramienta gratuita: Email Sender Checker, Email Security Check, SPF, DMARC, DKIM y MX Lookup.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-        rel="stylesheet">
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/styles.css?v=1.0.6">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": [
+    <link rel="stylesheet" href="/styles.css?v=1.0.7">
+    <script type="application/ld+json">
     {
-      "@type": "Question",
-      "name": "¿Necesito entregarles mis contraseñas?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Nunca. InboxSeguro analiza solo DNS público."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Qué pasa si me suplantan el dominio?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Detectamos envíos sin SPF/DKIM válidos, los marcamos en el inventario y te ayudamos a aplicar políticas DMARC. El rechazo del correo lo aplican los receptores según tu DNS (p=quarantine o p=reject)."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿De qué sirve definir un rango de envíos?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Alertas si un proveedor supera el volumen mensual habitual."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "¿Qué pasa si caigo en blacklist?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Monitorizamos RBL y alertamos en el panel."
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Herramientas gratuitas de seguridad de correo",
+      "url": "https://www.inboxseguro.com/herramientas",
+      "description": "Herramientas gratuitas que consultan DNS público para entender la autenticación de correo de un dominio.",
+      "isPartOf": {"@type": "WebSite", "name": "InboxSeguro", "url": "https://www.inboxseguro.com"},
+      "mainEntity": {
+        "@type": "ItemList",
+        "itemListElement": [
+          {"@type": "ListItem", "position": 1, "name": "Email Sender Checker", "url": "https://www.inboxseguro.com/quien-puede-enviar-correos"},
+          {"@type": "ListItem", "position": 2, "name": "Email Security Check", "url": "https://www.inboxseguro.com/domain-checker"},
+          {"@type": "ListItem", "position": 3, "name": "SPF Checker", "url": "https://www.inboxseguro.com/spf-checker"},
+          {"@type": "ListItem", "position": 4, "name": "DMARC Checker", "url": "https://www.inboxseguro.com/dmarc-checker"},
+          {"@type": "ListItem", "position": 5, "name": "DKIM Checker", "url": "https://www.inboxseguro.com/dkim-checker"},
+          {"@type": "ListItem", "position": 6, "name": "MX Lookup", "url": "https://www.inboxseguro.com/mx-lookup"}
+        ]
       }
     }
-  ]
-}
-</script>
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.inboxseguro.com/"},
+        {"@type": "ListItem", "position": 2, "name": "Herramientas", "item": "https://www.inboxseguro.com/herramientas"}
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {"@type": "Question", "name": "¿Estas herramientas modifican el DNS de mi dominio?", "acceptedAnswer": {"@type": "Answer", "text": "No. Consultan información DNS pública y muestran una lectura. No publican ni cambian registros."}},
+        {"@type": "Question", "name": "¿Un análisis gratuito confirma quién está enviando correo ahora?", "acceptedAnswer": {"@type": "Answer", "text": "No. Muestra servicios y registros reconocibles en ese momento. Saber qué fuentes envían de verdad requiere monitoreo continuo."}},
+        {"@type": "Question", "name": "¿Qué herramienta conviene usar primero?", "acceptedAnswer": {"@type": "Answer", "text": "Si quieres ver servicios reconocibles, empieza por Email Sender Checker. Si quieres el estado de SPF, DKIM, DMARC y MX, usa Email Security Check."}}
+      ]
+    }
+    </script>
 </head>
-
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
-
-    <!-- Header Light -->
     <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16 md:h-20 items-center">
@@ -233,143 +225,81 @@
             </div>
         </div>
     </nav>
+<main class="flex-grow">
+    <section class="relative pt-28 pb-16 lg:pt-36 lg:pb-20 bg-slate-950 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 pointer-events-none"></div>
+        <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+            <nav aria-label="Miga de pan" class="text-xs text-slate-400 mb-6">
+                <a href="/" class="hover:text-white">Inicio</a>
+                <span aria-hidden="true"> / </span>
+                <span class="text-slate-200">Herramientas</span>
+            </nav>
+            <h1 class="text-3xl md:text-5xl font-extrabold text-white mb-5 leading-tight">Herramientas gratuitas para entender el correo de tu dominio</h1>
+            <p class="text-base md:text-xl text-slate-300 max-w-2xl mx-auto leading-relaxed">Cada herramienta consulta DNS público y responde una pregunta distinta. Ninguna cambia tu configuración ni confirma, por sí sola, qué servicios están enviando correo en este momento.</p>
+        </div>
+    </section>
 
-    <!-- Main Content Area -->
-    <main class="flex-grow pt-24 lg:pt-32">
-
-        <!-- Hero Section/Header -->
-        <section class="py-16 bg-slate-900 text-white relative overflow-hidden">
-            <div class="absolute inset-0 bg-slate-900 pointer-events-none">
-                <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-blue-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
+    <section class="py-16 bg-white" aria-labelledby="analizar-title">
+        <div class="max-w-5xl mx-auto px-4">
+            <h2 id="analizar-title" class="text-2xl font-extrabold text-slate-900 mb-2">Analizar</h2>
+            <p class="text-slate-600 mb-8 max-w-2xl">Empieza por la pregunta que tienes ahora. Desde cada resultado puedes pasar a otra herramienta o a InboxSeguro si necesitas seguimiento continuo.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 bg-slate-50 transition-colors">
+                    <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Email Sender Checker</p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">¿Quién puede enviar correos con tu dominio?</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Identifica servicios reconocibles en SPF, DKIM y MX, como Google Workspace, Microsoft 365 o Amazon SES. Muestra la señal, no la actividad real.</p>
+                </a>
+                <a href="/domain-checker" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Email Security Check</p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">SPF, DKIM, DMARC y MX</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Vista agregada con estados claros. El MX se muestra como infraestructura de recepción, no como autorización de envío.</p>
+                </a>
+                <a href="/spf-checker" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">SPF Checker</p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Registro SPF</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Lee el SPF publicado y señala si falta o si la política deja el dominio demasiado abierto.</p>
+                </a>
+                <a href="/dmarc-checker" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">DMARC Checker</p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Política DMARC</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Comprueba si existe DMARC y si la política publicada es none, quarantine o reject.</p>
+                </a>
+                <a href="/dkim-checker" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">DKIM Checker</p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">DKIM Lookup</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Verifica un selector concreto o busca los habituales. No encontrarlos no demuestra que falte DKIM.</p>
+                </a>
+                <a href="/mx-lookup" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">MX Lookup</p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Registros MX</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Muestra hostname y prioridad. El MX indica dónde se recibe el correo y no demuestra quién lo envía.</p>
+                </a>
             </div>
-            <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
-                <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight tracking-tight">
-                    Preguntas sobre control de envíos y correo
-                </h1>
-                <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
-                    Suplantación, rangos de volumen, blacklist y configuración DNS — respuestas para empresas en Chile y LATAM.
-                </p>
+        </div>
+    </section>
+
+    <section class="py-14 bg-slate-50 border-t border-slate-100">
+        <div class="max-w-3xl mx-auto px-4">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6">Preguntas frecuentes</h2>
+            <div class="space-y-4">
+                <article class="p-5 rounded-xl border border-slate-200 bg-white"><h3 class="font-bold text-slate-900 mb-2">¿Estas herramientas modifican el DNS de mi dominio?</h3><p class="text-sm text-slate-600 leading-relaxed">No. Consultan información pública y muestran una lectura. No publican ni cambian registros.</p></article>
+                <article class="p-5 rounded-xl border border-slate-200 bg-white"><h3 class="font-bold text-slate-900 mb-2">¿Un análisis gratuito confirma quién está enviando correo ahora?</h3><p class="text-sm text-slate-600 leading-relaxed">No. Muestra servicios y registros reconocibles en ese momento. Saber qué fuentes envían de verdad requiere monitoreo continuo.</p></article>
+                <article class="p-5 rounded-xl border border-slate-200 bg-white"><h3 class="font-bold text-slate-900 mb-2">¿Qué herramienta conviene usar primero?</h3><p class="text-sm text-slate-600 leading-relaxed">Si quieres ver servicios reconocibles, empieza por el <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">Email Sender Checker</a>. Si quieres el estado de SPF, DKIM, DMARC y MX, usa el <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">Email Security Check</a>.</p></article>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- FAQ Accordion Section -->
-        <section id="faq" class="py-24 bg-white scroll-mt-28">
-            <div class="max-w-4xl mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-slate-900 mb-4">Preguntas Frecuentes</h2>
-                    <p class="text-lg text-slate-600 font-medium italic">"La falta de control no avisa. La visibilidad sí."</p>
-                    <div class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 inline-block shadow-sm">
-                        <p class="text-sm text-slate-600">
-                            <span class="font-bold text-brand-600">¿Qué hace distinto a InboxSeguro?</span><br>
-                            No es una herramienta técnica para especialistas. Es una plataforma de protección que cualquier empresa puede activar hoy.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="space-y-4">
-
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
-                            ¿Necesito entregarles mis contraseñas?
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            <strong class="text-slate-900">Nunca.</strong> InboxSeguro analiza solo la información pública
-                            de tu dominio (DNS). Tú mantienes el control total de tus accesos. Nosotros solo te decimos qué
-                            copiar y pegar en tu panel de control actual.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
-                            ¿Cumplen con las normativas de Microsoft y Google?
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            Sí. Nuestra herramienta está diseñada para ayudarte a cumplir con los requisitos de
-                            autenticación (SPF, DKIM, DMARC) exigidos por Google y Microsoft desde 2024 para evitar que tus
-                            correos sean marcados como spam.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
-                            ¿Puedo cancelar si no me sirve?
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            Por supuesto. No hay contratos forzosos. Puedes cancelar tu suscripción con un solo clic desde
-                            tu panel de control cuando quieras.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
-                            ¿Qué pasa si uso Zoho, GoDaddy o NIC Chile?
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            Compatible con cualquier proveedor de dominio. Guías para NIC Chile, GoDaddy, Cloudflare y más en la configuración DNS del panel.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
-                            ¿Qué pasa si me suplantan el dominio?
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            InboxSeguro no detiene el ataque en tiempo real: analiza tus informes DMARC. Si un origen envía sin SPF ni DKIM válidos, lo marcamos como no autorizado en el inventario, te alertamos y te ayudamos a gestionar la decisión. Que el correo falso no llegue al destinatario depende de tu política DMARC (cuarentena o rechazo), aplicada por los servidores receptores. Si no reconoces el sistema, mantenlo marcado como no autorizado y avanza la política DNS.
-                            <a href="/suplantacion-correo-empresa" class="text-brand-600 hover:underline font-medium">Más sobre suplantación corporativa</a>.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
-                            ¿De qué sirve definir un rango de envíos por servicio?
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            Indicas cuántos correos al mes es normal para cada proveedor (por ejemplo Zoho o Resend). Si el volumen supera ese rango, recibes una alerta — útil para detectar cuentas comprometidas o herramientas que activó alguien sin avisar.
-                            <a href="/control-envios-dominio" class="text-brand-600 hover:underline font-medium">Guía de control de envíos</a>.
-                        </p>
-                    </div>
-
-                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
-                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
-                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
-                            ¿Qué pasa si mi dominio cae en una blacklist?
-                        </h3>
-                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
-                            Monitorizamos tus IPs frente a listas negras (RBL). Si apareces listado, verás alertas en el panel. Suele deberse a spam saliente o IPs compartidas del proveedor; revisa el detalle y contacta a tu proveedor de envío si es necesario.
-                        </p>
-                    </div>
-
-                </div>
+    <section class="py-16 bg-slate-900 text-white">
+        <div class="max-w-2xl mx-auto px-4 text-center">
+            <h2 class="text-2xl md:text-3xl font-extrabold mb-4">La foto DNS no sustituye el seguimiento</h2>
+            <p class="text-slate-300 mb-8 leading-relaxed">InboxSeguro te ayuda a mantener visibilidad continua sobre quién utiliza tu dominio para enviar correo y a detectar cambios que requieren atención, sin interrumpir el correo legítimo.</p>
+            <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                <a href="/precios" data-seo-event="cta_precios" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 rounded-xl font-bold">Ver planes</a>
+                <a href="https://panel.inboxseguro.com/register?plan=founding" data-seo-event="cta_register" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Crear cuenta</a>
             </div>
-        </section>
-
-        <!-- CTA Section -->
-        <section class="py-20 bg-slate-50 border-t border-slate-200">
-            <div class="max-w-4xl mx-auto px-4 text-center">
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">¿Aún tienes preguntas técnicas?</h2>
-                <p class="text-slate-600 mb-8 max-w-xl mx-auto">
-                    Conversemos directamente. Soporte responderá tus dudas en menos de 24 horas hábiles.
-                </p>
-                <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="/contacto" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">
-                        Formulario de Contacto
-                    </a>
-                    <a href="/domain-checker" class="px-8 py-4 bg-white hover:bg-slate-100 text-slate-800 font-semibold rounded-xl border border-slate-300 transition-all hover:-translate-y-0.5">
-                        Analizar mi Dominio Gratis
-                    </a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
+        </div>
+    </section>
+</main>
     <footer class="bg-slate-950 border-t border-slate-800 py-12">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-start gap-10">
@@ -382,7 +312,7 @@
                         </span>
                     </div>
                     <p class="text-slate-500 text-sm leading-relaxed mb-4">
-                        Seguridad del correo de tu empresa: vigilancia de envíos y protección DMARC guiada contra la suplantación.
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
                     </p>
                     <div class="space-y-2 text-xs text-slate-500 italic">
                         <p class="flex items-center gap-2">
@@ -397,7 +327,7 @@
                     <div>
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
-                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors">Cómo funciona</a></li>
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
                             <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
                             <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
                             <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
@@ -420,12 +350,13 @@
                     <div>
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
-                            <li><a href="/faq" class="text-blue-400 font-medium">Preguntas Frecuentes</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
                             <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
                             <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
-                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank" class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
-                                <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
-                            </a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -443,9 +374,7 @@
             </div>
         </div>
     </footer>
-
     <script>
-        // MOBILE MENU
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
             const iconOpen = document.getElementById('menuIconOpen');
@@ -468,5 +397,4 @@
     <script src="/seo-analytics.js" defer></script>
     <script src="/session-cta.js" defer></script>
 </body>
-
 </html>

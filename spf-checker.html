@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador SPF gratis: analiza tu registro SPF | InboxSeguro</title>
+    <title>SPF Checker: verifica el registro de tu dominio | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <meta name="description" content="Verifica gratis el registro SPF de tu dominio, detecta políticas débiles y revisa qué servidores están autorizados para enviar correo.">
+    <meta name="description" content="SPF Checker gratuito. Lee el registro publicado, señala si falta o si está abierto, y continúa en el Email Security Check para ver el resto.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/spf-checker">
     <meta name="robots" content="index, follow">
@@ -16,19 +16,19 @@
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/spf-checker">
-    <meta property="og:title" content="Verificador SPF gratis: analiza tu registro SPF | InboxSeguro">
-    <meta property="og:description" content="Verifica gratis el registro SPF de tu dominio, detecta políticas débiles y revisa qué servidores están autorizados para enviar correo.">
+    <meta property="og:title" content="SPF Checker: verifica el registro de tu dominio | InboxSeguro">
+    <meta property="og:description" content="SPF Checker gratuito. Lee el registro publicado, señala si falta o si está abierto, y continúa en el Email Security Check para ver el resto.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Verificador SPF gratis: analiza tu registro SPF | InboxSeguro">
-    <meta name="twitter:description" content="Verifica gratis el registro SPF de tu dominio, detecta políticas débiles y revisa qué servidores están autorizados para enviar correo.">
+    <meta name="twitter:title" content="SPF Checker: verifica el registro de tu dominio | InboxSeguro">
+    <meta name="twitter:description" content="SPF Checker gratuito. Lee el registro publicado, señala si falta o si está abierto, y continúa en el Email Security Check para ver el resto.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.6">
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Verificador SPF","url":"https://www.inboxseguro.com/spf-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SPF Checker","url":"https://www.inboxseguro.com/spf-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
 
 <style>
 @media (max-width:640px){
@@ -55,10 +55,11 @@
                     </span>
                 </a>
 
-                <div class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
                     <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
                     <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
                     <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
                     
                                         <!-- Dropdown Recursos -->
                     <div class="relative group">
@@ -72,11 +73,12 @@
                             <!-- Columna 1: Herramientas -->
                             <div>
                                 <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
                                 <div class="space-y-1">
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
-                                        <span>Diagnóstico Completo</span>
+                                        <span>Email Security Check</span>
                                     </a>
-                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Quién puede enviar</span></a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -85,6 +87,9 @@
                                     </a>
                                     <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
                                     </a>
                                 </div>
                             </div>
@@ -151,6 +156,8 @@
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
                 <a href="/precios" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
                 
                                 <!-- Guías Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
@@ -170,15 +177,17 @@
                 <!-- Herramientas Gratuitas Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Diagnóstico Completo</a>
-                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Quién puede enviar</span></a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
                     <a href="/dkim-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
                 </div>
 
                 <a href="/contacto" onclick="closeMobileMenu()"
@@ -214,9 +223,9 @@
 
             <div
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
-                Herramienta SPF</div>
+                SPF Checker gratuito</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador SPF gratuito para tu dominio</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">SPF Checker para tu dominio</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
                 Consulta tu registro SPF, revisa su política y detecta señales que pueden afectar la autenticación del correo corporativo.
             </p>
@@ -266,15 +275,13 @@
                     </div>
 
                     <!-- SEO/UX CTA Box leading to domain-checker -->
-                    <div class="p-5 rounded-xl bg-brand-900/40 border border-brand-500/30 text-center">
-                        <h4 class="text-white font-bold mb-2">🛡️ ¿Quieres el diagnóstico de seguridad completo?</h4>
-                        <p class="text-slate-300 text-sm mb-4">
-                            El registro SPF es solo el primer paso. Para evitar fraudes sofisticados y cumplir con las políticas obligatorias de Google/Yahoo, necesitas auditar tu configuración <strong>DMARC</strong> y <strong>DKIM</strong>.
-                        </p>
-                        <a href="/domain-checker"
-                            class="inline-block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 text-sm">
-                            Obtener Análisis Completo →
-                        </a>
+                    <div class="p-5 rounded-xl bg-slate-900/60 border border-white/10 text-left">
+                        <h4 class="text-white font-bold mb-2">SPF es solo una pieza</h4>
+                        <p class="text-slate-300 text-sm mb-4">El Email Security Check reúne SPF, DKIM, DMARC y MX en una sola fotografía. InboxSeguro añade el monitoreo continuo.</p>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <a href="/domain-checker" data-seo-event="cta_related_tool" class="inline-flex justify-center px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm">Abrir Email Security Check</a>
+                            <a href="/precios" data-seo-event="cta_precios" class="inline-flex justify-center px-5 py-2.5 text-blue-200 font-semibold text-sm">Ver monitoreo continuo</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -373,6 +380,8 @@
                 </div>
 
                 <div class="border-t border-slate-200 pt-6">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Ver SPF junto al resto</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">El <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Email Security Check</a> muestra este registro junto a DKIM, DMARC y MX. Para servicios reconocibles, sigue con el <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Email Sender Checker</a>.</p>
                     <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador SPF</h2>
                     <div class="space-y-4">
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
@@ -415,11 +424,11 @@
                 <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
                     <a href="/terminos" class="hover:text-brand-600 transition-colors">Términos y Condiciones</a>
                     <a href="/privacidad" class="hover:text-brand-600 transition-colors">Política de Privacidad</a>
-                    <a href="/#contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
+                    <a href="/contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
                 </div>
             </div>
             <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
-                <p>Herramientas Gratuitas: <a href="/quien-puede-enviar-correos" class="hover:underline text-blue-500/80">Quién puede enviar</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80">Diagnóstico Completo</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80 font-bold">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80">Verificador DKIM</a></p>
+                <p>Herramientas Gratuitas: <a href="/herramientas" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Todas</a> | <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Email Sender Checker</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80">Email Security Check</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80 font-bold">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80">Verificador DKIM</a> | <a href="/mx-lookup" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">MX Lookup</a></p>
             </div>
         </div>
     </footer>
@@ -442,30 +451,32 @@
 
             try {
                 const spfData = await fetchDNS(dominio, 'TXT');
+                const queryOk = !!(spfData && (spfData.Status === 0 || spfData.Status === 3));
                 const spfRecords = extractTXT(spfData);
-                const spfRecord = spfRecords.find(r => r.startsWith('v=spf1'));
-                const spfResult = analyzeSpf(spfRecord);
+                const spfRecord = spfRecords.find(r => r.toLowerCase().startsWith('v=spf1'));
+                const spfResult = queryOk
+                    ? analyzeSpf(spfRecord)
+                    : { status: 'unknown', label: 'No verificable', text: 'No pudimos consultar el TXT del dominio, así que no afirmamos si hay SPF.' };
 
-                // Render result
                 setResult('spf', spfResult);
                 document.getElementById('diagDomain').textContent = dominio;
 
                 const scoreEl = document.getElementById('diagScore');
-                if (spfResult.status === 'ok') {
-                    scoreEl.textContent = 'Correcto';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400';
-                } else if (spfResult.status === 'warn') {
-                    scoreEl.textContent = 'Mejorable';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
-                } else {
-                    scoreEl.textContent = 'Inseguro';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400';
-                }
+                const scoreStyles = {
+                    ok: ['Correcto', 'bg-emerald-500/20 text-emerald-400'],
+                    warn: ['Requiere atención', 'bg-amber-500/20 text-amber-400'],
+                    unknown: ['No verificable', 'bg-slate-500/20 text-slate-300']
+                };
+                const scoreStyle = scoreStyles[spfResult.status] || ['No detectado', 'bg-slate-500/20 text-slate-300'];
+                scoreEl.textContent = scoreStyle[0];
+                scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + scoreStyle[1];
 
                 resultsDiv.classList.remove('hidden');
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('spf');
+                if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('spf', 'success');
             } catch (err) {
                 console.error(err);
+                if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('spf', 'error');
                 alert('No pudimos consultar los registros DNS. Verifica tu conexión e inténtalo de nuevo.');
             } finally {
                 btn.disabled = false;
@@ -475,8 +486,8 @@
         }
 
         function analyzeSpf(record) {
-            if (!record) return { status: 'fail', label: 'No configurado', text: 'No encontramos un registro SPF. El dominio no publica qué servidores están autorizados' };
-            if (record.includes('+all')) return { status: 'warn', label: 'Mejorable', text: 'La política +all autoriza cualquier origen en SPF. Revisa todos tus remitentes antes de aplicar una política restrictiva.' };
+            if (!record) return { status: 'fail', label: 'No detectado', text: 'No encontramos un registro SPF. El dominio no publica qué servidores están autorizados.' };
+            if (record.toLowerCase().includes('+all')) return { status: 'warn', label: 'Requiere atención', text: 'La política +all autoriza cualquier origen en SPF. Revisa todos tus remitentes antes de aplicar una política restrictiva.' };
             return { status: 'ok', label: 'Configurado', text: record };
         }
 
@@ -494,11 +505,16 @@
                 icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-500/20';
                 badge.textContent = result.label;
                 badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-amber-500/20 text-amber-400';
-            } else {
-                icon.innerHTML = '<i class="fa-solid fa-xmark text-xs text-red-400"></i>';
-                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-red-500/20';
+            } else if (result.status === 'unknown') {
+                icon.innerHTML = '<i class="fa-solid fa-question text-xs text-slate-300"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-slate-500/20';
                 badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-red-500/20 text-red-400';
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-slate-500/20 text-slate-300';
+            } else {
+                icon.innerHTML = '<i class="fa-solid fa-minus text-xs text-slate-300"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-slate-500/20';
+                badge.textContent = result.label;
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-slate-500/20 text-slate-300';
             }
             txt.textContent = result.text;
         }

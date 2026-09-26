@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificador de dominio: SPF, DKIM y DMARC | InboxSeguro</title>
+    <title>Email Security Check: SPF, DKIM y DMARC | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <meta name="description" content="Analiza gratis SPF, DKIM y DMARC de tu dominio. Detecta configuraciones ausentes y entiende qué revisar para proteger el correo de tu empresa.">
+    <meta name="description" content="Revisa gratis SPF, DKIM, DMARC y el MX de tu dominio. Estados claros, sin puntaje inventado, y la diferencia entre una foto DNS y el monitoreo continuo.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/domain-checker">
     <meta name="robots" content="index, follow">
@@ -16,12 +16,12 @@
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/domain-checker">
-    <meta property="og:title" content="Verificador de dominio: SPF, DKIM y DMARC | InboxSeguro">
-    <meta property="og:description" content="Analiza gratis SPF, DKIM y DMARC de tu dominio. Detecta configuraciones ausentes y entiende qué revisar para proteger el correo de tu empresa.">
+    <meta property="og:title" content="Email Security Check: SPF, DKIM y DMARC | InboxSeguro">
+    <meta property="og:description" content="Revisa gratis SPF, DKIM, DMARC y el MX de tu dominio. Estados claros, sin puntaje inventado, y la diferencia entre una foto DNS y el monitoreo continuo.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Verificador de dominio: SPF, DKIM y DMARC | InboxSeguro">
-    <meta name="twitter:description" content="Analiza gratis SPF, DKIM y DMARC de tu dominio. Detecta configuraciones ausentes y entiende qué revisar para proteger el correo de tu empresa.">
+    <meta name="twitter:title" content="Email Security Check: SPF, DKIM y DMARC | InboxSeguro">
+    <meta name="twitter:description" content="Revisa gratis SPF, DKIM, DMARC y el MX de tu dominio. Estados claros, sin puntaje inventado, y la diferencia entre una foto DNS y el monitoreo continuo.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -32,7 +32,8 @@
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
-  "name": "Diagnóstico de seguridad de correo corporativo",
+  "name": "Email Security Check",
+  "description": "Consulta pública de SPF, DKIM, DMARC y MX. Muestra estados comprensibles y no asigna un puntaje de seguridad.",
   "url": "https://www.inboxseguro.com/domain-checker",
   "applicationCategory": "SecurityApplication",
   "operatingSystem": "Web",
@@ -48,18 +49,26 @@
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "¿Tu cliente corporativo te pidió evidencia de seguridad de correo?",
+      "name": "¿Qué significa cada estado?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Empresas grandes y reguladas empiezan a exigir a sus proveedores demostrar que su correo corporativo está bajo control. Este diagnóstico gratuito muestra el estado inicial de tu dominio."
+        "text": "Correcto: el dato público está presente y es legible. Requiere atención: hay una señal concreta que conviene revisar. No detectado: la consulta respondió y ese registro no apareció. No verificable: no pudimos comprobarlo automáticamente."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Qué diferencia hay entre este checker y InboxSeguro?",
+      "name": "¿El MX demuestra quién puede enviar con mi dominio?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "El checker valida DNS puntualmente. InboxSeguro monitorea de forma continua, inventaría todos los sistemas de envío y genera un informe auditable en PDF."
+        "text": "No. El MX indica dónde recibe correo el dominio. La autorización de envío se publica en SPF y la actividad real requiere monitoreo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Este análisis reemplaza a InboxSeguro?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Es una fotografía DNS. InboxSeguro mantiene visibilidad continua sobre quién utiliza el dominio para enviar correo y avisa cuando aparece un cambio que requiere atención."
       }
     }
   ]
@@ -91,10 +100,11 @@
                     </span>
                 </a>
 
-                <div class="hidden lg:flex items-center space-x-8 text-sm font-medium">
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
                     <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
                     <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
                     <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
                     
                                         <!-- Dropdown Recursos -->
                     <div class="relative group">
@@ -108,11 +118,12 @@
                             <!-- Columna 1: Herramientas -->
                             <div>
                                 <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
                                 <div class="space-y-1">
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
-                                        <span>Diagnóstico Completo</span>
+                                        <span>Email Security Check</span>
                                     </a>
-                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Quién puede enviar</span></a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -121,6 +132,9 @@
                                     </a>
                                     <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
                                     </a>
                                 </div>
                             </div>
@@ -187,6 +201,8 @@
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
                 <a href="/precios" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
                 
                                 <!-- Guías Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
@@ -206,15 +222,17 @@
                 <!-- Herramientas Gratuitas Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Diagnóstico Completo</a>
-                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Quién puede enviar</span></a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
                     <a href="/dkim-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
                 </div>
 
                 <a href="/contacto" onclick="closeMobileMenu()"
@@ -250,11 +268,11 @@
 
             <div
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
-                Análisis Unificado de DNS</div>
+                Email Security Check gratuito</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verificador de dominio: revisa SPF, DKIM y DMARC</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Revisa la seguridad de correo publicada en tu dominio</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Comprueba en segundos la autenticación de correo publicada en el DNS de tu empresa. El análisis es pasivo, gratuito y no requiere registro.
+                Una fotografía de SPF, DKIM, DMARC y MX, cuando la consulta DNS lo permite. No cambia tu configuración y no confirma quién está enviando ahora.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
@@ -270,24 +288,24 @@
                 </form>
 
                 <p class="text-xs text-slate-500 mt-4 text-left">
-                    <i class="fa-solid fa-lock mr-1"></i> Análisis seguro y pasivo basado en consultas de registros públicos DNS (DoH).
+                    <i class="fa-solid fa-lock mr-1"></i> Solo consultamos DNS público. No pedimos acceso al correo ni modificamos registros.
                 </p>
+                <div id="diagError" class="hidden mt-5 p-4 rounded-xl bg-red-500/10 border border-red-400/25 text-red-200 text-sm text-left" role="alert"></div>
 
                 <!-- Loading Spinner -->
                 <div id="diagLoading" class="hidden mt-8 text-center animate-in fade-in duration-300">
                     <div
                         class="inline-block w-8 h-8 md:w-10 md:h-10 border-4 border-brand-500 border-t-transparent rounded-full animate-spin">
                     </div>
-                    <p class="mt-3 text-slate-400 text-sm font-medium animate-pulse">Analizando registros DNS públicos...</p>
+                    <p class="mt-3 text-slate-400 text-sm font-medium animate-pulse">Consultando SPF, DKIM, DMARC y MX…</p>
                 </div>
 
                 <!-- Results Container -->
                 <div id="diagResults" aria-live="polite"
                     class="hidden mt-8 text-left border-t border-white/10 pt-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div class="flex items-center justify-between mb-6">
-                        <h3 class="text-white font-bold text-lg">Resultados para <span id="diagDomain"
-                                class="text-brand-400"></span></h3>
-                        <div id="diagScore" class="px-3 py-1 rounded-full text-xs font-bold"></div>
+                    <div class="mb-4">
+                        <p class="text-xs uppercase tracking-wider text-slate-400 font-bold">Resultado para <span id="diagDomain" class="text-brand-400"></span></p>
+                        <h2 class="text-white font-bold text-lg mt-1">Fotografía DNS pública</h2>
                     </div>
                     <div class="space-y-3">
                         <div id="row-spf"
@@ -317,17 +335,28 @@
                             <span id="badge-dkim"
                                 class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
                         </div>
+                        <div id="row-mx"
+                            class="flex items-center gap-4 p-3 rounded-lg bg-white/5 border border-white/5">
+                            <div id="icon-mx"
+                                class="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0"></div>
+                            <span class="text-white font-bold text-sm w-16">MX</span>
+                            <p id="txt-mx" class="text-sm text-slate-400 break-words flex-1 pr-2"></p>
+                            <span id="badge-mx"
+                                class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
+                        </div>
                     </div>
+                    <p class="mt-4 text-xs text-slate-400 leading-relaxed">Correcto: el dato público está y se puede leer. Requiere atención: hay una señal concreta para revisar. No detectado: la consulta respondió y no apareció. No verificable: no pudimos comprobarlo automáticamente. El MX indica dónde se recibe el correo; no confirma autorización ni actividad de envío.</p>
 
                     <div id="resultMessageContainer"
-                        class="mt-8 p-4 rounded-xl bg-brand-900/40 border border-brand-500/30 text-center">
-                        <h4 id="resultTitle" class="text-white font-bold mb-2">¿Necesitas ayuda con estos errores?</h4>
-                        <p id="resultText" class="text-slate-300 text-sm mb-4">InboxSeguro te guía paso a paso para
-                            solucionarlos.</p>
-                        <a id="resultBtn" href="/precios" data-seo-event="cta_precios"
-                            class="inline-block px-6 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 text-sm">
-                            Ver planes y control de envíos
-                        </a>
+                        class="mt-8 p-5 rounded-xl bg-slate-900/60 border border-white/10 text-left">
+                        <h3 class="text-white font-bold mb-2">¿Quieres seguimiento, no solo esta foto?</h3>
+                        <p class="text-slate-300 text-sm mb-4">Este análisis muestra una fotografía pública de tu dominio. InboxSeguro te ayuda a mantener visibilidad continua sobre quién utiliza tu dominio para enviar correo y detectar cambios que requieren atención.</p>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <a href="/precios" data-seo-event="cta_precios"
+                                class="inline-flex justify-center px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm">Ver monitoreo continuo</a>
+                            <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool"
+                                class="inline-flex justify-center px-5 py-2.5 text-blue-200 hover:text-white font-semibold text-sm">Ver servicios reconocibles</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -336,143 +365,59 @@
         </section> <!-- close dark section -->
 
         <section class="py-16 bg-white border-t border-slate-100 flex-grow">
-            <div class="max-w-3xl w-full mx-auto px-4 text-left space-y-8">
-                <!-- SSR/SEO Static Informative Content -->
-                <div class="space-y-8">
+            <div class="max-w-3xl w-full mx-auto px-4 text-left space-y-10">
                 <div>
-                    <h2 class="text-2xl font-bold text-slate-900 mb-3">La Tríada Perfecta de la Autenticación de Correo: SPF, DKIM y DMARC</h2>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                        Para garantizar que los correos electrónicos de tu empresa no sean rechazados por los proveedores ni suplantados por cibercriminales para cometer estafas avanzadas de Phishing, no basta con implementar una sola herramienta. Se requiere una estrategia robusta de <strong>email authentication</strong> basada en tres pilares de configuración en tus <strong>DNS records</strong>:
-                    </p>
-                </div>
-
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                        <h3 class="text-slate-900 font-bold text-sm mb-2 flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-blue-500 animate-pulse"></span> Registro SPF
-                        </h3>
-                        <p class="text-slate-600 text-xs leading-relaxed">
-                            <strong>Sender Policy Framework</strong>. Declara explícitamente cuáles son las direcciones IP y servidores de envío (como Google o HubSpot) autorizados a enviar correos usando tu dominio, combatiendo la suplantación inicial.
-                        </p>
-                    </div>
-
-                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                        <h3 class="text-slate-900 font-bold text-sm mb-2 flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-teal-500 animate-pulse"></span> Firmas DKIM
-                        </h3>
-                        <p class="text-slate-600 text-xs leading-relaxed">
-                            <strong>DomainKeys Identified Mail</strong>. Inserta una firma criptográfica invisible en la cabecera de tus mensajes que garantiza que el correo no ha sido modificado o alterado maliciosamente en tránsito.
-                        </p>
-                    </div>
-
-                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                        <h3 class="text-slate-900 font-bold text-sm mb-2 flex items-center gap-2">
-                            <span class="w-2.5 h-2.5 rounded-full bg-indigo-500 animate-pulse"></span> Registro DMARC
-                        </h3>
-                        <p class="text-slate-600 text-xs leading-relaxed">
-                            <strong>Domain-based Message Authentication</strong>. Dicta la política de acción ante un fallo de SPF o DKIM (ignorar, enviar a spam o rechazar de inmediato) y consolida la telemetría agregada mediante reportes RUA.
-                        </p>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Qué comprueba esta herramienta</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Consulta cuatro datos públicos. Si una consulta falla, el estado es No verificable: no rellenamos el hueco con una suposición.</p>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">SPF</h3><p class="text-slate-600 text-sm leading-relaxed">Si el dominio publica quién podría estar autorizado para enviar, y si ese registro cierra con ~all o -all.</p></article>
+                        <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">DMARC</h3><p class="text-slate-600 text-sm leading-relaxed">Si existe una política y cuál es: p=none, p=quarantine o p=reject. No recomendamos pasar a reject desde aquí.</p></article>
+                        <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">DKIM</h3><p class="text-slate-600 text-sm leading-relaxed">Si aparece una clave en selectores habituales. No encontrarlos no demuestra que DKIM falte.</p></article>
+                        <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">MX</h3><p class="text-slate-600 text-sm leading-relaxed">Dónde recibe correo el dominio y, si el host es reconocible, el proveedor. No es una autorización de envío.</p></article>
                     </div>
                 </div>
-
-                <div class="border-t border-slate-200 pt-6">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-3">¿Por qué es vital verificar todo el ecosistema de seguridad de tu dominio corporativo?</h2>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                        Adoptar estas configuraciones de forma unificada no es un lujo técnico opcional, sino una obligación crítica para cualquier negocio digital:
-                    </p>
-                    <ul class="list-disc pl-5 space-y-3 text-slate-600 text-sm leading-relaxed mb-4">
-                        <li><strong>Prevención de Spoofing y Ransomware:</strong> Evita que spammers y suplantadores dañen tu reputación de marca enviando malware o solicitudes de pago falsas haciéndose pasar por ti.</li>
-                        <li><strong>Mejora de la Entregabilidad (Email Deliverability):</strong> Asegura que tus correos de ventas, soporte y facturación tengan una excelente reputación de remitente y se entreguen en la bandeja de entrada principal en lugar de la carpeta de Spam.</li>
-                        <li><strong>Cumplimiento con Google y Yahoo (2024+):</strong> Las nuevas regulaciones de los mayores proveedores exigen obligatoriamente contar con SPF, DKIM y DMARC correctos para evitar que tus correos sean bloqueados de forma inmediata.</li>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Cómo leer el resultado</h2>
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li><strong class="text-slate-900">Correcto.</strong> El dato público está presente y se puede leer. En SPF, además, el registro cierra con ~all o -all. En DMARC, la política es p=quarantine o p=reject.</li>
+                        <li><strong class="text-slate-900">Requiere atención.</strong> Hay una señal concreta: varios SPF, un SPF abierto, o DMARC en p=none.</li>
+                        <li><strong class="text-slate-900">No detectado.</strong> La consulta respondió y ese registro no está publicado.</li>
+                        <li><strong class="text-slate-900">No verificable.</strong> La consulta no se completó, o DKIM no apareció en los selectores habituales.</li>
                     </ul>
                 </div>
-
-                <div class="border-t border-slate-200 pt-6">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Ejemplo de Configuración DNS Unificada Perfecta</h2>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                        Una configuración típica y segura en tu proveedor de DNS (como Cloudflare o AWS Route 53) incluye registros TXT independientes y coordinados:
-                    </p>
-                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2 font-mono text-xs text-blue-600 mb-4 break-all">
-                        <div><span class="text-indigo-400"># Registro SPF (TXT en el dominio principal)</span><br>v=spf1 include:_spf.google.com include:sendgrid.net ~all</div>
-                        <div class="border-t border-slate-200 my-2"></div>
-                        <div><span class="text-indigo-400"># Registro DKIM (TXT en el selector de subdominio)</span><br>google._domainkey.tudominio.com -> v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQ...</div>
-                        <div class="border-t border-slate-200 my-2"></div>
-                        <div><span class="text-indigo-400"># Registro DMARC (TXT en _dmarc.tudominio.com)</span><br>v=DMARC1; p=reject; rua=mailto:reportes@inboxseguro.com; pct=100</div>
+                <div class="p-5 rounded-xl border border-amber-200 bg-amber-50">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Qué no puede afirmar un análisis DNS</h2>
+                    <p class="text-sm text-slate-700 leading-relaxed mb-3">No recorremos los include de SPF, así que no medimos el límite de consultas. No vemos si un servicio envió correo hoy. Un MX de Google Workspace o Microsoft 365 solo identifica la infraestructura de recepción.</p>
+                    <p class="text-sm text-slate-700 leading-relaxed">Para ver servicios reconocibles en esas señales, usa el <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">Email Sender Checker</a>. Para saber cuáles envían de verdad hace falta monitoreo continuo.</p>
+                </div>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4">Herramientas relacionadas</h2>
+                    <div class="grid sm:grid-cols-2 gap-3 text-sm">
+                        <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="p-4 rounded-xl border border-slate-200 hover:border-blue-300"><strong class="block text-slate-900">Email Sender Checker</strong><span class="text-slate-600">Servicios reconocibles en SPF, DKIM y MX.</span></a>
+                        <a href="/spf-checker" data-seo-event="cta_related_tool" class="p-4 rounded-xl border border-slate-200 hover:border-blue-300"><strong class="block text-slate-900">SPF Checker</strong><span class="text-slate-600">El registro SPF, con más detalle.</span></a>
+                        <a href="/dmarc-checker" data-seo-event="cta_related_tool" class="p-4 rounded-xl border border-slate-200 hover:border-blue-300"><strong class="block text-slate-900">DMARC Checker</strong><span class="text-slate-600">La política DMARC publicada.</span></a>
+                        <a href="/dkim-checker" data-seo-event="cta_related_tool" class="p-4 rounded-xl border border-slate-200 hover:border-blue-300"><strong class="block text-slate-900">DKIM Checker</strong><span class="text-slate-600">Selectores DKIM habituales.</span></a>
                     </div>
                 </div>
-
-                <div class="border-t border-slate-200 pt-6">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Errores Frecuentes en la Alineación de Registros de Correo</h2>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                        El error más severo que detecta nuestro <strong>domain checker</strong> o <strong>verificador de dominio</strong> unificado es la <strong>Falta de Alineación DMARC</strong> (Domain Alignment Failure). Esto sucede cuando:
-                    </p>
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                            <h4 class="text-slate-900 font-bold text-sm mb-2">Desalineación SPF</h4>
-                            <p class="text-slate-600 text-xs leading-relaxed">
-                                El dominio visible del remitente (`header.From`) es diferente al dominio de retorno (`Return-Path` o `envelope-from` usado por tu plataforma de marketing). DMARC fallará la verificación a menos que coincidan.
-                            </p>
-                        </div>
-                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                            <h4 class="text-slate-900 font-bold text-sm mb-2">Desalineación DKIM</h4>
-                            <p class="text-slate-600 text-xs leading-relaxed">
-                                Ocurre cuando firmas digitalmente usando el dominio de la herramienta externa (ej: `d=sendgrid.net`) en lugar de firmar usando tu dominio corporativo propio (ej: `d=tuempresa.com`).
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                
-                <div class="border-t border-slate-200 pt-6 seo-product-cta">
-                    <div class="p-5 rounded-xl bg-blue-50 border border-blue-200">
-                        <h2 class="text-xl font-bold text-slate-900 mb-2">El checker valida DNS. InboxSeguro te da control operativo.</h2>
-                        <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                            Inventario de quién envía con tu dominio, alertas cuando aparece un servicio nuevo, guía para política DMARC e informes mensuales — sin leer reportes XML.
-                        </p>
-                        <div class="flex flex-col sm:flex-row flex-wrap gap-3">
-                            <a href="/quien-puede-enviar-correos" data-seo-event="cta_sending_systems" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm transition">Descubrir posibles remitentes</a>
-                            <a href="/precios" data-seo-event="cta_precios" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-900 font-semibold rounded-xl border border-slate-300 text-sm transition">Ver planes</a>
-                        </div>
-                        <p class="text-slate-500 text-xs mt-4">Guías: <a href="/control-envios-dominio" class="text-brand-600 hover:underline">Control de envíos</a> · <a href="/suplantacion-correo-empresa" class="text-brand-600 hover:underline">Suplantación</a> · <a href="/dmarc-para-pymes" class="text-brand-600 hover:underline">DMARC para PYMEs</a></p>
-                    </div>
-                </div>
-
-                <div class="border-t border-slate-200 pt-6">
-                    <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas Frecuentes (FAQ) sobre el Diagnóstico de Dominio</h2>
+                <div>
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas frecuentes</h2>
                     <div class="space-y-4">
-                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Por qué mis correos siguen llegando a spam si pasé todas las pruebas DNS?</h3>
-                            <p class="text-slate-600 text-xs leading-relaxed">
-                                La autenticación DNS (SPF, DKIM, DMARC) es el pilar de la confianza, pero la entregabilidad también se ve afectada por factores humanos y operativos: reputación histórica del dominio, contenido sospechoso del mensaje, tasas elevadas de rebote (bounce rate) y denuncias de spam de tus destinatarios.
-                            </p>
-                        </div>
-                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Qué es exactamente la alineación de dominio en DMARC?</h3>
-                            <p class="text-slate-600 text-xs leading-relaxed">
-                                Es el mecanismo de seguridad que exige que el dominio visible del remitente (`From:`) sea coherente con los dominios validados por SPF y DKIM. Puede ser relajada (permite subdominios) o estricta (exige coincidencia exacta).
-                            </p>
-                        </div>
-                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Cómo soluciono un fallo en las firmas DKIM o SPF de mi dominio?</h3>
-                            <p class="text-slate-600 text-xs leading-relaxed">
-                                Debes acceder a la consola de administración de tu proveedor de correo (Workspace, Office 365, etc.), generar la clave DKIM, y luego publicarla como un registro TXT en el panel de control de tus DNS. Para SPF, debes ubicar el registro TXT existente y añadir la directiva `include:` del nuevo servicio.
-                            </p>
-                        </div>
+                        <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">¿Qué significa cada estado?</h3><p class="text-slate-600 text-sm leading-relaxed">Correcto: el dato público está presente y es legible. Requiere atención: hay una señal concreta que conviene revisar. No detectado: la consulta respondió y ese registro no apareció. No verificable: no pudimos comprobarlo automáticamente.</p></article>
+                        <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">¿El MX demuestra quién puede enviar con mi dominio?</h3><p class="text-slate-600 text-sm leading-relaxed">No. El MX indica dónde recibe correo el dominio. La autorización de envío se publica en SPF y la actividad real requiere monitoreo.</p></article>
+                        <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">¿Este análisis reemplaza a InboxSeguro?</h3><p class="text-slate-600 text-sm leading-relaxed">No. Es una fotografía DNS. InboxSeguro mantiene visibilidad continua sobre quién utiliza el dominio para enviar correo y avisa cuando aparece un cambio que requiere atención.</p></article>
                     </div>
                 </div>
             </div>
+        </section>
 
-        </div>
-    </div>
-            </section>
-    </main>
+        </main>
 
     <footer class="bg-slate-950 border-t border-slate-200 py-10 mt-auto">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
                 <div class="text-sm text-slate-500 flex items-center gap-1">
                     © 2026
-                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-slate-900 select-none">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
                         <span>Inbox<span class="text-brand-600">Seguro</span></span>
                         <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.4em]">TM</sup>
                     </span>
@@ -480,115 +425,103 @@
                 <div class="flex flex-wrap justify-center gap-6 text-sm text-slate-500">
                     <a href="/terminos" class="hover:text-brand-600 transition-colors">Términos y Condiciones</a>
                     <a href="/privacidad" class="hover:text-brand-600 transition-colors">Política de Privacidad</a>
-                    <a href="/#contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
+                    <a href="/contacto" class="hover:text-brand-600 transition-colors">Contacto</a>
                 </div>
             </div>
             <div class="border-t border-slate-900 pt-6 text-center text-xs text-slate-600">
-                <p>Herramientas Gratuitas: <a href="/quien-puede-enviar-correos" class="hover:underline text-blue-500/80">Quién puede enviar</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80 font-bold">Diagnóstico Completo</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80">Verificador DKIM</a></p>
+                <p>Herramientas Gratuitas: <a href="/herramientas" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Todas</a> | <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">Email Sender Checker</a> | <a href="/domain-checker" class="hover:underline text-blue-500/80 font-bold">Email Security Check</a> | <a href="/spf-checker" class="hover:underline text-blue-500/80">Verificador SPF</a> | <a href="/dmarc-checker" class="hover:underline text-blue-500/80">Verificador DMARC</a> | <a href="/dkim-checker" class="hover:underline text-blue-500/80">Verificador DKIM</a> | <a href="/mx-lookup" data-seo-event="cta_related_tool" class="hover:underline text-blue-500/80">MX Lookup</a></p>
             </div>
         </div>
     </footer>
 
     <script src="/dns-utils.js?v=1.0.2"></script>
+    <script src="/email-security-check.js?v=1"></script>
     <script>
-        // DIAGNOSTIC FORM — Real-time DNS check via DoH (Google / Cloudflare fallback)
+        function normalizeDomain(value) {
+            return String(value || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0].split(':')[0];
+        }
+
+        function showDiagError(message) {
+            const error = document.getElementById('diagError');
+            error.textContent = message;
+            error.classList.remove('hidden');
+            document.getElementById('diagResults').classList.add('hidden');
+        }
+
         async function handleDiagnostico(event) {
             event.preventDefault();
-            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
-            if (!dominio) return;
+            const dominio = normalizeDomain(document.getElementById('dominioInput').value);
+            const error = document.getElementById('diagError');
+            error.classList.add('hidden');
+            if (!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/i.test(dominio)) {
+                if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('domain', 'invalid');
+                showDiagError('Escribe un dominio válido, por ejemplo tuempresa.com.');
+                return;
+            }
+            document.getElementById('dominioInput').value = dominio;
 
             const btn = document.getElementById('diagBtn');
             const resultsDiv = document.getElementById('diagResults');
             const loadingDiv = document.getElementById('diagLoading');
-
+            const security = window.InboxSeguroEmailSecurity;
             btn.disabled = true;
             btn.innerText = 'Analizando...';
             resultsDiv.classList.add('hidden');
             loadingDiv.classList.remove('hidden');
 
             try {
-                const [spfData, dmarcData, dkimData] = await Promise.all([
-                    fetchDNS(dominio, 'TXT'),
-                    fetchDNS('_dmarc.' + dominio, 'TXT'),
-                    checkDKIM(dominio)
+                const [spfData, dmarcData, mxData, dkimData] = await Promise.all([
+                    fetchDNS(dominio, 'TXT').catch(function () { return null; }),
+                    fetchDNS('_dmarc.' + dominio, 'TXT').catch(function () { return null; }),
+                    fetchDNS(dominio, 'MX').catch(function () { return null; }),
+                    checkDKIM(dominio).catch(function () { return null; })
                 ]);
+                if (!spfData && !dmarcData && !mxData && !dkimData) {
+                    throw new Error('dns_unavailable');
+                }
 
-                // Parse SPF
-                const spfRecords = extractTXT(spfData);
-                const spfRecord = spfRecords.find(r => r.startsWith('v=spf1'));
-                const spfResult = analyzeSpf(spfRecord);
+                const spfResult = security.analyzeSpfFromTxt(extractTXT(spfData), security.dnsQuerySucceeded(spfData));
+                const dmarcResult = security.analyzeDmarcFromTxt(extractTXT(dmarcData), security.dnsQuerySucceeded(dmarcData));
+                const dkimResult = security.analyzeDkimLookup(dkimData, !!dkimData);
+                const mxResult = security.analyzeMxRecords(security.extractMX(mxData), security.dnsQuerySucceeded(mxData));
 
-                // Parse DMARC
-                const dmarcRecords = extractTXT(dmarcData);
-                const dmarcRecord = dmarcRecords.find(r => r.startsWith('v=DMARC1'));
-                const dmarcResult = analyzeDmarc(dmarcRecord);
-
-                // DKIM
-                const dkimResult = {
-                    status: dkimData.found ? 'ok' : 'warn',
-                    label: dkimData.found ? 'Configurado' : 'Oculto / Personalizado',
-                    text: dkimData.found ? 'Selector detectado: ' + dkimData.selector : 'No detectado en selectores comunes. Si tienes un selector personalizado, podría estar activo.'
-                };
-
-                // Render results
                 setResult('spf', spfResult);
                 setResult('dmarc', dmarcResult);
                 setResult('dkim', dkimResult);
-
+                setResult('mx', mxResult);
                 document.getElementById('diagDomain').textContent = dominio;
 
-                // Smart Score
-                const statuses = [spfResult.status, dmarcResult.status, dkimResult.status];
-                const okCount = statuses.filter(s => s === 'ok').length;
-                const warnCount = statuses.filter(s => s === 'warn').length;
-                const infoCount = statuses.filter(s => s === 'info').length;
-                const failCount = statuses.filter(s => s === 'fail').length;
-                const scoreEl = document.getElementById('diagScore');
-
-                if (failCount === 0 && warnCount === 0 && infoCount === 0) {
-                    scoreEl.textContent = 'p=reject';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/20 text-emerald-400';
-                } else if (failCount === 0 && warnCount === 0 && infoCount > 0) {
-                    scoreEl.textContent = 'p=quarantine';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-brand-600';
-                } else if (failCount === 0) {
-                    scoreEl.textContent = 'Mejorable';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
-                } else if (okCount > 0 || infoCount > 0) {
-                    scoreEl.textContent = 'Riesgo parcial';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
-                } else {
-                    scoreEl.textContent = 'Sin política fuerte';
-                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400';
-                }
-
-                // Update Result Message
-                updateResultMessage(failCount, warnCount, okCount, infoCount);
-
-                // Notify Backend (Discord)
-                // Fire and forget, no await
+                const states = [spfResult, dmarcResult, dkimResult, mxResult];
                 fetch('https://panel.inboxseguro.com/api/public/diagnosis-notify', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         domain: dominio,
-                        score: scoreEl.textContent,
+                        score: states.map(function (item, index) {
+                            return ['SPF', 'DMARC', 'DKIM', 'MX'][index] + ': ' + item.label;
+                        }).join(' · '),
                         results: {
                             spf: spfResult.text,
                             dmarc: dmarcResult.text,
-                            dkim: dkimResult.text
+                            dkim: dkimResult.text,
+                            mx: mxResult.text
                         }
                     })
-                }).catch(e => console.warn('Notify failed', e));
+                }).catch(function (err) { console.warn('Notify failed', err); });
 
                 resultsDiv.classList.remove('hidden');
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('domain');
-                if ((failCount > 0 || warnCount > 0) && typeof window.trackCheckerHighRisk === 'function') {
-                    window.trackCheckerHighRisk(dominio);
+                if (typeof window.trackCheckerOutcome === 'function') {
+                    window.trackCheckerOutcome('domain', 'success', {
+                        attention_count: states.filter(function (item) { return item.status === 'attention'; }).length,
+                        missing_count: states.filter(function (item) { return item.status === 'missing'; }).length,
+                        unknown_count: states.filter(function (item) { return item.status === 'unknown'; }).length
+                    });
                 }
             } catch (err) {
                 console.error(err);
-                alert('No pudimos consultar los registros DNS. Verifica tu conexión e inténtalo de nuevo.');
+                if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('domain', 'error');
+                showDiagError('No pudimos consultar los registros DNS. Verifica tu conexión e inténtalo de nuevo.');
             } finally {
                 btn.disabled = false;
                 btn.innerText = 'Analizar dominio';
@@ -596,91 +529,24 @@
             }
         }
 
-        function updateResultMessage(failCount, warnCount, okCount, infoCount) {
-            const title = document.getElementById('resultTitle');
-            const text = document.getElementById('resultText');
-            const btn = document.getElementById('resultBtn');
-            const container = document.getElementById('resultMessageContainer');
-
-            container.className = 'mt-8 p-5 rounded-xl border text-center transition-colors duration-500';
-            btn.className = 'inline-block px-6 py-3 font-bold rounded-xl shadow-lg transition-all hover:-translate-y-0.5 text-sm mt-1';
-
-            if (failCount === 0 && warnCount === 0 && infoCount === 0) {
-                container.classList.add('bg-emerald-900/40', 'border-emerald-500/30');
-                title.textContent = 'Tu dominio publica p=reject (enforcement DMARC).';
-                text.textContent = 'Los receptores que respetan DMARC pueden rechazar correo no autenticado. InboxSeguro no intercepta el tráfico: monitorea reportes y te ayuda a mantener la configuración.';
-                btn.textContent = 'Activar monitoreo continuo →';
-                btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500', 'text-slate-900', 'shadow-emerald-600/30');
-            } else if (failCount === 0 && warnCount === 0 && infoCount > 0) {
-                container.classList.add('bg-blue-900/40', 'border-blue-500/30');
-                title.textContent = 'Política DMARC en cuarentena (p=quarantine).';
-                text.textContent = 'Los receptores pueden aislar correo no autenticado. Para rechazo completo en DNS, publica p=reject cuando tu inventario esté listo.';
-                btn.textContent = 'Guía hacia p=reject →';
-                btn.classList.add('bg-blue-600', 'hover:bg-blue-500', 'text-slate-900', 'shadow-blue-600/30');
-            } else if (failCount === 0) {
-                container.classList.add('bg-amber-900/40', 'border-amber-500/30');
-                title.textContent = 'Configuración incompleta o en monitoreo.';
-                text.textContent = 'Detectamos registros mejorables. Con p=none solo hay visibilidad; el rechazo de impostores requiere cuarentena o reject en tu DNS.';
-                btn.textContent = 'Completar configuración →';
-                btn.classList.add('bg-amber-600', 'hover:bg-amber-500', 'text-slate-900', 'shadow-amber-600/30');
-            } else {
-                container.classList.add('bg-red-900/40', 'border-red-500/30');
-                title.textContent = 'Faltan piezas clave de autenticación.';
-                text.textContent = 'Hoy no tienes visibilidad completa ni una política DMARC fuerte. InboxSeguro monitorea tus envíos vía reportes y te guía a publicar SPF/DKIM/DMARC.';
-                btn.textContent = 'Ver InboxSeguro →';
-                btn.classList.add('bg-red-600', 'hover:bg-red-500', 'text-slate-900', 'shadow-red-600/30');
-            }
-        }
-
-        function analyzeSpf(record) {
-            if (!record) return { status: 'fail', label: 'No configurado', text: 'No encontramos un registro SPF. El dominio no publica qué servidores están autorizados' };
-            if (record.includes('+all')) return { status: 'warn', label: 'Mejorable', text: 'La política +all autoriza cualquier origen en SPF. Revisa todos tus remitentes antes de aplicar una política restrictiva.' };
-            return { status: 'ok', label: 'Configurado', text: record };
-        }
-
-        function analyzeDmarc(record) {
-            if (!record) return { status: 'fail', label: 'No configurado', text: 'Sin DMARC — no hay control sobre quién puede usar tu dominio para enviar correos' };
-            const policyMatch = record.match(/p=([^;\s]+)/);
-            const policy = policyMatch ? policyMatch[1].toLowerCase() : 'none';
-            if (policy === 'none') {
-                return { status: 'warn', label: 'Solo monitoreo', text: 'p=none: recibes informes pero los receptores no rechazan impostores. Publica p=quarantine cuando el inventario esté listo.' };
-            } else if (policy === 'quarantine') {
-                return { status: 'info', label: 'Cuarentena', text: 'p=quarantine: receivers pueden aislar correo no autenticado. Escala a p=reject cuando corresponda.' };
-            } else if (policy === 'reject') {
-                return { status: 'ok', label: 'p=reject', text: 'p=reject: receivers que respetan DMARC pueden rechazar correo no autenticado.' };
-            }
-            return { status: 'ok', label: 'Configurado', text: record };
-        }
-
         function setResult(key, result) {
             const icon = document.getElementById('icon-' + key);
             const txt = document.getElementById('txt-' + key);
             const badge = document.getElementById('badge-' + key);
-            if (result.status === 'ok') {
-                icon.innerHTML = '<i class="fa-solid fa-check text-xs text-emerald-400"></i>';
-                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-emerald-500/20';
-                badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-emerald-500/20 text-emerald-400';
-            } else if (result.status === 'warn') {
-                icon.innerHTML = '<i class="fa-solid fa-exclamation text-xs text-amber-400"></i>';
-                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-500/20';
-                badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-amber-500/20 text-amber-400';
-            } else if (result.status === 'info') {
-                icon.innerHTML = '<i class="fa-solid fa-shield-halved text-xs text-brand-600"></i>';
-                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-blue-500/20';
-                badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-blue-500/20 text-brand-600';
-            } else {
-                icon.innerHTML = '<i class="fa-solid fa-xmark text-xs text-red-400"></i>';
-                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-red-500/20';
-                badge.textContent = result.label;
-                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-red-500/20 text-red-400';
-            }
+            const styles = {
+                ok: ['fa-check', 'text-emerald-400', 'bg-emerald-500/20', 'text-emerald-400'],
+                attention: ['fa-exclamation', 'text-amber-400', 'bg-amber-500/20', 'text-amber-400'],
+                missing: ['fa-minus', 'text-slate-300', 'bg-slate-500/20', 'text-slate-300'],
+                unknown: ['fa-question', 'text-slate-300', 'bg-slate-500/20', 'text-slate-300']
+            };
+            const style = styles[result.status] || styles.unknown;
+            icon.innerHTML = '<i class="fa-solid ' + style[0] + ' text-xs ' + style[1] + '"></i>';
+            icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ' + style[2];
+            badge.textContent = result.label;
+            badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 whitespace-normal text-center ' + style[2] + ' ' + style[3];
             txt.textContent = result.text;
         }
 
-        // MOBILE MENU
         function toggleMobileMenu() {
             const menu = document.getElementById('mobileMenu');
             const iconOpen = document.getElementById('menuIconOpen');
