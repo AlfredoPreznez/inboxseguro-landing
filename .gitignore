@@ -3,3 +3,5 @@
 *.backup
 *.backup_*
 tailwindcss
+__pycache__/
+*.pyc
