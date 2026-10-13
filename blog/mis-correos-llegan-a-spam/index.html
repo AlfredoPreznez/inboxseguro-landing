@@ -14,11 +14,11 @@
     <meta property="og:url" content="https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/">
     <meta property="og:title" content="Mis correos llegan a spam: la causa oculta | InboxSeguro">
     <meta property="og:description" content="¿Los correos de tu empresa llegan a spam? A veces la causa son servicios que envían con tu dominio sin que nadie los administre. Aprende a encontrarlos.">
-    <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/mis-correos-llegan-a-spam.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Mis correos llegan a spam: la causa oculta | InboxSeguro">
     <meta name="twitter:description" content="¿Los correos de tu empresa llegan a spam? A veces la causa son servicios que envían con tu dominio sin que nadie los administre. Aprende a encontrarlos.">
-    <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/mis-correos-llegan-a-spam.png">
     <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -46,7 +46,7 @@
     }
   },
   "image": [
-    "https://www.inboxseguro.com/og-image.png"
+    "https://www.inboxseguro.com/blog/covers/mis-correos-llegan-a-spam.png"
   ],
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -271,18 +271,18 @@
         </header>
         <div class="blog-prose">
             <p>Si los correos de tu empresa terminan en spam, lo primero que se suele revisar es el contenido: palabras &ldquo;sospechosas&rdquo;, demasiados enlaces o imágenes pesadas. Eso influye, pero muchas veces la causa está en otra parte: hay servicios que envían correo con el dominio de la empresa y que nadie configuró ni administra.</p>
-<h2>Tu dominio envía correo desde más lugares de los que crees</h2>
+<h2  id="tu-dominio-envia-correo-desde-mas-lugares-de-los-que-crees">Tu dominio envía correo desde más lugares de los que crees</h2>
 <p>Una pyme puede usar Google Workspace o Microsoft 365 para el correo diario, un CRM para ventas, una herramienta de marketing para newsletters, un sistema de facturación, la plataforma de su tienda en línea y una mesa de ayuda. Cada uno manda correos que dicen venir de <code>@ejemplo.cl</code>. Si alguno no está autorizado correctamente, Gmail u Outlook no pueden confirmar que esos mensajes son legítimos, y pueden mandarlos a spam o rechazarlos.</p>
-<h2>Qué revisan Gmail y Outlook antes de entregar un correo</h2>
+<h2  id="que-revisan-gmail-y-outlook-antes-de-entregar-un-correo">Qué revisan Gmail y Outlook antes de entregar un correo</h2>
 <ul>
 <li><strong>SPF:</strong> la lista de servidores autorizados a enviar con tu dominio. Puedes revisarla con el <a href="/spf-checker">verificador SPF</a>.</li>
 <li><strong>DKIM:</strong> una firma digital que prueba que el mensaje no fue alterado y que viene de quien dice. Revísala con el <a href="/dkim-checker">verificador DKIM</a>.</li>
 <li><strong>DMARC:</strong> la regla que le dice al receptor qué hacer si un correo falla esas pruebas, y que además te envía reportes. Revísala con el <a href="/dmarc-checker">verificador DMARC</a>.</li>
 </ul>
 <p>Cuando un servicio no está incluido en SPF o no firma con DKIM usando tu dominio, sus correos pueden fallar aunque el texto sea impecable.</p>
-<h2>Por qué pasa: servicios sin dueño</h2>
+<h2  id="por-que-pasa-servicios-sin-dueno">Por qué pasa: servicios sin dueño</h2>
 <p>Alguien de marketing contrató una herramienta hace tiempo, un proveedor configuró la facturación y ya no trabaja con ustedes, o se probó un CRM que nunca se dio de baja. Nadie sabe que esos servicios siguen enviando correo y nadie se hace cargo de su configuración. El resultado son correos legítimos que no llegan y un dominio más fácil de suplantar, porque sin una lista clara de quién puede enviar no es posible activar con confianza una política DMARC que bloquee los correos falsos.</p>
-<h2>Cómo encontrarlos en 4 pasos</h2>
+<h2  id="como-encontrarlos-en-4-pasos">Cómo encontrarlos en 4 pasos</h2>
 <ol>
 <li><strong>Hagan una lista</strong> de todas las herramientas que mandan correos a clientes o proveedores: facturas, avisos, newsletters, recuperación de contraseña y tickets de soporte. Un buen punto de partida es revisar el dominio con el <a href="/domain-checker">verificador de dominio</a>.</li>
 <li><strong>Asignen un responsable</strong> a cada servicio.</li>
@@ -297,7 +297,7 @@
 <blockquote>
 <p><strong>Advertencia:</strong> pasar a cuarentena o rechazo antes de autorizar todos los servicios legítimos puede mandar a spam o bloquear sus propias facturas, avisos o newsletters.</p>
 </blockquote>
-<h2>Cómo ayuda InboxSeguro</h2>
+<h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
 <p>InboxSeguro muestra qué sistemas envían correo con el dominio de tu empresa, te permite asignar un responsable a cada uno y guía paso a paso para activar la protección contra la suplantación sin cortar los correos legítimos. Puedes ver los planes en <a href="/precios">precios</a>.</p>
         </div>
         <aside class="blog-cta" aria-label="Siguiente paso">

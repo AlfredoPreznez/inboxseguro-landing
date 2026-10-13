@@ -18,7 +18,7 @@ Fuentes en `_content/blog/` (carpeta con guion bajo: Jekyll no la sirve). Repo p
 1. Crear `_content/blog/<slug>.md` (o `_content/blog/_drafts/<slug>.md` si `draft: true`).
 2. Crear `_content/blog/<slug>.linkedin.md` (o en `_drafts/`) con 2 borradores LinkedIn.
 3. Correr `python3 scripts/build_blog.py` y luego `python3 update_nav.py` si cambió el chrome.
-4. Commitear solo HTML/XML publicados + el `.md` **sin** `draft: true`. Nunca `*.linkedin.md` ni `_drafts/`.
+4. Commitear solo HTML/XML publicados + el `.md` **sin** `draft: true` + covers regeneradas. Nunca `*.linkedin.md` ni `_drafts/`.
 
 ## Front matter (YAML)
 
@@ -27,27 +27,33 @@ Fuentes en `_content/blog/` (carpeta con guion bajo: Jekyll no la sirve). Repo p
 title: "Título claro para empresas"
 slug: slug-url
 description: "Meta description ≤155 caracteres."
+excerpt: "Extracto corto para tarjetas (puede coincidir con description)."
+category: Entregabilidad   # también: DMARC, SPF, DKIM, Gobernanza, Seguridad, Guías
 date: YYYY-MM-DD
 updated: YYYY-MM-DD
 tags:
   - etiqueta
 keyword_objetivo: frase clave
-cover: # opcional, ruta /... o URL absoluta
+cover: # opcional; si falta, el build genera /blog/covers/<slug>.png
+featured: false  # opcional; si ninguno, el más reciente es el destacado
 draft: false
 ---
 ```
 
+- `reading_time_min` se calcula en el build (~220 palabras/min); no hace falta en el YAML.
 - `draft: true` → no sale en listado, feed ni sitemap; no generar HTML público.
 - Título de página (`title | InboxSeguro`) ≤ 60 caracteres; description ≤ 155.
 - URLs públicas: `https://www.inboxseguro.com/blog/<slug>/` (barra final).
+- Categorías/paginación: el build tiene soporte; solo publica páginas de categoría con ≥3 posts y paginación con >9 posts.
 
 ## Checklist SEO del artículo
 
 - Un solo `h1` (= title); cuerpo en `<article>` con `<time>`.
-- Canonical, OG `article`, JSON-LD `BlogPosting` + `BreadcrumbList` (lo genera el build).
-- Enlaces internos a herramientas (`/domain-checker`, SPF/DKIM/DMARC/MX, sender) y `/precios`.
-- CTA final: diagnóstico gratuito + Precios (plantilla del build).
+- Canonical, OG `article`, JSON-LD `BlogPosting` + `BreadcrumbList` (imagen absoluta + dateModified).
+- Enlaces internos a herramientas gratuitas y, si aplica, `/precios`.
+- CTA final: verificadores SPF/DMARC/DKIM + agendar demo (plantilla del build).
 - Nav/footer con `data-nosnippet` vía chrome de `index.html` / `update_nav.py`.
+- No afirmar funciones del producto que no existan (p. ej. auto-asignar responsables).
 
 ## Plantilla LinkedIn (`<slug>.linkedin.md`)
 
@@ -55,7 +61,7 @@ Incluir enlace UTM exacto:
 
 `https://www.inboxseguro.com/blog/<slug>/?utm_source=linkedin&utm_medium=social&utm_campaign=blog_<slug>`
 
-Dos borradores en español de Chile:
+Dos borradores en español neutro LATAM:
 
 1. **Perfil personal** (primera persona).
 2. **Página de empresa**.
@@ -72,8 +78,8 @@ Cada uno: gancho en las 2 primeras líneas; párrafos de 1–2 líneas; 120–20
 ## Build
 
 ```bash
-pip install -r requirements-build.txt   # solo local
-python3 scripts/build_blog.py           # blog + feed + sitemap (lastmod vía git)
+pip install -r requirements-build.txt   # solo local (incluye Pillow para portadas)
+python3 scripts/build_blog.py           # blog + covers + feed + sitemap
 python3 update_nav.py                   # sync nav/footer a HTML existentes
 ```
 

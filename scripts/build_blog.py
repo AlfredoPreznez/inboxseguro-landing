@@ -6,15 +6,22 @@ Fuentes: _content/blog/*.md y _content/blog/_drafts/*.md
 Salida: blog/index.html, blog/<slug>/index.html, blog/feed.xml, sitemap.xml
 
 Los draft no se publican. Los .linkedin.md no se sirven ni se generan HTML.
+
+Categorías y paginación: el build tiene el soporte preparado, pero solo genera
+páginas públicas cuando hay ≥3 posts por categoría o >9 posts (paginación).
+Mientras no se cumplan, no se escriben esas rutas ni entran al sitemap.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
+import math
 import re
 import subprocess
 import sys
-from dataclasses import dataclass
+from collections import defaultdict
+from dataclasses import dataclass, field
 from datetime import date, datetime
 from email.utils import format_datetime
 from pathlib import Path
@@ -33,12 +40,28 @@ SITE = "https://www.inboxseguro.com"
 CONTENT_DIR = ROOT / "_content" / "blog"
 DRAFTS_DIR = CONTENT_DIR / "_drafts"
 BLOG_OUT = ROOT / "blog"
+COVERS_OUT = BLOG_OUT / "covers"
 TEMPLATES = ROOT / "_templates"
 DEFAULT_OG = f"{SITE}/og-image.png"
+LOGO_PATH = ROOT / "logo.png"
+FONTS_DIR = ROOT / "assets" / "fonts"
+WORDS_PER_MINUTE = 220
+POSTS_PER_PAGE = 9
+CATEGORY_PAGE_MIN_POSTS = 3
+PAGINATION_MIN_POSTS = 10  # >9
 
-# Rutas públicas -> archivo fuente para lastmod vía git.
+# Etiquetas de categoría conocidas (slug → nombre visible).
+CATEGORY_LABELS = {
+    "entregabilidad": "Entregabilidad",
+    "dmarc": "DMARC",
+    "spf": "SPF",
+    "dkim": "DKIM",
+    "gobernanza": "Gobernanza",
+    "seguridad": "Seguridad",
+    "guias": "Guías",
+}
+
 SITEMAP_STATIC: list[tuple[str, str, str, str]] = [
-    # path, file, changefreq, priority
     ("/", "index.html", "weekly", "1.0"),
     ("/plataforma", "plataforma.html", "monthly", "0.9"),
     ("/precios", "precios.html", "monthly", "0.9"),
@@ -68,14 +91,22 @@ class Post:
     title: str
     slug: str
     description: str
+    excerpt: str
     date: str
     updated: str
     tags: list[str]
+    category_slug: str
+    category_label: str
     keyword_objetivo: str
     cover: str | None
+    cover_path: str  # ruta pública, p. ej. /blog/covers/slug.png
+    featured: bool
     draft: bool
     body_md: str
     source_path: Path
+    reading_time_min: int = 1
+    word_count: int = 0
+    toc: list[dict] = field(default_factory=list)
 
     @property
     def date_display(self) -> str:
@@ -92,6 +123,21 @@ class Post:
     @property
     def public_url(self) -> str:
         return f"{SITE}{self.public_path}"
+
+    @property
+    def cover_url(self) -> str:
+        if self.cover:
+            if self.cover.startswith("http"):
+                return self.cover
+            if self.cover.startswith("/"):
+                return f"{SITE}{self.cover}"
+            return f"{SITE}/{self.cover.lstrip('/')}"
+        return f"{SITE}{self.cover_path}"
+
+    @property
+    def reading_label(self) -> str:
+        n = max(1, self.reading_time_min)
+        return f"{n} min de lectura"
 
 
 def _format_es(iso: str) -> str:
@@ -114,6 +160,17 @@ def _parse_bool(value) -> bool:
     return str(value).strip().lower() in {"1", "true", "yes", "si", "sí"}
 
 
+def _slugify(text: str) -> str:
+    text = text.strip().lower()
+    repl = {
+        "á": "a", "é": "e", "í": "i", "ó": "o", "ú": "u", "ñ": "n", "ü": "u",
+    }
+    for a, b in repl.items():
+        text = text.replace(a, b)
+    text = re.sub(r"[^a-z0-9]+", "-", text)
+    return text.strip("-") or "general"
+
+
 def _split_front_matter(text: str) -> tuple[dict, str]:
     if not text.startswith("---"):
         return {}, text
@@ -124,6 +181,29 @@ def _split_front_matter(text: str) -> tuple[dict, str]:
     if not isinstance(meta, dict):
         raise ValueError("Front matter debe ser un mapa YAML")
     return meta, parts[2].lstrip("\n")
+
+
+def _word_count(md: str) -> int:
+    plain = re.sub(r"[`*_>#\[\]()!-]", " ", md)
+    plain = re.sub(r"https?://\S+", " ", plain)
+    words = re.findall(r"[A-Za-zÁÉÍÓÚÜÑáéíóúüñ0-9]+", plain)
+    return len(words)
+
+
+def _reading_time_min(words: int) -> int:
+    return max(1, math.ceil(words / WORDS_PER_MINUTE))
+
+
+def _resolve_category(meta: dict, tags: list[str]) -> tuple[str, str]:
+    raw = meta.get("category") or meta.get("categoria")
+    if raw:
+        label = str(raw).strip()
+        slug = _slugify(label)
+        return slug, CATEGORY_LABELS.get(slug, label)
+    if tags:
+        slug = _slugify(tags[0])
+        return slug, CATEGORY_LABELS.get(slug, tags[0].strip().capitalize())
+    return "guias", CATEGORY_LABELS["guias"]
 
 
 def load_posts() -> list[Post]:
@@ -148,18 +228,32 @@ def load_posts() -> list[Post]:
         meta, body = _split_front_matter(raw)
         slug = str(meta.get("slug") or path.stem).strip()
         draft = _parse_bool(meta.get("draft")) or path.parent.name == "_drafts"
+        tags = [str(t).strip() for t in (meta.get("tags") or []) if str(t).strip()]
+        cat_slug, cat_label = _resolve_category(meta, tags)
+        description = str(meta.get("description") or "").strip()
+        excerpt = str(meta.get("excerpt") or meta.get("extracto") or description).strip()
+        words = _word_count(body)
+        cover_override = str(meta["cover"]).strip() if meta.get("cover") else None
+        cover_path = f"/blog/covers/{slug}.png"
         post = Post(
             title=str(meta.get("title") or "").strip(),
             slug=slug,
-            description=str(meta.get("description") or "").strip(),
+            description=description,
+            excerpt=excerpt,
             date=str(meta.get("date") or "").strip()[:10],
             updated=str(meta.get("updated") or meta.get("date") or "").strip()[:10],
-            tags=[str(t) for t in (meta.get("tags") or [])],
+            tags=tags,
+            category_slug=cat_slug,
+            category_label=cat_label,
             keyword_objetivo=str(meta.get("keyword_objetivo") or "").strip(),
-            cover=(str(meta["cover"]).strip() if meta.get("cover") else None),
+            cover=cover_override,
+            cover_path=cover_path,
+            featured=_parse_bool(meta.get("featured")),
             draft=draft,
             body_md=body,
             source_path=path,
+            reading_time_min=_reading_time_min(words),
+            word_count=words,
         )
         if not post.title or not post.slug or not post.date:
             raise SystemExit(f"Post incompleto (title/slug/date): {path}")
@@ -168,7 +262,6 @@ def load_posts() -> list[Post]:
 
 
 def git_lastmod(*paths: Path) -> str:
-    """Fecha YYYY-MM-DD del último commit que tocó alguno de los paths."""
     best: str | None = None
     for path in paths:
         if not path.exists():
@@ -186,7 +279,6 @@ def git_lastmod(*paths: Path) -> str:
             best = out
     if best:
         return best
-    # Archivo nuevo sin commit: usar mtime local (solo para build; tras commit git manda).
     for path in paths:
         if path.exists():
             return datetime.fromtimestamp(path.stat().st_mtime).date().isoformat()
@@ -196,9 +288,46 @@ def git_lastmod(*paths: Path) -> str:
 def render_markdown(body: str) -> str:
     return markdown.markdown(
         body,
-        extensions=["extra", "sane_lists", "smarty"],
+        extensions=["extra", "sane_lists", "smarty", "toc"],
+        extension_configs={"toc": {"permalink": False, "toc_depth": "2-3"}},
         output_format="html5",
     )
+
+
+def inject_heading_ids_and_toc(html: str) -> tuple[str, list[dict]]:
+    """Añade id a h2/h3 y construye TOC (si hay ≥3 headings)."""
+    toc: list[dict] = []
+    used: set[str] = set()
+
+    def repl(match: re.Match) -> str:
+        level = match.group(1)
+        attrs = match.group(2) or ""
+        text = match.group(3)
+        existing = re.search(r'id="([^"]+)"', attrs)
+        if existing:
+            hid = existing.group(1)
+        else:
+            base = _slugify(re.sub(r"<[^>]+>", "", text))
+            hid = base
+            i = 2
+            while hid in used:
+                hid = f"{base}-{i}"
+                i += 1
+            attrs = f'{attrs} id="{hid}"'.strip()
+        used.add(hid)
+        plain = re.sub(r"<[^>]+>", "", text).strip()
+        toc.append({"level": int(level), "id": hid, "text": plain})
+        return f"<h{level}{(' ' + attrs) if attrs else ''}>{text}</h{level}>"
+
+    html = re.sub(
+        r"<h([23])([^>]*)>(.*?)</h\1>",
+        repl,
+        html,
+        flags=re.DOTALL | re.IGNORECASE,
+    )
+    if len(toc) < 3:
+        return html, []
+    return html, toc
 
 
 def _clip(text: str, limit: int) -> str:
@@ -207,6 +336,167 @@ def _clip(text: str, limit: int) -> str:
         return text
     cut = text[: limit - 1].rsplit(" ", 1)[0]
     return cut + "…"
+
+
+def pick_featured(posts: list[Post]) -> Post | None:
+    if not posts:
+        return None
+    marked = [p for p in posts if p.featured]
+    if marked:
+        return sorted(marked, key=lambda p: p.date, reverse=True)[0]
+    return sorted(posts, key=lambda p: p.date, reverse=True)[0]
+
+
+def group_by_category(posts: list[Post]) -> dict[str, list[Post]]:
+    groups: dict[str, list[Post]] = defaultdict(list)
+    for post in posts:
+        groups[post.category_slug].append(post)
+    return groups
+
+
+def should_publish_category_pages(posts: list[Post]) -> dict[str, list[Post]]:
+    """Solo categorías con ≥ CATEGORY_PAGE_MIN_POSTS posts."""
+    return {
+        slug: items
+        for slug, items in group_by_category(posts).items()
+        if len(items) >= CATEGORY_PAGE_MIN_POSTS
+    }
+
+
+def should_paginate(posts: list[Post]) -> bool:
+    return len(posts) >= PAGINATION_MIN_POSTS
+
+
+# ---------------------------------------------------------------------------
+# Portadas (Pillow) — se activa cuando el módulo está disponible
+# ---------------------------------------------------------------------------
+
+def _cover_fingerprint(title: str, category_label: str, logo_path: Path) -> str:
+    logo_hash = ""
+    if logo_path.is_file():
+        logo_hash = hashlib.sha256(logo_path.read_bytes()).hexdigest()[:16]
+    payload = f"v1|{title}|{category_label}|{logo_hash}"
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:24]
+
+
+def _find_inter_font() -> Path | None:
+    candidates = [
+        FONTS_DIR / "Inter-Bold.ttf",
+        FONTS_DIR / "Inter-SemiBold.ttf",
+        FONTS_DIR / "Inter.ttf",
+        FONTS_DIR / "Inter-Regular.ttf",
+    ]
+    for path in candidates:
+        if path.is_file():
+            return path
+    return None
+
+
+def generate_cover_png(post: Post, force: bool = False) -> Path | None:
+    """Genera portada 1200x630 si cambió título/categoría/logo. Retorna path local."""
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        print("Pillow no instalado: se omite generación de portadas")
+        return None
+
+    COVERS_OUT.mkdir(parents=True, exist_ok=True)
+    out_file = COVERS_OUT / f"{post.slug}.png"
+    meta_file = COVERS_OUT / f"{post.slug}.sha"
+    fingerprint = _cover_fingerprint(post.title, post.category_label, LOGO_PATH)
+
+    if (
+        not force
+        and out_file.is_file()
+        and meta_file.is_file()
+        and meta_file.read_text(encoding="utf-8").strip() == fingerprint
+    ):
+        return out_file
+
+    width, height = 1200, 630
+    img = Image.new("RGB", (width, height), "#0f172a")
+    draw = ImageDraw.Draw(img)
+
+    # Degradado simple azul oscuro → azul marca
+    for y in range(height):
+        t = y / (height - 1)
+        r = int(15 + (37 - 15) * t)
+        g = int(23 + (99 - 23) * t)
+        b = int(42 + (235 - 42) * t * 0.55)
+        draw.line([(0, y), (width, y)], fill=(r, g, b))
+
+    # Acento
+    draw.rectangle([0, 0, 12, height], fill="#2563eb")
+
+    font_path = _find_inter_font()
+    if font_path:
+        font_cat = ImageFont.truetype(str(font_path), 28)
+        font_title = ImageFont.truetype(str(font_path), 54)
+        font_brand = ImageFont.truetype(str(font_path), 22)
+    else:
+        font_cat = ImageFont.load_default()
+        font_title = ImageFont.load_default()
+        font_brand = ImageFont.load_default()
+
+    # Logo
+    logo_h = 56
+    if LOGO_PATH.is_file():
+        logo = Image.open(LOGO_PATH).convert("RGBA")
+        ratio = logo_h / logo.height
+        logo = logo.resize((max(1, int(logo.width * ratio)), logo_h), Image.Resampling.LANCZOS)
+        img.paste(logo, (64, 48), logo)
+
+    draw.text((64, 130), post.category_label.upper(), font=font_cat, fill="#93c5fd")
+
+    # Título con wrap
+    max_width = width - 128
+    lines = _wrap_text(draw, post.title, font_title, max_width, max_lines=4)
+    y = 180
+    for line in lines:
+        draw.text((64, y), line, font=font_title, fill="#ffffff")
+        bbox = draw.textbbox((0, 0), line, font=font_title)
+        y += (bbox[3] - bbox[1]) + 10
+
+    draw.text((64, height - 72), "InboxSeguro", font=font_brand, fill="#cbd5e1")
+
+    img.save(out_file, format="PNG", optimize=True)
+    meta_file.write_text(fingerprint + "\n", encoding="utf-8")
+    print(f"Wrote {out_file.relative_to(ROOT)}")
+    return out_file
+
+
+def _wrap_text(draw, text: str, font, max_width: int, max_lines: int = 4) -> list[str]:
+    words = text.split()
+    if not words:
+        return [""]
+    lines: list[str] = []
+    current = words[0]
+    for word in words[1:]:
+        trial = f"{current} {word}"
+        bbox = draw.textbbox((0, 0), trial, font=font)
+        if bbox[2] - bbox[0] <= max_width:
+            current = trial
+        else:
+            lines.append(current)
+            current = word
+            if len(lines) >= max_lines:
+                break
+    if len(lines) < max_lines:
+        lines.append(current)
+    elif lines:
+        # Truncar última línea
+        last = lines[-1]
+        while last and draw.textbbox((0, 0), last + "…", font=font)[2] > max_width:
+            last = last[:-1]
+        lines[-1] = (last.rstrip() + "…") if last else "…"
+    return lines[:max_lines]
+
+
+def ensure_covers(posts: list[Post]) -> None:
+    for post in posts:
+        if post.cover:
+            continue  # override manual
+        generate_cover_png(post)
 
 
 def build_html(posts_published: list[Post]) -> None:
@@ -220,20 +510,22 @@ def build_html(posts_published: list[Post]) -> None:
     )
 
     BLOG_OUT.mkdir(parents=True, exist_ok=True)
+    ensure_covers(posts_published)
 
-    # Limpiar HTML de posts previos que ya no estén publicados.
-    keep = {"index.html", "feed.xml"}
+    sorted_posts = sorted(posts_published, key=lambda p: p.date, reverse=True)
+    featured = pick_featured(sorted_posts)
+    grid_posts = [p for p in sorted_posts if featured is None or p.slug != featured.slug]
+
+    # Limpiar HTML de posts previos
     for child in list(BLOG_OUT.iterdir()):
-        if child.is_dir() and (child / "index.html").is_file():
-            if child.name not in {p.slug for p in posts_published}:
+        if child.is_dir() and child.name not in {"covers", "categoria", "pagina"}:
+            if (child / "index.html").is_file() and child.name not in {p.slug for p in posts_published}:
                 (child / "index.html").unlink(missing_ok=True)
                 try:
                     child.rmdir()
                 except OSError:
                     pass
 
-    # Listado
-    sorted_posts = sorted(posts_published, key=lambda p: p.date, reverse=True)
     list_tpl = env.get_template("blog_index.html.j2")
     list_html = list_tpl.render(
         chrome_nav=chrome_nav,
@@ -245,8 +537,10 @@ def build_html(posts_published: list[Post]) -> None:
         ),
         canonical_url=f"{SITE}/blog/",
         og_type="website",
-        og_image=DEFAULT_OG,
+        og_image=featured.cover_url if featured else DEFAULT_OG,
         posts=sorted_posts,
+        featured=featured,
+        grid_posts=grid_posts,
     )
     (BLOG_OUT / "index.html").write_text(list_html, encoding="utf-8")
 
@@ -255,9 +549,9 @@ def build_html(posts_published: list[Post]) -> None:
         title = _clip(f"{post.title} | InboxSeguro", 60)
         desc = _clip(post.description, 155)
         body_html = render_markdown(post.body_md)
-        image = post.cover if post.cover and post.cover.startswith("http") else (
-            f"{SITE}{post.cover}" if post.cover and post.cover.startswith("/") else DEFAULT_OG
-        )
+        body_html, toc = inject_heading_ids_and_toc(body_html)
+        post.toc = toc
+        image = post.cover_url
         blog_posting = {
             "@context": "https://schema.org",
             "@type": "BlogPosting",
@@ -297,6 +591,7 @@ def build_html(posts_published: list[Post]) -> None:
             og_image=image,
             post=post,
             body_html=body_html,
+            toc=toc,
             blog_posting_json=json.dumps(blog_posting, ensure_ascii=False, indent=2),
             breadcrumb_json=json.dumps(breadcrumb, ensure_ascii=False, indent=2),
         )
@@ -304,6 +599,24 @@ def build_html(posts_published: list[Post]) -> None:
         out_dir.mkdir(parents=True, exist_ok=True)
         (out_dir / "index.html").write_text(html, encoding="utf-8")
         print(f"Wrote blog/{post.slug}/index.html")
+
+    # Categorías / paginación: soporte listo, sin publicar aún
+    publishable_cats = should_publish_category_pages(sorted_posts)
+    if publishable_cats:
+        print(f"Categorías publicables (≥{CATEGORY_PAGE_MIN_POSTS}): {list(publishable_cats)}")
+        # Se implementará la escritura de HTML en el paso SEO (5).
+    else:
+        print(
+            f"Categorías: soporte activo; no se generan páginas "
+            f"(ninguna llega a {CATEGORY_PAGE_MIN_POSTS} posts)."
+        )
+    if should_paginate(sorted_posts):
+        print(f"Paginación: {len(sorted_posts)} posts → se generaría (umbral {PAGINATION_MIN_POSTS}).")
+    else:
+        print(
+            f"Paginación: soporte activo; no se generan páginas "
+            f"({len(sorted_posts)} posts, umbral >9)."
+        )
 
     print(f"Wrote blog/index.html ({len(sorted_posts)} publicados)")
 
@@ -360,10 +673,11 @@ def build_sitemap(posts_published: list[Post]) -> None:
     urls.append((f"{SITE}/blog/", blog_index_lastmod, "weekly", "0.8"))
     for post in sorted(posts_published, key=lambda p: p.slug):
         lastmod = git_lastmod(post.source_path, BLOG_OUT / post.slug / "index.html")
-        # Preferir updated del front matter si es más reciente que git (archivo nuevo).
         if post.updated and post.updated > lastmod:
             lastmod = post.updated
         urls.append((post.public_url, lastmod, "monthly", "0.7"))
+
+    # Nota: categorías/paginación NO entran al sitemap hasta generarlas.
 
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
@@ -390,7 +704,6 @@ def main() -> int:
     all_posts = load_posts()
     drafts = [p for p in all_posts if p.draft]
     published_raw = [p for p in all_posts if not p.draft]
-    # Si el mismo slug aparece dos veces, gana el no-draft más reciente.
     by_slug: dict[str, Post] = {}
     for post in published_raw:
         prev = by_slug.get(post.slug)
@@ -398,6 +711,11 @@ def main() -> int:
             by_slug[post.slug] = post
     published = list(by_slug.values())
     print(f"Posts: {len(published)} publicados, {len(drafts)} draft (omitidos)")
+    for p in published:
+        print(
+            f"  - {p.slug}: categoría={p.category_slug}, "
+            f"{p.reading_time_min} min, {p.word_count} palabras"
+        )
     build_html(published)
     build_feed(published)
     build_sitemap(published)
