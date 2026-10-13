@@ -375,7 +375,8 @@ def _cover_fingerprint(title: str, category_label: str, logo_path: Path) -> str:
     logo_hash = ""
     if logo_path.is_file():
         logo_hash = hashlib.sha256(logo_path.read_bytes()).hexdigest()[:16]
-    payload = f"v1|{title}|{category_label}|{logo_hash}"
+    # v2: tipografía grande, píldora de categoría, trama y chips SPF/DKIM/DMARC
+    payload = f"v2|{title}|{category_label}|{logo_hash}"
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:24]
 
 
@@ -417,47 +418,81 @@ def generate_cover_png(post: Post, force: bool = False) -> Path | None:
     img = Image.new("RGB", (width, height), "#0f172a")
     draw = ImageDraw.Draw(img)
 
-    # Degradado simple azul oscuro → azul marca
+    # Degradado azul oscuro → marca
     for y in range(height):
         t = y / (height - 1)
-        r = int(15 + (37 - 15) * t)
-        g = int(23 + (99 - 23) * t)
-        b = int(42 + (235 - 42) * t * 0.55)
+        r = int(15 + (30 - 15) * t)
+        g = int(23 + (64 - 23) * t)
+        b = int(42 + (175 - 42) * t * 0.7)
         draw.line([(0, y), (width, y)], fill=(r, g, b))
 
-    # Acento
-    draw.rectangle([0, 0, 12, height], fill="#2563eb")
+    # Trama sutil (puntos)
+    for x in range(28, width, 28):
+        for y in range(28, height, 28):
+            draw.ellipse([x, y, x + 2, y + 2], fill=(148, 163, 184,))
+
+    # Acento izquierdo
+    draw.rectangle([0, 0, 10, height], fill="#2563eb")
 
     font_path = _find_inter_font()
     if font_path:
-        font_cat = ImageFont.truetype(str(font_path), 28)
-        font_title = ImageFont.truetype(str(font_path), 54)
-        font_brand = ImageFont.truetype(str(font_path), 22)
+        font_cat = ImageFont.truetype(str(font_path), 26)
+        font_title = ImageFont.truetype(str(font_path), 68)
+        font_brand = ImageFont.truetype(str(font_path), 24)
+        font_chip = ImageFont.truetype(str(font_path), 22)
     else:
         font_cat = ImageFont.load_default()
         font_title = ImageFont.load_default()
         font_brand = ImageFont.load_default()
+        font_chip = ImageFont.load_default()
 
-    # Logo
-    logo_h = 56
+    # Escudo grande semitransparente a la derecha
     if LOGO_PATH.is_file():
         logo = Image.open(LOGO_PATH).convert("RGBA")
+        logo_h = 360
         ratio = logo_h / logo.height
         logo = logo.resize((max(1, int(logo.width * ratio)), logo_h), Image.Resampling.LANCZOS)
-        img.paste(logo, (64, 48), logo)
+        # bajar opacidad
+        alpha = logo.split()[-1].point(lambda p: int(p * 0.18))
+        logo.putalpha(alpha)
+        img_rgba = img.convert("RGBA")
+        img_rgba.alpha_composite(logo, (width - logo.width - 40, (height - logo.height) // 2))
+        img = img_rgba.convert("RGB")
+        draw = ImageDraw.Draw(img)
 
-    draw.text((64, 130), post.category_label.upper(), font=font_cat, fill="#93c5fd")
+    # Categoría como píldora
+    cat = post.category_label.upper()
+    cat_bbox = draw.textbbox((0, 0), cat, font=font_cat)
+    cat_w = cat_bbox[2] - cat_bbox[0]
+    cat_h = cat_bbox[3] - cat_bbox[1]
+    pad_x, pad_y = 18, 10
+    pill = [56, 56, 56 + cat_w + pad_x * 2, 56 + cat_h + pad_y * 2]
+    draw.rounded_rectangle(pill, radius=999, fill="#2563eb")
+    draw.text((56 + pad_x, 56 + pad_y - 2), cat, font=font_cat, fill="#ffffff")
 
-    # Título con wrap
-    max_width = width - 128
+    # Título grande (deja margen derecho para el escudo)
+    max_width = width - 340
     lines = _wrap_text(draw, post.title, font_title, max_width, max_lines=4)
-    y = 180
+    y = 130
     for line in lines:
-        draw.text((64, y), line, font=font_title, fill="#ffffff")
+        draw.text((56, y), line, font=font_title, fill="#ffffff")
         bbox = draw.textbbox((0, 0), line, font=font_title)
-        y += (bbox[3] - bbox[1]) + 10
+        y += (bbox[3] - bbox[1]) + 8
 
-    draw.text((64, height - 72), "InboxSeguro", font=font_brand, fill="#cbd5e1")
+    # Chips SPF / DKIM / DMARC
+    chip_y = height - 118
+    chip_x = 56
+    for label in ("SPF", "DKIM", "DMARC"):
+        text = f"✓ {label}"
+        tb = draw.textbbox((0, 0), text, font=font_chip)
+        tw, th = tb[2] - tb[0], tb[3] - tb[1]
+        box = [chip_x, chip_y, chip_x + tw + 28, chip_y + th + 18]
+        draw.rounded_rectangle(box, radius=12, fill=(15, 23, 42), outline=(59, 130, 246), width=2)
+        draw.text((chip_x + 14, chip_y + 7), text, font=font_chip, fill="#93c5fd")
+        chip_x = box[2] + 12
+
+    # Una sola marca
+    draw.text((56, height - 52), "InboxSeguro", font=font_brand, fill="#cbd5e1")
 
     img.save(out_file, format="PNG", optimize=True)
     meta_file.write_text(fingerprint + "\n", encoding="utf-8")
@@ -484,7 +519,6 @@ def _wrap_text(draw, text: str, font, max_width: int, max_lines: int = 4) -> lis
     if len(lines) < max_lines:
         lines.append(current)
     elif lines:
-        # Truncar última línea
         last = lines[-1]
         while last and draw.textbbox((0, 0), last + "…", font=font)[2] > max_width:
             last = last[:-1]
