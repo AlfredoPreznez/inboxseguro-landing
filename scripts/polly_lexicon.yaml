@@ -2,20 +2,10 @@
 # - say_as_characters → <say-as interpret-as="characters">SIGLA</say-as>
 # - sub_alias → <sub alias="...">término</sub>
 # Ampliar aquí; se aplica a todos los artículos en el build.
-version: 1
+# Las siglas se dicen como palabra, no letra por letra.
+version: 2
 
-say_as_characters:
-  - SPF
-  - DKIM
-  - DMARC
-  - CRM
-  - DNS
-  - MX
-  - API
-  - SSL
-  - TLS
-  - SMTP
-  - BIMI
+say_as_characters: []
 
 sub_alias:
   InboxSeguro: "Inbox Seguro"
@@ -23,7 +13,18 @@ sub_alias:
   Outlook: "áut luk"
   "Google Workspace": "Google Guórk speis"
   "Microsoft 365": "Microsoft trescientos sesenta y cinco"
-  newsletter: "núusleter"
-  newsletters: "núusleters"
+  newsletter: "boletín"
+  newsletters: "boletines"
   WhatsApp: "guasáp"
   LinkedIn: "linked in"
+  DKIM: "diquim"
+  DMARC: "dimarc"
+  SPF: "espefe"
+  CRM: "cerm"
+  DNS: "denes"
+  MX: "eme equis"
+  API: "api"
+  SSL: "es ese ele"
+  TLS: "te ele ese"
+  SMTP: "esemetepe"
+  BIMI: "bimi"
