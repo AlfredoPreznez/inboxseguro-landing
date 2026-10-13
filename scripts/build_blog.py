@@ -375,8 +375,8 @@ def _cover_fingerprint(title: str, category_label: str, logo_path: Path) -> str:
     logo_hash = ""
     if logo_path.is_file():
         logo_hash = hashlib.sha256(logo_path.read_bytes()).hexdigest()[:16]
-    # v2: tipografía grande, píldora de categoría, trama y chips SPF/DKIM/DMARC
-    payload = f"v2|{title}|{category_label}|{logo_hash}"
+    # v3: fondo limpio + glow, píldora/chips centrados, composición en bloque, supersampling 2x
+    payload = f"v3.1|{title}|{category_label}|{logo_hash}"
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()[:24]
 
 
@@ -393,10 +393,39 @@ def _find_inter_font() -> Path | None:
     return None
 
 
+def _text_size(draw, text: str, font) -> tuple[int, int]:
+    bbox = draw.textbbox((0, 0), text, font=font)
+    return bbox[2] - bbox[0], bbox[3] - bbox[1]
+
+
+def _draw_check_mark(draw, cx: float, cy: float, size: float, fill: tuple[int, int, int]) -> None:
+    """Marca de verificación vectorial cuyo bbox queda centrado en (cx, cy)."""
+    # Forma relativa; luego se desplaza para centrar el bbox real en (cx, cy)
+    raw = [
+        (-size * 0.42, size * 0.05),
+        (-size * 0.06, size * 0.36),
+        (size * 0.46, -size * 0.34),
+    ]
+    ys = [p[1] for p in raw]
+    xs = [p[0] for p in raw]
+    mid_x = (min(xs) + max(xs)) / 2
+    mid_y = (min(ys) + max(ys)) / 2
+    points = [(cx + x - mid_x, cy + y - mid_y) for x, y in raw]
+    width = max(2, int(round(size * 0.18)))
+    draw.line(points, fill=fill, width=width, joint="curve")
+
+
+def _draw_centered_text(draw, box: tuple[float, float, float, float], text: str, font, fill) -> None:
+    """Centra texto con anchor=mm en el centro geométrico de la caja."""
+    cx = (box[0] + box[2]) / 2
+    cy = (box[1] + box[3]) / 2
+    draw.text((cx, cy), text, font=font, fill=fill, anchor="mm")
+
+
 def generate_cover_png(post: Post, force: bool = False) -> Path | None:
     """Genera portada 1200x630 si cambió título/categoría/logo. Retorna path local."""
     try:
-        from PIL import Image, ImageDraw, ImageFont
+        from PIL import Image, ImageDraw, ImageFilter, ImageFont
     except ImportError:
         print("Pillow no instalado: se omite generación de portadas")
         return None
@@ -414,11 +443,16 @@ def generate_cover_png(post: Post, force: bool = False) -> Path | None:
     ):
         return out_file
 
-    width, height = 1200, 630
+    # Supersampling 2x → LANCZOS a 1200×630 (evita bordes dentados en tarjetas)
+    out_w, out_h = 1200, 630
+    scale = 2
+    width, height = out_w * scale, out_h * scale
+    s = scale  # atajo para márgenes/paddings en coordenadas 2x
+
     img = Image.new("RGB", (width, height), "#0f172a")
     draw = ImageDraw.Draw(img)
 
-    # Degradado azul oscuro → marca
+    # Degradado azul limpio (sin trama)
     for y in range(height):
         t = y / (height - 1)
         r = int(15 + (30 - 15) * t)
@@ -426,81 +460,148 @@ def generate_cover_png(post: Post, force: bool = False) -> Path | None:
         b = int(42 + (175 - 42) * t * 0.7)
         draw.line([(0, y), (width, y)], fill=(r, g, b))
 
-    # Trama sutil (puntos)
-    for x in range(28, width, 28):
-        for y in range(28, height, 28):
-            draw.ellipse([x, y, x + 2, y + 2], fill=(148, 163, 184,))
+    img_rgba = img.convert("RGBA")
 
-    # Acento izquierdo
-    draw.rectangle([0, 0, 10, height], fill="#2563eb")
+    # Resplandor radial suave detrás del escudo (azul más claro, baja opacidad)
+    glow = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    glow_draw = ImageDraw.Draw(glow)
+    glow_cx = int(width * 0.82)
+    glow_cy = height // 2
+    glow_rx = int(height * 0.58)
+    glow_ry = int(height * 0.52)
+    glow_draw.ellipse(
+        [glow_cx - glow_rx, glow_cy - glow_ry, glow_cx + glow_rx, glow_cy + glow_ry],
+        fill=(96, 165, 250, 72),
+    )
+    glow = glow.filter(ImageFilter.GaussianBlur(radius=90 * s // 2))
+    img_rgba = Image.alpha_composite(img_rgba, glow)
+
+    # Escudo grande, parcialmente cortado por el borde derecho
+    if LOGO_PATH.is_file():
+        logo = Image.open(LOGO_PATH).convert("RGBA")
+        logo_h = int(height * 1.05)
+        ratio = logo_h / logo.height
+        logo = logo.resize((max(1, int(logo.width * ratio)), logo_h), Image.Resampling.LANCZOS)
+        alpha = logo.split()[-1].point(lambda p: int(p * 0.30))
+        logo.putalpha(alpha)
+        logo_x = width - int(logo.width * 0.58)
+        logo_y = (height - logo.height) // 2
+        img_rgba.alpha_composite(logo, (logo_x, logo_y))
+
+    img = img_rgba.convert("RGB")
+    draw = ImageDraw.Draw(img)
+
+    # Acento izquierdo fino
+    draw.rectangle([0, 0, 8 * s, height], fill="#2563eb")
 
     font_path = _find_inter_font()
     if font_path:
-        font_cat = ImageFont.truetype(str(font_path), 26)
-        font_title = ImageFont.truetype(str(font_path), 68)
-        font_brand = ImageFont.truetype(str(font_path), 24)
-        font_chip = ImageFont.truetype(str(font_path), 22)
+        font_cat = ImageFont.truetype(str(font_path), 26 * s)
+        font_title = ImageFont.truetype(str(font_path), 70 * s)
+        font_brand = ImageFont.truetype(str(font_path), 24 * s)
+        font_chip = ImageFont.truetype(str(font_path), 24 * s)
     else:
         font_cat = ImageFont.load_default()
         font_title = ImageFont.load_default()
         font_brand = ImageFont.load_default()
         font_chip = ImageFont.load_default()
 
-    # Escudo grande semitransparente a la derecha
-    if LOGO_PATH.is_file():
-        logo = Image.open(LOGO_PATH).convert("RGBA")
-        logo_h = 360
-        ratio = logo_h / logo.height
-        logo = logo.resize((max(1, int(logo.width * ratio)), logo_h), Image.Resampling.LANCZOS)
-        # bajar opacidad
-        alpha = logo.split()[-1].point(lambda p: int(p * 0.18))
-        logo.putalpha(alpha)
-        img_rgba = img.convert("RGBA")
-        img_rgba.alpha_composite(logo, (width - logo.width - 40, (height - logo.height) // 2))
-        img = img_rgba.convert("RGB")
-        draw = ImageDraw.Draw(img)
+    left = 56 * s
+    content_max_w = width - 320 * s  # deja aire al escudo sin estrechar el título
 
-    # Categoría como píldora
+    # --- Medir bloque: píldora + título + chips ---
     cat = post.category_label.upper()
-    cat_bbox = draw.textbbox((0, 0), cat, font=font_cat)
-    cat_w = cat_bbox[2] - cat_bbox[0]
-    cat_h = cat_bbox[3] - cat_bbox[1]
-    pad_x, pad_y = 18, 10
-    pill = [56, 56, 56 + cat_w + pad_x * 2, 56 + cat_h + pad_y * 2]
-    draw.rounded_rectangle(pill, radius=999, fill="#2563eb")
-    draw.text((56 + pad_x, 56 + pad_y - 2), cat, font=font_cat, fill="#ffffff")
+    cat_w, cat_h = _text_size(draw, cat, font_cat)
+    pill_pad_x = 30 * s
+    pill_pad_y = 13 * s
+    pill_w = cat_w + pill_pad_x * 2
+    pill_h = cat_h + pill_pad_y * 2
+    pill_radius = pill_h / 2
 
-    # Título grande (deja margen derecho para el escudo)
-    max_width = width - 340
-    lines = _wrap_text(draw, post.title, font_title, max_width, max_lines=4)
-    y = 130
+    lines = _wrap_text(draw, post.title, font_title, content_max_w, max_lines=3)
+    line_gap = 10 * s
+    title_line_heights: list[int] = []
     for line in lines:
-        draw.text((56, y), line, font=font_title, fill="#ffffff")
-        bbox = draw.textbbox((0, 0), line, font=font_title)
-        y += (bbox[3] - bbox[1]) + 8
+        _, lh = _text_size(draw, line, font_title)
+        title_line_heights.append(lh)
+    title_h = sum(title_line_heights) + line_gap * max(0, len(lines) - 1)
 
-    # Chips SPF / DKIM / DMARC
-    chip_y = height - 118
-    chip_x = 56
-    for label in ("SPF", "DKIM", "DMARC"):
-        text = f"✓ {label}"
-        tb = draw.textbbox((0, 0), text, font=font_chip)
-        tw, th = tb[2] - tb[0], tb[3] - tb[1]
-        box = [chip_x, chip_y, chip_x + tw + 28, chip_y + th + 18]
-        draw.rounded_rectangle(box, radius=12, fill=(15, 23, 42), outline=(59, 130, 246), width=2)
-        draw.text((chip_x + 14, chip_y + 7), text, font=font_chip, fill="#93c5fd")
-        chip_x = box[2] + 12
+    chip_labels = ("SPF", "DKIM", "DMARC")
+    chip_pad_x = 22 * s
+    chip_pad_y = 15 * s
+    check_size = 18 * s
+    check_gap = 14 * s
+    chip_text_sizes = [_text_size(draw, label, font_chip) for label in chip_labels]
+    chip_h = max(th for _, th in chip_text_sizes) + chip_pad_y * 2
+    chip_ws = [
+        chip_pad_x + check_size + check_gap + tw + chip_pad_x
+        for tw, _ in chip_text_sizes
+    ]
+    chip_gap = 14 * s
 
-    # Una sola marca
-    draw.text((56, height - 52), "InboxSeguro", font=font_brand, fill="#cbd5e1")
+    gap_pill_title = 28 * s
+    gap_title_chips = 26 * s  # hueco reducido entre título y chips
+    block_h = pill_h + gap_pill_title + title_h + gap_title_chips + chip_h
 
+    brand_margin = 40 * s
+    brand_zone = 56 * s
+    usable_h = height - brand_zone
+    block_top = max(36 * s, (usable_h - block_h) // 2)
+
+    # Píldora
+    pill_box = (left, block_top, left + pill_w, block_top + pill_h)
+    draw.rounded_rectangle(pill_box, radius=pill_radius, fill="#2563eb")
+    _draw_centered_text(draw, pill_box, cat, font_cat, "#ffffff")
+
+    # Título
+    title_y = block_top + pill_h + gap_pill_title
+    for i, line in enumerate(lines):
+        lh = title_line_heights[i]
+        # Centrado vertical de cada línea en su franja (evita caída por baseline)
+        line_box = (left, title_y, left + content_max_w, title_y + lh)
+        # Alinear a la izquierda pero centrado en Y: anchor="lm"
+        cy = (line_box[1] + line_box[3]) / 2
+        draw.text((left, cy), line, font=font_title, fill="#ffffff", anchor="lm")
+        title_y += lh + line_gap
+
+    # Chips
+    chip_y = block_top + pill_h + gap_pill_title + title_h + gap_title_chips
+    chip_x = left
+    chip_fill = (15, 23, 42)
+    chip_outline = (59, 130, 246)
+    chip_text_fill = (147, 197, 253)
+    for label, (tw, _th), cw in zip(chip_labels, chip_text_sizes, chip_ws):
+        box = (chip_x, chip_y, chip_x + cw, chip_y + chip_h)
+        draw.rounded_rectangle(box, radius=12 * s, fill=chip_fill, outline=chip_outline, width=2 * s)
+        cy = (box[1] + box[3]) / 2
+        check_cx = chip_x + chip_pad_x + check_size / 2
+        _draw_check_mark(draw, check_cx, cy, check_size, chip_text_fill)
+        text_left = chip_x + chip_pad_x + check_size + check_gap
+        # Centrar verticalmente el texto junto al check
+        draw.text((text_left, cy), label, font=font_chip, fill=chip_text_fill, anchor="lm")
+        chip_x = box[2] + chip_gap
+
+    # Firma de marca abajo
+    draw.text(
+        (left, height - brand_margin),
+        "InboxSeguro",
+        font=font_brand,
+        fill="#cbd5e1",
+        anchor="ls",
+    )
+
+    img = img.resize((out_w, out_h), Image.Resampling.LANCZOS)
     img.save(out_file, format="PNG", optimize=True)
     meta_file.write_text(fingerprint + "\n", encoding="utf-8")
-    print(f"Wrote {out_file.relative_to(ROOT)}")
+    try:
+        rel = out_file.relative_to(ROOT)
+    except ValueError:
+        rel = out_file
+    print(f"Wrote {rel}")
     return out_file
 
 
-def _wrap_text(draw, text: str, font, max_width: int, max_lines: int = 4) -> list[str]:
+def _wrap_text(draw, text: str, font, max_width: int, max_lines: int = 3) -> list[str]:
     words = text.split()
     if not words:
         return [""]
