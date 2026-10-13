@@ -24,7 +24,7 @@ Fuentes en `_content/blog/` (carpeta con guion bajo: Jekyll no la sirve). Repo p
 
 ```yaml
 ---
-title: "Título claro para PYME"
+title: "Título claro para empresas"
 slug: slug-url
 description: "Meta description ≤155 caracteres."
 date: YYYY-MM-DD
@@ -64,7 +64,7 @@ Cada uno: gancho en las 2 primeras líneas; párrafos de 1–2 líneas; 120–20
 
 ## Estándares de contenido
 
-- Español claro para dueños de PYME; precisión técnica en DNS.
+- Español claro para responsables de empresa; precisión técnica en DNS.
 - Dominios de ejemplo: `ejemplo.cl`, `example.com`. Nunca dominios/empresas reales de terceros.
 - No inventar estadísticas ni afirmaciones sin fuente o dato propio.
 - Si un paso puede interrumpir correo (p. ej. `p=reject`), advertir riesgo y recomendar avance gradual.
