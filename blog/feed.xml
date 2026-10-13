@@ -6,11 +6,32 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
+      <title>Cómo saber si alguien suplanta tu dominio</title>
+      <link>https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/</guid>
+      <pubDate>Tue, 13 Oct 2026 00:00:00 -0000</pubDate>
+      <description>¿Alguien envía correos falsos con el dominio de tu empresa? Aprende a detectarlo con reportes DMARC y a separar tus servicios legítimos de los falsos.</description>
+    </item>
+    <item>
       <title>Mis correos llegan a spam: la causa oculta</title>
       <link>https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/</guid>
       <pubDate>Tue, 13 Oct 2026 00:00:00 -0000</pubDate>
       <description>¿Los correos de tu empresa llegan a spam? A veces la causa son servicios que envían con tu dominio sin que nadie los administre. Aprende a encontrarlos.</description>
+    </item>
+    <item>
+      <title>Qué es DMARC y cómo activarlo sin riesgos</title>
+      <link>https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/</guid>
+      <pubDate>Tue, 13 Oct 2026 00:00:00 -0000</pubDate>
+      <description>Qué es DMARC, qué significan p, rua, ruf, pct, sp, adkim y aspf, y cómo pasar de p=none a p=reject sin bloquear los correos legítimos de tu empresa.</description>
+    </item>
+    <item>
+      <title>SPF: cómo no pasar el límite de 10 consultas</title>
+      <link>https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/</guid>
+      <pubDate>Tue, 13 Oct 2026 00:00:00 -0000</pubDate>
+      <description>Cómo autorizar tus servicios de correo en SPF sin superar el límite de 10 consultas DNS de la RFC 7208, y qué pasa si lo superas. Guía práctica para pymes.</description>
     </item>
   </channel>
 </rss>
