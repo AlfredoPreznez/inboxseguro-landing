@@ -23,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.7">
-    <link rel="stylesheet" href="/blog.css?v=1.1.0">
+    <link rel="stylesheet" href="/blog.css?v=1.2.0">
     
 <script type="application/ld+json">
 {
@@ -252,25 +252,15 @@
     <!-- /chrome:nav -->
 <main class="flex-grow">
 
-<section class="blog-wrap">
-    <nav class="blog-breadcrumbs" aria-label="Miga de pan">
-        <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Mis correos llegan a spam: la causa oculta
-    </nav>
-    <article class="blog-article">
-        <header>
-            <div class="blog-cover">
-                <img
-                    src="/blog/covers/mis-correos-llegan-a-spam.png"
-                    alt="Portada: Mis correos llegan a spam: la causa oculta"
-                    width="1200"
-                    height="630"
-                    loading="eager"
-                    decoding="async"
-                >
-            </div>
-            <span class="blog-chip">Entregabilidad</span>
-            <h1 class="blog-title">Mis correos llegan a spam: la causa oculta</h1>
-            <p class="blog-meta">
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Mis correos llegan a spam: la causa oculta
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">Entregabilidad</span>
+            <h1 class="blog-article-h1">Mis correos llegan a spam: la causa oculta</h1>
+            <p class="blog-meta blog-meta--on-dark">
                 <time datetime="2026-10-13" data-updated="2026-10-13">
                     13 de octubre de 2026
                 </time>
@@ -278,42 +268,42 @@
                 <span>3 min de lectura</span>
                 
             </p>
-            
-            <p class="blog-lead">¿Los correos de tu empresa llegan a spam? A veces la causa son servicios que envían con tu dominio sin que nadie los administre.</p>
-            
-        </header>
+        </div>
+    </header>
 
-        
-        <nav class="blog-toc" aria-label="Contenido del artículo">
-            <p class="blog-toc-title">Contenido</p>
-            <ol>
-                
-                <li>
-                    <a href="#tu-dominio-envia-correo-desde-mas-lugares-de-los-que-crees">Tu dominio envía correo desde más lugares de los que crees</a>
-                </li>
-                
-                <li>
-                    <a href="#que-revisan-gmail-y-outlook-antes-de-entregar-un-correo">Qué revisan Gmail y Outlook antes de entregar un correo</a>
-                </li>
-                
-                <li>
-                    <a href="#por-que-pasa-servicios-sin-dueno">Por qué pasa: servicios sin dueño</a>
-                </li>
-                
-                <li>
-                    <a href="#como-encontrarlos-en-4-pasos">Cómo encontrarlos en 4 pasos</a>
-                </li>
-                
-                <li>
-                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
-                </li>
-                
-            </ol>
-        </nav>
-        
+    <div class="blog-article-body">
+        <div class="blog-article-main">
+            
+            <nav class="blog-toc" aria-label="Contenido del artículo">
+                <p class="blog-toc-title">Contenido</p>
+                <ol class="blog-toc-list">
+                    
+                    <li class="blog-toc-item">
+                        <a href="#tu-dominio-envia-correo-desde-mas-lugares-de-los-que-crees">Tu dominio envía correo desde más lugares de los que crees</a>
+                    </li>
+                    
+                    <li class="blog-toc-item">
+                        <a href="#que-revisan-gmail-y-outlook-antes-de-entregar-un-correo">Qué revisan Gmail y Outlook antes de entregar un correo</a>
+                    </li>
+                    
+                    <li class="blog-toc-item">
+                        <a href="#por-que-pasa-servicios-sin-dueno">Por qué pasa: servicios sin dueño</a>
+                    </li>
+                    
+                    <li class="blog-toc-item">
+                        <a href="#como-encontrarlos-en-4-pasos">Cómo encontrarlos en 4 pasos</a>
+                    </li>
+                    
+                    <li class="blog-toc-item">
+                        <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                    </li>
+                    
+                </ol>
+            </nav>
+            
 
-        <div class="blog-prose">
-            <p>Si los correos de tu empresa terminan en spam, lo primero que se suele revisar es el contenido: palabras &ldquo;sospechosas&rdquo;, demasiados enlaces o imágenes pesadas. Eso influye, pero muchas veces la causa está en otra parte: hay servicios que envían correo con el dominio de la empresa y que nadie configuró ni administra.</p>
+            <div class="blog-prose">
+                <p>Si los correos de tu empresa terminan en spam, lo primero que se suele revisar es el contenido: palabras &ldquo;sospechosas&rdquo;, demasiados enlaces o imágenes pesadas. Eso influye, pero muchas veces la causa está en otra parte: hay servicios que envían correo con el dominio de la empresa y que nadie configuró ni administra.</p>
 <h2  id="tu-dominio-envia-correo-desde-mas-lugares-de-los-que-crees">Tu dominio envía correo desde más lugares de los que crees</h2>
 <p>Una pyme puede usar Google Workspace o Microsoft 365 para el correo diario, un CRM para ventas, una herramienta de marketing para newsletters, un sistema de facturación, la plataforma de su tienda en línea y una mesa de ayuda. Cada uno manda correos que dicen venir de <code>@ejemplo.cl</code>. Si alguno no está autorizado correctamente, Gmail u Outlook no pueden confirmar que esos mensajes son legítimos, y pueden mandarlos a spam o rechazarlos.</p>
 <h2  id="que-revisan-gmail-y-outlook-antes-de-entregar-un-correo">Qué revisan Gmail y Outlook antes de entregar un correo</h2>
@@ -342,26 +332,27 @@
 </blockquote>
 <h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
 <p>InboxSeguro muestra qué sistemas envían correo con el dominio de tu empresa, te permite asignar un responsable a cada uno y guía paso a paso para activar la protección contra la suplantación sin cortar los correos legítimos. Puedes ver los planes en <a href="/precios">precios</a>.</p>
-        </div>
+            </div>
 
-        <aside class="blog-cta" aria-label="Siguiente paso">
-            <h2>Revisa tu dominio gratis</h2>
-            <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
-            <div class="blog-cta-tools">
-                <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
-                <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
-                <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
-            </div>
-            <div class="blog-cta-actions">
-                <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
-                <a class="blog-cta-secondary"
-                   href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
-                   target="_blank" rel="noopener noreferrer"
-                   data-seo-event="cta_demo_whatsapp">Agendar demo</a>
-            </div>
-        </aside>
-    </article>
-</section>
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary"
+                       href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                       target="_blank" rel="noopener noreferrer"
+                       data-seo-event="cta_demo_whatsapp">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+    </div>
+</article>
 
 </main>
 <!-- chrome:footer -->
