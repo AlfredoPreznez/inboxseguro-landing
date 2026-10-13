@@ -134,7 +134,25 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/</loc>
+    <lastmod>2026-10-13</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/</loc>
     <lastmod>2026-10-13</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

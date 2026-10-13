@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPF: cómo no pasar el límite de 10 consultas | InboxSeguro</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Cómo autorizar tus servicios de correo en SPF sin superar el límite de 10 consultas DNS de la RFC 7208, y qué pasa si lo superas. Guía práctica para pymes.">
+    <link rel="canonical" href="https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/">
+    <meta property="og:title" content="SPF: cómo no pasar el límite de 10 consultas | InboxSeguro">
+    <meta property="og:description" content="Cómo autorizar tus servicios de correo en SPF sin superar el límite de 10 consultas DNS de la RFC 7208, y qué pasa si lo superas. Guía práctica para pymes.">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/spf-limite-10-consultas-dns.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="SPF: cómo no pasar el límite de 10 consultas | InboxSeguro">
+    <meta name="twitter:description" content="Cómo autorizar tus servicios de correo en SPF sin superar el límite de 10 consultas DNS de la RFC 7208, y qué pasa si lo superas. Guía práctica para pymes.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/spf-limite-10-consultas-dns.png">
+    <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css?v=1.0.7">
+    <link rel="stylesheet" href="/blog.css?v=1.2.2">
+    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "SPF: cómo no pasar el límite de 10 consultas",
+  "description": "Cómo autorizar tus servicios de correo en SPF sin superar el límite de 10 consultas DNS de la RFC 7208, y qué pasa si lo superas. Guía práctica para pymes.",
+  "datePublished": "2026-10-13",
+  "dateModified": "2026-10-13",
+  "author": {
+    "@type": "Organization",
+    "name": "InboxSeguro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InboxSeguro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.inboxseguro.com/logo.png"
+    }
+  },
+  "image": [
+    "https://www.inboxseguro.com/blog/covers/spf-limite-10-consultas-dns.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/"
+  },
+  "url": "https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.inboxseguro.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://www.inboxseguro.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "SPF: cómo no pasar el límite de 10 consultas",
+      "item": "https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/"
+    }
+  ]
+}
+</script>
+
+</head>
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Email Security Check</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
+                                    <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador SPF</span>
+                                    </a>
+                                    <a href="/dmarc-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador DMARC</span>
+                                    </a>
+                                    <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Guías -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Guías de Seguridad</span>
+                                <div class="space-y-1">
+                                    <a href="/seguridad-correo-proveedores" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Seguridad para proveedores</span>
+                                    </a>
+                                    <a href="/informe-higiene-correo-corporativo" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Informe de higiene</span>
+                                    </a>
+                                    <a href="/control-envios-dominio" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Control de Envíos</span>
+                                    </a>
+                                    <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Detener Suplantación</span>
+                                    </a>
+                                    <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC PYMEs</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso
+                        Clientes</a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                        target="_blank" rel="noopener noreferrer" data-seo-event="cta_demo_whatsapp"
+                        class="hidden sm:inline-flex items-center text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar
+                        demo</a>
+                    <a href="/precios"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors" data-seo-event="cta_precios">Ver
+                        planes</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                                <!-- Guías Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Guías de Seguridad</span>
+                    <a href="/seguridad-correo-proveedores" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Seguridad para proveedores</a>
+                    <a href="/informe-higiene-correo-corporativo" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Informe de higiene</a>
+                    <a href="/control-envios-dominio" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Control de Envíos</a>
+                    <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Detener Suplantación</a>
+                    <a href="/dmarc-para-pymes" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DMARC para PYMEs</a>
+                </div>
+
+                <!-- Herramientas Gratuitas Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
+                    <a href="/spf-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
+                    <a href="/dmarc-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
+                    <a href="/dkim-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro." target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()"
+                        class="block px-4 py-3 text-sm font-medium text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>SPF: cómo no pasar el límite de 10 consultas
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">SPF</span>
+            <h1 class="blog-article-h1">SPF: cómo no pasar el límite de 10 consultas</h1>
+            <p class="blog-meta blog-meta--on-dark">
+                <time datetime="2026-10-13" data-updated="2026-10-13">
+                    13 de octubre de 2026
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>3 min de lectura</span>
+                
+            </p>
+        </div>
+    </header>
+
+    <div class="blog-article-body blog-article-body--with-toc">
+        
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-es-spf-en-una-frase">Qué es SPF, en una frase</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#el-limite-que-pocos-conocen">El límite que pocos conocen</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#un-solo-registro-por-dominio">Un solo registro por dominio</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-autorizar-herramientas-sin-pasarte">Cómo autorizar herramientas sin pasarte</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#1-cuenta-lo-que-tienes">1. Cuenta lo que tienes</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#2-saca-las-herramientas-que-ya-no-usan">2. Saca las herramientas que ya no usan</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#3-usa-direcciones-fijas-para-tus-propios-servidores">3. Usa direcciones fijas para tus propios servidores</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#4-usa-un-subdominio-para-envios-masivos">4. Usa un subdominio para envíos masivos</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#5-apoyate-en-dkim">5. Apóyate en DKIM</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#para-tu-equipo-tecnico">Para tu equipo técnico</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+            </ol>
+        </details>
+        
+
+        <div class="blog-article-main">
+            <div class="blog-prose">
+                <p>Cada vez que tu empresa contrata una herramienta que envía correos (un CRM, una newsletter, la facturación), alguien la agrega a tu registro SPF. Funciona hasta que un día deja de funcionar. Si el registro se llena demasiado, falla para todos tus correos, no solo para el último servicio. El resultado: correos que no llegan o que terminan en spam.</p>
+<h2  id="que-es-spf-en-una-frase">Qué es SPF, en una frase</h2>
+<p><strong>SPF</strong> es la lista, publicada en tu dominio, de los servidores que tienen permiso para enviar correos con tu nombre.</p>
+<p>Revisa la tuya con el <a href="/spf-checker">verificador SPF</a>.</p>
+<h2  id="el-limite-que-pocos-conocen">El límite que pocos conocen</h2>
+<p>SPF tiene un límite: cuando Gmail u Outlook revisan tu lista, solo pueden hacer <strong>10 consultas</strong> para comprobarla. Cada herramienta que se agrega con la instrucción &ldquo;include&rdquo; gasta una. Si la lista de esa herramienta incluye a su vez otras, esas también cuentan.</p>
+<p>Si pasas de 10, SPF da error. Google advierte que los correos que no se autentican pueden ir a spam o ser rechazados.</p>
+<h2  id="un-solo-registro-por-dominio">Un solo registro por dominio</h2>
+<p>Tu dominio debe tener una sola lista SPF. Si hay dos, SPF da error.</p>
+<blockquote>
+<p><strong>Advertencia:</strong> para autorizar una herramienta nueva, hay que editar la lista existente. Si alguien crea una segunda, todos tus correos pueden fallar.</p>
+</blockquote>
+<h2  id="como-autorizar-herramientas-sin-pasarte">Cómo autorizar herramientas sin pasarte</h2>
+<h3  id="1-cuenta-lo-que-tienes">1. Cuenta lo que tienes</h3>
+<p>Revisa tu dominio con el <a href="/domain-checker">verificador de dominio</a> o el <a href="/spf-checker">verificador SPF</a> para ver la lista completa y cuánto ocupa.</p>
+<h3  id="2-saca-las-herramientas-que-ya-no-usan">2. Saca las herramientas que ya no usan</h3>
+<p>Un CRM que se probó y se abandonó, o el sistema de un proveedor anterior, siguen ocupando espacio.</p>
+<blockquote>
+<p><strong>Advertencia:</strong> antes de sacar una herramienta, confirma con el área que la usaba que ya no envía correos con tu dominio. Si todavía envía, sus correos empezarán a fallar.</p>
+</blockquote>
+<h3  id="3-usa-direcciones-fijas-para-tus-propios-servidores">3. Usa direcciones fijas para tus propios servidores</h3>
+<p>Si un servidor tuyo envía desde una dirección IP fija que tú controlas, autorizarla directamente no gasta consultas.</p>
+<blockquote>
+<p><strong>Advertencia:</strong> no hagas esto con herramientas externas copiando las IP que ves hoy. Si el proveedor cambia sus IP, tus correos fallarán sin que nadie lo note.</p>
+</blockquote>
+<h3  id="4-usa-un-subdominio-para-envios-masivos">4. Usa un subdominio para envíos masivos</h3>
+<p>Si una plataforma te permite enviar desde un subdominio como <code>news.ejemplo.cl</code>, ese subdominio puede tener su propia lista SPF, con su propio límite.</p>
+<h3  id="5-apoyate-en-dkim">5. Apóyate en DKIM</h3>
+<p><strong>DKIM</strong> es una firma digital que prueba que el correo viene de tu dominio. Para pasar DMARC (la regla que dice qué hacer con los correos que no prueban ser tuyos), basta con SPF <strong>o</strong> DKIM. Si una herramienta firma con DKIM usando tu dominio, depende menos de tu lista SPF. Revisa con el <a href="/dkim-checker">verificador DKIM</a> y el <a href="/dmarc-checker">verificador DMARC</a>.</p>
+<p>Si tus correos ya llegan a spam, revisa <a href="/blog/mis-correos-llegan-a-spam/">por qué tus correos llegan a spam</a>.</p>
+<h2  id="para-tu-equipo-tecnico">Para tu equipo técnico</h2>
+<ul>
+<li>SPF: RFC 7208. Solo como registro TXT (3.1). Un único registro; si hay varios, <code>permerror</code> (3.2, 4.5).</li>
+<li>Límite de 10 (4.6.4): cuentan <code>include</code>, <code>a</code>, <code>mx</code>, <code>ptr</code>, <code>exists</code> y <code>redirect</code>; exceso = <code>permerror</code>. <code>ip4</code>, <code>ip6</code> y <code>all</code> no cuentan. Cada MX no puede resolver a más de 10 A/AAAA.</li>
+<li><code>include</code> evalúa recursivamente el registro del proveedor, así que los anidados suman (5.2).</li>
+<li>Void lookups (respuestas vacías o NXDOMAIN): deberían limitarse a dos (4.6.4). Un <code>include</code> a un dominio que ya no existe consume una.</li>
+<li>No publicar <code>ptr</code> (5.5).</li>
+<li>Ejemplo: <code>v=spf1 include:_spf.example.com ip4:192.0.2.10 -all</code>.</li>
+<li>Subdominios: con alineación relajada, la opción por defecto de DMARC (RFC 7489, 3.1 y 6.3), <code>news.ejemplo.cl</code> sigue alineado con <code>ejemplo.cl</code>.</li>
+</ul>
+<h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
+<p>InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite asignar un responsable a cada uno y te guía para activar la protección contra suplantación sin cortar correos legítimos.</p>
+            </div>
+
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary"
+                       href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                       target="_blank" rel="noopener noreferrer"
+                       data-seo-event="cta_demo_whatsapp">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+
+        
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-es-spf-en-una-frase">Qué es SPF, en una frase</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#el-limite-que-pocos-conocen">El límite que pocos conocen</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#un-solo-registro-por-dominio">Un solo registro por dominio</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-autorizar-herramientas-sin-pasarte">Cómo autorizar herramientas sin pasarte</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#1-cuenta-lo-que-tienes">1. Cuenta lo que tienes</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#2-saca-las-herramientas-que-ya-no-usan">2. Saca las herramientas que ya no usan</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#3-usa-direcciones-fijas-para-tus-propios-servidores">3. Usa direcciones fijas para tus propios servidores</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#4-usa-un-subdominio-para-envios-masivos">4. Usa un subdominio para envíos masivos</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#5-apoyate-en-dkim">5. Apóyate en DKIM</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#para-tu-equipo-tecnico">Para tu equipo técnico</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+            </ol>
+        </nav>
+        
+    </div>
+</article>
+
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
+                            <li><a href="/dmarc-para-pymes" class="hover:text-blue-400 transition-colors">DMARC para PYMEs</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas Gratuitas</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Email Sender Checker</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Email Security Check</a></li>
+                            <li><a href="/spf-checker" class="hover:text-blue-400 transition-colors">Verificador SPF</a></li>
+                            <li><a href="/dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
+                            <li><a href="/dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>
+                            <li><a href="/mx-lookup" class="hover:text-blue-400 transition-colors">MX Lookup</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>
