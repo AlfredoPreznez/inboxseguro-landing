@@ -1,0 +1,29 @@
+# Diccionario de pronunciación Polly (SSML).
+# - say_as_characters → <say-as interpret-as="characters">SIGLA</say-as>
+# - sub_alias → <sub alias="...">término</sub>
+# Ampliar aquí; se aplica a todos los artículos en el build.
+version: 1
+
+say_as_characters:
+  - SPF
+  - DKIM
+  - DMARC
+  - CRM
+  - DNS
+  - MX
+  - API
+  - SSL
+  - TLS
+  - SMTP
+  - BIMI
+
+sub_alias:
+  InboxSeguro: "Inbox Seguro"
+  Gmail: "yi meil"
+  Outlook: "áut luk"
+  "Google Workspace": "Google Guórk speis"
+  "Microsoft 365": "Microsoft trescientos sesenta y cinco"
+  newsletter: "núusleter"
+  newsletters: "núusleters"
+  WhatsApp: "guasáp"
+  LinkedIn: "linked in"
