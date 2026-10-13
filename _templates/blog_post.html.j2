@@ -30,21 +30,21 @@
         </div>
     </header>
 
-    <div class="blog-article-body">
-        <div class="blog-article-main">
-            {% if toc %}
-            <nav class="blog-toc" aria-label="Contenido del artículo">
-                <p class="blog-toc-title">Contenido</p>
-                <ol class="blog-toc-list">
-                    {% for item in toc %}
-                    <li class="blog-toc-item{% if item.level == 3 %} blog-toc-item--sub{% endif %}">
-                        <a href="#{{ item.id }}">{{ item.text }}</a>
-                    </li>
-                    {% endfor %}
-                </ol>
-            </nav>
-            {% endif %}
+    <div class="blog-article-body{% if toc %} blog-article-body--with-toc{% endif %}">
+        {% if toc %}
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                {% for item in toc %}
+                <li class="blog-toc-item{% if item.level == 3 %} blog-toc-item--sub{% endif %}">
+                    <a href="#{{ item.id }}">{{ item.text }}</a>
+                </li>
+                {% endfor %}
+            </ol>
+        </details>
+        {% endif %}
 
+        <div class="blog-article-main">
             <div class="blog-prose">
                 {{ body_html|safe }}
             </div>
@@ -66,6 +66,19 @@
                 </div>
             </aside>
         </div>
+
+        {% if toc %}
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                {% for item in toc %}
+                <li class="blog-toc-item{% if item.level == 3 %} blog-toc-item--sub{% endif %}">
+                    <a href="#{{ item.id }}">{{ item.text }}</a>
+                </li>
+                {% endfor %}
+            </ol>
+        </nav>
+        {% endif %}
     </div>
 </article>
 {% endblock %}
