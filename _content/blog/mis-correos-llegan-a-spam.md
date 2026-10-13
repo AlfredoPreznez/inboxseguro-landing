@@ -2,10 +2,13 @@
 title: "Mis correos llegan a spam: la causa oculta"
 slug: mis-correos-llegan-a-spam
 description: "¿Los correos de tu empresa llegan a spam? A veces la causa son servicios que envían con tu dominio sin que nadie los administre. Aprende a encontrarlos."
+excerpt: "¿Los correos de tu empresa llegan a spam? A veces la causa son servicios que envían con tu dominio sin que nadie los administre."
+category: Entregabilidad
 date: 2026-10-13
 updated: 2026-10-13
-tags: [entregabilidad, spam, spf, dkim, dmarc, pymes]
+tags: [entregabilidad, spam, spf, dkim, dmarc]
 keyword_objetivo: mis correos llegan a spam
+featured: true
 draft: false
 ---
 
