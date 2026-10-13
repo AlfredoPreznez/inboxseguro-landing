@@ -240,7 +240,7 @@ def build_html(posts_published: list[Post]) -> None:
         chrome_footer=chrome_footer,
         page_title=_clip("Blog de seguridad de correo | InboxSeguro", 60),
         meta_description=_clip(
-            "Artículos prácticos sobre SPF, DKIM, DMARC y control de envíos para PYMEs en Chile y LATAM.",
+            "Artículos prácticos sobre SPF, DKIM, DMARC y control de envíos para empresas en Chile y LATAM.",
             155,
         ),
         canonical_url=f"{SITE}/blog/",
@@ -332,7 +332,7 @@ def build_feed(posts_published: list[Post]) -> None:
             "  <channel>",
             "    <title>Blog InboxSeguro</title>",
             f"    <link>{SITE}/blog/</link>",
-            "    <description>Guías prácticas de seguridad de correo para PYMEs.</description>",
+            "    <description>Guías prácticas de seguridad de correo para empresas.</description>",
             "    <language>es-cl</language>",
             *items,
             "  </channel>",
