@@ -49,7 +49,7 @@
             <a class="blog-card-link" href="/blog/{{ post.slug }}/">
                 <div class="blog-card-media">
                     <img
-                        src="{{ post.cover_path if not post.cover else post.cover }}"
+                        src="{{ post.cover or post.cover_path }}"
                         alt="Portada: {{ post.title }}"
                         width="1200"
                         height="630"

@@ -14,28 +14,65 @@
     </nav>
     <article class="blog-article">
         <header>
+            <div class="blog-cover">
+                <img
+                    src="{{ post.cover or post.cover_path }}"
+                    alt="Portada: {{ post.title }}"
+                    width="1200"
+                    height="630"
+                    loading="eager"
+                    decoding="async"
+                >
+            </div>
+            <span class="blog-chip">{{ post.category_label }}</span>
             <h1 class="blog-title">{{ post.title }}</h1>
             <p class="blog-meta">
                 <time datetime="{{ post.date }}"{% if post.updated %} data-updated="{{ post.updated }}"{% endif %}>
                     {{ post.date_display }}
                 </time>
+                <span aria-hidden="true">·</span>
+                <span>{{ post.reading_label }}</span>
                 {% if post.updated and post.updated != post.date %}
-                · Actualizado <time datetime="{{ post.updated }}">{{ post.updated_display }}</time>
+                <span aria-hidden="true">·</span>
+                <span>Actualizado <time datetime="{{ post.updated }}">{{ post.updated_display }}</time></span>
                 {% endif %}
             </p>
-            {% if post.description %}
-            <p class="blog-lead">{{ post.description }}</p>
+            {% if post.excerpt %}
+            <p class="blog-lead">{{ post.excerpt }}</p>
             {% endif %}
         </header>
+
+        {% if toc %}
+        <nav class="blog-toc" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol>
+                {% for item in toc %}
+                <li{% if item.level == 3 %} style="margin-left:0.75rem"{% endif %}>
+                    <a href="#{{ item.id }}">{{ item.text }}</a>
+                </li>
+                {% endfor %}
+            </ol>
+        </nav>
+        {% endif %}
+
         <div class="blog-prose">
             {{ body_html|safe }}
         </div>
+
         <aside class="blog-cta" aria-label="Siguiente paso">
             <h2>Revisa tu dominio gratis</h2>
-            <p>Haz un diagnóstico de SPF, DKIM, DMARC y MX, o mira los planes si quieres monitoreo continuo.</p>
+            <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+            <div class="blog-cta-tools">
+                <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+            </div>
             <div class="blog-cta-actions">
-                <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico gratuito</a>
-                <a class="blog-cta-secondary" href="/precios" data-seo-event="cta_precios">Ver Precios</a>
+                <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                <a class="blog-cta-secondary"
+                   href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                   target="_blank" rel="noopener noreferrer"
+                   data-seo-event="cta_demo_whatsapp">Agendar demo</a>
             </div>
         </aside>
     </article>
