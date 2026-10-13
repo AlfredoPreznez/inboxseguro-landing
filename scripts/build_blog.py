@@ -634,6 +634,20 @@ def ensure_covers(posts: list[Post]) -> None:
         generate_cover_png(post)
 
 
+def ensure_audio(posts: list[Post]) -> None:
+    """Genera MP3 con Polly si hay credenciales; si no, omite y avisa."""
+    try:
+        from generate_audio import ensure_audio_for_posts
+    except ImportError:
+        sys.path.insert(0, str(Path(__file__).resolve().parent))
+        try:
+            from generate_audio import ensure_audio_for_posts
+        except ImportError:
+            print("AVISO: generate_audio no disponible; se omite audio")
+            return
+    ensure_audio_for_posts([p.slug for p in posts])
+
+
 def build_html(posts_published: list[Post]) -> None:
     index_html = read_index()
     chrome_nav = extract_chrome_nav(index_html)
@@ -646,6 +660,7 @@ def build_html(posts_published: list[Post]) -> None:
 
     BLOG_OUT.mkdir(parents=True, exist_ok=True)
     ensure_covers(posts_published)
+    ensure_audio(posts_published)
 
     sorted_posts = sorted(posts_published, key=lambda p: p.date, reverse=True)
     featured = pick_featured(sorted_posts)
@@ -716,6 +731,13 @@ def build_html(posts_published: list[Post]) -> None:
                 {"@type": "ListItem", "position": 3, "name": post.title, "item": post.public_url},
             ],
         }
+        try:
+            from generate_audio import get_audio_for_template
+        except ImportError:
+            sys.path.insert(0, str(Path(__file__).resolve().parent))
+            from generate_audio import get_audio_for_template
+        audio = get_audio_for_template(post.slug)
+
         html = post_tpl.render(
             chrome_nav=chrome_nav,
             chrome_footer=chrome_footer,
@@ -727,6 +749,7 @@ def build_html(posts_published: list[Post]) -> None:
             post=post,
             body_html=body_html,
             toc=toc,
+            audio=audio,
             blog_posting_json=json.dumps(blog_posting, ensure_ascii=False, indent=2),
             breadcrumb_json=json.dumps(breadcrumb, ensure_ascii=False, indent=2),
         )
