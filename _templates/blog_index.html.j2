@@ -1,23 +1,79 @@
 {% extends "blog_base.html.j2" %}
 {% block main %}
-<section class="blog-wrap blog-wrap--list">
-    <span class="blog-kicker">Blog</span>
-    <h1 class="blog-title">Control del correo, explicado para empresas</h1>
-    <p class="blog-lead">Guías prácticas sobre SPF, DKIM, DMARC y entregabilidad, sin jerga innecesaria.</p>
-    {% if posts %}
-    <ul class="blog-list">
-        {% for post in posts %}
-        <li class="blog-list-item">
-            <a href="/blog/{{ post.slug }}/">
-                <h2 class="blog-list-title">{{ post.title }}</h2>
-                <p class="blog-list-desc">{{ post.description }}</p>
-                <p class="blog-list-date"><time datetime="{{ post.date }}">{{ post.date_display }}</time></p>
+<section class="blog-hero" aria-label="Blog InboxSeguro">
+    <div class="blog-hero-inner">
+        <div class="blog-hero-brand">
+            <img src="/logo.png" alt="" class="blog-hero-logo" width="40" height="40">
+            <div>
+                <p class="blog-hero-kicker">InboxSeguro</p>
+                <h1 class="blog-hero-title">Blog</h1>
+            </div>
+        </div>
+        <p class="blog-hero-lead">Control del correo corporativo: guías claras sobre SPF, DKIM, DMARC y quién envía con el dominio de tu empresa.</p>
+    </div>
+</section>
+
+<section class="blog-home">
+    {% if featured %}
+    <article class="blog-featured">
+        <a class="blog-featured-link" href="/blog/{{ featured.slug }}/">
+            <div class="blog-featured-media">
+                <img
+                    src="{{ featured.cover or featured.cover_path }}"
+                    alt="Portada: {{ featured.title }}"
+                    width="1200"
+                    height="630"
+                    loading="eager"
+                    decoding="async"
+                    class="blog-featured-img"
+                >
+            </div>
+            <div class="blog-featured-body">
+                <span class="blog-chip">{{ featured.category_label }}</span>
+                <h2 class="blog-featured-title">{{ featured.title }}</h2>
+                <p class="blog-featured-excerpt">{{ featured.excerpt }}</p>
+                <p class="blog-card-meta">
+                    <time datetime="{{ featured.date }}">{{ featured.date_display }}</time>
+                    <span aria-hidden="true">·</span>
+                    <span>{{ featured.reading_label }}</span>
+                </p>
+            </div>
+        </a>
+    </article>
+    {% endif %}
+
+    {% if grid_posts %}
+    <ul class="blog-grid">
+        {% for post in grid_posts %}
+        <li class="blog-card">
+            <a class="blog-card-link" href="/blog/{{ post.slug }}/">
+                <div class="blog-card-media">
+                    <img
+                        src="{{ post.cover_path if not post.cover else post.cover }}"
+                        alt="Portada: {{ post.title }}"
+                        width="1200"
+                        height="630"
+                        loading="lazy"
+                        decoding="async"
+                        class="blog-card-img"
+                    >
+                </div>
+                <div class="blog-card-body">
+                    <span class="blog-chip">{{ post.category_label }}</span>
+                    <h2 class="blog-card-title">{{ post.title }}</h2>
+                    <p class="blog-card-excerpt">{{ post.excerpt }}</p>
+                    <p class="blog-card-meta">
+                        <time datetime="{{ post.date }}">{{ post.date_display }}</time>
+                        <span aria-hidden="true">·</span>
+                        <span>{{ post.reading_label }}</span>
+                    </p>
+                </div>
             </a>
         </li>
         {% endfor %}
     </ul>
-    {% else %}
-    <p class="blog-empty">Pronto publicaremos los primeros artículos. Mientras tanto puedes usar el <a href="/domain-checker">diagnóstico gratuito</a> o revisar <a href="/precios">Precios</a>.</p>
+    {% elif not featured %}
+    <p class="blog-empty">Pronto publicaremos los primeros artículos. Mientras tanto puedes usar el <a href="/domain-checker">diagnóstico gratuito</a> o las <a href="/herramientas">herramientas</a>.</p>
     {% endif %}
 </section>
 {% endblock %}
