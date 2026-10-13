@@ -56,7 +56,9 @@
     <link rel="stylesheet" href="/styles.css?v=1.0.6">
 </head>
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
-<nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16 md:h-20 items-center">
 
@@ -74,7 +76,8 @@
                     <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
                     <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
                     <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
-                    
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
                                         <!-- Dropdown Recursos -->
                     <div class="relative group">
                         <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
@@ -172,7 +175,9 @@
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
                 <a href="/herramientas" onclick="closeMobileMenu()"
                     class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
-                
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
                                 <!-- Guías Mobile Section -->
                 <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Guías de Seguridad</span>
@@ -215,6 +220,8 @@
             </div>
         </div>
     </nav>
+    </div>
+    <!-- /chrome:nav -->
 <main class="flex-grow pt-24 lg:pt-32">
 <section class="py-16 bg-slate-900 text-white"><div class="max-w-4xl mx-auto px-4 text-center">
 <h1 class="text-4xl md:text-5xl font-extrabold mb-4">Suplantación de correo en tu empresa</h1>
@@ -230,7 +237,9 @@
             <a href="/precios" data-seo-event="cta_precios" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Ver precios</a>
         </div></div></section>
 </main>
-<footer class="bg-slate-950 border-t border-slate-800 py-12">
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-start gap-10">
                 <!-- Brand & Address -->
@@ -242,7 +251,7 @@
                         </span>
                     </div>
                     <p class="text-slate-500 text-sm leading-relaxed mb-4">
-                        Seguridad del correo de tu empresa: vigilancia de envíos y protección DMARC guiada contra la suplantación.
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
                     </p>
                     <div class="space-y-2 text-xs text-slate-500 italic">
                         <p class="flex items-center gap-2">
@@ -257,7 +266,7 @@
                     <div>
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
-                            <li><a href="/como-funciona" class="text-blue-400 font-medium">Cómo funciona</a></li>
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
                             <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
                             <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
                             <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
@@ -280,12 +289,14 @@
                     <div>
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
                             <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
                             <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
                             <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
-                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank" class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
-                                <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
-                            </a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
                         </ul>
                     </div>
                 </div>
@@ -303,6 +314,8 @@
             </div>
         </div>
     </footer>
+    </div>
+    <!-- /chrome:footer -->
 <script>
 function toggleMobileMenu(){document.getElementById('mobileMenu').classList.toggle('hidden');document.getElementById('menuIconOpen').classList.toggle('hidden');document.getElementById('menuIconClose').classList.toggle('hidden');}
 function closeMobileMenu(){document.getElementById('mobileMenu').classList.add('hidden');document.getElementById('menuIconOpen').classList.remove('hidden');document.getElementById('menuIconClose').classList.add('hidden');}

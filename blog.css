@@ -1,0 +1,262 @@
+/* Estilos del blog (CSS explícito; no depende de recompilar Tailwind). */
+
+.blog-wrap {
+  width: 100%;
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 6.5rem 1rem 4rem;
+}
+
+.blog-wrap--list {
+  max-width: 56rem;
+}
+
+.blog-kicker {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+}
+
+.blog-title {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+  margin: 0 0 1rem;
+}
+
+.blog-lead {
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: #475569;
+  margin: 0 0 2rem;
+}
+
+.blog-meta {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0 0 2rem;
+}
+
+.blog-meta time {
+  font-weight: 600;
+  color: #334155;
+}
+
+.blog-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.blog-list-item a {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.blog-list-item a:hover .blog-list-title {
+  color: #2563eb;
+}
+
+.blog-list-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 0.5rem;
+  transition: color 0.15s ease;
+}
+
+.blog-list-desc {
+  font-size: 0.975rem;
+  line-height: 1.55;
+  color: #475569;
+  margin: 0 0 0.5rem;
+}
+
+.blog-list-date {
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.blog-empty {
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.blog-article {
+  color: #1e293b;
+}
+
+.blog-prose {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.blog-prose > *:first-child {
+  margin-top: 0;
+}
+
+.blog-prose h2 {
+  font-size: 1.375rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 2.25rem 0 0.85rem;
+  letter-spacing: -0.015em;
+}
+
+.blog-prose h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 1.75rem 0 0.65rem;
+}
+
+.blog-prose p {
+  margin: 0 0 1.1rem;
+}
+
+.blog-prose ul,
+.blog-prose ol {
+  margin: 0 0 1.1rem;
+  padding-left: 1.35rem;
+}
+
+.blog-prose li {
+  margin-bottom: 0.4rem;
+}
+
+.blog-prose a {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.blog-prose a:hover {
+  color: #1d4ed8;
+}
+
+.blog-prose strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.blog-prose code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+  background: #f1f5f9;
+  padding: 0.1em 0.35em;
+  border-radius: 0.25rem;
+}
+
+.blog-prose pre {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 1rem 1.1rem;
+  border-radius: 0.75rem;
+  overflow-x: auto;
+  margin: 0 0 1.25rem;
+}
+
+.blog-prose pre code {
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.blog-prose blockquote {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1rem;
+  border-left: 3px solid #2563eb;
+  background: #f8fafc;
+  color: #334155;
+}
+
+.blog-cta {
+  margin-top: 3rem;
+  padding: 1.5rem 1.35rem;
+  border: 1px solid #e2e8f0;
+  background: linear-gradient(180deg, #f8fafc 0%, #fff 100%);
+  border-radius: 0.9rem;
+}
+
+.blog-cta h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin: 0 0 0.6rem;
+}
+
+.blog-cta p {
+  margin: 0 0 1.1rem;
+  color: #475569;
+  line-height: 1.55;
+}
+
+.blog-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.blog-cta-actions a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.7rem 1.1rem;
+  border-radius: 0.65rem;
+  font-size: 0.925rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.blog-cta-primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.blog-cta-primary:hover {
+  background: #1d4ed8;
+}
+
+.blog-cta-secondary {
+  background: #fff;
+  color: #0f172a;
+  border: 1px solid #cbd5e1;
+}
+
+.blog-cta-secondary:hover {
+  border-color: #94a3b8;
+  color: #2563eb;
+}
+
+.blog-breadcrumbs {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 1.25rem;
+}
+
+.blog-breadcrumbs a {
+  color: #64748b;
+  text-decoration: none;
+}
+
+.blog-breadcrumbs a:hover {
+  color: #2563eb;
+}
+
+.blog-breadcrumbs span {
+  margin: 0 0.4rem;
+  color: #cbd5e1;
+}
