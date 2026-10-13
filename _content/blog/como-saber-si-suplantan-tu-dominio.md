@@ -4,7 +4,7 @@ slug: como-saber-si-suplantan-tu-dominio
 description: "¿Alguien envía correos falsos con el dominio de tu empresa? Aprende a detectarlo con reportes DMARC y a separar tus servicios legítimos de los falsos."
 date: 2026-10-13
 updated: 2026-10-13
-tags: [suplantacion, spoofing, dmarc, spf, dkim, pymes]
+tags: [suplantacion, spoofing, dmarc, spf, dkim, empresas]
 keyword_objetivo: cómo saber si alguien suplanta tu dominio
 draft: false
 ---

@@ -71,6 +71,7 @@ Cada uno: gancho en las 2 primeras líneas; párrafos de 1–2 líneas; 120–20
 ## Estándares de contenido
 
 - Español claro para responsables de empresa; precisión técnica en DNS.
+- No escribir pyme, pymes ni PYME. Decir empresa o empresas.
 - Dominios de ejemplo: `ejemplo.cl`, `example.com`. Nunca dominios/empresas reales de terceros.
 - No inventar estadísticas ni afirmaciones sin fuente o dato propio.
 - Si un paso puede interrumpir correo (p. ej. `p=reject`), advertir riesgo y recomendar avance gradual.
@@ -79,8 +80,21 @@ Cada uno: gancho en las 2 primeras líneas; párrafos de 1–2 líneas; 120–20
 
 ```bash
 pip install -r requirements-build.txt   # solo local (incluye Pillow para portadas)
-python3 scripts/build_blog.py           # blog + covers + feed + sitemap
+python3 scripts/generate_audio.py --slug <slug>
+python3 scripts/build_blog.py           # blog + covers + audio + feed + sitemap
 python3 update_nav.py                   # sync nav/footer a HTML existentes
 ```
+
+## Audio
+
+Polly ya está en el build: voz Pedro, motor generative, idioma es-US. Hace falta el permiso `polly:SynthesizeSpeech` en la máquina que publica.
+
+Por cada post publicado, commitear junto al markdown:
+
+- `blog/<slug>/index.html`
+- `blog/<slug>/audio.mp3`
+- `blog/<slug>/audio.sha`
+
+Antes de commitear, quitar `cost_usd_est` de `audio.sha`. No subir precios ni secretos. Si no hay credenciales, el build avisa y omite el audio: no publicar el HTML como si el reproductor existiera. Subir a `main`, que es lo que sirve el sitio.
 
 Tras deploy: `curl -I https://www.inboxseguro.com/blog/` y posts con barra final (200, sin redirects raros).

@@ -16,7 +16,7 @@ Si los correos de tu empresa terminan en spam, lo primero que se suele revisar e
 
 ## Tu dominio envía correo desde más lugares de los que crees
 
-Una pyme puede usar Google Workspace o Microsoft 365 para el correo diario, un CRM para ventas, una herramienta de marketing para newsletters, un sistema de facturación, la plataforma de su tienda en línea y una mesa de ayuda. Cada uno manda correos que dicen venir de `@ejemplo.cl`. Si alguno no está autorizado correctamente, Gmail u Outlook no pueden confirmar que esos mensajes son legítimos, y pueden mandarlos a spam o rechazarlos.
+Una empresa puede usar Google Workspace o Microsoft 365 para el correo diario, un CRM para ventas, una herramienta de marketing para newsletters, un sistema de facturación, la plataforma de su tienda en línea y una mesa de ayuda. Cada uno manda correos que dicen venir de `@ejemplo.cl`. Si alguno no está autorizado correctamente, Gmail u Outlook no pueden confirmar que esos mensajes son legítimos, y pueden mandarlos a spam o rechazarlos.
 
 ## Qué revisan Gmail y Outlook antes de entregar un correo
 

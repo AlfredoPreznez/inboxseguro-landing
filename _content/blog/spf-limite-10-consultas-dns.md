@@ -1,10 +1,10 @@
 ---
 title: "SPF: cómo no pasar el límite de 10 consultas"
 slug: spf-limite-10-consultas-dns
-description: "Cómo autorizar tus servicios de correo en SPF sin superar el límite de 10 consultas DNS de la RFC 7208, y qué pasa si lo superas. Guía práctica para pymes."
+description: "Cómo autorizar tus servicios de correo en SPF sin superar el límite de 10 consultas DNS de la RFC 7208, y qué pasa si lo superas. Guía práctica para empresas."
 date: 2026-10-13
 updated: 2026-10-13
-tags: [spf, dns, entregabilidad, autenticacion, pymes]
+tags: [spf, dns, entregabilidad, autenticacion, empresas]
 keyword_objetivo: límite de 10 consultas DNS SPF
 draft: false
 ---

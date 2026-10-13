@@ -4,7 +4,7 @@ slug: que-es-dmarc-como-activarlo
 description: "Qué es DMARC, qué significan p, rua, ruf, pct, sp, adkim y aspf, y cómo pasar de p=none a p=reject sin bloquear los correos legítimos de tu empresa."
 date: 2026-10-13
 updated: 2026-10-13
-tags: [dmarc, spf, dkim, suplantacion, entregabilidad, pymes]
+tags: [dmarc, spf, dkim, suplantacion, entregabilidad, empresas]
 keyword_objetivo: qué es DMARC
 draft: false
 ---
