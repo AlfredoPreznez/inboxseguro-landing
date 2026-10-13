@@ -46,6 +46,11 @@ MAX_BILLED_CHARS_PER_REQUEST = 2500
 GENERATIVE_USD_PER_MILLION = 30.0
 
 AUDIO_META_VERSION = "audio-v1"
+POLICY_SPOKEN = {
+    "p=none": "pe igual none",
+    "p=quarantine": "pe igual quarantine",
+    "p=reject": "pe igual reject",
+}
 DNS_TOKEN_RE = re.compile(
     r"\b(v=spf1|include:|p=none|p=quarantine|p=reject|redirect=|exp=)\S*",
     re.I,
@@ -152,12 +157,17 @@ def _strip_inline_noise(text: str) -> str:
     text = LINK_RE.sub(r"\1", text)
 
     def _code_repl(m: re.Match) -> str:
-        inner = m.group(1)
+        inner = m.group(1).strip()
+        spoken = POLICY_SPOKEN.get(inner.lower())
+        if spoken:
+            return spoken
         if DNS_TOKEN_RE.search(inner) or len(inner) > 12:
             return ""
         return inner
 
     text = INLINE_CODE_RE.sub(_code_repl, text)
+    for token, spoken in POLICY_SPOKEN.items():
+        text = re.sub(rf"\b{re.escape(token)}\b", spoken, text, flags=re.I)
     text = DNS_TOKEN_RE.sub("", text)
     text = re.sub(r"\s{2,}", " ", text)
     return text.strip()

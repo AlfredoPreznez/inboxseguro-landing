@@ -2,9 +2,9 @@
 # - say_as_characters → <say-as interpret-as="characters">SIGLA</say-as>
 # - sub_alias → <sub alias="...">término</sub>
 # Ampliar aquí; se aplica a todos los artículos en el build.
-# SPF, DKIM y DMARC se dejan tal cual: Polly ya los dice bien.
+# SPF y DKIM se dejan tal cual. DMARC lleva la D audible.
 # CRM sí se deletrea.
-version: 3
+version: 4
 
 say_as_characters:
   - CRM
@@ -17,3 +17,4 @@ sub_alias:
   "Microsoft 365": "Microsoft trescientos sesenta y cinco"
   WhatsApp: "guasáp"
   LinkedIn: "linked in"
+  DMARC: "di marc"
