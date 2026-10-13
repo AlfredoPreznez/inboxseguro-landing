@@ -1,0 +1,43 @@
+{% extends "blog_base.html.j2" %}
+{% block head_extra %}
+<script type="application/ld+json">
+{{ blog_posting_json|safe }}
+</script>
+<script type="application/ld+json">
+{{ breadcrumb_json|safe }}
+</script>
+{% endblock %}
+{% block main %}
+<section class="blog-wrap">
+    <nav class="blog-breadcrumbs" aria-label="Miga de pan">
+        <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>{{ post.title }}
+    </nav>
+    <article class="blog-article">
+        <header>
+            <h1 class="blog-title">{{ post.title }}</h1>
+            <p class="blog-meta">
+                <time datetime="{{ post.date }}"{% if post.updated %} data-updated="{{ post.updated }}"{% endif %}>
+                    {{ post.date_display }}
+                </time>
+                {% if post.updated and post.updated != post.date %}
+                · Actualizado <time datetime="{{ post.updated }}">{{ post.updated_display }}</time>
+                {% endif %}
+            </p>
+            {% if post.description %}
+            <p class="blog-lead">{{ post.description }}</p>
+            {% endif %}
+        </header>
+        <div class="blog-prose">
+            {{ body_html|safe }}
+        </div>
+        <aside class="blog-cta" aria-label="Siguiente paso">
+            <h2>Revisa tu dominio gratis</h2>
+            <p>Haz un diagnóstico de SPF, DKIM, DMARC y MX, o mira los planes si quieres monitoreo continuo.</p>
+            <div class="blog-cta-actions">
+                <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico gratuito</a>
+                <a class="blog-cta-secondary" href="/precios" data-seo-event="cta_precios">Ver Precios</a>
+            </div>
+        </aside>
+    </article>
+</section>
+{% endblock %}

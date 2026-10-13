@@ -1,0 +1,4 @@
+# Solo para build local del blog/sitemap. No se usa en producción (GitHub Pages).
+markdown==3.7
+Jinja2==3.1.4
+PyYAML==6.0.2

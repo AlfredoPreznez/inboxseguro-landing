@@ -1,0 +1,80 @@
+---
+description: Flujo para crear y publicar posts del blog SEO de InboxSeguro (sitio estático).
+globs:
+  - _content/blog/**/*
+  - _templates/blog*.j2
+  - scripts/build_blog.py
+  - blog/**/*
+alwaysApply: false
+---
+
+# Blog InboxSeguro — flujo de contenido
+
+Sitio público = HTML estático en GitHub Pages (sin Flask en runtime).  
+Fuentes en `_content/blog/` (carpeta con guion bajo: Jekyll no la sirve). Repo público: **no commitear** borradores ni `*.linkedin.md`.
+
+## Al pedir "nuevo post sobre X"
+
+1. Crear `_content/blog/<slug>.md` (o `_content/blog/_drafts/<slug>.md` si `draft: true`).
+2. Crear `_content/blog/<slug>.linkedin.md` (o en `_drafts/`) con 2 borradores LinkedIn.
+3. Correr `python3 scripts/build_blog.py` y luego `python3 update_nav.py` si cambió el chrome.
+4. Commitear solo HTML/XML publicados + el `.md` **sin** `draft: true`. Nunca `*.linkedin.md` ni `_drafts/`.
+
+## Front matter (YAML)
+
+```yaml
+---
+title: "Título claro para PYME"
+slug: slug-url
+description: "Meta description ≤155 caracteres."
+date: YYYY-MM-DD
+updated: YYYY-MM-DD
+tags:
+  - etiqueta
+keyword_objetivo: frase clave
+cover: # opcional, ruta /... o URL absoluta
+draft: false
+---
+```
+
+- `draft: true` → no sale en listado, feed ni sitemap; no generar HTML público.
+- Título de página (`title | InboxSeguro`) ≤ 60 caracteres; description ≤ 155.
+- URLs públicas: `https://www.inboxseguro.com/blog/<slug>/` (barra final).
+
+## Checklist SEO del artículo
+
+- Un solo `h1` (= title); cuerpo en `<article>` con `<time>`.
+- Canonical, OG `article`, JSON-LD `BlogPosting` + `BreadcrumbList` (lo genera el build).
+- Enlaces internos a herramientas (`/domain-checker`, SPF/DKIM/DMARC/MX, sender) y `/precios`.
+- CTA final: diagnóstico gratuito + Precios (plantilla del build).
+- Nav/footer con `data-nosnippet` vía chrome de `index.html` / `update_nav.py`.
+
+## Plantilla LinkedIn (`<slug>.linkedin.md`)
+
+Incluir enlace UTM exacto:
+
+`https://www.inboxseguro.com/blog/<slug>/?utm_source=linkedin&utm_medium=social&utm_campaign=blog_<slug>`
+
+Dos borradores en español de Chile:
+
+1. **Perfil personal** (primera persona).
+2. **Página de empresa**.
+
+Cada uno: gancho en las 2 primeras líneas; párrafos de 1–2 líneas; 120–200 palabras; una idea práctica del artículo; pregunta final; máximo 3 hashtags. No publicar por API.
+
+## Estándares de contenido
+
+- Español claro para dueños de PYME; precisión técnica en DNS.
+- Dominios de ejemplo: `ejemplo.cl`, `example.com`. Nunca dominios/empresas reales de terceros.
+- No inventar estadísticas ni afirmaciones sin fuente o dato propio.
+- Si un paso puede interrumpir correo (p. ej. `p=reject`), advertir riesgo y recomendar avance gradual.
+
+## Build
+
+```bash
+pip install -r requirements-build.txt   # solo local
+python3 scripts/build_blog.py           # blog + feed + sitemap (lastmod vía git)
+python3 update_nav.py                   # sync nav/footer a HTML existentes
+```
+
+Tras deploy: `curl -I https://www.inboxseguro.com/blog/` y posts con barra final (200, sin redirects raros).

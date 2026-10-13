@@ -3,3 +3,9 @@
 *.backup
 *.backup_*
 tailwindcss
+__pycache__/
+*.pyc
+
+# Blog: repo público — no exponer borradores ni textos LinkedIn
+_content/blog/_drafts/
+_content/blog/**/*.linkedin.md

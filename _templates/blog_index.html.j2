@@ -1,0 +1,23 @@
+{% extends "blog_base.html.j2" %}
+{% block main %}
+<section class="blog-wrap blog-wrap--list">
+    <span class="blog-kicker">Blog</span>
+    <h1 class="blog-title">Control del correo, explicado para PYMEs</h1>
+    <p class="blog-lead">Guías prácticas sobre SPF, DKIM, DMARC y entregabilidad, sin jerga innecesaria.</p>
+    {% if posts %}
+    <ul class="blog-list">
+        {% for post in posts %}
+        <li class="blog-list-item">
+            <a href="/blog/{{ post.slug }}/">
+                <h2 class="blog-list-title">{{ post.title }}</h2>
+                <p class="blog-list-desc">{{ post.description }}</p>
+                <p class="blog-list-date"><time datetime="{{ post.date }}">{{ post.date_display }}</time></p>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p class="blog-empty">Pronto publicaremos los primeros artículos. Mientras tanto puedes usar el <a href="/domain-checker">diagnóstico gratuito</a> o revisar <a href="/precios">Precios</a>.</p>
+    {% endif %}
+</section>
+{% endblock %}
