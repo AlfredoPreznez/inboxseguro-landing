@@ -286,6 +286,26 @@
   color: #e2e8f0;
 }
 
+.blog-listen {
+  margin-top: 1.1rem;
+  max-width: 28rem;
+}
+
+.blog-listen-label {
+  margin: 0 0 0.45rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #bfdbfe;
+}
+
+.blog-listen-audio {
+  display: block;
+  width: 100%;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  accent-color: #3b82f6;
+}
+
 .blog-article-body {
   max-width: 48rem;
   margin: 0 auto;
@@ -410,7 +430,8 @@
   .blog-article-hero-inner .blog-article-h1,
   .blog-article-hero-inner .blog-meta,
   .blog-article-hero-inner .blog-chip,
-  .blog-article-hero-inner .blog-breadcrumbs {
+  .blog-article-hero-inner .blog-breadcrumbs,
+  .blog-article-hero-inner .blog-listen {
     max-width: 48rem;
   }
 }

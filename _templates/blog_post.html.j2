@@ -27,6 +27,23 @@
                 <span>Actualizado <time datetime="{{ post.updated }}">{{ post.updated_display }}</time></span>
                 {% endif %}
             </p>
+            {% if audio %}
+            <div class="blog-listen" data-nosnippet>
+                <p class="blog-listen-label" id="blog-listen-label-{{ post.slug }}">
+                    Escuchar este artículo{% if audio.duration_label %} · {{ audio.duration_label }}{% endif %}
+                </p>
+                <audio
+                    class="blog-listen-audio"
+                    controls
+                    preload="none"
+                    controlslist="nodownload"
+                    aria-labelledby="blog-listen-label-{{ post.slug }}"
+                >
+                    <source src="{{ audio.url }}" type="audio/mpeg">
+                    Tu navegador no admite audio HTML5.
+                </audio>
+            </div>
+            {% endif %}
         </div>
     </header>
 
