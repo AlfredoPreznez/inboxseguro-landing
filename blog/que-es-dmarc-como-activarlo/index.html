@@ -82,6 +82,56 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es DMARC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Es una regla publicada en tu dominio que dice qué hacer con los correos que no pueden probar que son tuyos, y que además te envía reportes. Se apoya en SPF y DKIM."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuándo pasa un correo DMARC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cuando pasa SPF o DKIM y ese resultado corresponde al mismo dominio que ve el destinatario en el campo \"De\"."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuáles son las políticas de DMARC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Observar (none), que no cambia la entrega; cuarentena (quarantine), que pide tratar como sospechosos los correos que fallan; y rechazo (reject), que pide rechazarlos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Gmail exige DMARC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sí, a quienes envían más de 5.000 correos al día a cuentas de Gmail, aunque sea en modo observación."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si mi dominio tiene dos registros DMARC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DMARC deja de aplicarse. Si ya existe un registro, hay que editarlo, no crear otro."
+      }
+    }
+  ]
+}
+</script>
+
+
 </head>
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
 <!-- chrome:nav -->
@@ -344,6 +394,11 @@
 
         <div class="blog-article-main">
             <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> DMARC es una regla publicada en tu dominio que indica qué hacer con los correos que no pueden probar que son tuyos, y que además te envía reportes. Para activarlo sin riesgos, empieza en modo observación (p=none), corrige tus herramientas que fallan según los reportes, pasa a cuarentena de forma gradual y llega a rechazo (p=reject) solo cuando los reportes estén limpios.</p>
+                </div>
+                
                 <p>Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, puede mandar a spam tus propias facturas. Aquí te explicamos cómo funciona y cómo activarlo por etapas.</p>
 <h2  id="que-es-dmarc-en-una-frase">Qué es DMARC, en una frase</h2>
 <p><strong>DMARC</strong> es una regla publicada en tu dominio que dice qué hacer con los correos que no pueden probar que son tuyos, y que además te envía reportes.</p>
@@ -399,6 +454,27 @@
 </ul>
 <h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
 <p>InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite asignar un responsable a cada uno y te guía para activar la protección contra suplantación sin cortar correos legítimos.</p>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿Qué es DMARC?</h3>
+                    <p>Es una regla publicada en tu dominio que dice qué hacer con los correos que no pueden probar que son tuyos, y que además te envía reportes. Se apoya en SPF y DKIM.</p>
+                    
+                    <h3>¿Cuándo pasa un correo DMARC?</h3>
+                    <p>Cuando pasa SPF o DKIM y ese resultado corresponde al mismo dominio que ve el destinatario en el campo &#34;De&#34;.</p>
+                    
+                    <h3>¿Cuáles son las políticas de DMARC?</h3>
+                    <p>Observar (none), que no cambia la entrega; cuarentena (quarantine), que pide tratar como sospechosos los correos que fallan; y rechazo (reject), que pide rechazarlos.</p>
+                    
+                    <h3>¿Gmail exige DMARC?</h3>
+                    <p>Sí, a quienes envían más de 5.000 correos al día a cuentas de Gmail, aunque sea en modo observación.</p>
+                    
+                    <h3>¿Qué pasa si mi dominio tiene dos registros DMARC?</h3>
+                    <p>DMARC deja de aplicarse. Si ya existe un registro, hay que editarlo, no crear otro.</p>
+                    
+                </section>
+                
             </div>
 
             <aside class="blog-cta" aria-label="Siguiente paso">

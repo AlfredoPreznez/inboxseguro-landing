@@ -1,0 +1,32 @@
+# InboxSeguro
+
+> InboxSeguro es una plataforma de control de envíos de correo y protección contra la suplantación de dominio para empresas B2B, de e-commerce y SaaS en LATAM. Muestra qué sistemas envían correo con el dominio de la empresa, alerta sobre cambios y riesgos, y guía la activación de DMARC sin cortar correos legítimos. Configuración e interfaz en español.
+
+## Qué hace InboxSeguro
+
+- Inventario de sistemas de envío: a partir de los reportes DMARC, identifica qué sistemas envían correo con tu dominio, usando PTR/ASN y detección de DKIM.
+- Gobierno por sistema: permite asignar un responsable y un estado (aprobado, inactivo o revisión) a cada sistema de envío.
+- Alertas: avisa cuando aparece un remitente nuevo, cuando el volumen sale del rango mensual esperado y cuando hay fallas de SPF/DKIM, que se clasifican como posible suplantación después de descartar reenvíos.
+- Detección de reenvíos (forwarding), para no confundir correos reenviados con suplantación.
+- Estado DNS: revisa SPF, DKIM, DMARC, BIMI, MTA-STS y la dirección RUA, con alertas ante cambios DNS no autorizados.
+- Listas negras: revisión cada hora contra 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer), con guía para solicitar la remoción.
+- Configuración DNS guiada con asistente de IA para avanzar de p=none a p=quarantine y p=reject.
+- Informe técnico mensual y PDF de gobernanza como apoyo para auditoría interna (no es una certificación).
+- Analítica semanal de envíos.
+
+## Para quién
+
+Empresas B2B, de e-commerce y SaaS en LATAM que envían correo con su dominio desde varias herramientas (correo corporativo, CRM, newsletter, facturación, tienda en línea, mesa de ayuda) y necesitan saber quién envía en su nombre.
+
+## Páginas principales
+
+- [Inicio](https://www.inboxseguro.com/): presentación de InboxSeguro.
+- [Plataforma](https://www.inboxseguro.com/plataforma): funciones de la plataforma.
+- [Blog](https://www.inboxseguro.com/blog/): guías prácticas sobre SPF, DKIM, DMARC y entregabilidad.
+
+## Artículos del blog
+
+- [Cómo saber si alguien suplanta tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/): detectar suplantación con reportes DMARC y separar servicios legítimos de falsos.
+- [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios sin dueño que envían con tu dominio y cómo encontrarlos.
+- [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y cómo avanzar por etapas.
+- [SPF: cómo no pasar el límite de 10 consultas](https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/): autorizar servicios en SPF sin superar el límite de la RFC 7208.

@@ -6,6 +6,18 @@ date: 2026-10-13
 updated: 2026-10-13
 tags: [dmarc, spf, dkim, suplantacion, entregabilidad, empresas]
 keyword_objetivo: qué es DMARC
+resumen: "DMARC es una regla publicada en tu dominio que indica qué hacer con los correos que no pueden probar que son tuyos, y que además te envía reportes. Para activarlo sin riesgos, empieza en modo observación (p=none), corrige tus herramientas que fallan según los reportes, pasa a cuarentena de forma gradual y llega a rechazo (p=reject) solo cuando los reportes estén limpios."
+faq:
+  - q: "¿Qué es DMARC?"
+    a: "Es una regla publicada en tu dominio que dice qué hacer con los correos que no pueden probar que son tuyos, y que además te envía reportes. Se apoya en SPF y DKIM."
+  - q: "¿Cuándo pasa un correo DMARC?"
+    a: "Cuando pasa SPF o DKIM y ese resultado corresponde al mismo dominio que ve el destinatario en el campo \"De\"."
+  - q: "¿Cuáles son las políticas de DMARC?"
+    a: "Observar (none), que no cambia la entrega; cuarentena (quarantine), que pide tratar como sospechosos los correos que fallan; y rechazo (reject), que pide rechazarlos."
+  - q: "¿Gmail exige DMARC?"
+    a: "Sí, a quienes envían más de 5.000 correos al día a cuentas de Gmail, aunque sea en modo observación."
+  - q: "¿Qué pasa si mi dominio tiene dos registros DMARC?"
+    a: "DMARC deja de aplicarse. Si ya existe un registro, hay que editarlo, no crear otro."
 draft: false
 ---
 

@@ -628,3 +628,14 @@
     padding-top: 1.75rem;
   }
 }
+
+/* AEO: respuesta corta y preguntas frecuentes */
+.blog-summary {
+    border-left: 4px solid #2563eb;
+    background: #eff6ff;
+    padding: 1rem 1.25rem;
+    border-radius: 0.5rem;
+    margin: 0 0 1.5rem;
+}
+.blog-summary p { margin: 0; }
+.blog-faq { margin-top: 2.5rem; }

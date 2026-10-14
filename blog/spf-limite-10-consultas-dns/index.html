@@ -82,6 +82,56 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cuál es el límite de consultas DNS de SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "10 consultas. Cuentan include, a, mx, ptr, exists y redirect; ip4, ip6 y all no cuentan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si mi registro SPF supera las 10 consultas?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SPF da error (permerror) para todos tus correos, no solo para el último servicio agregado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo tener dos registros SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Si hay dos, SPF da error. Para autorizar una herramienta nueva hay que editar la lista existente."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Conviene copiar las IP de un proveedor externo en mi SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Si el proveedor cambia sus IP, tus correos fallarán sin que nadie lo note. Usa IP fijas solo para servidores que tú controlas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo ayuda DKIM con el límite de SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Para pasar DMARC basta con SPF o DKIM. Si una herramienta firma con DKIM usando tu dominio, depende menos de tu lista SPF."
+      }
+    }
+  ]
+}
+</script>
+
+
 </head>
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
 <!-- chrome:nav -->
@@ -344,6 +394,11 @@
 
         <div class="blog-article-main">
             <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> SPF permite como máximo 10 consultas DNS al evaluar tu registro; cada include, y los include anidados de cada proveedor, suman. Si se supera el límite, SPF da error para todos tus correos, que pueden ir a spam o ser rechazados. Para no pasarte, quita herramientas que ya no usan, usa IP fijas solo para servidores propios, envía campañas masivas desde un subdominio y apóyate en DKIM.</p>
+                </div>
+                
                 <p>Cada vez que tu empresa contrata una herramienta que envía correos (un CRM, una newsletter, la facturación), alguien la agrega a tu registro SPF. Funciona hasta que un día deja de funcionar. Si el registro se llena demasiado, falla para todos tus correos, no solo para el último servicio. El resultado: correos que no llegan o que terminan en spam.</p>
 <h2  id="que-es-spf-en-una-frase">Qué es SPF, en una frase</h2>
 <p><strong>SPF</strong> es la lista, publicada en tu dominio, de los servidores que tienen permiso para enviar correos con tu nombre.</p>
@@ -386,6 +441,27 @@
 </ul>
 <h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
 <p>InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite asignar un responsable a cada uno y te guía para activar la protección contra suplantación sin cortar correos legítimos.</p>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿Cuál es el límite de consultas DNS de SPF?</h3>
+                    <p>10 consultas. Cuentan include, a, mx, ptr, exists y redirect; ip4, ip6 y all no cuentan.</p>
+                    
+                    <h3>¿Qué pasa si mi registro SPF supera las 10 consultas?</h3>
+                    <p>SPF da error (permerror) para todos tus correos, no solo para el último servicio agregado.</p>
+                    
+                    <h3>¿Puedo tener dos registros SPF?</h3>
+                    <p>No. Si hay dos, SPF da error. Para autorizar una herramienta nueva hay que editar la lista existente.</p>
+                    
+                    <h3>¿Conviene copiar las IP de un proveedor externo en mi SPF?</h3>
+                    <p>No. Si el proveedor cambia sus IP, tus correos fallarán sin que nadie lo note. Usa IP fijas solo para servidores que tú controlas.</p>
+                    
+                    <h3>¿Cómo ayuda DKIM con el límite de SPF?</h3>
+                    <p>Para pasar DMARC basta con SPF o DKIM. Si una herramienta firma con DKIM usando tu dominio, depende menos de tu lista SPF.</p>
+                    
+                </section>
+                
             </div>
 
             <aside class="blog-cta" aria-label="Siguiente paso">

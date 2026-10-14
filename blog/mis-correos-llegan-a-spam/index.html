@@ -82,6 +82,48 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Por qué mis correos llegan a spam si el contenido está bien?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cuando un servicio no está incluido en SPF o no firma con DKIM usando tu dominio, sus correos pueden fallar aunque el texto sea impecable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué revisan Gmail y Outlook antes de entregar un correo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Revisan SPF (servidores autorizados), DKIM (firma digital) y DMARC (la regla sobre qué hacer si un correo falla esas pruebas)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo tener más de un registro SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Un dominio solo puede tener un registro SPF. Crear un segundo registro en vez de editar el existente puede cortar correos legítimos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuándo conviene pasar DMARC a quarantine o reject?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Solo después de autorizar todos los servicios legítimos. Antes de eso, puede mandar a spam o bloquear sus propias facturas, avisos o newsletters."
+      }
+    }
+  ]
+}
+</script>
+
+
 </head>
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
 <!-- chrome:nav -->
@@ -320,6 +362,11 @@
 
         <div class="blog-article-main">
             <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> Si los correos de tu empresa llegan a spam, la causa no siempre es el contenido: a menudo hay servicios que envían con tu dominio sin estar autorizados en SPF ni firmar con DKIM, y que nadie administra. Para corregirlo, hagan una lista de todas las herramientas que envían correo, asignen un responsable a cada una, revisen su autorización en SPF y DKIM y activen DMARC primero en modo monitoreo.</p>
+                </div>
+                
                 <p>Si los correos de tu empresa terminan en spam, lo primero que se suele revisar es el contenido: palabras &ldquo;sospechosas&rdquo;, demasiados enlaces o imágenes pesadas. Eso influye, pero muchas veces la causa está en otra parte: hay servicios que envían correo con el dominio de la empresa y que nadie configuró ni administra.</p>
 <h2  id="tu-dominio-envia-correo-desde-mas-lugares-de-los-que-crees">Tu dominio envía correo desde más lugares de los que crees</h2>
 <p>Una empresa puede usar Google Workspace o Microsoft 365 para el correo diario, un CRM para ventas, una herramienta de marketing para newsletters, un sistema de facturación, la plataforma de su tienda en línea y una mesa de ayuda. Cada uno manda correos que dicen venir de <code>@ejemplo.cl</code>. Si alguno no está autorizado correctamente, Gmail u Outlook no pueden confirmar que esos mensajes son legítimos, y pueden mandarlos a spam o rechazarlos.</p>
@@ -349,6 +396,24 @@
 </blockquote>
 <h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
 <p>InboxSeguro muestra qué sistemas envían correo con el dominio de tu empresa, te permite asignar un responsable a cada uno y guía paso a paso para activar la protección contra la suplantación sin cortar los correos legítimos. Puedes ver los planes en <a href="/precios">precios</a>.</p>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿Por qué mis correos llegan a spam si el contenido está bien?</h3>
+                    <p>Cuando un servicio no está incluido en SPF o no firma con DKIM usando tu dominio, sus correos pueden fallar aunque el texto sea impecable.</p>
+                    
+                    <h3>¿Qué revisan Gmail y Outlook antes de entregar un correo?</h3>
+                    <p>Revisan SPF (servidores autorizados), DKIM (firma digital) y DMARC (la regla sobre qué hacer si un correo falla esas pruebas).</p>
+                    
+                    <h3>¿Puedo tener más de un registro SPF?</h3>
+                    <p>No. Un dominio solo puede tener un registro SPF. Crear un segundo registro en vez de editar el existente puede cortar correos legítimos.</p>
+                    
+                    <h3>¿Cuándo conviene pasar DMARC a quarantine o reject?</h3>
+                    <p>Solo después de autorizar todos los servicios legítimos. Antes de eso, puede mandar a spam o bloquear sus propias facturas, avisos o newsletters.</p>
+                    
+                </section>
+                
             </div>
 
             <aside class="blog-cta" aria-label="Siguiente paso">
