@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo verificar DKIM de tu dominio paso a paso | InboxSeguro</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Aprende a comprobar si DKIM está bien configurado en tu dominio: cómo encontrar el selector, revisar el registro DNS y detectar los errores más comunes.">
+    <link rel="canonical" href="https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/">
+    <meta property="og:title" content="Cómo verificar DKIM de tu dominio paso a paso | InboxSeguro">
+    <meta property="og:description" content="Aprende a comprobar si DKIM está bien configurado en tu dominio: cómo encontrar el selector, revisar el registro DNS y detectar los errores más comunes.">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/como-verificar-dkim-de-tu-dominio.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cómo verificar DKIM de tu dominio paso a paso | InboxSeguro">
+    <meta name="twitter:description" content="Aprende a comprobar si DKIM está bien configurado en tu dominio: cómo encontrar el selector, revisar el registro DNS y detectar los errores más comunes.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/como-verificar-dkim-de-tu-dominio.png">
+    <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css?v=1.0.7">
+    <link rel="stylesheet" href="/blog.css?v=1.2.3">
+    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Cómo verificar DKIM de tu dominio paso a paso",
+  "description": "Aprende a comprobar si DKIM está bien configurado en tu dominio: cómo encontrar el selector, revisar el registro DNS y detectar los errores más comunes.",
+  "datePublished": "2026-10-14",
+  "dateModified": "2026-10-14",
+  "author": {
+    "@type": "Organization",
+    "name": "InboxSeguro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InboxSeguro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.inboxseguro.com/logo.png"
+    }
+  },
+  "image": [
+    "https://www.inboxseguro.com/blog/covers/como-verificar-dkim-de-tu-dominio.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/"
+  },
+  "url": "https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.inboxseguro.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://www.inboxseguro.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Cómo verificar DKIM de tu dominio paso a paso",
+      "item": "https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué es el selector DKIM y dónde lo encuentro?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Es el nombre que identifica la clave con que se firmó un correo. Aparece en la cabecera DKIM-Signature de cualquier mensaje enviado, en la etiqueta s=. Con él se busca la clave pública en selector._domainkey.tudominio."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Por qué una herramienta dice que no tengo DKIM si mis correos sí se firman?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "DKIM no se puede listar desde el DNS sin conocer el selector. Si la herramienta prueba un selector distinto al que usa tu proveedor, no encontrará el registro aunque exista."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué tamaño de clave DKIM debo usar?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El RFC 8301 exige claves RSA de al menos 1024 bits y recomienda 2048. Google también recomienda claves de 2048 bits cuando el proveedor lo permite."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Basta con que DKIM dé pass para cumplir con DMARC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No necesariamente. DMARC exige alineación: el dominio de la firma (d=) debe coincidir con el dominio del remitente visible. Un servicio que firma con su propio dominio da pass en DKIM, pero no alinea con el tuyo."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Gmail, Yahoo y Outlook exigen DKIM?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Google pide SPF o DKIM a todos los remitentes y ambos, más DMARC, a quienes envían más de 5.000 mensajes diarios a cuentas Gmail. Yahoo y Microsoft (Outlook.com) tienen requisitos similares para remitentes de alto volumen."
+      }
+    }
+  ]
+}
+</script>
+
+
+</head>
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Email Security Check</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
+                                    <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador SPF</span>
+                                    </a>
+                                    <a href="/dmarc-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador DMARC</span>
+                                    </a>
+                                    <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Guías -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Guías de Seguridad</span>
+                                <div class="space-y-1">
+                                    <a href="/seguridad-correo-proveedores" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Seguridad para proveedores</span>
+                                    </a>
+                                    <a href="/informe-higiene-correo-corporativo" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Informe de higiene</span>
+                                    </a>
+                                    <a href="/control-envios-dominio" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Control de Envíos</span>
+                                    </a>
+                                    <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Detener Suplantación</span>
+                                    </a>
+                                    <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC empresas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso
+                        Clientes</a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                        target="_blank" rel="noopener noreferrer" data-seo-event="cta_demo_whatsapp"
+                        class="hidden sm:inline-flex items-center text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar
+                        demo</a>
+                    <a href="/precios"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors" data-seo-event="cta_precios">Ver
+                        planes</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                                <!-- Guías Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Guías de Seguridad</span>
+                    <a href="/seguridad-correo-proveedores" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Seguridad para proveedores</a>
+                    <a href="/informe-higiene-correo-corporativo" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Informe de higiene</a>
+                    <a href="/control-envios-dominio" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Control de Envíos</a>
+                    <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Detener Suplantación</a>
+                    <a href="/dmarc-para-pymes" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DMARC para empresas</a>
+                </div>
+
+                <!-- Herramientas Gratuitas Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
+                    <a href="/spf-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
+                    <a href="/dmarc-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
+                    <a href="/dkim-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro." target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()"
+                        class="block px-4 py-3 text-sm font-medium text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Cómo verificar DKIM de tu dominio paso a paso
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">Autenticación</span>
+            <h1 class="blog-article-h1">Cómo verificar DKIM de tu dominio paso a paso</h1>
+            <p class="blog-meta blog-meta--on-dark">
+                <time datetime="2026-10-14" data-updated="2026-10-14">
+                    14 de octubre de 2026
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>4 min de lectura</span>
+                
+            </p>
+            
+            <div class="blog-listen" data-nosnippet>
+                <p class="blog-listen-label" id="blog-listen-label-como-verificar-dkim-de-tu-dominio">
+                    Escuchar este artículo · 4:50
+                </p>
+                <audio
+                    class="blog-listen-audio"
+                    controls
+                    preload="none"
+                    controlslist="nodownload"
+                    aria-labelledby="blog-listen-label-como-verificar-dkim-de-tu-dominio"
+                >
+                    <source src="/blog/como-verificar-dkim-de-tu-dominio/audio.mp3" type="audio/mpeg">
+                    Tu navegador no admite audio HTML5.
+                </audio>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="blog-article-body blog-article-body--with-toc">
+        
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#como-funciona-dkim-en-dos-lineas">Cómo funciona DKIM en dos líneas</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-1-encuentra-el-selector-de-cada-servicio">Paso 1: encuentra el selector de cada servicio</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-2-revisa-el-registro-en-el-dns">Paso 2: revisa el registro en el DNS</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-3-confirma-que-la-firma-pasa-y-esta-alineada">Paso 3: confirma que la firma pasa y está alineada</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#errores-comunes-al-verificar-dkim">Errores comunes al verificar DKIM</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#por-que-importa-ahora">Por qué importa ahora</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+            </ol>
+        </details>
+        
+
+        <div class="blog-article-main">
+            <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> Para verificar DKIM necesitas el selector que usa cada servicio que envía correo con tu dominio y revisar que exista un registro TXT en selector._domainkey.tudominio con una clave pública válida. Luego confirma en un correo real que la firma da DKIM=pass y que el dominio de la firma (d=) coincide con el de tu remitente, que es lo que exige DMARC.</p>
+                </div>
+                
+                <p>DKIM es la firma digital que acompaña a cada correo y le permite al receptor comprobar que el mensaje viene de tu dominio y que no fue alterado en el camino. Es fácil suponer que &ldquo;ya está configurado&rdquo;, pero cada servicio que envía con tu dominio necesita su propia firma. Aquí verás cómo comprobarlo sin depender de suposiciones.</p>
+<h2  id="como-funciona-dkim-en-dos-lineas">Cómo funciona DKIM en dos líneas</h2>
+<p>El servicio que envía el correo lo firma con una clave privada y agrega una cabecera <code>DKIM-Signature</code>. El receptor lee esa cabecera, busca la clave pública en el DNS de tu dominio y valida la firma. Así lo define el <a href="https://www.rfc-editor.org/rfc/rfc6376">RFC 6376</a>.</p>
+<p>Dos etiquetas de la cabecera son clave:</p>
+<ul>
+<li><strong><code>d=</code></strong>: el dominio que firma, por ejemplo <code>ejemplo.cl</code>.</li>
+<li><strong><code>s=</code></strong>: el selector, el nombre de la clave usada, por ejemplo <code>google</code> o <code>selector1</code>.</li>
+</ul>
+<p>Con ambos datos, la clave pública se publica como registro TXT en <code>selector._domainkey.dominio</code>.</p>
+<h2  id="paso-1-encuentra-el-selector-de-cada-servicio">Paso 1: encuentra el selector de cada servicio</h2>
+<p>A diferencia de SPF o DMARC, DKIM no tiene una dirección fija en el DNS: no se puede revisar sin saber el selector. La forma más confiable de obtenerlo es mirar un correo real.</p>
+<ol>
+<li>Envía un correo desde el servicio que quieres revisar a una cuenta de Gmail.</li>
+<li>Abre el mensaje, entra al menú de tres puntos y elige <strong>Mostrar original</strong>.</li>
+<li>Busca la línea <code>DKIM-Signature</code> y anota los valores de <code>d=</code> y <code>s=</code>.</li>
+</ol>
+<p>Repite esto para cada herramienta que envía correo con tu dominio: correo corporativo, CRM, newsletters, facturación, tienda en línea y mesa de ayuda. Cada una puede usar un selector distinto. Como referencia, Google Workspace usa por defecto el selector <code>google</code> y Microsoft 365 usa <code>selector1</code> y <code>selector2</code>.</p>
+<h2  id="paso-2-revisa-el-registro-en-el-dns">Paso 2: revisa el registro en el DNS</h2>
+<p>Con el selector, consulta el registro. Puedes usar el <a href="/dkim-checker">verificador DKIM</a> o la línea de comandos:</p>
+<pre><code>dig TXT google._domainkey.ejemplo.cl +short
+</code></pre>
+<p>Un registro válido se ve así (la clave aparece abreviada):</p>
+<pre><code>v=DKIM1; k=rsa; p=MIIBIjANBgkqh...
+</code></pre>
+<p>Revisa tres cosas:</p>
+<ul>
+<li><strong>Que el registro exista</strong> en el nombre exacto <code>selector._domainkey.tudominio</code>.</li>
+<li><strong>Que <code>p=</code> no esté vacío.</strong> Según el RFC 6376, una clave vacía significa que fue revocada.</li>
+<li><strong>Que la clave tenga un tamaño adecuado.</strong> El <a href="https://www.rfc-editor.org/rfc/rfc8301">RFC 8301</a> exige al menos 1024 bits y recomienda 2048. Google también <a href="https://support.google.com/a/answer/174124">recomienda 2048 bits</a>.</li>
+</ul>
+<blockquote>
+<p><strong>Advertencia:</strong> algunos paneles DNS agregan el dominio automáticamente al final del nombre. Si escribes el nombre completo, puede quedar duplicado (<code>google._domainkey.ejemplo.cl.ejemplo.cl</code>) y la firma fallará.</p>
+</blockquote>
+<h2  id="paso-3-confirma-que-la-firma-pasa-y-esta-alineada">Paso 3: confirma que la firma pasa y está alineada</h2>
+<p>Que el registro exista no garantiza que la firma funcione. En el mismo <strong>Mostrar original</strong> de Gmail verás un resumen con el resultado de DKIM. Debe decir <code>PASS</code>.</p>
+<p>Luego compara el dominio de <code>d=</code> con el dominio de tu remitente. DMARC (<a href="https://www.rfc-editor.org/rfc/rfc7489">RFC 7489</a>) exige que estén alineados. Muchos servicios firman por defecto con su propio dominio: DKIM da pass, pero no cuenta para tu DMARC. Para corregirlo, configura en ese servicio la firma con tu dominio, normalmente agregando los registros CNAME o TXT que te indica.</p>
+<p>Revisa también el resto de la autenticación con el <a href="/domain-checker">verificador de dominio</a>.</p>
+<h2  id="errores-comunes-al-verificar-dkim">Errores comunes al verificar DKIM</h2>
+<ul>
+<li><strong>Probar un selector equivocado</strong> y concluir que no hay DKIM.</li>
+<li><strong>Revisar solo el correo corporativo</strong> y olvidar CRM, facturación o newsletters.</li>
+<li><strong>Dejar claves antiguas de 1024 bits</strong> cuando el proveedor ya permite 2048.</li>
+<li><strong>Firmar con el dominio del proveedor</strong> en vez del tuyo, sin alineación para DMARC.</li>
+<li><strong>Borrar un registro DKIM</strong> de un servicio que todavía envía correos.</li>
+</ul>
+<blockquote>
+<p><strong>Advertencia:</strong> antes de eliminar o rotar una clave DKIM, confirma que ningún servicio la sigue usando. Si la borras antes de tiempo, esos correos dejarán de pasar la verificación.</p>
+</blockquote>
+<h2  id="por-que-importa-ahora">Por qué importa ahora</h2>
+<p>Google <a href="https://support.google.com/a/answer/81126">pide a todos los remitentes</a> configurar SPF o DKIM, y a quienes envían más de 5.000 mensajes diarios a cuentas Gmail les exige SPF, DKIM y DMARC. <a href="https://senders.yahooinc.com/best-practices/">Yahoo</a> y <a href="https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730">Microsoft para Outlook.com</a> tienen requisitos similares para remitentes de alto volumen.</p>
+<h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
+<p>InboxSeguro arma un inventario de los sistemas que envían correo con tu dominio a partir de los reportes DMARC, identificándolos por PTR, ASN y firma DKIM, y te permite asignar un responsable y un estado a cada uno. También muestra el estado de SPF, DKIM, DMARC, BIMI, MTA-STS y RUA, y te avisa cuando aparece un remitente nuevo. Si necesitas corregir un registro, la configuración DNS guiada con asistente de IA te acompaña paso a paso. Puedes ver los planes en <a href="/precios">precios</a>.</p>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿Qué es el selector DKIM y dónde lo encuentro?</h3>
+                    <p>Es el nombre que identifica la clave con que se firmó un correo. Aparece en la cabecera DKIM-Signature de cualquier mensaje enviado, en la etiqueta s=. Con él se busca la clave pública en selector._domainkey.tudominio.</p>
+                    
+                    <h3>¿Por qué una herramienta dice que no tengo DKIM si mis correos sí se firman?</h3>
+                    <p>DKIM no se puede listar desde el DNS sin conocer el selector. Si la herramienta prueba un selector distinto al que usa tu proveedor, no encontrará el registro aunque exista.</p>
+                    
+                    <h3>¿Qué tamaño de clave DKIM debo usar?</h3>
+                    <p>El RFC 8301 exige claves RSA de al menos 1024 bits y recomienda 2048. Google también recomienda claves de 2048 bits cuando el proveedor lo permite.</p>
+                    
+                    <h3>¿Basta con que DKIM dé pass para cumplir con DMARC?</h3>
+                    <p>No necesariamente. DMARC exige alineación: el dominio de la firma (d=) debe coincidir con el dominio del remitente visible. Un servicio que firma con su propio dominio da pass en DKIM, pero no alinea con el tuyo.</p>
+                    
+                    <h3>¿Gmail, Yahoo y Outlook exigen DKIM?</h3>
+                    <p>Google pide SPF o DKIM a todos los remitentes y ambos, más DMARC, a quienes envían más de 5.000 mensajes diarios a cuentas Gmail. Yahoo y Microsoft (Outlook.com) tienen requisitos similares para remitentes de alto volumen.</p>
+                    
+                </section>
+                
+            </div>
+
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary"
+                       href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                       target="_blank" rel="noopener noreferrer"
+                       data-seo-event="cta_demo_whatsapp">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+
+        
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#como-funciona-dkim-en-dos-lineas">Cómo funciona DKIM en dos líneas</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-1-encuentra-el-selector-de-cada-servicio">Paso 1: encuentra el selector de cada servicio</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-2-revisa-el-registro-en-el-dns">Paso 2: revisa el registro en el DNS</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-3-confirma-que-la-firma-pasa-y-esta-alineada">Paso 3: confirma que la firma pasa y está alineada</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#errores-comunes-al-verificar-dkim">Errores comunes al verificar DKIM</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#por-que-importa-ahora">Por qué importa ahora</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+            </ol>
+        </nav>
+        
+    </div>
+</article>
+
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
+                            <li><a href="/dmarc-para-pymes" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas Gratuitas</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Email Sender Checker</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Email Security Check</a></li>
+                            <li><a href="/spf-checker" class="hover:text-blue-400 transition-colors">Verificador SPF</a></li>
+                            <li><a href="/dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
+                            <li><a href="/dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>
+                            <li><a href="/mx-lookup" class="hover:text-blue-400 transition-colors">MX Lookup</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>

@@ -6,6 +6,13 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
+      <title>Cómo verificar DKIM de tu dominio paso a paso</title>
+      <link>https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/</guid>
+      <pubDate>Wed, 14 Oct 2026 00:00:00 -0000</pubDate>
+      <description>Aprende a comprobar si DKIM está bien configurado en tu dominio: cómo encontrar el selector, revisar el registro DNS y detectar los errores más comunes.</description>
+    </item>
+    <item>
       <title>Cómo saber si alguien suplanta tu dominio</title>
       <link>https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/</guid>
