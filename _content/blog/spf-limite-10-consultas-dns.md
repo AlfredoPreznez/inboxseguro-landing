@@ -6,6 +6,18 @@ date: 2026-10-13
 updated: 2026-10-13
 tags: [spf, dns, entregabilidad, autenticacion, empresas]
 keyword_objetivo: límite de 10 consultas DNS SPF
+resumen: "SPF permite como máximo 10 consultas DNS al evaluar tu registro; cada include, y los include anidados de cada proveedor, suman. Si se supera el límite, SPF da error para todos tus correos, que pueden ir a spam o ser rechazados. Para no pasarte, quita herramientas que ya no usan, usa IP fijas solo para servidores propios, envía campañas masivas desde un subdominio y apóyate en DKIM."
+faq:
+  - q: "¿Cuál es el límite de consultas DNS de SPF?"
+    a: "10 consultas. Cuentan include, a, mx, ptr, exists y redirect; ip4, ip6 y all no cuentan."
+  - q: "¿Qué pasa si mi registro SPF supera las 10 consultas?"
+    a: "SPF da error (permerror) para todos tus correos, no solo para el último servicio agregado."
+  - q: "¿Puedo tener dos registros SPF?"
+    a: "No. Si hay dos, SPF da error. Para autorizar una herramienta nueva hay que editar la lista existente."
+  - q: "¿Conviene copiar las IP de un proveedor externo en mi SPF?"
+    a: "No. Si el proveedor cambia sus IP, tus correos fallarán sin que nadie lo note. Usa IP fijas solo para servidores que tú controlas."
+  - q: "¿Cómo ayuda DKIM con el límite de SPF?"
+    a: "Para pasar DMARC basta con SPF o DKIM. Si una herramienta firma con DKIM usando tu dominio, depende menos de tu lista SPF."
 draft: false
 ---
 

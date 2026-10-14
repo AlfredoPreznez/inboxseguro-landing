@@ -107,6 +107,8 @@ class Post:
     reading_time_min: int = 1
     word_count: int = 0
     toc: list[dict] = field(default_factory=list)
+    resumen: str = ""
+    faq: list[dict] = field(default_factory=list)
 
     @property
     def date_display(self) -> str:
@@ -254,6 +256,12 @@ def load_posts() -> list[Post]:
             source_path=path,
             reading_time_min=_reading_time_min(words),
             word_count=words,
+            resumen=str(meta.get("resumen") or "").strip(),
+            faq=[
+                {"q": str(i.get("q")).strip(), "a": str(i.get("a")).strip()}
+                for i in (meta.get("faq") or [])
+                if isinstance(i, dict) and i.get("q") and i.get("a")
+            ],
         )
         if not post.title or not post.slug or not post.date:
             raise SystemExit(f"Post incompleto (title/slug/date): {path}")
@@ -731,6 +739,21 @@ def build_html(posts_published: list[Post]) -> None:
                 {"@type": "ListItem", "position": 3, "name": post.title, "item": post.public_url},
             ],
         }
+        faq_json = None
+        if post.faq:
+            faq_page = {
+                "@context": "https://schema.org",
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": item["q"],
+                        "acceptedAnswer": {"@type": "Answer", "text": item["a"]},
+                    }
+                    for item in post.faq
+                ],
+            }
+            faq_json = json.dumps(faq_page, ensure_ascii=False, indent=2).replace("</", "<\\/")
         try:
             from generate_audio import get_audio_for_template
         except ImportError:
@@ -752,6 +775,7 @@ def build_html(posts_published: list[Post]) -> None:
             audio=audio,
             blog_posting_json=json.dumps(blog_posting, ensure_ascii=False, indent=2),
             breadcrumb_json=json.dumps(breadcrumb, ensure_ascii=False, indent=2),
+            faq_json=faq_json,
         )
         out_dir = BLOG_OUT / post.slug
         out_dir.mkdir(parents=True, exist_ok=True)

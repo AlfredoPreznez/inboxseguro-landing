@@ -82,6 +82,56 @@
 }
 </script>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Cómo sé si alguien está enviando correos falsos con mi dominio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Revisa los reportes DMARC. Las fuentes que nadie en tu empresa reconoce y que fallan las pruebas son una señal de posible suplantación."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Activar DMARC en modo observación afecta la entrega de mis correos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. En modo observación (p=none) no cambia la entrega de ningún correo; solo empiezas a recibir reportes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cada cuánto llegan los reportes DMARC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Normalmente una vez al día. Incluyen tanto los correos que pasaron las pruebas como los que fallaron."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Si una herramienta mía falla SPF o DKIM, ¿es un ataque?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Es un servicio legítimo mal configurado y sus correos corren riesgo de no llegar. Hay que corregirlo antes de bloquear nada."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuándo debo pasar a cuarentena o rechazo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Solo cuando todas tus herramientas legítimas pasen las pruebas. Se puede aplicar primero a una parte de los correos y subir de forma gradual."
+      }
+    }
+  ]
+}
+</script>
+
+
 </head>
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
 <!-- chrome:nav -->
@@ -332,6 +382,11 @@
 
         <div class="blog-article-main">
             <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> Para saber si alguien suplanta tu dominio, activa DMARC en modo observación (p=none) con una dirección rua y lee los reportes que envían Gmail, Outlook y otros receptores. Si en ellos aparecen fuentes que nadie en tu empresa reconoce y que fallan SPF y DKIM, es una señal de posible suplantación. Antes de concluir que es un ataque, descarta tus propias herramientas mal configuradas.</p>
+                </div>
+                
                 <p>Un cliente te reenvía una factura que tu empresa nunca emitió. Un proveedor pregunta por un cambio de cuenta bancaria que nadie pidió. Los dos correos dicen venir de <code>@ejemplo.cl</code>. Puede que alguien esté enviando correos falsos a tu nombre. Hay una forma de confirmarlo sin adivinar.</p>
 <h2  id="por-que-alguien-puede-enviar-correos-a-tu-nombre">Por qué alguien puede enviar correos a tu nombre</h2>
 <p>El correo permite escribir cualquier dirección en el campo &ldquo;De&rdquo;. Por eso existen tres controles que ayudan a Gmail, Outlook y otros a distinguir un correo real de uno falso:</p>
@@ -376,6 +431,27 @@
 </ul>
 <h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
 <p>InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite asignar un responsable a cada uno y te guía para activar la protección contra suplantación sin cortar correos legítimos.</p>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿Cómo sé si alguien está enviando correos falsos con mi dominio?</h3>
+                    <p>Revisa los reportes DMARC. Las fuentes que nadie en tu empresa reconoce y que fallan las pruebas son una señal de posible suplantación.</p>
+                    
+                    <h3>¿Activar DMARC en modo observación afecta la entrega de mis correos?</h3>
+                    <p>No. En modo observación (p=none) no cambia la entrega de ningún correo; solo empiezas a recibir reportes.</p>
+                    
+                    <h3>¿Cada cuánto llegan los reportes DMARC?</h3>
+                    <p>Normalmente una vez al día. Incluyen tanto los correos que pasaron las pruebas como los que fallaron.</p>
+                    
+                    <h3>Si una herramienta mía falla SPF o DKIM, ¿es un ataque?</h3>
+                    <p>No. Es un servicio legítimo mal configurado y sus correos corren riesgo de no llegar. Hay que corregirlo antes de bloquear nada.</p>
+                    
+                    <h3>¿Cuándo debo pasar a cuarentena o rechazo?</h3>
+                    <p>Solo cuando todas tus herramientas legítimas pasen las pruebas. Se puede aplicar primero a una parte de los correos y subir de forma gradual.</p>
+                    
+                </section>
+                
             </div>
 
             <aside class="blog-cta" aria-label="Siguiente paso">

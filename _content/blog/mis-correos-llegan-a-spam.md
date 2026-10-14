@@ -9,6 +9,16 @@ updated: 2026-10-13
 tags: [entregabilidad, spam, spf, dkim, dmarc]
 keyword_objetivo: mis correos llegan a spam
 featured: true
+resumen: "Si los correos de tu empresa llegan a spam, la causa no siempre es el contenido: a menudo hay servicios que envían con tu dominio sin estar autorizados en SPF ni firmar con DKIM, y que nadie administra. Para corregirlo, hagan una lista de todas las herramientas que envían correo, asignen un responsable a cada una, revisen su autorización en SPF y DKIM y activen DMARC primero en modo monitoreo."
+faq:
+  - q: "¿Por qué mis correos llegan a spam si el contenido está bien?"
+    a: "Cuando un servicio no está incluido en SPF o no firma con DKIM usando tu dominio, sus correos pueden fallar aunque el texto sea impecable."
+  - q: "¿Qué revisan Gmail y Outlook antes de entregar un correo?"
+    a: "Revisan SPF (servidores autorizados), DKIM (firma digital) y DMARC (la regla sobre qué hacer si un correo falla esas pruebas)."
+  - q: "¿Puedo tener más de un registro SPF?"
+    a: "No. Un dominio solo puede tener un registro SPF. Crear un segundo registro en vez de editar el existente puede cortar correos legítimos."
+  - q: "¿Cuándo conviene pasar DMARC a quarantine o reject?"
+    a: "Solo después de autorizar todos los servicios legítimos. Antes de eso, puede mandar a spam o bloquear sus propias facturas, avisos o newsletters."
 draft: false
 ---
 

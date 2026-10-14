@@ -6,6 +6,18 @@ date: 2026-10-13
 updated: 2026-10-13
 tags: [suplantacion, spoofing, dmarc, spf, dkim, empresas]
 keyword_objetivo: cómo saber si alguien suplanta tu dominio
+resumen: "Para saber si alguien suplanta tu dominio, activa DMARC en modo observación (p=none) con una dirección rua y lee los reportes que envían Gmail, Outlook y otros receptores. Si en ellos aparecen fuentes que nadie en tu empresa reconoce y que fallan SPF y DKIM, es una señal de posible suplantación. Antes de concluir que es un ataque, descarta tus propias herramientas mal configuradas."
+faq:
+  - q: "¿Cómo sé si alguien está enviando correos falsos con mi dominio?"
+    a: "Revisa los reportes DMARC. Las fuentes que nadie en tu empresa reconoce y que fallan las pruebas son una señal de posible suplantación."
+  - q: "¿Activar DMARC en modo observación afecta la entrega de mis correos?"
+    a: "No. En modo observación (p=none) no cambia la entrega de ningún correo; solo empiezas a recibir reportes."
+  - q: "¿Cada cuánto llegan los reportes DMARC?"
+    a: "Normalmente una vez al día. Incluyen tanto los correos que pasaron las pruebas como los que fallaron."
+  - q: "Si una herramienta mía falla SPF o DKIM, ¿es un ataque?"
+    a: "No. Es un servicio legítimo mal configurado y sus correos corren riesgo de no llegar. Hay que corregirlo antes de bloquear nada."
+  - q: "¿Cuándo debo pasar a cuarentena o rechazo?"
+    a: "Solo cuando todas tus herramientas legítimas pasen las pruebas. Se puede aplicar primero a una parte de los correos y subir de forma gradual."
 draft: false
 ---
 

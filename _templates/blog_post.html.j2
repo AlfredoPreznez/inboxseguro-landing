@@ -6,6 +6,11 @@
 <script type="application/ld+json">
 {{ breadcrumb_json|safe }}
 </script>
+{% if faq_json %}
+<script type="application/ld+json">
+{{ faq_json|safe }}
+</script>
+{% endif %}
 {% endblock %}
 {% block main %}
 <article class="blog-article">
@@ -63,7 +68,21 @@
 
         <div class="blog-article-main">
             <div class="blog-prose">
+                {% if post.resumen %}
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> {{ post.resumen }}</p>
+                </div>
+                {% endif %}
                 {{ body_html|safe }}
+                {% if post.faq %}
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    {% for item in post.faq %}
+                    <h3>{{ item.q }}</h3>
+                    <p>{{ item.a }}</p>
+                    {% endfor %}
+                </section>
+                {% endif %}
             </div>
 
             <aside class="blog-cta" aria-label="Siguiente paso">
