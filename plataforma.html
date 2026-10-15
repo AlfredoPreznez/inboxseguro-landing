@@ -268,12 +268,12 @@
                                 <p class="text-[10px] uppercase font-bold text-emerald-700/80 mt-1">Autorizados</p>
                             </div>
                             <div class="rounded-xl bg-amber-50 border border-amber-200 p-4 text-center">
-                                <p class="text-2xl font-black text-amber-700">0</p>
-                                <p class="text-[10px] uppercase font-bold text-amber-700/80 mt-1">Alertas</p>
+                                <p class="text-2xl font-black text-amber-700">1</p>
+                                <p class="text-[10px] uppercase font-bold text-amber-700/80 mt-1">Alerta</p>
                             </div>
-                            <div class="rounded-xl bg-red-100 border border-red-500/30 p-4 text-center">
-                                <p class="text-2xl font-black text-red-600">8</p>
-                                <p class="text-[10px] uppercase font-bold text-red-600 mt-1">No autorizados</p>
+                            <div class="rounded-xl bg-red-50 border border-red-500/30 p-4 text-center">
+                                <p class="text-2xl font-black text-red-600">1</p>
+                                <p class="text-[10px] uppercase font-bold text-red-600 mt-1">No autorizado</p>
                             </div>
                         </div>
                         <div class="space-y-2 text-sm">
@@ -283,11 +283,11 @@
                             </div>
                             <div class="flex justify-between items-center bg-white rounded-lg border border-slate-200 px-4 py-3">
                                 <span class="font-semibold text-slate-800">Resend</span>
-                                <span class="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-full">En rango</span>
+                                <span class="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-1 rounded-full">Sobre el rango</span>
                             </div>
                             <div class="flex justify-between items-center bg-white rounded-lg border border-slate-200 px-4 py-3">
                                 <span class="font-semibold text-slate-800">Infraestructura desconocida</span>
-                                <span class="text-xs font-bold text-rose-700 bg-rose-50 px-2 py-1 rounded-full">No autorizado</span>
+                                <span class="text-xs font-bold text-red-600 bg-red-50 px-2 py-1 rounded-full">No autorizado</span>
                             </div>
                         </div>
                     </div>
@@ -387,13 +387,14 @@
                         <p class="text-sm text-slate-600 leading-relaxed">Resumen ejecutivo con control de envíos, score y eventos del mes. Aviso por correo con enlace — sin PDF adjunto.</p>
                     </div>
 
-                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
+                    <a href="/inboxscore" class="block bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
                         <div class="w-11 h-11 rounded-xl bg-blue-100 flex items-center justify-center mb-4 text-blue-600 group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-shield-halved text-lg"></i>
                         </div>
                         <h3 class="font-bold text-base text-slate-900 mb-2">Estado de protección</h3>
                         <p class="text-sm text-slate-600 leading-relaxed">InboxScore y estado SPF/DKIM/DMARC en un vistazo. La configuración DNS queda en segundo plano, accesible cuando la necesitas.</p>
-                    </div>
+                        <span class="inline-block mt-3 text-sm font-bold text-brand-600">Calcula tu InboxScore &rarr;</span>
+                    </a>
 
                     <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
                         <div class="w-11 h-11 rounded-xl bg-emerald-100 flex items-center justify-center mb-4 text-emerald-600 group-hover:scale-110 transition-transform">
@@ -411,13 +412,14 @@
                         <p class="text-sm text-slate-600 leading-relaxed">Pregunta en español sobre tus servicios de envío, alertas o DNS. Respuestas con contexto de tu cuenta.</p>
                     </div>
 
-                    <div class="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
+                    <a href="/verificar-lista-negra" class="block bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all group">
                         <div class="w-11 h-11 rounded-xl bg-teal-100 flex items-center justify-center mb-4 text-teal-600 group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-chart-line text-lg"></i>
                         </div>
                         <h3 class="font-bold text-base text-slate-900 mb-2">Reputación y listas negras</h3>
                         <p class="text-sm text-slate-600 leading-relaxed">Monitorización de IPs frente a RBL. Alertas si tu dominio aparece listado.</p>
-                    </div>
+                        <span class="inline-block mt-3 text-sm font-bold text-brand-600">Verificar listas negras &rarr;</span>
+                    </a>
 
                 </div>
             </div>

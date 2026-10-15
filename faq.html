@@ -36,6 +36,14 @@
   "mainEntity": [
     {
       "@type": "Question",
+      "name": "¿Qué hace distinto a InboxSeguro?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No es una herramienta técnica para especialistas. Es una plataforma de protección que cualquier empresa puede activar hoy: muestra qué sistemas envían correo con tu dominio, avisa cuando aparece uno nuevo y te guía para protegerlo sin interrumpir la operación."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "¿Necesito entregarles mis contraseñas?",
       "acceptedAnswer": {
         "@type": "Answer",
@@ -275,15 +283,19 @@
                 <div class="text-center mb-12">
                     <h2 class="text-3xl font-bold text-slate-900 mb-4">Preguntas Frecuentes</h2>
                     <p class="text-lg text-slate-600 font-medium italic">"La falta de control no avisa. La visibilidad sí."</p>
-                    <div class="mt-6 p-4 bg-slate-50 rounded-lg border border-slate-200 inline-block shadow-sm">
-                        <p class="text-sm text-slate-600">
-                            <span class="font-bold text-brand-600">¿Qué hace distinto a InboxSeguro?</span><br>
-                            No es una herramienta técnica para especialistas. Es una plataforma de protección que cualquier empresa puede activar hoy.
-                        </p>
-                    </div>
                 </div>
 
                 <div class="space-y-4">
+
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
+                        <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-blue-50 text-brand-600 flex items-center justify-center text-xs font-bold flex-shrink-0">?</div>
+                            ¿Qué hace distinto a InboxSeguro?
+                        </h3>
+                        <p class="text-slate-600 text-sm leading-relaxed pl-9">
+                            No es una herramienta técnica para especialistas. Es una plataforma de protección que cualquier empresa puede activar hoy: muestra qué sistemas envían correo con tu dominio, avisa cuando aparece uno nuevo y te guía para protegerlo sin interrumpir la operación.
+                        </p>
+                    </div>
 
                     <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm hover:border-blue-200 transition-colors">
                         <h3 class="font-bold text-slate-900 mb-2 flex items-start gap-3">
@@ -359,6 +371,7 @@
                         </h3>
                         <p class="text-slate-600 text-sm leading-relaxed pl-9">
                             Monitorizamos tus IPs frente a listas negras (RBL). Si apareces listado, verás alertas en el panel. Suele deberse a spam saliente o IPs compartidas del proveedor; revisa el detalle y contacta a tu proveedor de envío si es necesario.
+                            <a href="/verificar-lista-negra" class="text-brand-600 hover:underline font-medium">Verifica gratis si tu dominio está en una lista negra</a>.
                         </p>
                     </div>
 

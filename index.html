@@ -294,7 +294,7 @@
                     InboxSeguro muestra qué sistemas envían correo con tu dominio, avisa cuando aparece uno nuevo y te guía para protegerlo sin interrumpir la operación.
                 </p>
 
-                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-16 items-center">
+                <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-6 items-center">
                     <a href="/quien-puede-enviar-correos"
                         data-seo-event="cta_sender_checker"
                         class="group relative px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 transition-all hover:-translate-y-1 overflow-hidden">
@@ -311,7 +311,13 @@
                         class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white text-lg font-semibold rounded-xl border border-white/10 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
                         <i class="fa-regular fa-calendar-check"></i> Agendar una demo
                     </a>
+                    <a href="/inboxscore"
+                        data-seo-event="cta_inboxscore"
+                        class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white text-lg font-semibold rounded-xl border border-white/10 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
+                        <i class="fa-solid fa-gauge-high"></i> Calcula el InboxScore de tu dominio, gratis
+                    </a>
                 </div>
+                <p class="mb-16 text-sm text-slate-400">Prueba de 14 días sin tarjeta al conectar tu dominio.</p>
 
                 <!-- Marquee de Sistemas Compatibles (Movido arriba) -->
                 <div class="mt-24 mb-6 overflow-hidden relative">
@@ -587,9 +593,49 @@
                     </p>
                 </div>
 
-                <!-- 4 Grid of Premium Glassmorphic Cards -->
+                <!-- Grid of Premium Glassmorphic Cards -->
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     
+                    <!-- Card: InboxScore -->
+                    <div class="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-300 -z-10"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center mb-6 text-emerald-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-gauge-high text-xl"></i>
+                            </div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <h3 class="text-xl font-bold text-slate-900">InboxScore</h3>
+                                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold uppercase text-[10px] leading-none">Nuevo</span>
+                            </div>
+                            <p class="text-slate-500 text-sm leading-relaxed font-light mb-6">
+                                Puntaje de 0 a 100 según SPF, DKIM, DMARC y listas negras, con el desglose y qué corregir.
+                            </p>
+                        </div>
+                        <a href="/inboxscore" class="inline-flex items-center gap-2 text-sm font-bold text-emerald-600 hover:text-emerald-700 transition-colors mt-auto">
+                            Calcular InboxScore &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Card: Verificador de listas negras -->
+                    <div class="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-300 -z-10"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-amber-50 flex items-center justify-center mb-6 text-amber-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-ban text-xl"></i>
+                            </div>
+                            <div class="flex items-center gap-2 mb-2">
+                                <h3 class="text-xl font-bold text-slate-900">Verificador de listas negras</h3>
+                                <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold uppercase text-[10px] leading-none">Nuevo</span>
+                            </div>
+                            <p class="text-slate-500 text-sm leading-relaxed font-light mb-6">
+                                Revisa si la IP o los servidores de correo de tu dominio aparecen en listas negras (RBL). Consulta DNS pública.
+                            </p>
+                        </div>
+                        <a href="/verificar-lista-negra" class="inline-flex items-center gap-2 text-sm font-bold text-amber-600 hover:text-amber-700 transition-colors mt-auto">
+                            Verificar listas negras &rarr;
+                        </a>
+                    </div>
+
                     <!-- Card 1: Email Security Check -->
                     <div class="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full">
                         <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-300 -z-10"></div>
