@@ -38,7 +38,8 @@
           {"@type": "ListItem", "position": 3, "name": "SPF Checker", "url": "https://www.inboxseguro.com/spf-checker"},
           {"@type": "ListItem", "position": 4, "name": "DMARC Checker", "url": "https://www.inboxseguro.com/dmarc-checker"},
           {"@type": "ListItem", "position": 5, "name": "DKIM Checker", "url": "https://www.inboxseguro.com/dkim-checker"},
-          {"@type": "ListItem", "position": 6, "name": "MX Lookup", "url": "https://www.inboxseguro.com/mx-lookup"}
+          {"@type": "ListItem", "position": 6, "name": "MX Lookup", "url": "https://www.inboxseguro.com/mx-lookup"},
+          {"@type": "ListItem", "position": 7, "name": "Verificar lista negra", "url": "https://www.inboxseguro.com/verificar-lista-negra"}
         ]
       }
     }
@@ -117,6 +118,9 @@
                                     </a>
                                     <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>MX Lookup</span>
+                                    </a>
+                                    <a href="/verificar-lista-negra" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificar lista negra</span>
                                     </a>
                                 </div>
                             </div>
@@ -217,6 +221,7 @@
                     <a href="/dkim-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
                     <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
+                    <a href="/verificar-lista-negra" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificar lista negra</a>
                 </div>
 
                 <a href="/contacto" onclick="closeMobileMenu()"
@@ -280,6 +285,11 @@
                     <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">MX Lookup</p>
                     <h3 class="text-xl font-bold text-slate-900 mb-2">Registros MX</h3>
                     <p class="text-sm text-slate-600 leading-relaxed">Muestra hostname y prioridad. El MX indica dónde se recibe el correo y no demuestra quién lo envía.</p>
+                </a>
+                <a href="/verificar-lista-negra" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 transition-colors">
+                    <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Blacklist Checker</p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Listas negras (RBL)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Revisa si una IP o los servidores de correo de tu dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer.</p>
                 </a>
             </div>
         </div>
@@ -354,6 +364,7 @@
                             <li><a href="/dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
                             <li><a href="/dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>
                             <li><a href="/mx-lookup" class="hover:text-blue-400 transition-colors">MX Lookup</a></li>
+                            <li><a href="/verificar-lista-negra" class="hover:text-blue-400 transition-colors">Verificar lista negra</a></li>
                         </ul>
                     </div>
                     <div>
