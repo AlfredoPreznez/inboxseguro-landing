@@ -280,8 +280,8 @@
                                 <p class="text-xs text-slate-400 mt-1.5">facturado mensualmente · cancela cuando quieras</p>
                             </div>
 
-                            <a href="https://panel.inboxseguro.com/register?plan=starter" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all shadow-sm hover:shadow mb-8">
-                                Elegir Esencial
+                            <a href="https://panel.inboxseguro.com/register?plan=starter" aria-label="Probar 14 días gratis el plan Esencial" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all shadow-sm hover:shadow mb-8">
+                                Probar 14 días gratis
                             </a>
 
                             <div class="space-y-3.5 text-xs md:text-sm text-slate-600">
@@ -364,8 +364,8 @@
                                 </p>
                             </div>
 
-                            <a href="https://panel.inboxseguro.com/register?plan=founding" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-8">
-                                Elegir Fundador
+                            <a href="https://panel.inboxseguro.com/register?plan=founding" aria-label="Probar 14 días gratis el plan Fundador" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-8">
+                                Probar 14 días gratis
                             </a>
 
                             <div class="space-y-3.5 text-xs md:text-sm text-slate-700">
@@ -489,16 +489,16 @@
 
                 <!-- Boton Comparar features -->
                 <div class="text-center">
-                    <button id="toggleTableBtn" onclick="toggleComparisonTable()" class="inline-flex items-center gap-2 px-6 py-3 border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold rounded-xl text-xs transition-all shadow-sm cursor-pointer">
+                    <a href="#comparativa" id="toggleTableBtn" onclick="event.preventDefault(); toggleComparisonTable()" aria-controls="comparativa" class="inline-flex items-center gap-2 px-6 py-3 border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold rounded-xl text-xs transition-all shadow-sm cursor-pointer">
                         <span>Comparar todas las características</span>
                         <svg id="tableArrow" class="w-4 h-4 transition-transform duration-200 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Tabla Comparativa Colapsable -->
-                <div id="comparisonTableWrapper" class="hidden overflow-x-auto max-w-2xl mx-auto mt-10 rounded-2xl border border-slate-200 shadow-lg bg-white">
+                <div id="comparativa" class="hidden scroll-mt-24 overflow-x-auto max-w-2xl mx-auto mt-10 rounded-2xl border border-slate-200 shadow-lg bg-white">
                     <table class="w-full min-w-[500px] border-collapse text-left text-xs md:text-sm text-slate-700">
                         <thead>
                             <tr class="bg-slate-900 text-white">
@@ -709,8 +709,12 @@
         }
 
 
+        document.addEventListener('DOMContentLoaded', function () {
+            if (window.location.hash === '#comparativa') toggleComparisonTable();
+        });
+
         function toggleComparisonTable() {
-            const wrapper = document.getElementById('comparisonTableWrapper');
+            const wrapper = document.getElementById('comparativa');
             const arrow = document.getElementById('tableArrow');
             
             if (wrapper.classList.contains('hidden')) {

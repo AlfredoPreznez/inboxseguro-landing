@@ -62,7 +62,7 @@
       "mainEntity": [
         {"@type": "Question", "name": "¿Estas herramientas modifican el DNS de mi dominio?", "acceptedAnswer": {"@type": "Answer", "text": "No. Consultan información DNS pública y muestran una lectura. No publican ni cambian registros."}},
         {"@type": "Question", "name": "¿Un análisis gratuito confirma quién está enviando correo ahora?", "acceptedAnswer": {"@type": "Answer", "text": "No. Muestra servicios y registros reconocibles en ese momento. Saber qué fuentes envían de verdad requiere monitoreo continuo."}},
-        {"@type": "Question", "name": "¿Qué herramienta conviene usar primero?", "acceptedAnswer": {"@type": "Answer", "text": "Si quieres ver servicios reconocibles, empieza por Email Sender Checker. Si quieres el estado de SPF, DKIM, DMARC y MX, usa Email Security Check."}}
+        {"@type": "Question", "name": "¿Qué herramienta conviene usar primero?", "acceptedAnswer": {"@type": "Answer", "text": "Para una visión general rápida, empieza por InboxScore: resume SPF, DKIM, DMARC y listas negras en un puntaje con qué corregir. Si quieres ver servicios reconocibles, usa Email Sender Checker. Si quieres el estado de SPF, DKIM, DMARC y MX, usa Email Security Check."}}
       ]
     }
     </script>
@@ -263,7 +263,12 @@
             <h2 id="analizar-title" class="text-2xl font-extrabold text-slate-900 mb-2">Analizar</h2>
             <p class="text-slate-600 mb-8 max-w-2xl">Empieza por la pregunta que tienes ahora. Desde cada resultado puedes pasar a otra herramienta o a InboxSeguro si necesitas seguimiento continuo.</p>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 bg-slate-50 transition-colors">
+                <a href="/inboxscore" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 bg-slate-50 transition-colors">
+                    <p class="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">InboxScore <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 font-bold uppercase text-[10px] leading-none">Nuevo</span></p>
+                    <h3 class="text-xl font-bold text-slate-900 mb-2">Puntaje del dominio (0-100)</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Resume SPF, DKIM, DMARC y listas negras en un puntaje con desglose, qué corregir y enlace para compartir. Señal externa, no garantía de entrega.</p>
+                </a>
+                <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 transition-colors">
                     <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">Email Sender Checker</p>
                     <h3 class="text-xl font-bold text-slate-900 mb-2">¿Quién puede enviar correos con tu dominio?</h3>
                     <p class="text-sm text-slate-600 leading-relaxed">Identifica servicios reconocibles en SPF, DKIM y MX, como Google Workspace, Microsoft 365 o Amazon SES. Muestra la señal, no la actividad real.</p>
@@ -298,11 +303,6 @@
                     <h3 class="text-xl font-bold text-slate-900 mb-2">Listas negras (RBL)</h3>
                     <p class="text-sm text-slate-600 leading-relaxed">Revisa si una IP o los servidores de correo de tu dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer.</p>
                 </a>
-                <a href="/inboxscore" data-seo-event="cta_related_tool" class="block p-6 rounded-2xl border border-slate-200 hover:border-blue-300 transition-colors">
-                    <p class="text-xs font-bold uppercase tracking-wider text-blue-600 mb-2">InboxScore</p>
-                    <h3 class="text-xl font-bold text-slate-900 mb-2">Puntaje del dominio (0-100)</h3>
-                    <p class="text-sm text-slate-600 leading-relaxed">Resume SPF, DKIM, DMARC y listas negras en un puntaje con desglose, qué corregir y enlace para compartir. Señal externa, no garantía de entrega.</p>
-                </a>
             </div>
         </div>
     </section>
@@ -313,7 +313,7 @@
             <div class="space-y-4">
                 <article class="p-5 rounded-xl border border-slate-200 bg-white"><h3 class="font-bold text-slate-900 mb-2">¿Estas herramientas modifican el DNS de mi dominio?</h3><p class="text-sm text-slate-600 leading-relaxed">No. Consultan información pública y muestran una lectura. No publican ni cambian registros.</p></article>
                 <article class="p-5 rounded-xl border border-slate-200 bg-white"><h3 class="font-bold text-slate-900 mb-2">¿Un análisis gratuito confirma quién está enviando correo ahora?</h3><p class="text-sm text-slate-600 leading-relaxed">No. Muestra servicios y registros reconocibles en ese momento. Saber qué fuentes envían de verdad requiere monitoreo continuo.</p></article>
-                <article class="p-5 rounded-xl border border-slate-200 bg-white"><h3 class="font-bold text-slate-900 mb-2">¿Qué herramienta conviene usar primero?</h3><p class="text-sm text-slate-600 leading-relaxed">Si quieres ver servicios reconocibles, empieza por el <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">Email Sender Checker</a>. Si quieres el estado de SPF, DKIM, DMARC y MX, usa el <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">Email Security Check</a>.</p></article>
+                <article class="p-5 rounded-xl border border-slate-200 bg-white"><h3 class="font-bold text-slate-900 mb-2">¿Qué herramienta conviene usar primero?</h3><p class="text-sm text-slate-600 leading-relaxed">Para una visión general rápida, empieza por <a href="/inboxscore" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">InboxScore</a>: resume SPF, DKIM, DMARC y listas negras en un puntaje con qué corregir. Si quieres ver servicios reconocibles, usa el <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">Email Sender Checker</a>. Si quieres el estado de SPF, DKIM, DMARC y MX, usa el <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-blue-700 hover:underline">Email Security Check</a>.</p></article>
             </div>
         </div>
     </section>
