@@ -62,6 +62,12 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://www.inboxseguro.com/verificar-lista-negra</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://www.inboxseguro.com/seguridad-correo-proveedores</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>

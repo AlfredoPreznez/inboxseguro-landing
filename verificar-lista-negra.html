@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar lista negra: ¿tu dominio o IP está en blacklist? | InboxSeguro</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Verifica gratis si la IP o los servidores de correo de tu dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL o Backscatterer. Consulta DNS pública.">
+    <link rel="canonical" href="https://www.inboxseguro.com/verificar-lista-negra">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_419">
+    <meta property="og:url" content="https://www.inboxseguro.com/verificar-lista-negra">
+    <meta property="og:title" content="Verificar lista negra: ¿tu dominio o IP está en blacklist? | InboxSeguro">
+    <meta property="og:description" content="Verifica gratis si la IP o los servidores de correo de tu dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL o Backscatterer. Consulta DNS pública.">
+    <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Verificar lista negra: ¿tu dominio o IP está en blacklist? | InboxSeguro">
+    <meta name="twitter:description" content="Verifica gratis si la IP o los servidores de correo de tu dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL o Backscatterer. Consulta DNS pública.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css?v=1.0.7">
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Verificador de listas negras","url":"https://www.inboxseguro.com/verificar-lista-negra","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Consulta si una IP o los servidores de correo de un dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer."}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Inicio","item":"https://www.inboxseguro.com/"},
+      {"@type":"ListItem","position":2,"name":"Herramientas","item":"https://www.inboxseguro.com/herramientas"},
+      {"@type":"ListItem","position":3,"name":"Verificar lista negra","item":"https://www.inboxseguro.com/verificar-lista-negra"}
+    ]}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"¿Qué es una lista negra de correo (RBL o DNSBL)?","acceptedAnswer":{"@type":"Answer","text":"Es una base de datos pública de direcciones IP asociadas a spam, rebotes no solicitados o equipos comprometidos. Muchos servidores de correo la consultan por DNS antes de aceptar un mensaje."}},
+      {"@type":"Question","name":"¿Se lista el dominio o la IP?","acceptedAnswer":{"@type":"Answer","text":"Las seis listas que revisa esta herramienta trabajan con direcciones IP. Si escribes un dominio, buscamos las IP de sus servidores MX y de su registro A y revisamos cada una."}},
+      {"@type":"Question","name":"Mi IP aparece listada, ¿qué hago?","acceptedAnswer":{"@type":"Answer","text":"Primero corrige la causa: una cuenta comprometida, un formulario abusado o rebotes enviados a remitentes falsos. Después pide la remoción en el sitio de la lista. Si la IP es de tu proveedor de correo, avísale a él."}},
+      {"@type":"Question","name":"¿Por qué una lista aparece como no verificada?","acceptedAnswer":{"@type":"Answer","text":"Algunas listas limitan o rechazan consultas desde resolvers DNS públicos, o pueden no responder a tiempo. En ese caso no mostramos un resultado que no podamos confirmar."}},
+      {"@type":"Question","name":"¿Estar limpio aquí garantiza que mis correos llegan a la bandeja de entrada?","acceptedAnswer":{"@type":"Answer","text":"No. Revisamos seis listas en el momento de la consulta. La entrega también depende de SPF, DKIM, DMARC, el contenido y la reputación que cada proveedor calcula por su cuenta."}}
+    ]}
+    </script>
+</head>
+<body class="bg-slate-900 text-slate-200 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Email Security Check</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
+                                    <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador SPF</span>
+                                    </a>
+                                    <a href="/dmarc-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador DMARC</span>
+                                    </a>
+                                    <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
+                                    </a>
+                                    <a href="/verificar-lista-negra" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificar lista negra</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Guías -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Guías de Seguridad</span>
+                                <div class="space-y-1">
+                                    <a href="/seguridad-correo-proveedores" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Seguridad para proveedores</span>
+                                    </a>
+                                    <a href="/informe-higiene-correo-corporativo" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Informe de higiene</span>
+                                    </a>
+                                    <a href="/control-envios-dominio" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Control de Envíos</span>
+                                    </a>
+                                    <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Detener Suplantación</span>
+                                    </a>
+                                    <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC empresas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso
+                        Clientes</a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro."
+                        target="_blank" rel="noopener noreferrer" data-seo-event="cta_demo_whatsapp"
+                        class="hidden sm:inline-flex items-center text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar
+                        demo</a>
+                    <a href="/precios"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors" data-seo-event="cta_precios">Ver
+                        planes</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                                <!-- Guías Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Guías de Seguridad</span>
+                    <a href="/seguridad-correo-proveedores" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Seguridad para proveedores</a>
+                    <a href="/informe-higiene-correo-corporativo" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Informe de higiene</a>
+                    <a href="/control-envios-dominio" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Control de Envíos</a>
+                    <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Detener Suplantación</a>
+                    <a href="/dmarc-para-pymes" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DMARC para empresas</a>
+                </div>
+
+                <!-- Herramientas Gratuitas Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
+                    <a href="/spf-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
+                    <a href="/dmarc-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
+                    <a href="/dkim-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
+                    <a href="/verificar-lista-negra" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificar lista negra</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://wa.me/56928615416?text=Hola%2C%20quisiera%20agendar%20una%20demo%20de%20InboxSeguro." target="_blank" rel="noopener noreferrer" onclick="closeMobileMenu()"
+                        class="block px-4 py-3 text-sm font-medium text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950"></div>
+        <div class="max-w-3xl w-full mx-auto px-4 relative z-10 text-center">
+            <nav aria-label="Miga de pan" class="text-xs text-slate-400 mb-6">
+                <a href="/" class="hover:text-white">Inicio</a>
+                <span aria-hidden="true"> / </span>
+                <a href="/herramientas" class="hover:text-white">Herramientas</a>
+                <span aria-hidden="true"> / </span>
+                <span class="text-slate-200">Verificar lista negra</span>
+            </nav>
+            <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">Blacklist Checker gratuito</div>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">¿Tu dominio o IP está en una lista negra?</h1>
+            <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">Revisa al instante si la IP, o los servidores de correo de tu dominio, aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer.</p>
+            <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12 text-left">
+                <form id="rblForm" class="flex flex-col sm:flex-row gap-3">
+                    <label for="rblInput" class="sr-only">Dominio o IP</label>
+                    <input type="text" id="rblInput" inputmode="url" autocomplete="off" spellcheck="false" placeholder="ej: tuempresa.com o 203.0.113.10" required class="flex-1 px-5 py-4 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 text-lg">
+                    <button type="submit" id="rblBtn" class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 whitespace-nowrap">Verificar</button>
+                </form>
+                <p id="rblError" class="hidden mt-4 p-3 rounded-xl bg-red-500/10 border border-red-400/25 text-red-200 text-sm" role="alert"></p>
+                <p class="text-xs text-slate-500 mt-4">Consulta DNS pública desde tu navegador. Acepta IPv4 o dominio; con un dominio revisamos las IP de sus MX y de su registro A (hasta 6).</p>
+                <div id="rblLoading" class="hidden mt-8 text-center">
+                    <div class="inline-block w-8 h-8 border-4 border-brand-500 border-t-transparent rounded-full animate-spin"></div>
+                    <p class="mt-3 text-slate-400 text-sm">Consultando 6 listas negras...</p>
+                </div>
+                <div id="rblResults" aria-live="polite" class="hidden mt-8 border-t border-white/10 pt-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4">
+                        <h2 class="text-white font-bold text-lg">Resultado para <span id="rblTarget" class="text-brand-400 break-all"></span></h2>
+                        <div id="rblBadge" class="px-3 py-1 rounded-full text-xs font-bold self-start"></div>
+                    </div>
+                    <p id="rblSummary" class="text-sm text-slate-300 leading-relaxed mb-4"></p>
+                    <div id="rblTableWrap" class="space-y-4"></div>
+                    <div class="mt-6 p-5 rounded-xl bg-slate-900/60 border border-white/10">
+                        <h3 class="text-white font-bold mb-2">Una revisión es una foto del momento</h3>
+                        <p class="text-slate-300 text-sm mb-4">InboxSeguro revisa tus IP contra estas 6 listas cada hora, te alerta si apareces y te indica cómo pedir la remoción.</p>
+                        <div class="flex flex-col sm:flex-row gap-3">
+                            <a href="/domain-checker" data-seo-event="cta_related_tool" class="inline-flex justify-center px-5 py-2.5 bg-white/10 border border-white/20 text-white font-semibold rounded-xl text-sm">Email Security Check</a>
+                            <a href="/plataforma" data-seo-event="cta_platform" class="inline-flex justify-center px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm">Ver monitoreo continuo</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-16 bg-white text-slate-800">
+        <div class="max-w-3xl mx-auto px-4 space-y-8">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900 mb-3">Qué es una lista negra de correo</h2>
+                <p class="text-slate-600 text-sm leading-relaxed">Una lista negra (RBL o DNSBL) es una base de datos pública de direcciones IP asociadas a spam, rebotes no solicitados o equipos comprometidos. Muchos servidores de correo la consultan por DNS antes de aceptar un mensaje. Si la IP que envía tu correo aparece listada, parte de tus mensajes puede terminar en spam o ser rechazada.</p>
+            </div>
+            <div class="border-t border-slate-200 pt-6">
+                <h2 class="text-2xl font-bold text-slate-900 mb-3">Cómo funciona la verificación</h2>
+                <p class="text-slate-600 text-sm leading-relaxed">Invertimos los octetos de la IP y consultamos ese nombre en la zona DNS de cada lista. Por ejemplo, 203.0.113.10 se consulta como 10.113.0.203.bl.spamcop.net. Si la zona responde con una dirección 127.x, la IP está listada; si responde que el nombre no existe, no lo está. Con un dominio, primero buscamos las IP de sus servidores MX y de su registro A.</p>
+            </div>
+            <div class="border-t border-slate-200 pt-6">
+                <h2 class="text-2xl font-bold text-slate-900 mb-3">Las 6 listas que revisamos</h2>
+                <ul class="text-slate-600 text-sm leading-relaxed space-y-2 list-disc pl-5">
+                    <li><strong>Spamcop</strong> (bl.spamcop.net): IP reportadas por usuarios que recibieron spam. Las entradas expiran solas si cesan los reportes.</li>
+                    <li><strong>Barracuda</strong> (b.barracudacentral.org): lista de reputación de Barracuda Networks. Ofrece un formulario de remoción.</li>
+                    <li><strong>PSBL</strong> (psbl.surriel.com): IP detectadas por trampas de spam. Permite remoción desde su sitio.</li>
+                    <li><strong>Mailspike</strong> (bl.mailspike.net): IP con mala reputación según su red de sensores.</li>
+                    <li><strong>DroneBL</strong> (dnsbl.dronebl.org): IP de equipos comprometidos, proxies abiertos o bots.</li>
+                    <li><strong>Backscatterer</strong> (ips.backscatterer.org): servidores que envían rebotes o respuestas automáticas a remitentes falsificados.</li>
+                </ul>
+            </div>
+            <div class="border-t border-slate-200 pt-6">
+                <h2 class="text-2xl font-bold text-slate-900 mb-3">Si apareces listado</h2>
+                <ol class="text-slate-600 text-sm leading-relaxed space-y-2 list-decimal pl-5">
+                    <li>Confirma de quién es la IP. Si pertenece a tu proveedor de correo (por ejemplo, un servidor compartido), avísale a él.</li>
+                    <li>Corrige la causa: cuentas con contraseña filtrada, formularios web abusados, equipos infectados o rebotes enviados a remitentes falsos.</li>
+                    <li>Solicita la remoción en el sitio de la lista. Algunas listas, como Spamcop, retiran la entrada de forma automática al cesar la actividad.</li>
+                    <li>Vuelve a verificar. Los cambios pueden tardar en reflejarse por la caché DNS.</li>
+                </ol>
+            </div>
+            <div class="border-t border-slate-200 pt-6">
+                <h2 class="text-2xl font-bold text-slate-900 mb-3">Monitoreo continuo con InboxSeguro</h2>
+                <p class="text-slate-600 text-sm leading-relaxed">Una revisión manual solo muestra el estado de ese momento. InboxSeguro revisa tus IP contra estas 6 listas cada hora, te avisa en el panel si apareces y te guía para solicitar la remoción. Conoce más en <a href="/plataforma" class="text-brand-600 hover:underline">la plataforma</a> o revisa SPF, DKIM y DMARC con el <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Email Security Check</a>.</p>
+            </div>
+            <div class="border-t border-slate-200 pt-6">
+                <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas frecuentes</h2>
+                <div class="space-y-4">
+                    <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">¿Qué es una lista negra de correo (RBL o DNSBL)?</h3><p class="text-slate-600 text-sm leading-relaxed">Es una base de datos pública de direcciones IP asociadas a spam, rebotes no solicitados o equipos comprometidos. Muchos servidores de correo la consultan por DNS antes de aceptar un mensaje.</p></article>
+                    <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">¿Se lista el dominio o la IP?</h3><p class="text-slate-600 text-sm leading-relaxed">Las seis listas que revisa esta herramienta trabajan con direcciones IP. Si escribes un dominio, buscamos las IP de sus servidores MX y de su registro A y revisamos cada una.</p></article>
+                    <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">Mi IP aparece listada, ¿qué hago?</h3><p class="text-slate-600 text-sm leading-relaxed">Primero corrige la causa: una cuenta comprometida, un formulario abusado o rebotes enviados a remitentes falsos. Después pide la remoción en el sitio de la lista. Si la IP es de tu proveedor de correo, avísale a él.</p></article>
+                    <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">¿Por qué una lista aparece como no verificada?</h3><p class="text-slate-600 text-sm leading-relaxed">Algunas listas limitan o rechazan consultas desde resolvers DNS públicos, o pueden no responder a tiempo. En ese caso no mostramos un resultado que no podamos confirmar.</p></article>
+                    <article class="p-4 bg-slate-50 border border-slate-200 rounded-xl"><h3 class="font-bold text-slate-900 text-sm mb-2">¿Estar limpio aquí garantiza que mis correos llegan a la bandeja de entrada?</h3><p class="text-slate-600 text-sm leading-relaxed">No. Revisamos seis listas en el momento de la consulta. La entrega también depende de SPF, DKIM, DMARC, el contenido y la reputación que cada proveedor calcula por su cuenta.</p></article>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
+                            <li><a href="/dmarc-para-pymes" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas Gratuitas</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Email Sender Checker</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Email Security Check</a></li>
+                            <li><a href="/spf-checker" class="hover:text-blue-400 transition-colors">Verificador SPF</a></li>
+                            <li><a href="/dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
+                            <li><a href="/dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>
+                            <li><a href="/mx-lookup" class="hover:text-blue-400 transition-colors">MX Lookup</a></li>
+                            <li><a href="/verificar-lista-negra" class="hover:text-blue-400 transition-colors">Verificar lista negra</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script src="/rbl-check.js?v=1"></script>
+<script>
+function showRblError(message) {
+    var box = document.getElementById('rblError');
+    if (!message) { box.textContent = ''; box.classList.add('hidden'); return; }
+    box.textContent = message;
+    box.classList.remove('hidden');
+}
+function escapeHtml(value) {
+    return String(value).replace(/[&<>"']/g, function (char) {
+        return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char];
+    });
+}
+var RBL_STATUS = {
+    listed: { label: 'Listada', cls: 'bg-red-500/20 text-red-300' },
+    clean: { label: 'No listada', cls: 'bg-emerald-500/20 text-emerald-300' },
+    unknown: { label: 'No verificada', cls: 'bg-slate-500/20 text-slate-200' }
+};
+function renderRbl(data) {
+    var wrap = document.getElementById('rblTableWrap');
+    wrap.innerHTML = data.rows.map(function (row) {
+        var trs = row.results.map(function (r, i) {
+            var list = data.lists[i];
+            var st = RBL_STATUS[r.status];
+            var detail = r.status === 'listed'
+                ? '<a href="' + list.info + '" target="_blank" rel="noopener nofollow" class="text-brand-400 hover:underline">Ver detalle y remoción</a>'
+                : '';
+            return '<tr class="border-t border-white/10"><td class="px-4 py-3 text-sm text-white">' + escapeHtml(list.name) + '<div class="font-mono text-xs text-slate-500">' + escapeHtml(list.zone) + '</div></td><td class="px-4 py-3"><span class="px-2 py-0.5 rounded-full text-xs font-bold ' + st.cls + '">' + st.label + '</span></td><td class="px-4 py-3 text-xs">' + detail + '</td></tr>';
+        }).join('');
+        return '<div class="overflow-x-auto rounded-xl border border-white/10"><div class="px-4 py-2 bg-white/5 text-sm"><span class="font-mono text-white">' + escapeHtml(row.ip) + '</span> <span class="text-slate-400 text-xs">(' + escapeHtml(row.source) + ')</span></div><table class="w-full text-left"><tbody>' + trs + '</tbody></table></div>';
+    }).join('');
+}
+document.getElementById('rblForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+    showRblError('');
+    var btn = document.getElementById('rblBtn');
+    var results = document.getElementById('rblResults');
+    btn.disabled = true;
+    btn.textContent = 'Consultando...';
+    results.classList.add('hidden');
+    document.getElementById('rblLoading').classList.remove('hidden');
+    try {
+        var data = await window.InboxSeguroRBL.check(document.getElementById('rblInput').value);
+        document.getElementById('rblTarget').textContent = data.input;
+        var badge = document.getElementById('rblBadge');
+        var summary = document.getElementById('rblSummary');
+        if (!data.rows.length) {
+            badge.textContent = 'Sin IP';
+            badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-slate-500/20 text-slate-200';
+            summary.textContent = 'No encontramos IPv4 en los registros MX ni A de este dominio, así que no hay IP que revisar.';
+        } else {
+            var all = [];
+            data.rows.forEach(function (r) { all = all.concat(r.results); });
+            var listed = all.filter(function (r) { return r.status === 'listed'; }).length;
+            var unknown = all.filter(function (r) { return r.status === 'unknown'; }).length;
+            if (listed) {
+                badge.textContent = listed + (listed === 1 ? ' listado' : ' listados');
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-red-500/20 text-red-300';
+                summary.textContent = 'Al menos una IP aparece en una lista negra. Corrige la causa y solicita la remoción en el sitio de cada lista.';
+            } else {
+                badge.textContent = unknown ? 'Sin listados confirmados' : 'No listada';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-emerald-500/20 text-emerald-300';
+                summary.textContent = unknown
+                    ? 'No encontramos listados, pero algunas listas no respondieron y quedaron sin verificar.'
+                    : 'Ninguna IP revisada aparece en las 6 listas en este momento.';
+            }
+        }
+        renderRbl(data);
+        results.classList.remove('hidden');
+        if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('rbl');
+        if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('rbl', 'success');
+    } catch (err) {
+        if (err && err.code === 'invalid') {
+            showRblError('Escribe un dominio (empresa.com) o una IPv4 (203.0.113.10).');
+            if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('rbl', 'invalid');
+        } else {
+            showRblError('No pudimos completar la consulta. Verifica tu conexión e inténtalo de nuevo.');
+            if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('rbl', 'error');
+        }
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Verificar';
+        document.getElementById('rblLoading').classList.add('hidden');
+    }
+});
+function toggleMobileMenu() {
+    document.getElementById('mobileMenu').classList.toggle('hidden');
+    document.getElementById('menuIconOpen').classList.toggle('hidden');
+    document.getElementById('menuIconClose').classList.toggle('hidden');
+}
+function closeMobileMenu() {
+    document.getElementById('mobileMenu').classList.add('hidden');
+    document.getElementById('menuIconOpen').classList.remove('hidden');
+    document.getElementById('menuIconClose').classList.add('hidden');
+}
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>
