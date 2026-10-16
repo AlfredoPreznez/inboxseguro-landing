@@ -413,6 +413,7 @@
     </footer>
     </div>
     <!-- /chrome:footer -->
+    <script src="/notify.js?v=1"></script>
     <script>
       (function(){
         const form=document.getElementById('systemsForm');
@@ -454,6 +455,12 @@
             const dmarcText=data.signals.dmarc_exists?'DMARC: política '+data.signals.dmarc_policy:'DMARC no detectado';
             document.getElementById('technicalSummary').textContent=spfText+' · '+dmarcText;
             results.classList.remove('hidden');
+            if(window.InboxSeguroNotify)window.InboxSeguroNotify.notifyToolUse({
+              tool:'Email Sender Checker',
+              domain:data.domain||domain,
+              score:document.getElementById('resultHeadline').textContent,
+              results:{systems:(data.systems||[]).map(function(system){return system.name;}).join(', ')||'ninguno'}
+            });
             if(typeof window.trackCheckerSubmit==='function')window.trackCheckerSubmit('sending_systems');
             if(typeof window.trackCheckerOutcome==='function')window.trackCheckerOutcome('sending_systems','success',{result_count:data.count});
           }catch(err){

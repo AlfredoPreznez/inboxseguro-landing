@@ -512,6 +512,7 @@
 
     <script src="/dns-utils.js?v=1.0.2"></script>
     <script src="/email-security-check.js?v=1"></script>
+    <script src="/notify.js?v=1"></script>
     <script>
         function normalizeDomain(value) {
             return String(value || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0].split(':')[0];
@@ -568,22 +569,19 @@
                 document.getElementById('diagDomain').textContent = dominio;
 
                 const states = [spfResult, dmarcResult, dkimResult, mxResult];
-                fetch('https://panel.inboxseguro.com/api/public/diagnosis-notify', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        domain: dominio,
-                        score: states.map(function (item, index) {
-                            return ['SPF', 'DMARC', 'DKIM', 'MX'][index] + ': ' + item.label;
-                        }).join(' · '),
-                        results: {
-                            spf: spfResult.text,
-                            dmarc: dmarcResult.text,
-                            dkim: dkimResult.text,
-                            mx: mxResult.text
-                        }
-                    })
-                }).catch(function (err) { console.warn('Notify failed', err); });
+                if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+                    tool: 'Email Security Check',
+                    domain: dominio,
+                    score: states.map(function (item, index) {
+                        return ['SPF', 'DMARC', 'DKIM', 'MX'][index] + ': ' + item.label;
+                    }).join(' · '),
+                    results: {
+                        spf: spfResult.text,
+                        dmarc: dmarcResult.text,
+                        dkim: dkimResult.text,
+                        mx: mxResult.text
+                    }
+                });
 
                 resultsDiv.classList.remove('hidden');
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('domain');

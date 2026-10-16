@@ -411,6 +411,7 @@
 <script src="/dns-utils.js?v=1"></script>
 <script src="/rbl-check.js?v=1"></script>
 <script src="/inboxscore.js?v=1"></script>
+<script src="/notify.js?v=1"></script>
 <script>
 (function () {
     var S = window.InboxScore;
@@ -474,7 +475,21 @@
         if (push) history.replaceState(null, '', location.pathname + '?d=' + encodeURIComponent(d));
         $('isBtn').disabled = true; $('isBtn').textContent = 'Consultando...';
         $('isResults').classList.add('hidden'); $('isLoading').classList.remove('hidden');
-        try { var res = await run(d); window.__inboxscore = res; render(res); }
+        try {
+            var res = await run(d);
+            window.__inboxscore = res;
+            render(res);
+            if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+                tool: 'InboxScore',
+                domain: res.domain,
+                score: res.total.score === null ? 'sin datos' : res.total.score + '/100',
+                results: {
+                    inboxscore: res.sections.map(function (s) {
+                        return s.name + ': ' + (s.points === null ? '—' : s.points + '/' + s.max);
+                    }).join(' · ')
+                }
+            });
+        }
         catch (e) { $('isError').textContent = 'No pudimos completar las consultas DNS. Intenta de nuevo en unos segundos.'; $('isError').classList.remove('hidden'); }
         finally { $('isLoading').classList.add('hidden'); $('isBtn').disabled = false; $('isBtn').textContent = 'Calcular puntaje'; }
     }

@@ -394,6 +394,7 @@
     </div>
     <!-- /chrome:footer -->
 <script src="/rbl-check.js?v=1"></script>
+<script src="/notify.js?v=1"></script>
 <script>
 function showRblError(message) {
     var box = document.getElementById('rblError');
@@ -461,6 +462,12 @@ document.getElementById('rblForm').addEventListener('submit', async function (ev
             }
         }
         renderRbl(data);
+        if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+            tool: 'Verificar lista negra',
+            domain: data.input,
+            score: badge.textContent,
+            results: { rbl: summary.textContent }
+        });
         results.classList.remove('hidden');
         if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('rbl');
         if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('rbl', 'success');
