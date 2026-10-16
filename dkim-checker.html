@@ -294,6 +294,16 @@
                             <span id="badge-dkim"
                                 class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
                         </div>
+                        <div id="dkimService" class="hidden rounded-lg bg-white/5 border border-white/5 p-4">
+                            <p id="txt-dkim-service" class="text-sm text-slate-200"></p>
+                            <p id="txt-dkim-meaning" class="text-sm text-slate-400 mt-4"></p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 p-5 rounded-xl bg-slate-900/60 border border-white/10 text-left">
+                        <h4 class="text-white font-bold mb-2">¿Quieres ver todos los servicios que pueden enviar correos con tu dominio?</h4>
+                        <p class="text-slate-300 text-sm mt-4 mb-4 leading-relaxed">El Email Sender Checker muestra los servicios reconocibles en el DNS público.</p>
+                        <a id="dkimSendersLink" href="/quien-puede-enviar-correos" data-seo-event="cta_sending_systems" class="inline-flex px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm">Ver servicios de envío</a>
                     </div>
 
                     <!-- SEO/UX CTA Box leading to domain-checker -->
@@ -507,7 +517,7 @@
     <!-- /chrome:footer -->
 
     <script src="/dns-utils.js?v=1.0.3"></script>
-    <script src="/dkim-lookup.js?v=1"></script>
+    <script src="/dkim-lookup.js?v=2"></script>
     <script src="/notify.js?v=1"></script>
     <script>
         function showDkimError(message) {
@@ -561,6 +571,7 @@
                 }
 
                 setResult('dkim', dkimResult);
+                setServiceExplanation(dkimResult);
                 document.getElementById('diagDomain').textContent = dominio;
 
                 const scoreEl = document.getElementById('diagScore');
@@ -611,6 +622,21 @@
             badge.textContent = result.label;
             badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 ' + tone[2] + ' ' + tone[1];
             txt.textContent = result.text;
+        }
+
+        function setServiceExplanation(result) {
+            const box = document.getElementById('dkimService');
+            const service = document.getElementById('txt-dkim-service');
+            const meaning = document.getElementById('txt-dkim-meaning');
+            if (!result || !result.serviceNote) {
+                service.textContent = '';
+                meaning.textContent = '';
+                box.classList.add('hidden');
+                return;
+            }
+            service.textContent = result.serviceNote;
+            meaning.textContent = result.businessNote || '';
+            box.classList.remove('hidden');
         }
 
         // MOBILE MENU
