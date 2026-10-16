@@ -508,6 +508,7 @@
 
     <script src="/dns-utils.js?v=1.0.3"></script>
     <script src="/dkim-lookup.js?v=1"></script>
+    <script src="/notify.js?v=1"></script>
     <script>
         function showDkimError(message) {
             const box = document.getElementById('dkimError');
@@ -572,6 +573,13 @@
                 const style = styles[dkimResult.status] || styles.unknown;
                 scoreEl.textContent = style[0];
                 scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + style[1];
+
+                if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+                    tool: 'DKIM Checker',
+                    domain: dominio,
+                    score: 'DKIM: ' + dkimResult.label,
+                    results: { dkim: dkimResult.text }
+                });
 
                 resultsDiv.classList.remove('hidden');
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('dkim');

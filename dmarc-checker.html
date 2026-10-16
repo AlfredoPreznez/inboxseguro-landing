@@ -529,6 +529,7 @@
     <!-- /chrome:footer -->
 
     <script src="/dns-utils.js?v=1.0.2"></script>
+    <script src="/notify.js?v=1"></script>
     <script>
         async function handleDiagnostico(event) {
             event.preventDefault();
@@ -563,6 +564,13 @@
                 const scoreStyle = scoreStyles[dmarcResult.status] || ['No detectado', 'bg-slate-500/20 text-slate-300'];
                 scoreEl.textContent = scoreStyle[0];
                 scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + scoreStyle[1];
+
+                if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+                    tool: 'DMARC Checker',
+                    domain: dominio,
+                    score: 'DMARC: ' + dmarcResult.label,
+                    results: { dmarc: dmarcResult.text }
+                });
 
                 resultsDiv.classList.remove('hidden');
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('dmarc');
