@@ -60,3 +60,186 @@ body {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+/* Spacing polish.
+   Several utilities used in the HTML are absent from the compiled sheet
+   (mb-5, mb-9, mt-5, mt-7, mt-14, gap-5, pt-32, py-14, space-y-10, px-7, …),
+   so those gaps collapsed to zero. Values below follow the Tailwind scale,
+   then result areas and card grids get a little more air (16–32px). */
+.mb-5 { margin-bottom: 1.25rem; }
+.mb-9 { margin-bottom: 2.25rem; }
+.mt-5 { margin-top: 1.25rem; }
+.mt-7 { margin-top: 1.75rem; }
+.mt-14 { margin-top: 3.5rem; }
+.pb-2 { padding-bottom: 0.5rem; }
+.pt-32 { padding-top: 8rem; }
+.px-7 { padding-left: 1.75rem; padding-right: 1.75rem; }
+.py-14 { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+.gap-5 { gap: 1.5rem; }
+.space-y-10 > :not(:last-child) { margin-bottom: 2.5rem; }
+@media (min-width: 40rem) {
+  .sm\:justify-between { justify-content: space-between; }
+  .sm\:justify-start { justify-content: flex-start; }
+  .sm\:text-left { text-align: left; }
+}
+@media (min-width: 48rem) {
+  .md\:pb-24 { padding-bottom: 6rem; }
+}
+@media (min-width: 64rem) {
+  .lg\:pb-20 { padding-bottom: 5rem; }
+}
+
+#systemsResults > .tool-result-head,
+#diagResults > :first-child,
+#rblResults > :first-child,
+#mxResults > :first-child,
+#isResults > :first-child {
+  margin-bottom: 1.5rem;
+}
+
+#systemsResults > p,
+#diagResults > p,
+#rblResults > p,
+#mxResults > p {
+  margin-top: 1.5rem;
+  line-height: 1.7;
+}
+
+#systemsResults > .rounded-xl {
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.35rem;
+  line-height: 1.7;
+}
+
+#systemsResults > div:last-child,
+#diagResults > div:last-child,
+#rblResults > div:last-child,
+#mxResults > div:last-child,
+#isResults > div:last-child,
+#isFixesWrap,
+#isLeadWrap,
+#diagResults #resultMessageContainer {
+  margin-top: 2rem;
+}
+
+#diagResults [id^="row-"] {
+  padding: 1.15rem 1.25rem;
+}
+
+#diagResults [id^="txt-"] {
+  line-height: 1.7;
+}
+
+#diagResults .space-y-3 > :not(:last-child),
+#isBreakdown > :not(:last-child),
+#rblTableWrap > :not(:last-child) {
+  margin-bottom: 1.25rem;
+}
+
+#isBreakdown > div,
+#emptySystems {
+  padding: 1.25rem 1.35rem;
+}
+
+#isBreakdown p,
+#isResults .text-xs,
+.system-card p {
+  line-height: 1.75;
+}
+
+#isBreakdown p {
+  margin-top: 0.7rem;
+}
+
+#rblTableWrap td,
+#mxTableWrap th,
+#mxTableWrap td {
+  padding-top: 0.95rem;
+  padding-bottom: 0.95rem;
+}
+
+#systemsResults > div:last-child > p + p,
+#diagResults > div:last-child > p,
+#rblResults > div:last-child > p,
+#mxResults > div:last-child > p,
+#isResults > div:last-child > p,
+#isFixesWrap > ol,
+#isLeadWrap > p {
+  margin-top: 1rem;
+  line-height: 1.7;
+}
+
+#diagResults > div:last-child > h3,
+#diagResults > div:last-child > h4,
+#rblResults > div:last-child > h3,
+#mxResults > div:last-child > h3,
+#isResults > div:last-child > h3,
+#isFixesWrap > h3,
+#isLeadWrap > h3,
+#systemsResults > div:last-child > p:first-child {
+  margin-bottom: 0.35rem;
+}
+
+#diagResults > div:last-child > .flex,
+#rblResults > div:last-child > .flex,
+#mxResults > div:last-child > .flex,
+#isResults > div:last-child > .flex,
+#systemsResults > div:last-child > .flex,
+#isLeadWrap form {
+  margin-top: 1.25rem;
+}
+
+article.system-card {
+  gap: 1rem;
+  padding: 1.2rem 1.35rem;
+}
+
+.system-grid {
+  gap: 1.5rem;
+}
+
+main .grid.gap-5 > a,
+main .grid.gap-5 > article {
+  padding: 2rem;
+}
+
+main .grid.gap-5 > a > p:first-child,
+main .grid.gap-5 > article > :first-child {
+  margin-bottom: 0.85rem;
+}
+
+main .grid.gap-5 > a h3,
+main .grid.gap-5 > article h3 {
+  margin-top: 0.15rem;
+  margin-bottom: 0.85rem;
+}
+
+main .grid.gap-4:has(> a.rounded-xl),
+main .grid.gap-4:has(> article.rounded-xl),
+main .grid.gap-3:has(> a.rounded-xl) {
+  gap: 1.5rem;
+}
+
+main .grid.gap-4 > a.rounded-xl,
+main .grid.gap-4 > article.rounded-xl,
+main .grid.gap-3 > a.rounded-xl {
+  padding: 1.5rem 1.6rem;
+}
+
+main .space-y-4:has(> article.rounded-xl) > :not(:last-child) {
+  margin-bottom: 1.35rem;
+}
+
+main .space-y-4 > article.rounded-xl {
+  padding: 1.4rem 1.5rem;
+}
+
+main .grid.gap-6:has(> .rounded-2xl),
+main .grid.gap-6:has(> .rounded-3xl) {
+  gap: 1.75rem;
+}
+
+main .grid.gap-6 > .rounded-2xl,
+main .grid.gap-6 > .rounded-3xl {
+  padding: 2rem;
+}
