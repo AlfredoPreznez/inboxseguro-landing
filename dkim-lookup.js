@@ -1,18 +1,62 @@
 /* Interpreta un selector DKIM o el resultado de una búsqueda de selectores habituales.
-   No afirma que DKIM falte cuando solo fallan los selectores comunes. */
+   No afirma que DKIM falte cuando solo fallan los selectores comunes.
+   El nombre del selector solo sugiere un servicio probable. Esta página no consulta MX ni SPF. */
 (function (root, factory) {
     var api = factory();
     if (typeof module === 'object' && module.exports) module.exports = api;
     if (root) root.InboxDkimLookup = api;
 })(typeof window !== 'undefined' ? window : null, function () {
-    function state(status, text) {
+    var SELECTOR_SERVICES = {
+        google: 'Google Workspace',
+        titan1: 'Titan Email',
+        titan2: 'Titan Email',
+        selector1: 'Microsoft 365',
+        selector2: 'Microsoft 365',
+        zmail: 'Zoho Mail',
+        zoho: 'Zoho Mail',
+        k1: 'Mailchimp',
+        k2: 'Mailchimp',
+        k3: 'Mailchimp',
+        s1: 'SendGrid',
+        s2: 'SendGrid',
+        hs1: 'HubSpot',
+        hs2: 'HubSpot',
+        mandrill: 'Mandrill',
+        amazonses: 'Amazon SES',
+        ses: 'Amazon SES',
+        mailjet: 'Mailjet',
+        pm: 'Postmark',
+        brevo: 'Brevo',
+        sendinblue: 'Brevo'
+    };
+
+    function state(status, text, notes) {
         var labels = {
             ok: 'Correcto',
             attention: 'Requiere atención',
             missing: 'No detectado',
             unknown: 'No verificable'
         };
-        return { status: status, label: labels[status], text: text };
+        var result = { status: status, label: labels[status], text: text };
+        if (notes) {
+            result.serviceNote = notes.serviceNote;
+            result.businessNote = notes.businessNote;
+        }
+        return result;
+    }
+
+    function explainFoundSelector(selector) {
+        var service = SELECTOR_SERVICES[String(selector || '').trim().toLowerCase()] || '';
+        if (service) {
+            return {
+                serviceNote: 'Este selector suele estar relacionado con ' + service + '.',
+                businessNote: 'Eso significa que ese servicio puede firmar correos con tu dominio.'
+            };
+        }
+        return {
+            serviceNote: 'El selector existe, pero no pudimos identificar el servicio a partir de su nombre.',
+            businessNote: 'Eso significa que quien publicó esa clave puede firmar correos con tu dominio.'
+        };
     }
 
     function normalizeDkimSelector(value) {
@@ -49,7 +93,7 @@
         }
         var found = classifyRecords(records);
         if (found.present) {
-            return state('ok', 'Hay una clave DKIM en el selector «' + name + '». Verificar este registro no demuestra que los mensajes actuales se firmen con él.');
+            return state('ok', 'Hay una clave DKIM en el selector «' + name + '». Verificar este registro no demuestra que los mensajes actuales se firmen con él.', explainFoundSelector(name));
         }
         if (found.revoked) {
             return state('attention', 'El selector «' + name + '» publica p vacío: la clave está revocada y no sirve para verificar firmas nuevas.');
@@ -59,7 +103,7 @@
 
     function interpretCommonScan(found, selector) {
         if (found && selector) {
-            return state('ok', 'Hay una clave DKIM en el selector habitual «' + selector + '». Verificar este registro no demuestra que los mensajes actuales se firmen con él. Pueden existir otros selectores.');
+            return state('ok', 'Hay una clave DKIM en el selector habitual «' + selector + '». Verificar este registro no demuestra que los mensajes actuales se firmen con él. Pueden existir otros selectores.', explainFoundSelector(selector));
         }
         return state('unknown', 'No apareció una clave DKIM en los selectores habituales. Eso no demuestra que falte DKIM. Si conoces el selector, indícalo en el campo opcional.');
     }

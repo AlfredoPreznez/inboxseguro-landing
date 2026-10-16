@@ -70,5 +70,50 @@ assert.strictEqual(dkim.interpretSelectorQuery([], 'google', false).status, 'unk
 const scan = dkim.interpretCommonScan(false, null);
 assert.strictEqual(scan.status, 'unknown');
 assert.match(scan.text, /no demuestra que falte DKIM/);
-assert.strictEqual(dkim.interpretCommonScan(true, 'google').status, 'ok');
+const scanGoogle = dkim.interpretCommonScan(true, 'google');
+assert.strictEqual(scanGoogle.status, 'ok');
+assert.match(scanGoogle.serviceNote, /Google Workspace/);
+assert.match(scanGoogle.text, /no demuestra/);
+
+const services = {
+    google: 'Google Workspace',
+    titan1: 'Titan Email',
+    titan2: 'Titan Email',
+    selector1: 'Microsoft 365',
+    selector2: 'Microsoft 365',
+    zmail: 'Zoho Mail',
+    zoho: 'Zoho Mail',
+    k1: 'Mailchimp',
+    k2: 'Mailchimp',
+    k3: 'Mailchimp',
+    s1: 'SendGrid',
+    s2: 'SendGrid',
+    hs1: 'HubSpot',
+    hs2: 'HubSpot',
+    mandrill: 'Mandrill',
+    amazonses: 'Amazon SES',
+    ses: 'Amazon SES',
+    mailjet: 'Mailjet',
+    pm: 'Postmark',
+    brevo: 'Brevo',
+    sendinblue: 'Brevo'
+};
+Object.keys(services).forEach(function (selector) {
+    const found = dkim.interpretSelectorQuery(['v=DKIM1; k=rsa; p=ABC'], selector, true);
+    assert.strictEqual(found.status, 'ok');
+    assert.strictEqual(found.serviceNote, 'Este selector suele estar relacionado con ' + services[selector] + '.');
+    assert.strictEqual(found.businessNote, 'Eso significa que ese servicio puede firmar correos con tu dominio.');
+    assert.doesNotMatch(found.serviceNote + found.businessNote, /pyme|precio|coincide con tu MX/i);
+    assert.match(found.text, /no demuestra/);
+});
+
+const unknownSelector = dkim.interpretSelectorQuery(['v=DKIM1; p=QQQ'], 'correo1', true);
+assert.match(unknownSelector.serviceNote, /El selector existe, pero no pudimos identificar el servicio a partir de su nombre/);
+assert.match(unknownSelector.businessNote, /quien publicó esa clave puede firmar correos con tu dominio/);
+
+assert.strictEqual(revoked.serviceNote, undefined);
+assert.strictEqual(absent.serviceNote, undefined);
+assert.strictEqual(dkim.interpretSelectorQuery([], 'titan1', false).serviceNote, undefined);
+assert.strictEqual(scan.serviceNote, undefined);
+assert.match(present.serviceNote, /Google Workspace/);
 console.log('dkim-lookup tests ok');
