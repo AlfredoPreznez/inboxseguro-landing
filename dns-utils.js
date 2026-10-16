@@ -1,25 +1,12 @@
-// DNS lookup: proxy same-origin (iOS Safari) → DoH público en paralelo
+// DNS lookup: proxy Worker (workers.dev) → DoH público en paralelo
+// Nota: /api/dns (same-origin) y panel.inboxseguro.com/api/public/dns-resolve
+// responden 404 hoy; se quitaron para no esperar endpoints muertos.
 (function () {
     const PROXY_ENDPOINTS = [
-        {
-            name: 'SameOrigin',
-            buildUrl: function (name, type) {
-                return '/api/dns?name=' + encodeURIComponent(name) + '&type=' + type;
-            },
-            headers: {}
-        },
         {
             name: 'Worker',
             buildUrl: function (name, type) {
                 return 'https://inboxseguro-dns-proxy.alfredo-9d8.workers.dev/api/dns?name=' +
-                    encodeURIComponent(name) + '&type=' + type;
-            },
-            headers: {}
-        },
-        {
-            name: 'Panel',
-            buildUrl: function (name, type) {
-                return 'https://panel.inboxseguro.com/api/public/dns-resolve?name=' +
                     encodeURIComponent(name) + '&type=' + type;
             },
             headers: {}
@@ -35,16 +22,16 @@
             headers: { Accept: 'application/dns-json' }
         },
         {
-            name: 'AliDNS',
+            name: 'Google',
             buildUrl: function (name, type) {
-                return 'https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type;
+                return 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type;
             },
             headers: {}
         },
         {
-            name: 'Google',
+            name: 'AliDNS',
             buildUrl: function (name, type) {
-                return 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type;
+                return 'https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type;
             },
             headers: {}
         }
@@ -71,6 +58,12 @@
             if (typeof data.Status !== 'number') {
                 throw new Error(endpoint.name + ' devolvió una respuesta inválida');
             }
+            if (data.Status === 2) {
+                // SERVFAIL: probar otro resolver en vez de aceptarlo como respuesta
+                var servfail = new Error(endpoint.name + ' devolvió SERVFAIL');
+                servfail.dnsData = data;
+                throw servfail;
+            }
             return data;
         }).finally(function () {
             clearTimeout(timeoutId);
@@ -91,7 +84,9 @@
                     errors.push(err);
                     rejected += 1;
                     if (rejected === promises.length) {
-                        reject(errors[0] || new Error('No hay resolvers DNS disponibles'));
+                        var agg = new Error('No hay resolvers DNS disponibles');
+                        agg.errors = errors;
+                        reject(agg);
                     }
                 });
             });
@@ -122,7 +117,15 @@
             });
         });
 
-        return firstSuccessful(attempts);
+        try {
+            return await firstSuccessful(attempts);
+        } catch (err) {
+            // Si todos devolvieron SERVFAIL, conservar el comportamiento previo: devolver esa respuesta
+            const errs = (err && err.errors) ? err.errors : [err];
+            const sf = errs.find(function (e) { return e && e.dnsData; });
+            if (sf) return sf.dnsData;
+            throw err;
+        }
     }
 
     async function fetchDNS(name, type) {
