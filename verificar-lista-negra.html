@@ -82,9 +82,9 @@
                                 <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
                                 <div class="space-y-1">
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
-                                        <span>Email Security Check</span>
+                                        <span>Chequeo de seguridad del correo</span>
                                     </a>
-                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Verificador de remitentes</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -121,7 +121,7 @@
                                     <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Detener Suplantación</span>
                                     </a>
-                                    <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Guía DMARC empresas</span>
                                     </a>
                                 </div>
@@ -135,13 +135,12 @@
                 <div class="flex items-center gap-3">
                     <a href="https://panel.inboxseguro.com/login"
                         class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
                     <a href="https://calendly.com/alfredo-inboxseguro/30min"
                         target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
                         onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
-                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar demo</a>
-                    <a href="/precios"
-                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors" data-seo-event="cta_precios">Ver
-                        planes</a>
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
                     <!-- Hamburger -->
                     <button id="menuBtn" onclick="toggleMobileMenu()"
                         class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
@@ -183,7 +182,7 @@
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Control de Envíos</a>
                     <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Detener Suplantación</a>
-                    <a href="/dmarc-para-pymes" onclick="closeMobileMenu()"
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DMARC para empresas</a>
                 </div>
 
@@ -192,8 +191,8 @@
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
                     <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
-                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad del correo</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Verificador de remitentes</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
@@ -257,7 +256,7 @@
                         <h3 class="text-white font-bold mb-2">Una revisión es una foto del momento</h3>
                         <p class="text-slate-300 text-sm mb-4">InboxSeguro revisa tus IP contra estas 6 listas cada hora, te alerta si apareces y te indica cómo pedir la remoción.</p>
                         <div class="flex flex-col sm:flex-row gap-3">
-                            <a href="/domain-checker" data-seo-event="cta_related_tool" class="inline-flex justify-center px-5 py-2.5 bg-white/10 border border-white/20 text-white font-semibold rounded-xl text-sm">Email Security Check</a>
+                            <a href="/domain-checker" data-seo-event="cta_related_tool" class="inline-flex justify-center px-5 py-2.5 bg-white/10 border border-white/20 text-white font-semibold rounded-xl text-sm">Chequeo de seguridad del correo</a>
                             <a href="/plataforma" data-seo-event="cta_platform" class="inline-flex justify-center px-5 py-2.5 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl text-sm">Ver monitoreo continuo</a>
                         </div>
                     </div>
@@ -297,7 +296,7 @@
             </div>
             <div class="border-t border-slate-200 pt-6">
                 <h2 class="text-2xl font-bold text-slate-900 mb-3">Monitoreo continuo con InboxSeguro</h2>
-                <p class="text-slate-600 text-sm leading-relaxed">Una revisión manual solo muestra el estado de ese momento. InboxSeguro revisa tus IP contra estas 6 listas cada hora, te avisa en el panel si apareces y te guía para solicitar la remoción. Conoce más en <a href="/plataforma" class="text-brand-600 hover:underline">la plataforma</a> o revisa SPF, DKIM y DMARC con el <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Email Security Check</a>.</p>
+                <p class="text-slate-600 text-sm leading-relaxed">Una revisión manual solo muestra el estado de ese momento. InboxSeguro revisa tus IP contra estas 6 listas cada hora, te avisa en el panel si apareces y te guía para solicitar la remoción. Conoce más en <a href="/plataforma" class="text-brand-600 hover:underline">la plataforma</a> o revisa SPF, DKIM y DMARC con el <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Chequeo de seguridad del correo</a>.</p>
             </div>
             <div class="border-t border-slate-200 pt-6">
                 <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas frecuentes</h2>
@@ -345,7 +344,7 @@
                             <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
                             <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
                             <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
-                            <li><a href="/dmarc-para-pymes" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
                             <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
                         </ul>
                     </div>
@@ -353,8 +352,8 @@
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas Gratuitas</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
                             <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
-                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Email Sender Checker</a></li>
-                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Email Security Check</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad del correo</a></li>
                             <li><a href="/spf-checker" class="hover:text-blue-400 transition-colors">Verificador SPF</a></li>
                             <li><a href="/dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
                             <li><a href="/dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>
@@ -395,6 +394,7 @@
     <!-- /chrome:footer -->
 <script src="/rbl-check.js?v=1"></script>
 <script src="/notify.js?v=1"></script>
+    <script src="/tool-lead.js?v=1"></script>
 <script>
 function showRblError(message) {
     var box = document.getElementById('rblError');
@@ -469,6 +469,13 @@ document.getElementById('rblForm').addEventListener('submit', async function (ev
             results: { rbl: summary.textContent }
         });
         results.classList.remove('hidden');
+                if (window.InboxSeguroToolLead) window.InboxSeguroToolLead.mount(results, {
+                    tool: 'Verificar lista negra',
+                    idPrefix: 'rblLead',
+                    leadSource: 'rblLead',
+                    getDomain: function () { return data.input; },
+                    getScore: function () { return badge.textContent; }
+                });
         if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('rbl');
         if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('rbl', 'success');
     } catch (err) {
