@@ -1,12 +1,29 @@
 /* Aviso fire-and-forget cuando alguien usa una herramienta gratis.
    Mismo endpoint que Email Security Check (el panel lo reenvía a Discord).
-   Si falla, no bloquea ni rompe la consulta. */
+   Si falla, no bloquea ni rompe la consulta.
+
+   Opcional: pide un ticket HMAC al Worker CF y lo envía en headers.
+   Si el ticket falla (Worker aún no desplegado), hace POST sin firma —
+   válido mientras el panel tenga PUBLIC_DIAGNOSIS_HMAC_REQUIRED=0. */
 (function (root, factory) {
     var api = factory();
     if (typeof module === 'object' && module.exports) module.exports = api;
-    if (root) root.InboxSeguroNotify = api;
+    if (root) {
+        root.InboxSeguroNotify = api;
+        // Alias usado por diagnóstico / docs del panel.
+        root.InboxSeguroDiagnosisNotify = {
+            notify: function (opts) {
+                return api.notifyToolUse(opts || {});
+            }
+        };
+    }
 })(typeof window !== 'undefined' ? window : null, function () {
     var ENDPOINT = 'https://panel.inboxseguro.com/api/public/diagnosis-notify';
+    // Preferir ruta en el mismo sitio (CF route); fallback al workers.dev histórico.
+    var TICKET_URLS = [
+        'https://www.inboxseguro.com/api/diagnosis-ticket',
+        'https://inboxseguro-dns-proxy.alfredo-9d8.workers.dev/api/diagnosis-ticket'
+    ];
 
     function buildPayload(input) {
         var data = input || {};
@@ -23,17 +40,48 @@
         return payload;
     }
 
+    function fetchTicket(domain) {
+        if (!domain || typeof fetch !== 'function') {
+            return Promise.resolve(null);
+        }
+        var i = 0;
+        function tryNext() {
+            if (i >= TICKET_URLS.length) return Promise.resolve(null);
+            var url = TICKET_URLS[i++] + '?domain=' + encodeURIComponent(domain);
+            return fetch(url, {
+                method: 'GET',
+                headers: { Accept: 'application/json' }
+            }).then(function (res) {
+                if (!res.ok) return tryNext();
+                return res.json().then(function (ticket) {
+                    if (ticket && ticket.timestamp && ticket.signature) return ticket;
+                    return tryNext();
+                });
+            }).catch(function () {
+                return tryNext();
+            });
+        }
+        return tryNext();
+    }
+
     function postPayload(payload) {
         if (!payload.domain || typeof fetch !== 'function') {
             return Promise.resolve({ skipped: true });
         }
-        return fetch(ENDPOINT, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        }).then(function (res) {
-            if (!res.ok) throw new Error('notify status ' + res.status);
-            return res;
+        return fetchTicket(payload.domain).then(function (ticket) {
+            var headers = { 'Content-Type': 'application/json' };
+            if (ticket && ticket.timestamp && ticket.signature) {
+                headers['X-Inbox-Diagnosis-Timestamp'] = String(ticket.timestamp);
+                headers['X-Inbox-Diagnosis-Signature'] = String(ticket.signature);
+            }
+            return fetch(ENDPOINT, {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(payload)
+            }).then(function (res) {
+                if (!res.ok) throw new Error('notify status ' + res.status);
+                return res;
+            });
         });
     }
 
@@ -59,6 +107,7 @@
 
     return {
         ENDPOINT: ENDPOINT,
+        TICKET_URLS: TICKET_URLS,
         buildPayload: buildPayload,
         notifyToolUse: notifyToolUse,
         notifyLead: notifyLead
