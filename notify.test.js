@@ -3,6 +3,7 @@ const fs = require('fs');
 const notify = require('./notify.js');
 
 assert.strictEqual(notify.ENDPOINT, 'https://panel.inboxseguro.com/api/public/diagnosis-notify');
+assert.ok(Array.isArray(notify.TICKET_URLS) && notify.TICKET_URLS.length >= 1);
 
 var payload = notify.buildPayload({
     tool: 'SPF Checker',
@@ -33,41 +34,92 @@ assert.strictEqual(
 assert.strictEqual(notify.buildPayload({ tool: 'SPF Checker', domain: 'a.com' }).email, undefined);
 
 var calls = [];
+// Ticket falla → POST sin firma (compat REQUIRED=false)
 global.fetch = function (url, options) {
-    calls.push({ url: url, options: options });
-    return Promise.reject(new Error('red'));
+    calls.push({ url: url, options: options || {} });
+    if (String(url).indexOf('diagnosis-ticket') !== -1) {
+        return Promise.reject(new Error('ticket down'));
+    }
+    return Promise.resolve({ ok: true, status: 200 });
 };
-notify.notifyToolUse({ tool: 'MX Lookup', domain: 'empresa.com', score: 'Configurado', results: { mx: 'Google' } });
-assert.strictEqual(calls.length, 1);
-assert.strictEqual(calls[0].url, notify.ENDPOINT);
-assert.strictEqual(calls[0].options.method, 'POST');
-assert.deepStrictEqual(JSON.parse(calls[0].options.body), {
-    domain: 'empresa.com',
+notify.notifyToolUse({
     tool: 'MX Lookup',
-    score: 'MX Lookup · Configurado',
-    results: { mx: 'Google' }
-});
-
-notify.notifyToolUse({ tool: 'SPF Checker', domain: '   ', score: 'x' });
-assert.strictEqual(calls.length, 1);
-
-global.fetch = function () { throw new Error('boom'); };
-assert.doesNotThrow(function () {
-    notify.notifyToolUse({ tool: 'DKIM Checker', domain: 'empresa.com', score: 'ok' });
-});
-
-global.fetch = function (url, options) {
-    calls.push({ url: url, options: options });
-    return Promise.resolve({ ok: false, status: 500 });
-};
-notify.notifyLead({
-    tool: 'SPF Checker',
     domain: 'empresa.com',
-    email: 'tu@empresa.com'
-}).then(
-    function () { throw new Error('expected reject'); },
-    function () { /* ok */ }
-).then(function () {
+    score: 'Configurado',
+    results: { mx: 'Google' }
+}).then(function () {
+    var postCalls = calls.filter(function (c) { return c.url === notify.ENDPOINT; });
+    assert.strictEqual(postCalls.length, 1);
+    assert.strictEqual(postCalls[0].options.method, 'POST');
+    assert.deepStrictEqual(JSON.parse(postCalls[0].options.body), {
+        domain: 'empresa.com',
+        tool: 'MX Lookup',
+        score: 'MX Lookup · Configurado',
+        results: { mx: 'Google' }
+    });
+    assert.ok(!postCalls[0].options.headers['X-Inbox-Diagnosis-Signature']);
+
+    calls = [];
+    global.fetch = function (url, options) {
+        calls.push({ url: url, options: options || {} });
+        if (String(url).indexOf('diagnosis-ticket') !== -1) {
+            return Promise.resolve({
+                ok: true,
+                json: function () {
+                    return Promise.resolve({
+                        timestamp: 1700000000,
+                        signature: 'abc123'
+                    });
+                }
+            });
+        }
+        return Promise.resolve({ ok: true, status: 200 });
+    };
+    return notify.notifyToolUse({
+        tool: 'SPF Checker',
+        domain: 'empresa.com',
+        score: 'ok'
+    });
+}).then(function () {
+    var postCalls = calls.filter(function (c) { return c.url === notify.ENDPOINT; });
+    assert.strictEqual(postCalls.length, 1);
+    assert.strictEqual(
+        postCalls[0].options.headers['X-Inbox-Diagnosis-Timestamp'],
+        '1700000000'
+    );
+    assert.strictEqual(
+        postCalls[0].options.headers['X-Inbox-Diagnosis-Signature'],
+        'abc123'
+    );
+
+    notify.notifyToolUse({ tool: 'SPF Checker', domain: '   ', score: 'x' });
+    // sin dominio no suma POST
+    assert.strictEqual(calls.filter(function (c) { return c.url === notify.ENDPOINT; }).length, 1);
+
+    global.fetch = function () { throw new Error('boom'); };
+    assert.doesNotThrow(function () {
+        notify.notifyToolUse({ tool: 'DKIM Checker', domain: 'empresa.com', score: 'ok' });
+    });
+
+    calls = [];
+    global.fetch = function (url, options) {
+        calls.push({ url: url, options: options || {} });
+        if (String(url).indexOf('diagnosis-ticket') !== -1) {
+            return Promise.resolve(null).then(function () {
+                return { ok: false, status: 503 };
+            });
+        }
+        return Promise.resolve({ ok: false, status: 500 });
+    };
+    return notify.notifyLead({
+        tool: 'SPF Checker',
+        domain: 'empresa.com',
+        email: 'tu@empresa.com'
+    }).then(
+        function () { throw new Error('expected reject'); },
+        function () { /* ok */ }
+    );
+}).then(function () {
     var tools = [
         ['domain-checker.html', 'Email Security Check'],
         ['spf-checker.html', 'SPF Checker'],
