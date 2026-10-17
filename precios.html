@@ -36,13 +36,7 @@
   "name": "InboxSeguro",
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web",
-  "offers": {
-    "@type": "AggregateOffer",
-    "lowPrice": "25",
-    "highPrice": "39",
-    "priceCurrency": "USD",
-    "url": "https://www.inboxseguro.com/precios"
-  },
+  "url": "https://www.inboxseguro.com/precios",
   "description": "Plataforma de control de envíos del dominio con inventario automático y alertas."
 }
 </script>
@@ -88,9 +82,9 @@
                                 <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
                                 <div class="space-y-1">
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
-                                        <span>Email Security Check</span>
+                                        <span>Chequeo de seguridad del correo</span>
                                     </a>
-                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Verificador de remitentes</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -127,7 +121,7 @@
                                     <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Detener Suplantación</span>
                                     </a>
-                                    <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Guía DMARC empresas</span>
                                     </a>
                                 </div>
@@ -141,13 +135,12 @@
                 <div class="flex items-center gap-3">
                     <a href="https://panel.inboxseguro.com/login"
                         class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
                     <a href="https://calendly.com/alfredo-inboxseguro/30min"
                         target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
                         onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
-                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar demo</a>
-                    <a href="/precios"
-                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors" data-seo-event="cta_precios">Ver
-                        planes</a>
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
                     <!-- Hamburger -->
                     <button id="menuBtn" onclick="toggleMobileMenu()"
                         class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
@@ -189,7 +182,7 @@
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Control de Envíos</a>
                     <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Detener Suplantación</a>
-                    <a href="/dmarc-para-pymes" onclick="closeMobileMenu()"
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DMARC para empresas</a>
                 </div>
 
@@ -198,8 +191,8 @@
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
                     <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
-                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad del correo</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Verificador de remitentes</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
@@ -279,7 +272,10 @@
                                 <p class="text-xs text-slate-400 mt-1.5">facturado mensualmente · cancela cuando quieras</p>
                             </div>
 
-                            <a href="https://panel.inboxseguro.com/register?plan=starter" aria-label="Probar 14 días gratis el plan Esencial" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all shadow-sm hover:shadow mb-8">
+                            <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">
+                                Agendar demo
+                            </a>
+                            <a href="https://panel.inboxseguro.com/register?plan=starter" aria-label="Probar 14 días gratis el plan Esencial" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-8">
                                 Probar 14 días gratis
                             </a>
 
@@ -363,7 +359,10 @@
                                 </p>
                             </div>
 
-                            <a href="https://panel.inboxseguro.com/register?plan=founding" aria-label="Probar 14 días gratis el plan Fundador" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-8">
+                            <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">
+                                Agendar demo
+                            </a>
+                            <a href="https://panel.inboxseguro.com/register?plan=founding" aria-label="Probar 14 días gratis el plan Fundador" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-8">
                                 Probar 14 días gratis
                             </a>
 
@@ -593,7 +592,10 @@
                     Ejecuta un diagnóstico DNS gratuito y conoce el nivel de seguridad de tus firmas corporativas SPF, DKIM y DMARC hoy mismo.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="/domain-checker" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">
+                        Agendar demo
+                    </a>
+                    <a href="/domain-checker" class="px-8 py-4 bg-white hover:bg-slate-100 text-slate-800 font-semibold rounded-xl border border-slate-300 transition-all hover:-translate-y-0.5">
                         Probar Diagnóstico Gratuito
                     </a>
                     <a href="/contacto" class="px-8 py-4 bg-white hover:bg-slate-100 text-slate-800 font-semibold rounded-xl border border-slate-300 transition-all hover:-translate-y-0.5">
@@ -639,7 +641,7 @@
                             <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
                             <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
                             <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
-                            <li><a href="/dmarc-para-pymes" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
                             <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
                         </ul>
                     </div>
@@ -647,8 +649,8 @@
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas Gratuitas</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
                             <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
-                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Email Sender Checker</a></li>
-                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Email Security Check</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad del correo</a></li>
                             <li><a href="/spf-checker" class="hover:text-blue-400 transition-colors">Verificador SPF</a></li>
                             <li><a href="/dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
                             <li><a href="/dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>

@@ -51,6 +51,17 @@
   "url": "https://www.inboxseguro.com"
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "InboxSeguro",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "url": "https://www.inboxseguro.com",
+  "description": "Plataforma que protege el dominio de correo de una empresa: vigila SPF, DKIM y DMARC, alerta de suplantación y cambios de DNS, y muestra qué servicios envían con tu dominio."
+}
+</script>
 </head>
 
 <body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
@@ -92,9 +103,9 @@
                                 <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
                                 <div class="space-y-1">
                                     <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
-                                        <span>Email Security Check</span>
+                                        <span>Chequeo de seguridad del correo</span>
                                     </a>
-                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Email Sender Checker</span></a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Verificador de remitentes</span></a>
                                     <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Verificador SPF</span>
                                     </a>
@@ -131,7 +142,7 @@
                                     <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Detener Suplantación</span>
                                     </a>
-                                    <a href="/dmarc-para-pymes" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Guía DMARC empresas</span>
                                     </a>
                                 </div>
@@ -145,13 +156,12 @@
                 <div class="flex items-center gap-3">
                     <a href="https://panel.inboxseguro.com/login"
                         class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
                     <a href="https://calendly.com/alfredo-inboxseguro/30min"
                         target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
                         onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
-                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar demo</a>
-                    <a href="/precios"
-                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors" data-seo-event="cta_precios">Ver
-                        planes</a>
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
                     <!-- Hamburger -->
                     <button id="menuBtn" onclick="toggleMobileMenu()"
                         class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
@@ -193,7 +203,7 @@
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Control de Envíos</a>
                     <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Detener Suplantación</a>
-                    <a href="/dmarc-para-pymes" onclick="closeMobileMenu()"
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DMARC para empresas</a>
                 </div>
 
@@ -202,8 +212,8 @@
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
                     <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
-                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Email Security Check</a>
-                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Email Sender Checker</span></a>
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad del correo</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Verificador de remitentes</span></a>
                     <a href="/spf-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
                     <a href="/dmarc-checker" onclick="closeMobileMenu()"
@@ -294,22 +304,18 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-6 items-center">
-                    <a href="/quien-puede-enviar-correos"
-                        data-seo-event="cta_sender_checker"
-                        class="group relative px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 transition-all hover:-translate-y-1 overflow-hidden">
-                        <span class="relative z-10 flex items-center gap-2">
-                            Ver quién envía con mi correo
-                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                            </svg>
-                        </span>
-                        <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    </a>
                     <a href="https://calendly.com/alfredo-inboxseguro/30min"
                         target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
                         onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="group relative px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 transition-all hover:-translate-y-1 overflow-hidden flex items-center justify-center gap-2">
+                        <span class="relative z-10 flex items-center gap-2">
+                            <i class="fa-regular fa-calendar-check"></i> Agendar demo
+                        </span>
+                    </a>
+                    <a href="/quien-puede-enviar-correos"
+                        data-seo-event="cta_sender_checker"
                         class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white text-lg font-semibold rounded-xl border border-white/10 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
-                        <i class="fa-regular fa-calendar-check"></i> Agendar una demo
+                        Ver quién envía con mi correo
                     </a>
                     <a href="/inboxscore"
                         data-seo-event="cta_inboxscore"
@@ -322,7 +328,7 @@
                 <!-- Marquee de Sistemas Compatibles (Movido arriba) -->
                 <div class="mt-24 mb-6 overflow-hidden relative">
                     <div class="max-w-7xl mx-auto px-4 text-center mb-8">
-                        <p class="text-sm font-bold uppercase tracking-wider text-slate-400">Compatible y capaz de detectar más de 50 sistemas de envío</p>
+                        <p class="text-sm font-bold uppercase tracking-wider text-slate-400">Detectamos envíos de:</p>
                     </div>
                     
                     <!-- Contenedor del Marquee -->
@@ -555,7 +561,7 @@
                             <i class="fa-solid fa-list-check text-lg"></i>
                         </div>
                         <h3 class="font-bold text-slate-900 text-lg mb-2">Inventario de envíos</h3>
-                        <p class="text-sm text-slate-600 leading-relaxed">Identificamos las plataformas que aparecen en tus reportes DMARC enviando a tu nombre, ayudándote a detectar herramientas fantasma (Shadow IT) contratadas por otras áreas. <a href="/control-envios-dominio" class="text-brand-600 hover:underline font-medium">Guía completa</a>.</p>
+                        <p class="text-sm text-slate-600 leading-relaxed">Identificamos las plataformas que aparecen en tus reportes DMARC enviando a tu nombre, ayudándote a detectar herramientas sin control contratadas por otras áreas. <a href="/control-envios-dominio" class="text-brand-600 hover:underline font-medium">Guía completa</a>.</p>
                     </div>
                     <div class="rounded-2xl border border-slate-200 p-6 hover:shadow-lg hover:-translate-y-0.5 transition-all">
                         <div class="w-11 h-11 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center mb-4">
@@ -636,14 +642,14 @@
                         </a>
                     </div>
 
-                    <!-- Card 1: Email Security Check -->
+                    <!-- Card 1: Chequeo de seguridad del correo -->
                     <div class="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full">
                         <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-300 -z-10"></div>
                         <div>
                             <div class="w-12 h-12 rounded-2xl bg-brand-50 flex items-center justify-center mb-6 text-brand-600 shadow-inner group-hover:scale-110 transition-transform duration-300">
                                 <i class="fa-solid fa-server text-xl"></i>
                             </div>
-                            <h3 class="text-xl font-bold text-slate-900 mb-2">Email Security Check</h3>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Chequeo de seguridad del correo</h3>
                             <p class="text-slate-500 text-sm leading-relaxed font-light mb-6">
                                 Revisa SPF, DKIM, DMARC y el MX en una sola fotografía DNS. Estados claros, sin puntaje inventado.
                             </p>
@@ -768,8 +774,11 @@
                     Empieza con un diagnóstico gratuito o agenda una demo. Configuración guiada en español, inventario automático y guía para activar política DMARC desde el primer mes.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4 items-center">
-                    <a href="/precios" class="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5">
-                        Ver planes desde US$25/mes
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="w-full sm:w-auto px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5">
+                        Agendar demo
+                    </a>
+                    <a href="/precios" class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/10 transition-all hover:-translate-y-0.5">
+                        Ver planes
                     </a>
                     <a href="/domain-checker" class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-xl border border-white/10 transition-all hover:-translate-y-0.5">
                         Diagnóstico gratuito
@@ -813,7 +822,7 @@
                             <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
                             <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
                             <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
-                            <li><a href="/dmarc-para-pymes" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
                             <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
                         </ul>
                     </div>
@@ -821,8 +830,8 @@
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas Gratuitas</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
                             <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
-                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Email Sender Checker</a></li>
-                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Email Security Check</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad del correo</a></li>
                             <li><a href="/spf-checker" class="hover:text-blue-400 transition-colors">Verificador SPF</a></li>
                             <li><a href="/dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
                             <li><a href="/dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>
