@@ -72,6 +72,8 @@ SITEMAP_STATIC: list[tuple[str, str, str, str]] = [
     ("/dmarc-checker", "dmarc-checker.html", "monthly", "0.85"),
     ("/dkim-checker", "dkim-checker.html", "monthly", "0.85"),
     ("/mx-lookup", "mx-lookup.html", "monthly", "0.85"),
+    ("/verificar-lista-negra", "verificar-lista-negra.html", "monthly", "0.85"),
+    ("/inboxscore", "inboxscore.html", "monthly", "0.85"),
     ("/seguridad-correo-proveedores", "seguridad-correo-proveedores.html", "monthly", "0.85"),
     ("/informe-higiene-correo-corporativo", "informe-higiene-correo-corporativo.html", "monthly", "0.85"),
     ("/control-envios-dominio", "control-envios-dominio.html", "monthly", "0.8"),
