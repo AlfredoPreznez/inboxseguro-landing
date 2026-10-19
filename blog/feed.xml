@@ -6,6 +6,13 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
+      <title>Cómo saber si mi dominio está en lista negra</title>
+      <link>https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/</guid>
+      <pubDate>Mon, 19 Oct 2026 00:00:00 -0000</pubDate>
+      <description>Cómo saber si tu dominio o tu IP está en una lista negra, qué errores revisar en Gmail y Microsoft 365, y cómo pedir la salida sin volver a caer.</description>
+    </item>
+    <item>
       <title>Cómo verificar DKIM de tu dominio paso a paso</title>
       <link>https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/</guid>
