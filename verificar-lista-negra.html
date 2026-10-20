@@ -393,8 +393,8 @@
     </div>
     <!-- /chrome:footer -->
 <script src="/rbl-check.js?v=1"></script>
-<script src="/notify.js?v=2"></script>
-    <script src="/tool-lead.js?v=1"></script>
+<script src="/notify.js?v=3"></script>
+    <script src="/tool-lead.js?v=2"></script>
 <script>
 function showRblError(message) {
     var box = document.getElementById('rblError');
@@ -462,11 +462,42 @@ document.getElementById('rblForm').addEventListener('submit', async function (ev
             }
         }
         renderRbl(data);
+        var rblNotifyResults = (function () {
+            var listas = (data.rows || []).map(function (row) {
+                return {
+                    ip: row.ip,
+                    source: row.source,
+                    checks: (row.results || []).map(function (r, i) {
+                        var list = (data.lists && data.lists[i]) || {};
+                        return {
+                            list: list.name || ('Lista ' + (i + 1)),
+                            status: r.status || 'unknown'
+                        };
+                    })
+                };
+            });
+            var lines = [];
+            if (summary.textContent) lines.push(summary.textContent);
+            listas.forEach(function (row) {
+                lines.push('');
+                lines.push('IP ' + row.ip + (row.source ? ' (' + row.source + ')' : '') + ':');
+                (row.checks || []).forEach(function (chk) {
+                    var st = chk.status === 'listed' ? 'LISTADA'
+                        : (chk.status === 'clean' ? 'limpia' : 'sin verificar');
+                    lines.push('• ' + chk.list + ': ' + st);
+                });
+            });
+            return {
+                resumen: summary.textContent,
+                detalle: lines.join('\n').trim(),
+                listas: listas
+            };
+        })();
         if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
             tool: 'Verificar lista negra',
             domain: data.input,
             score: badge.textContent,
-            results: { rbl: summary.textContent }
+            results: rblNotifyResults
         });
         results.classList.remove('hidden');
                 if (window.InboxSeguroToolLead) window.InboxSeguroToolLead.mount(results, {
@@ -474,7 +505,8 @@ document.getElementById('rblForm').addEventListener('submit', async function (ev
                     idPrefix: 'rblLead',
                     leadSource: 'rblLead',
                     getDomain: function () { return data.input; },
-                    getScore: function () { return badge.textContent; }
+                    getScore: function () { return badge.textContent; },
+                    getResults: function () { return rblNotifyResults; }
                 });
         if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('rbl');
         if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('rbl', 'success');

@@ -528,8 +528,8 @@
     <!-- /chrome:footer -->
 
     <script src="/dns-utils.js?v=1.0.2"></script>
-    <script src="/notify.js?v=2"></script>
-    <script src="/tool-lead.js?v=1"></script>
+    <script src="/notify.js?v=3"></script>
+    <script src="/tool-lead.js?v=2"></script>
     <script>
         async function handleDiagnostico(event) {
             event.preventDefault();
@@ -565,11 +565,12 @@
                 scoreEl.textContent = scoreStyle[0];
                 scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + scoreStyle[1];
 
+                var notifyResults = { dmarc: dmarcResult.text };
                 if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
                     tool: 'DMARC Checker',
                     domain: dominio,
                     score: 'DMARC: ' + dmarcResult.label,
-                    results: { dmarc: dmarcResult.text }
+                    results: notifyResults
                 });
 
                 resultsDiv.classList.remove('hidden');
@@ -578,7 +579,8 @@
                     idPrefix: 'dmarcLead',
                     leadSource: 'dmarcLead',
                     getDomain: function () { return dominio; },
-                    getScore: function () { return document.getElementById('diagScore').textContent; }
+                    getScore: function () { return document.getElementById('diagScore').textContent; },
+                    getResults: function () { return notifyResults; }
                 });
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('dmarc');
                 if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('dmarc', 'success');

@@ -511,8 +511,8 @@
 
     <script src="/dns-utils.js?v=1.0.2"></script>
     <script src="/email-security-check.js?v=1"></script>
-    <script src="/notify.js?v=2"></script>
-    <script src="/tool-lead.js?v=1"></script>
+    <script src="/notify.js?v=3"></script>
+    <script src="/tool-lead.js?v=2"></script>
     <script>
         function normalizeDomain(value) {
             return String(value || '').trim().toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').split('/')[0].split(':')[0];
@@ -569,18 +569,19 @@
                 document.getElementById('diagDomain').textContent = dominio;
 
                 const states = [spfResult, dmarcResult, dkimResult, mxResult];
+                var notifyResults = {
+                    spf: spfResult.text,
+                    dmarc: dmarcResult.text,
+                    dkim: dkimResult.text,
+                    mx: mxResult.text
+                };
                 if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
                     tool: 'Email Security Check',
                     domain: dominio,
                     score: states.map(function (item, index) {
                         return ['SPF', 'DMARC', 'DKIM', 'MX'][index] + ': ' + item.label;
                     }).join(' · '),
-                    results: {
-                        spf: spfResult.text,
-                        dmarc: dmarcResult.text,
-                        dkim: dkimResult.text,
-                        mx: mxResult.text
-                    }
+                    results: notifyResults
                 });
 
                 resultsDiv.classList.remove('hidden');
@@ -589,7 +590,8 @@
                     idPrefix: 'escLead',
                     leadSource: 'escLead',
                     getDomain: function () { return dominio; },
-                    getScore: function () { return states.map(function (item, index) { return ['SPF', 'DMARC', 'DKIM', 'MX'][index] + ': ' + item.label; }).join(' · '); }
+                    getScore: function () { return states.map(function (item, index) { return ['SPF', 'DMARC', 'DKIM', 'MX'][index] + ': ' + item.label; }).join(' · '); },
+                    getResults: function () { return notifyResults; }
                 });
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('domain');
                 if (typeof window.trackCheckerOutcome === 'function') {

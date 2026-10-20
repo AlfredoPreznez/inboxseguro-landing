@@ -368,8 +368,8 @@
     <!-- /chrome:footer -->
 <script src="/dns-utils.js?v=1.0.3"></script>
 <script src="/email-security-check.js?v=1"></script>
-<script src="/notify.js?v=2"></script>
-    <script src="/tool-lead.js?v=1"></script>
+<script src="/notify.js?v=3"></script>
+    <script src="/tool-lead.js?v=2"></script>
 <script>
 function showMxError(message) {
     var box = document.getElementById('mxError');
@@ -421,11 +421,12 @@ document.getElementById('mxForm').addEventListener('submit', async function (eve
         badge.textContent = result.label;
         badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start ' + (tones[result.status] || tones.unknown);
         renderMxTable(result.status === 'ok' ? records : []);
+        var notifyResults = { mx: result.text };
         if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
             tool: 'MX Lookup',
             domain: domain,
             score: 'MX: ' + result.label,
-            results: { mx: result.text }
+            results: notifyResults
         });
         results.classList.remove('hidden');
                 if (window.InboxSeguroToolLead) window.InboxSeguroToolLead.mount(results, {
@@ -433,7 +434,8 @@ document.getElementById('mxForm').addEventListener('submit', async function (eve
                     idPrefix: 'mxLead',
                     leadSource: 'mxLead',
                     getDomain: function () { return domain; },
-                    getScore: function () { return 'MX: ' + result.label; }
+                    getScore: function () { return 'MX: ' + result.label; },
+                    getResults: function () { return notifyResults; }
                 });
         if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('mx');
         if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('mx', 'success');

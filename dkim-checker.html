@@ -517,8 +517,8 @@
 
     <script src="/dns-utils.js?v=1.0.3"></script>
     <script src="/dkim-lookup.js?v=2"></script>
-    <script src="/notify.js?v=2"></script>
-    <script src="/tool-lead.js?v=1"></script>
+    <script src="/notify.js?v=3"></script>
+    <script src="/tool-lead.js?v=2"></script>
     <script>
         function showDkimError(message) {
             const box = document.getElementById('dkimError');
@@ -585,11 +585,12 @@
                 scoreEl.textContent = style[0];
                 scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + style[1];
 
+                var notifyResults = { dkim: dkimResult.text };
                 if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
                     tool: 'DKIM Checker',
                     domain: dominio,
                     score: 'DKIM: ' + dkimResult.label,
-                    results: { dkim: dkimResult.text }
+                    results: notifyResults
                 });
 
                 resultsDiv.classList.remove('hidden');
@@ -598,7 +599,8 @@
                     idPrefix: 'dkimLead',
                     leadSource: 'dkimLead',
                     getDomain: function () { return dominio; },
-                    getScore: function () { return document.getElementById('diagScore').textContent; }
+                    getScore: function () { return document.getElementById('diagScore').textContent; },
+                    getResults: function () { return notifyResults; }
                 });
                 if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('dkim');
                 if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('dkim', 'success');

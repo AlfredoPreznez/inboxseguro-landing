@@ -413,8 +413,8 @@
     </footer>
     </div>
     <!-- /chrome:footer -->
-    <script src="/notify.js?v=2"></script>
-    <script src="/tool-lead.js?v=1"></script>
+    <script src="/notify.js?v=3"></script>
+    <script src="/tool-lead.js?v=2"></script>
     <script>
       (function(){
         const form=document.getElementById('systemsForm');
@@ -456,18 +456,25 @@
             const dmarcText=data.signals.dmarc_exists?'DMARC: política '+data.signals.dmarc_policy:'DMARC no detectado';
             document.getElementById('technicalSummary').textContent=spfText+' · '+dmarcText;
             results.classList.remove('hidden');
+            var notifyResults = {
+              systems: (data.systems||[]).map(function(system){return system.name;}).join(', ')||'ninguno',
+              detalle: ((data.systems||[]).length
+                ? (data.systems||[]).map(function(system){return '• ' + system.name;}).join('\n')
+                : '• ninguno detectado')
+            };
                 if (window.InboxSeguroToolLead) window.InboxSeguroToolLead.mount(results, {
                     tool: 'Email Sender Checker',
                     idPrefix: 'senderLead',
                     leadSource: 'senderLead',
                     getDomain: function () { return data.domain||domain; },
-                    getScore: function () { return document.getElementById('resultHeadline').textContent; }
+                    getScore: function () { return document.getElementById('resultHeadline').textContent; },
+                    getResults: function () { return notifyResults; }
                 });
             if(window.InboxSeguroNotify)window.InboxSeguroNotify.notifyToolUse({
               tool: 'Email Sender Checker',
               domain:data.domain||domain,
               score:document.getElementById('resultHeadline').textContent,
-              results:{systems:(data.systems||[]).map(function(system){return system.name;}).join(', ')||'ninguno'}
+              results: notifyResults
             });
             if(typeof window.trackCheckerSubmit==='function')window.trackCheckerSubmit('sending_systems');
             if(typeof window.trackCheckerOutcome==='function')window.trackCheckerOutcome('sending_systems','success',{result_count:data.count});
