@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing con IA: qué frena DMARC y qué no | InboxSeguro</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="La IA ayuda a crear correos falsos más creíbles. Te explicamos cómo DMARC frena los que usan tu dominio exacto y qué ataques no detiene.">
+    <link rel="canonical" href="https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/">
+    <meta property="og:title" content="Phishing con IA: qué frena DMARC y qué no | InboxSeguro">
+    <meta property="og:description" content="La IA ayuda a crear correos falsos más creíbles. Te explicamos cómo DMARC frena los que usan tu dominio exacto y qué ataques no detiene.">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/phishing-con-ia-dmarc.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Phishing con IA: qué frena DMARC y qué no | InboxSeguro">
+    <meta name="twitter:description" content="La IA ayuda a crear correos falsos más creíbles. Te explicamos cómo DMARC frena los que usan tu dominio exacto y qué ataques no detiene.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/phishing-con-ia-dmarc.png">
+    <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css?v=1.0.8">
+    <link rel="stylesheet" href="/blog.css?v=1.2.3">
+    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Phishing con IA: qué frena DMARC y qué no",
+  "description": "La IA ayuda a crear correos falsos más creíbles. Te explicamos cómo DMARC frena los que usan tu dominio exacto y qué ataques no detiene.",
+  "datePublished": "2026-10-22",
+  "dateModified": "2026-10-22",
+  "author": {
+    "@type": "Organization",
+    "name": "InboxSeguro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InboxSeguro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.inboxseguro.com/logo.png"
+    }
+  },
+  "image": [
+    "https://www.inboxseguro.com/blog/covers/phishing-con-ia-dmarc.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/"
+  },
+  "url": "https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.inboxseguro.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://www.inboxseguro.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Phishing con IA: qué frena DMARC y qué no",
+      "item": "https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/"
+    }
+  ]
+}
+</script>
+
+
+</head>
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors whitespace-nowrap">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas Gratis</span>
+                                <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Todas las herramientas</span></a>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Chequeo de seguridad del correo</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold"><span>Verificador de remitentes</span></a>
+                                    <a href="/spf-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador SPF</span>
+                                    </a>
+                                    <a href="/dmarc-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador DMARC</span>
+                                    </a>
+                                    <a href="/dkim-checker" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador DKIM</span>
+                                    </a>
+                                    <a href="/verificar-lista-negra" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador de listas negras</span>
+                                    </a>
+                                    <a href="/inboxscore" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>InboxScore</span>
+                                    </a>
+                                    <a href="/mx-lookup" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>MX Lookup</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Guías -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Guías de Seguridad</span>
+                                <div class="space-y-1">
+                                    <a href="/seguridad-correo-proveedores" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Seguridad para proveedores</span>
+                                    </a>
+                                    <a href="/informe-higiene-correo-corporativo" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Informe de higiene</span>
+                                    </a>
+                                    <a href="/control-envios-dominio" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Control de Envíos</span>
+                                    </a>
+                                    <a href="/suplantacion-correo-empresa" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Detener Suplantación</span>
+                                    </a>
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC empresas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min"
+                        target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
+                        onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                                <!-- Guías Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Guías de Seguridad</span>
+                    <a href="/seguridad-correo-proveedores" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Seguridad para proveedores</a>
+                    <a href="/informe-higiene-correo-corporativo" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Informe de higiene</a>
+                    <a href="/control-envios-dominio" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Control de Envíos</a>
+                    <a href="/suplantacion-correo-empresa" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Detener Suplantación</a>
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DMARC para empresas</a>
+                </div>
+
+                <!-- Herramientas Gratuitas Mobile Section -->
+                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas Gratuitas</span>
+                    <a href="/herramientas" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad del correo</a>
+                                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors"><span>Verificador de remitentes</span></a>
+                    <a href="/spf-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador SPF</a>
+                    <a href="/dmarc-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DMARC</a>
+                    <a href="/dkim-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador DKIM</a>
+                    <a href="/verificar-lista-negra" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador de listas negras</a>
+                    <a href="/inboxscore" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">InboxScore</a>
+                    <a href="/mx-lookup" onclick="closeMobileMenu()" class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">MX Lookup</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" onclick="closeMobileMenu(); if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Phishing con IA: qué frena DMARC y qué no
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">Seguridad</span>
+            <h1 class="blog-article-h1">Phishing con IA: qué frena DMARC y qué no</h1>
+            <p class="blog-meta blog-meta--on-dark">
+                <time datetime="2026-10-22" data-updated="2026-10-22">
+                    22 de octubre de 2026
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>8 min de lectura</span>
+                
+            </p>
+            
+            <div class="blog-listen" data-nosnippet>
+                <p class="blog-listen-label" id="blog-listen-label-phishing-con-ia-dmarc">
+                    Escuchar este artículo · 13:48
+                </p>
+                <audio
+                    class="blog-listen-audio"
+                    controls
+                    preload="none"
+                    controlslist="nodownload"
+                    aria-labelledby="blog-listen-label-phishing-con-ia-dmarc"
+                >
+                    <source src="/blog/phishing-con-ia-dmarc/audio.mp3" type="audio/mpeg">
+                    Tu navegador no admite audio HTML5.
+                </audio>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="blog-article-body blog-article-body--with-toc">
+        
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-cambia-con-el-phishing-con-inteligencia-artificial">Qué cambia con el phishing con inteligencia artificial</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#correos-sin-las-senales-de-siempre">Correos sin las señales de siempre</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#lo-que-dicen-las-cifras">Lo que dicen las cifras</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#el-ataque-que-dmarc-si-frena-la-suplantacion-de-tu-dominio-exacto">El ataque que DMARC sí frena: la suplantación de tu dominio exacto</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#cualquiera-puede-escribir-tu-dominio-en-el-campo-de">Cualquiera puede escribir tu dominio en el campo &amp;ldquo;De&amp;rdquo;</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#como-lo-frena-dmarc">Cómo lo frena DMARC</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#una-proteccion-para-tus-clientes-y-proveedores">Una protección para tus clientes y proveedores</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#lo-que-dmarc-no-frena">Lo que DMARC no frena</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#dominios-parecidos">Dominios parecidos</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#nombre-visible-falso">Nombre visible falso</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#cuentas-comprometidas">Cuentas comprometidas</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#gmail-yahoo-y-outlook-ya-piden-dmarc-a-quienes-envian-mucho">Gmail, Yahoo y Outlook ya piden DMARC a quienes envían mucho</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-empezar-sin-cortar-tus-propios-correos">Cómo empezar sin cortar tus propios correos</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#para-tu-equipo-tecnico">Para tu equipo técnico</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </details>
+        
+
+        <div class="blog-article-main">
+            <div class="blog-prose">
+                
+                <p>Un proveedor recibe un correo de <code>facturacion@ejemplo.cl</code> que le pide pagar la próxima factura a una cuenta bancaria nueva. Está bien escrito, en buen español y con el tono de siempre. Es un ejemplo, no un caso real, pero resume el phishing con inteligencia artificial: correos falsos que ya no se delatan por la forma. La IA no inventó el phishing, pero, como advierte el <a href="https://www.ic3.gov/PSA/2024/PSA241203">FBI</a>, lo hace más creíble y más rápido de producir. Aquí verás qué parte de ese problema puede frenar DMARC, qué parte no y por dónde empezar.</p>
+<h2  id="que-cambia-con-el-phishing-con-inteligencia-artificial">Qué cambia con el phishing con inteligencia artificial</h2>
+<h3  id="correos-sin-las-senales-de-siempre">Correos sin las señales de siempre</h3>
+<p>El <strong>phishing</strong> es un correo falso que busca que alguien entregue datos, haga un pago o abra un enlace malicioso. En diciembre de 2024, el FBI advirtió que los delincuentes usan IA generativa para crear mensajes creíbles de ingeniería social (engaños que se apoyan en la confianza), llegar más rápido a más personas y traducir textos con menos errores gramaticales u ortográficos (<a href="https://www.ic3.gov/PSA/2024/PSA241203">FBI IC3, alerta I-120324-PSA</a>).</p>
+<p>Por eso, &ldquo;fíjate en las faltas de ortografía&rdquo; ya no basta como consejo.</p>
+<h3  id="lo-que-dicen-las-cifras">Lo que dicen las cifras</h3>
+<p>Las cifras del <a href="https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf">informe 2025 del IC3</a>, el centro de denuncias del FBI, corresponden a <strong>denuncias recibidas por el FBI, principalmente de Estados Unidos</strong>. No son cifras de Latinoamérica.</p>
+<ul>
+<li><strong>Phishing/spoofing</strong> fue el tipo de delito con más denuncias: 191.561.</li>
+<li>El <strong>fraude del CEO por correo</strong>, que el FBI llama <em>business email compromise</em> (BEC), sumó 24.768 denuncias y USD 3.046.598.558 en pérdidas declaradas, el segundo tipo de delito con más pérdidas.</li>
+<li>Por primera vez, el informe incluye una sección sobre IA: 22.364 denuncias marcadas como relacionadas con IA y USD 893.346.472 en pérdidas (<a href="https://www.fbi.gov/news/press-releases/cryptocurrency-and-ai-scams-bilk-americans-of-billions">comunicado del FBI</a>).</li>
+</ul>
+<h2  id="el-ataque-que-dmarc-si-frena-la-suplantacion-de-tu-dominio-exacto">El ataque que DMARC sí frena: la suplantación de tu dominio exacto</h2>
+<h3  id="cualquiera-puede-escribir-tu-dominio-en-el-campo-de">Cualquiera puede escribir tu dominio en el campo &ldquo;De&rdquo;</h3>
+<p>El correo permite poner cualquier dirección como remitente. Por eso un correo puede decir que viene de <code>pagos@ejemplo.cl</code> sin haber salido de tu empresa. Eso es la <strong>suplantación de dominio de correo</strong>, o <em>spoofing</em>: tus clientes pueden recibir instrucciones de pago falsas con tu dirección exacta.</p>
+<h3  id="como-lo-frena-dmarc">Cómo lo frena DMARC</h3>
+<p>DMARC se apoya en dos controles:</p>
+<ul>
+<li><strong>SPF:</strong> la lista, publicada en tu dominio, de los servidores autorizados a enviar correo en tu nombre.</li>
+<li><strong>DKIM:</strong> una firma digital en cada correo que prueba que viene de tu dominio.</li>
+</ul>
+<p><strong>DMARC</strong> es una regla publicada en tu dominio que pide a Gmail, Outlook, Yahoo y otros qué hacer con los correos que dicen ser tuyos y no lo pueden probar con SPF o DKIM, con el mismo dominio que aparece en &ldquo;De&rdquo; (<a href="https://support.google.com/a/answer/81126?hl=es-419">Google</a>). El estándar actual, el <a href="https://www.rfc-editor.org/rfc/rfc9989.txt">RFC 9989</a> de mayo de 2026, dice que DMARC está diseñado para impedir el uso no autorizado del dominio del autor, lo que se conoce como <em>spoofing</em> (sección 2.2).</p>
+<p>La regla tiene tres niveles: <code>p=none</code> (solo observar), <code>p=quarantine</code> (tratar como sospechoso, por ejemplo enviar a spam) y <code>p=reject</code> (rechazar). Con <code>p=reject</code>, los proveedores que aplican DMARC pueden rechazar los correos que suplantan tu dominio exacto antes de entregarlos. CISA, la agencia de ciberseguridad de Estados Unidos, junto con la NSA, el FBI y el MS-ISAC, recomienda configurar DMARC en &ldquo;reject&rdquo; para el correo que envía tu organización (<a href="https://www.cisa.gov/sites/default/files/2023-10/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One_508c.pdf">guía de CISA</a>, p. 6).</p>
+<p>Da igual lo bien redactado que esté el correo falso: DMARC no evalúa el texto, sino si puede probar que viene de tu dominio. Por eso la IA no cambia esta parte de la ecuación.</p>
+<blockquote>
+<p><strong>Advertencia:</strong> si tu CRM o tu sistema de facturación no pasan SPF o DKIM con tu dominio, <code>p=reject</code> también puede rechazar sus correos legítimos.</p>
+</blockquote>
+<h3  id="una-proteccion-para-tus-clientes-y-proveedores">Una protección para tus clientes y proveedores</h3>
+<p>DMARC protege sobre todo a quienes <strong>reciben</strong> correos con tu nombre: clientes, proveedores y tu equipo. Los reportes de DMARC te ayudan a identificar a quien podría estar suplantando tu dominio (<a href="https://support.google.com/a/answer/81126?hl=es-419">Google</a>).</p>
+<h2  id="lo-que-dmarc-no-frena">Lo que DMARC no frena</h2>
+<p>El RFC 9989 dice que DMARC solo puede usarse para combatir directamente formas específicas de suplantación del dominio exacto. No aborda los dominios visualmente parecidos ni el abuso del nombre visible (<a href="https://www.rfc-editor.org/rfc/rfc9989.txt">RFC 9989</a>, sección 2.2).</p>
+<h3  id="dominios-parecidos">Dominios parecidos</h3>
+<p>Un atacante registra <code>ejemplo-cl.com</code> (dominio de ejemplo) o cambia una letra del tuyo. Ese dominio es suyo y puede tener SPF, DKIM y DMARC en regla. Tu DMARC no lo cubre.</p>
+<h3  id="nombre-visible-falso">Nombre visible falso</h3>
+<p>El correo muestra &ldquo;Gerencia de Finanzas Ejemplo&rdquo;, pero la dirección es otra. El RFC 9989 deja estos ataques al nombre visible fuera del alcance de DMARC (secciones 2.4 y 11.4).</p>
+<h3  id="cuentas-comprometidas">Cuentas comprometidas</h3>
+<p>Si roban la contraseña de una cuenta de tu empresa, los correos salen de tu propio servidor y pasan SPF, DKIM y DMARC. El FBI describe que el fraude del CEO se lleva a cabo comprometiendo cuentas de correo y otros medios mediante ingeniería social o intrusión (<a href="https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf">informe IC3 2025</a>, p. 59).</p>
+<p>Aquí ayuda la <strong>autenticación multifactor (MFA)</strong>, que pide un segundo paso además de la contraseña. CISA señala que reduce el uso de credenciales robadas, pero que sus formas débiles (SMS, voz o notificaciones push sin coincidencia de números) se pueden eludir (<a href="https://www.cisa.gov/sites/default/files/2023-10/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One_508c.pdf">guía de CISA</a>, p. 4).</p>
+<p>DMARC es <strong>una capa</strong>, no la solución al phishing. Acuerda con tu equipo que todo cambio de cuenta bancaria o pago urgente se confirme por otro canal, como una llamada a un número conocido, en línea con el consejo del FBI de verificar la identidad cortando y llamando directamente a la organización (<a href="https://www.ic3.gov/PSA/2024/PSA241203">FBI IC3</a>).</p>
+<h2  id="gmail-yahoo-y-outlook-ya-piden-dmarc-a-quienes-envian-mucho">Gmail, Yahoo y Outlook ya piden DMARC a quienes envían mucho</h2>
+<p>No aplica a todas las empresas:</p>
+<ul>
+<li><strong>Gmail:</strong> desde el 1 de febrero de 2024, Google pide a quienes envían más de 5.000 mensajes al día a cuentas personales de Gmail que tengan SPF, DKIM y DMARC (la política puede ser <code>none</code>), con el dominio del &ldquo;De&rdquo; alineado con SPF o DKIM (<a href="https://support.google.com/a/answer/81126?hl=es-419">Google</a>).</li>
+<li><strong>Yahoo:</strong> pide a los remitentes masivos una política DMARC válida de al menos <code>p=none</code> que pase (<a href="https://senders.yahooinc.com/best-practices/">Yahoo</a>).</li>
+<li><strong>Outlook.com</strong> (hotmail.com, live.com y outlook.com): exige SPF, DKIM y DMARC de al menos <code>p=none</code> a los dominios que envían más de 5.000 correos al día. Según la actualización del 29 de abril de 2025, desde mayo de 2025 los mensajes que no cumplan se rechazan con el error <code>550; 5.7.515</code>; es decir, no llegan (<a href="https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730">Microsoft</a>).</li>
+</ul>
+<p>Ojo: <code>p=none</code> cumple estos requisitos, pero <strong>no frena la suplantación</strong>; solo da visibilidad. La protección llega con <code>quarantine</code> y <code>reject</code>.</p>
+<h2  id="como-empezar-sin-cortar-tus-propios-correos">Cómo empezar sin cortar tus propios correos</h2>
+<p>El detalle está en <a href="https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/">cómo activar DMARC por etapas</a>. En resumen:</p>
+<ol>
+<li><strong>Haz la lista</strong> de lo que envía correo con tu dominio (correo de la empresa, CRM, facturación, newsletter, mesa de ayuda), con un responsable por servicio.</li>
+<li><strong>Empieza en <code>p=none</code></strong> para recibir reportes sin cambiar la entrega. Según el RFC 9989, así no pasas por alto ningún servidor o servicio externo (secciones 5.1.4 y 5.1.5).</li>
+<li><strong>Corrige los servicios legítimos que fallan.</strong> Por ejemplo, <a href="https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/">revisa que DKIM firme con tu dominio</a>.</li>
+<li><strong>Avanza a <code>quarantine</code> y después a <code>reject</code></strong> cuando los reportes estén limpios. Para dominios cuyos usuarios escriben en listas de correo, el RFC 9989 da como ejemplo al menos un mes en <code>none</code> y otro periodo similar en <code>quarantine</code> antes de <code>reject</code> (sección 7.4).</li>
+</ol>
+<blockquote>
+<p><strong>Advertencia:</strong> si un servicio legítimo todavía falla, <code>quarantine</code> puede mandar sus correos a spam y <code>reject</code> puede hacer que no lleguen. No avances mientras tus herramientas aparezcan con fallas.</p>
+</blockquote>
+<p>Si ya sospechas que te suplantan, revisa <a href="https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/">cómo detectar si alguien ya usa tu dominio</a>.</p>
+<h2  id="para-tu-equipo-tecnico">Para tu equipo técnico</h2>
+<ul>
+<li>DMARC actual: RFC 9989 (protocolo), RFC 9990 (reportes agregados) y RFC 9991 (reportes de fallas), de mayo de 2026; reemplazan a RFC 7489 (<a href="https://dmarc.org/2026/05/ietf-publishes-updated-dmarc-specification/">dmarc.org</a>). Los registros siguen siendo <code>v=DMARC1</code>.</li>
+<li>Inicio: <code>_dmarc.ejemplo.cl TXT "v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl"</code>.</li>
+<li>La etiqueta <code>pct</code> se retiró (RFC 9989, anexo A.6): avanza por etapas, sin porcentajes.</li>
+</ul>
+<h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
+<p>InboxSeguro te muestra qué sistemas envían correo con tu dominio y te permite asignar un responsable a cada uno. Te guía en la activación gradual de DMARC, de <code>p=none</code> a <code>quarantine</code> y después a <code>reject</code>, sin cortar correos legítimos. Y detecta intentos de suplantación cuando fallan SPF o DKIM.</p>
+<p><strong>¿Sabes en qué punto está tu dominio?</strong> Revisa gratis si tu dominio está protegido con el <a href="https://www.inboxseguro.com/domain-checker">verificador de dominio de InboxSeguro</a>. Te muestra si tiene SPF, DKIM y DMARC, y qué política usa. No te dice si alguien está suplantando tu dominio en este momento; para eso necesitas leer los reportes de DMARC.</p>
+<h2  id="fuentes">Fuentes</h2>
+<ul>
+<li>FBI IC3, alerta I-120324-PSA (3-12-2024): IA generativa en fraudes y consejo de verificar. https://www.ic3.gov/PSA/2024/PSA241203</li>
+<li>FBI IC3, Internet Crime Report 2025: cifras (pp. 7-8) y definición de BEC (p. 59). https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf</li>
+<li>FBI, comunicado: primera sección sobre IA. https://www.fbi.gov/news/press-releases/cryptocurrency-and-ai-scams-bilk-americans-of-billions</li>
+<li>IETF, RFC 9989 (mayo de 2026): alcance de DMARC, etapas y retiro de <code>pct</code>. https://www.rfc-editor.org/rfc/rfc9989.txt</li>
+<li>RFC Editor y dmarc.org: publicación de RFC 9989, 9990 y 9991. https://www.rfc-editor.org/subjects/dmarc/ · https://dmarc.org/2026/05/ietf-publishes-updated-dmarc-specification/</li>
+<li>Google, lineamientos para remitentes: requisitos de Gmail e informes DMARC. https://support.google.com/a/answer/81126?hl=es-419</li>
+<li>Yahoo Sender Hub: requisitos de Yahoo. https://senders.yahooinc.com/best-practices/</li>
+<li>Microsoft, requisitos de Outlook.com (2-4-2025, actualizado 29-4-2025). https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730</li>
+<li>CISA, NSA, FBI y MS-ISAC, guía de phishing (octubre de 2023): DMARC en &ldquo;reject&rdquo; (p. 6) y MFA (p. 4). https://www.cisa.gov/sites/default/files/2023-10/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One_508c.pdf</li>
+</ul>
+                
+            </div>
+
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary" href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener"
+                       data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+
+        
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-cambia-con-el-phishing-con-inteligencia-artificial">Qué cambia con el phishing con inteligencia artificial</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#correos-sin-las-senales-de-siempre">Correos sin las señales de siempre</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#lo-que-dicen-las-cifras">Lo que dicen las cifras</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#el-ataque-que-dmarc-si-frena-la-suplantacion-de-tu-dominio-exacto">El ataque que DMARC sí frena: la suplantación de tu dominio exacto</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#cualquiera-puede-escribir-tu-dominio-en-el-campo-de">Cualquiera puede escribir tu dominio en el campo &amp;ldquo;De&amp;rdquo;</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#como-lo-frena-dmarc">Cómo lo frena DMARC</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#una-proteccion-para-tus-clientes-y-proveedores">Una protección para tus clientes y proveedores</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#lo-que-dmarc-no-frena">Lo que DMARC no frena</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#dominios-parecidos">Dominios parecidos</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#nombre-visible-falso">Nombre visible falso</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#cuentas-comprometidas">Cuentas comprometidas</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#gmail-yahoo-y-outlook-ya-piden-dmarc-a-quienes-envian-mucho">Gmail, Yahoo y Outlook ya piden DMARC a quienes envían mucho</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-empezar-sin-cortar-tus-propios-correos">Cómo empezar sin cortar tus propios correos</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#para-tu-equipo-tecnico">Para tu equipo técnico</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </nav>
+        
+    </div>
+</article>
+
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Suplantación corporativa</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas Gratuitas</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad del correo</a></li>
+                            <li><a href="/spf-checker" class="hover:text-blue-400 transition-colors">Verificador SPF</a></li>
+                            <li><a href="/dmarc-checker" class="hover:text-blue-400 transition-colors">Verificador DMARC</a></li>
+                            <li><a href="/dkim-checker" class="hover:text-blue-400 transition-colors">Verificador DKIM</a></li>
+                            <li><a href="/verificar-lista-negra" class="hover:text-blue-400 transition-colors">Verificador de listas negras</a></li>
+                            <li><a href="/inboxscore" class="hover:text-blue-400 transition-colors">InboxScore</a></li>
+                            <li><a href="/mx-lookup" class="hover:text-blue-400 transition-colors">MX Lookup</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>
