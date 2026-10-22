@@ -343,6 +343,23 @@ def estimate_duration_sec(billed_chars: int) -> int:
     return max(1, round(billed_chars / 14.5))
 
 
+def measure_mp3_duration_sec(path: Path) -> int | None:
+    """Duración real del MP3 con ffprobe; None si no está disponible."""
+    import shutil
+    import subprocess
+
+    if not shutil.which("ffprobe"):
+        return None
+    try:
+        out = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(path)],
+            capture_output=True, text=True, check=True, timeout=30,
+        ).stdout.strip()
+        return max(1, int(float(out)))
+    except (subprocess.SubprocessError, ValueError):
+        return None
+
+
 def estimate_cost_usd(billed_chars: int) -> float:
     return round(billed_chars / 1_000_000 * GENERATIVE_USD_PER_MILLION, 4)
 
@@ -489,6 +506,12 @@ def generate_for_slug(slug: str, *, force: bool = False, dry_run: bool = False) 
         print(f"AVISO: blog/{slug}/audio.mp3 pesa {size / (1024 * 1024):.2f} MB (>2 MB)")
     elif size > 1 * 1024 * 1024:
         print(f"AVISO: blog/{slug}/audio.mp3 pesa {size / (1024 * 1024):.2f} MB (>1 MB)")
+
+    measured = measure_mp3_duration_sec(mp3_path)
+    if measured:
+        duration = measured
+    else:
+        print("AVISO: ffprobe no disponible; la duración del audio es estimada")
 
     meta = AudioMeta(
         fingerprint=fp,
