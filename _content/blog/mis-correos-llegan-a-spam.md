@@ -8,7 +8,7 @@ date: 2026-10-13
 updated: 2026-10-13
 tags: [entregabilidad, spam, spf, dkim, dmarc]
 keyword_objetivo: mis correos llegan a spam
-featured: true
+featured: false
 resumen: "Si los correos de tu empresa llegan a spam, la causa no siempre es el contenido: a menudo hay servicios que envían con tu dominio sin estar autorizados en SPF ni firmar con DKIM, y que nadie administra. Para corregirlo, hagan una lista de todas las herramientas que envían correo, asignen un responsable a cada una, revisen su autorización en SPF y DKIM y activen DMARC primero en modo monitoreo."
 faq:
   - q: "¿Por qué mis correos llegan a spam si el contenido está bien?"
