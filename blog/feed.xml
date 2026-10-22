@@ -6,6 +6,13 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
+      <title>Phishing con IA: qué frena DMARC y qué no</title>
+      <link>https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/</guid>
+      <pubDate>Thu, 22 Oct 2026 00:00:00 -0000</pubDate>
+      <description>La IA ayuda a crear correos falsos más creíbles. Te explicamos cómo DMARC frena los que usan tu dominio exacto y qué ataques no detiene.</description>
+    </item>
+    <item>
       <title>Cómo saber si mi dominio está en lista negra</title>
       <link>https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/</guid>
