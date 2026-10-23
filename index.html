@@ -304,23 +304,18 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-4 mb-6 items-center">
+                    <a href="/inboxscore"
+                        data-seo-event="cta_inboxscore"
+                        class="group relative w-full sm:w-auto text-center px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 transition-all hover:-translate-y-1 overflow-hidden flex items-center justify-center gap-2">
+                        <span class="relative z-10 flex items-center gap-2">
+                            <i class="fa-solid fa-gauge-high"></i> Calcula el InboxScore de tu dominio, gratis
+                        </span>
+                    </a>
                     <a href="https://calendly.com/alfredo-inboxseguro/30min"
                         target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
                         onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
-                        class="group relative px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white text-lg rounded-xl font-bold shadow-2xl shadow-blue-600/30 transition-all hover:-translate-y-1 overflow-hidden flex items-center justify-center gap-2">
-                        <span class="relative z-10 flex items-center gap-2">
-                            <i class="fa-regular fa-calendar-check"></i> Agendar demo
-                        </span>
-                    </a>
-                    <a href="/quien-puede-enviar-correos"
-                        data-seo-event="cta_sender_checker"
-                        class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white text-lg font-semibold rounded-xl border border-white/10 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
-                        Ver quién envía con mi correo
-                    </a>
-                    <a href="/inboxscore"
-                        data-seo-event="cta_inboxscore"
-                        class="px-8 py-4 bg-white/5 hover:bg-white/10 text-white text-lg font-semibold rounded-xl border border-white/10 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
-                        <i class="fa-solid fa-gauge-high"></i> Calcula el InboxScore de tu dominio, gratis
+                        class="w-full sm:w-auto text-center px-8 py-4 bg-white/5 hover:bg-white/10 text-white text-lg font-semibold rounded-xl border border-white/20 shadow-lg transition-all hover:-translate-y-1 flex items-center justify-center gap-2 backdrop-blur-sm">
+                        <i class="fa-regular fa-calendar-check"></i> Agendar demo
                     </a>
                 </div>
                 <p class="mb-16 text-sm text-slate-400">Prueba de 14 días sin tarjeta al conectar tu dominio.</p>
@@ -404,12 +399,15 @@
                     <!-- Header -->
                     <div class="p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-white">
                         <div>
-                            <h3 class="font-bold text-slate-900 text-lg mb-1">Sistemas de envío</h3>
+                            <div class="flex flex-wrap items-center gap-2 mb-1">
+                                <h3 class="font-bold text-slate-900 text-lg">Sistemas de envío</h3>
+                                <span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200 font-bold uppercase text-[10px] leading-none tracking-wide">Datos de ejemplo</span>
+                            </div>
                             <p class="text-slate-500 text-sm">Quién envía con tu dominio, quién es responsable y qué requiere acción. Los nombres de proveedor se infieren por DNS inverso (PTR) y pueden no ser exactos.</p>
                         </div>
                         <div class="flex items-center gap-3 shrink-0">
                             <button id="advanced-toggle-btn" onclick="toggleAdvancedView()" class="text-blue-600 font-semibold text-sm cursor-pointer hover:underline focus:outline-none transition-colors">Vista avanzada</button>
-                            <span class="bg-slate-100 text-slate-600 w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold">2</span>
+                            <span class="bg-slate-100 text-slate-600 w-6 h-6 flex items-center justify-center rounded-full text-xs font-bold">3</span>
                         </div>
                     </div>
                     
@@ -446,11 +444,11 @@
                                     <!-- Advanced Data -->
                                     <td class="adv-col hidden py-4 px-6 text-sm text-slate-600">Corporativo</td>
                                     <td class="adv-col hidden py-4 px-6 text-center">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-600">192-271 /mes</span>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-600">4.000–5.500 /mes</span>
                                     </td>
                                     <td class="adv-col hidden py-4 px-6 text-center">
-                                        <div class="font-bold text-slate-900">4,520</div>
-                                        <div class="text-[10px] text-slate-400">~5,000 /mes est.</div>
+                                        <div class="font-bold text-slate-900">4.520</div>
+                                        <div class="text-[10px] text-slate-400">~5.000 /mes est.</div>
                                     </td>
                                 </tr>
                                 <!-- Row 2 -->
@@ -470,10 +468,10 @@
                                     <!-- Advanced Data -->
                                     <td class="adv-col hidden py-4 px-6 text-sm text-slate-600">Marketing</td>
                                     <td class="adv-col hidden py-4 px-6 text-center">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">5-20 /mes</span>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">120.000–180.000 /mes</span>
                                     </td>
                                     <td class="adv-col hidden py-4 px-6 text-center">
-                                        <div class="font-bold text-slate-900">150,000</div>
+                                        <div class="font-bold text-slate-900">150.000</div>
                                         <div class="text-[10px] text-slate-400">~150k /mes est.</div>
                                     </td>
                                 </tr>
@@ -494,10 +492,10 @@
                                     <!-- Advanced Data -->
                                     <td class="adv-col hidden py-4 px-6 text-sm text-slate-400 italic">—</td>
                                     <td class="adv-col hidden py-4 px-6 text-center">
-                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">18-80 /mes</span>
+                                        <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-600">18–80 /mes</span>
                                     </td>
                                     <td class="adv-col hidden py-4 px-6 text-center">
-                                        <div class="font-bold text-slate-900">0</div>
+                                        <div class="font-bold text-slate-900">50</div>
                                         <div class="text-[10px] text-slate-400">/mes est.</div>
                                     </td>
                                 </tr>
@@ -707,6 +705,40 @@
                         </div>
                         <a href="/dkim-checker" class="inline-flex items-center gap-2 text-sm font-bold text-teal-600 hover:text-teal-700 transition-colors mt-auto">
                             Probar DKIM &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Card: Verificador de remitentes -->
+                    <div class="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-300 -z-10"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-700 flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-paper-plane text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">Verificador de remitentes</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed font-light mb-6">
+                                Muestra qué servicios reconocibles, como Google Workspace o Amazon SES, aparecen en tu SPF, DKIM y MX. No confirma quién envía hoy.
+                            </p>
+                        </div>
+                        <a href="/quien-puede-enviar-correos" class="inline-flex items-center gap-2 text-sm font-bold text-rose-700 hover:text-brand-600 transition-colors mt-auto">
+                            Ver remitentes &rarr;
+                        </a>
+                    </div>
+
+                    <!-- Card: MX Lookup -->
+                    <div class="group relative bg-white border border-slate-200 rounded-3xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between h-full">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-50/50 to-indigo-50/30 opacity-0 group-hover:opacity-100 rounded-3xl transition-opacity duration-300 -z-10"></div>
+                        <div>
+                            <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-700 flex items-center justify-center mb-6 shadow-inner group-hover:scale-110 transition-transform duration-300">
+                                <i class="fa-solid fa-inbox text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-slate-900 mb-2">MX Lookup</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed font-light mb-6">
+                                Consulta los registros MX públicos de tu dominio: hostname y prioridad. Indica dónde se recibe el correo, no quién lo envía.
+                            </p>
+                        </div>
+                        <a href="/mx-lookup" class="inline-flex items-center gap-2 text-sm font-bold text-slate-700 hover:text-brand-600 transition-colors mt-auto">
+                            Consultar MX &rarr;
                         </a>
                     </div>
 

@@ -59,6 +59,8 @@ CATEGORY_LABELS = {
     "gobernanza": "Gobernanza",
     "seguridad": "Seguridad",
     "guias": "Guías",
+    "suplantacion": "Suplantación",
+    "autenticacion": "Autenticación",
 }
 
 SITEMAP_STATIC: list[tuple[str, str, str, str]] = [
