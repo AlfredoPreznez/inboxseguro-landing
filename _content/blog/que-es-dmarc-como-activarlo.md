@@ -21,7 +21,7 @@ faq:
 draft: false
 ---
 
-Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, puede mandar a spam tus propias facturas. Aquí te explicamos cómo funciona y cómo activarlo por etapas.
+Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, tus propias facturas pueden ir a spam o no llegar. Aquí te explicamos cómo funciona y cómo activarlo por etapas.
 
 ## Qué es DMARC, en una frase
 
