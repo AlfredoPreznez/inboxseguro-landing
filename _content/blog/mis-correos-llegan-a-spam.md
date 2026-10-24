@@ -36,6 +36,8 @@ Una empresa puede usar Google Workspace o Microsoft 365 para el correo diario, u
 
 Cuando un servicio no está incluido en SPF o no firma con DKIM usando tu dominio, sus correos pueden fallar aunque el texto sea impecable.
 
+Otra causa frecuente es que la IP de envío aparezca en una lista negra. Puedes [comprobar si tu dominio o IP está en lista negra](/verificar-lista-negra) contra Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer.
+
 ## Por qué pasa: servicios sin dueño
 
 Alguien de marketing contrató una herramienta hace tiempo, un proveedor configuró la facturación y ya no trabaja con ustedes, o se probó un CRM que nunca se dio de baja. Nadie sabe que esos servicios siguen enviando correo y nadie se hace cargo de su configuración. El resultado son correos legítimos que no llegan y un dominio más fácil de suplantar, porque sin una lista clara de quién puede enviar no es posible activar con confianza una política DMARC que bloquee los correos falsos.

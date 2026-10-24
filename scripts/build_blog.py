@@ -84,7 +84,7 @@ SITEMAP_STATIC: list[tuple[str, str, str, str]] = [
     ("/due-diligence-ciberseguridad-empresas", "due-diligence-ciberseguridad-empresas.html", "monthly", "0.75"),
     ("/como-funciona", "como-funciona.html", "monthly", "0.7"),
     ("/faq", "faq.html", "monthly", "0.65"),
-    ("/contacto", "contacto.html", "monthly", "0.6"),
+    # /contacto tiene noindex: no debe entrar al sitemap.
     ("/terminos", "terminos.html", "yearly", "0.2"),
     ("/privacidad", "privacidad.html", "yearly", "0.2"),
 ]
