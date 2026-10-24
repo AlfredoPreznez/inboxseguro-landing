@@ -321,7 +321,7 @@
             
             <div class="blog-listen" data-nosnippet>
                 <p class="blog-listen-label" id="blog-listen-label-mis-correos-llegan-a-spam">
-                    Escuchar este artículo · 3:20
+                    Escuchar este artículo · 3:34
                 </p>
                 <audio
                     class="blog-listen-audio"
@@ -385,6 +385,7 @@
 <li><strong>DMARC:</strong> la regla que le dice al receptor qué hacer si un correo falla esas pruebas, y que además te envía reportes. Revísala con el <a href="/dmarc-checker">verificador DMARC</a>.</li>
 </ul>
 <p>Cuando un servicio no está incluido en SPF o no firma con DKIM usando tu dominio, sus correos pueden fallar aunque el texto sea impecable.</p>
+<p>Otra causa frecuente es que la IP de envío aparezca en una lista negra. Puedes <a href="/verificar-lista-negra">comprobar si tu dominio o IP está en lista negra</a> contra Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer.</p>
 <h2  id="por-que-pasa-servicios-sin-dueno">Por qué pasa: servicios sin dueño</h2>
 <p>Alguien de marketing contrató una herramienta hace tiempo, un proveedor configuró la facturación y ya no trabaja con ustedes, o se probó un CRM que nunca se dio de baja. Nadie sabe que esos servicios siguen enviando correo y nadie se hace cargo de su configuración. El resultado son correos legítimos que no llegan y un dominio más fácil de suplantar, porque sin una lista clara de quién puede enviar no es posible activar con confianza una política DMARC que bloquee los correos falsos.</p>
 <h2  id="como-encontrarlos-en-4-pasos">Cómo encontrarlos en 4 pasos</h2>

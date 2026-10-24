@@ -67,7 +67,7 @@ La protección real llega cuando pides a los receptores que manden a spam o rech
 
 > **Advertencia:** da este paso solo cuando todas tus herramientas legítimas pasen las pruebas. Si no, bloquearás tus propios correos junto con los falsos.
 
-Si tus correos legítimos ya llegan a spam, revisa [por qué tus correos llegan a spam](/blog/mis-correos-llegan-a-spam/).
+Si tus correos legítimos ya llegan a spam, revisa [por qué tus correos llegan a spam](/blog/mis-correos-llegan-a-spam/). Para el contexto de negocio (riesgo, señales y qué pedir al equipo técnico), consulta la guía de [suplantación de correo en la empresa](/suplantacion-correo-empresa). El detalle de políticas y etapas está en [qué es DMARC y cómo activarlo](/blog/que-es-dmarc-como-activarlo/).
 
 ## Para tu equipo técnico
 
