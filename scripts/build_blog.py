@@ -844,7 +844,28 @@ def build_feed(posts_published: list[Post]) -> None:
     print("Wrote blog/feed.xml")
 
 
+def _previous_sitemap_lastmods() -> dict[str, str]:
+    """lastmod ya publicados en sitemap.xml (loc -> YYYY-MM-DD)."""
+    path = ROOT / "sitemap.xml"
+    if not path.exists():
+        return {}
+    text = path.read_text(encoding="utf-8")
+    pairs = re.findall(r"<loc>([^<]+)</loc>\s*<lastmod>(\d{4}-\d{2}-\d{2})", text)
+    return dict(pairs)
+
+
 def build_sitemap(posts_published: list[Post]) -> None:
+    # git_lastmod depende del historial: en un clon superficial (shallow) los
+    # archivos anteriores al límite heredan la fecha del commit límite, y con
+    # historial completo esa fecha puede ser anterior a la ya publicada. Para
+    # que un rebuild nunca haga retroceder un lastmod, se toma el máximo entre
+    # la fecha de git y la que ya está en sitemap.xml.
+    if subprocess.run(
+        ["git", "rev-parse", "--is-shallow-repository"],
+        cwd=ROOT, capture_output=True, text=True,
+    ).stdout.strip() == "true":
+        print("AVISO: repo shallow; lastmod de git puede ser impreciso (git fetch --unshallow)")
+    previous = _previous_sitemap_lastmods()
     urls: list[tuple[str, str, str, str]] = []
     for path, file_name, freq, prio in SITEMAP_STATIC:
         lastmod = git_lastmod(ROOT / file_name)
@@ -864,6 +885,11 @@ def build_sitemap(posts_published: list[Post]) -> None:
         urls.append((post.public_url, lastmod, "monthly", "0.7"))
 
     # Nota: categorías/paginación NO entran al sitemap hasta generarlas.
+
+    urls = [
+        (loc, max(lastmod, previous.get(loc, "")), freq, prio)
+        for loc, lastmod, freq, prio in urls
+    ]
 
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
