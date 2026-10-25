@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DKIM y DMARC en Microsoft 365 | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Pasos con docs de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.">
+    <meta name="description" content="Guía basada en la documentación oficial de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.">
     <link rel="canonical" href="https://www.inboxseguro.com/como-configurar-dkim-dmarc-microsoft-365">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/como-configurar-dkim-dmarc-microsoft-365">
     <meta property="og:title" content="DKIM y DMARC en Microsoft 365 | InboxSeguro">
-    <meta property="og:description" content="Pasos con docs de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.">
+    <meta property="og:description" content="Guía basada en la documentación oficial de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DKIM y DMARC en Microsoft 365 | InboxSeguro">
-    <meta name="twitter:description" content="Pasos con docs de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.">
+    <meta name="twitter:description" content="Guía basada en la documentación oficial de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,50 +27,50 @@
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "Cómo configurar DKIM y DMARC en Microsoft 365",
-  "description": "Pasos con docs de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.",
+  "description": "Guía basada en la documentación oficial de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.",
   "url": "https://www.inboxseguro.com/como-configurar-dkim-dmarc-microsoft-365",
   "step": [
     {
       "@type": "HowToStep",
       "position": 1,
       "name": "Orden recomendado: SPF, luego DKIM, luego DMARC",
-      "text": "Microsoft recomienda autenticación SPF → DKIM → DMARC para cada dominio personalizado que envíe correo. Confirma SPF del dominio en DNS según la guía SPF de Microsoft 365 (consulta docs del proveedor; InboxSeguro no aplana ni «arregla» SPF)."
+      "text": "Microsoft recomienda autenticación SPF → DKIM → DMARC para cada dominio personalizado que envíe correo. SPF es la lista de orígenes autorizados en DNS; sigue la guía SPF de Microsoft Learn para tu dominio en ejemplo.cl."
     },
     {
       "@type": "HowToStep",
       "position": 2,
-      "name": "Abre DKIM en el portal Defender",
-      "text": "En el Microsoft Defender portal, Email authentication settings → DKIM. Selecciona el dominio personalizado. La UI puede variar entre Microsoft 365 Defender / Security; si no ves la opción, usa la doc Learn enlazada o PowerShell según esa misma guía."
+      "name": "Obtén los dos CNAME DKIM (antes del interruptor)",
+      "text": "En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey que apuntan al formato vigente, por ejemplo selector1-ejemplo-cl._domainkey.<prefijo>.<partición>-v1.dkim.mail.microsoft. El formato antiguo (hacia *.onmicrosoft.com) y el nuevo no pueden coexistir para el mismo selector: usa solo los valores que Microsoft te muestra ahora."
     },
     {
       "@type": "HowToStep",
       "position": 3,
-      "name": "Publica los dos CNAME que indica Microsoft",
-      "text": "Al habilitar firma DKIM para un dominio personalizado, Microsoft muestra dos registros CNAME hacia hosts *.onmicrosoft.com / dominio de firma. Publícalos en el DNS de ejemplo.cl. Microsoft activa la firma cuando detecta los CNAME."
+      "name": "Publica los CNAME en el DNS",
+      "text": "En el DNS de ejemplo.cl crea exactamente esos dos CNAME. Espera unos minutos (o más) a que Microsoft 365 los detecte."
     },
     {
       "@type": "HowToStep",
       "position": 4,
-      "name": "Activa la firma DKIM para el dominio",
-      "text": "Vuelve al portal y habilita DKIM signing para ese dominio. Cada subdominio que envíe correo necesita su propia configuración DKIM según Microsoft."
+      "name": "Activa la firma DKIM (interruptor Enabled)",
+      "text": "Cuando los CNAME estén publicados, desliza el interruptor Sign messages for this domain with DKIM signatures a Enabled (o Set-DkimSigningConfig -Enabled $true). Si los CNAME faltan, el portal muestra error con los valores a publicar: no intentes dejar Enabled sin DNS. Cada subdominio que envíe correo necesita su propia configuración DKIM según Microsoft."
     },
     {
       "@type": "HowToStep",
       "position": 5,
-      "name": "Verifica con el checker DKIM",
-      "text": "Usa el verificador DKIM de InboxSeguro con los selectores que Microsoft te indicó (no inventes el nombre). Confirma también el dominio con el verificador de dominio si quieres ver SPF/DKIM/DMARC juntos."
+      "name": "Verifica con el verificador DKIM",
+      "text": "Usa el verificador DKIM de InboxSeguro con los selectores que Microsoft te indicó (no inventes el nombre)."
     },
     {
       "@type": "HowToStep",
       "position": 6,
       "name": "Publica el TXT DMARC en _dmarc",
-      "text": "Hostname _dmarc, valor inicial: v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl. Microsoft documenta p=none para prueba, p=quarantine (aceptar pero marcar; a menudo spam/junk) y p=reject (típicamente descartar / no entregar)."
+      "text": "Hostname _dmarc, valor inicial: v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl. Microsoft documenta p=none para prueba, p=quarantine (aceptar pero marcar; a menudo spam/junk) y p=reject (típicamente descartar / no entregar). También documenta pct para despliegue gradual, aunque RFC 9989 lo marcó histórico."
     },
     {
       "@type": "HowToStep",
       "position": 7,
       "name": "Monitorea y endurece la política",
-      "text": "Revisa reportes agregados. Sube a quarantine (puedes usar pct) y luego reject solo con fuentes legítimas alineadas. Verifica el registro con el verificador DMARC. InboxSeguro ofrece guía gradual y analítica semanal desde reportes DMARC."
+      "text": "Revisa reportes agregados (rua). Sube a quarantine y luego reject solo con fuentes legítimas alineadas. Verifica la política p= con el verificador DMARC."
     }
   ]
 }
@@ -89,13 +89,7 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Glosario",
-      "item": "https://www.inboxseguro.com/glosario/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Cómo configurar DKIM y DMARC en Microsoft 365",
+      "name": "Microsoft 365",
       "item": "https://www.inboxseguro.com/como-configurar-dkim-dmarc-microsoft-365"
     }
   ]
@@ -305,8 +299,6 @@
       <ol class="flex flex-wrap gap-2 items-center">
         <li><a href="/" class="hover:text-white transition-colors">Inicio</a></li>
         <li aria-hidden="true">/</li>
-        <li><a href="/glosario/" class="hover:text-white transition-colors">Glosario</a></li>
-        <li aria-hidden="true">/</li>
         <li class="text-slate-200">Microsoft 365</li>
       </ol>
     </nav>
@@ -327,31 +319,31 @@
     <ol class="list-none space-y-6">
         <li class="leading-relaxed">
           <strong class="text-slate-900">1. Orden recomendado: SPF, luego DKIM, luego DMARC</strong>
-          <p class="mt-2 text-slate-600">Microsoft recomienda autenticación SPF → DKIM → DMARC para cada dominio personalizado que envíe correo. Confirma SPF del dominio en DNS según la guía SPF de Microsoft 365 (consulta docs del proveedor; InboxSeguro no aplana ni «arregla» SPF).</p>
+          <p class="mt-2 text-slate-600">Microsoft recomienda autenticación SPF → DKIM → DMARC para cada dominio personalizado que envíe correo. SPF es la lista de orígenes autorizados en DNS; sigue la guía SPF de Microsoft Learn para tu dominio en ejemplo.cl.</p>
         </li>
         <li class="leading-relaxed">
-          <strong class="text-slate-900">2. Abre DKIM en el portal Defender</strong>
-          <p class="mt-2 text-slate-600">En el Microsoft Defender portal, Email authentication settings → DKIM. Selecciona el dominio personalizado. La UI puede variar entre Microsoft 365 Defender / Security; si no ves la opción, usa la doc Learn enlazada o PowerShell según esa misma guía.</p>
+          <strong class="text-slate-900">2. Obtén los dos CNAME DKIM (antes del interruptor)</strong>
+          <p class="mt-2 text-slate-600">En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey que apuntan al formato vigente, por ejemplo selector1-ejemplo-cl._domainkey.<prefijo>.<partición>-v1.dkim.mail.microsoft. El formato antiguo (hacia *.onmicrosoft.com) y el nuevo no pueden coexistir para el mismo selector: usa solo los valores que Microsoft te muestra ahora.</p>
         </li>
         <li class="leading-relaxed">
-          <strong class="text-slate-900">3. Publica los dos CNAME que indica Microsoft</strong>
-          <p class="mt-2 text-slate-600">Al habilitar firma DKIM para un dominio personalizado, Microsoft muestra dos registros CNAME hacia hosts *.onmicrosoft.com / dominio de firma. Publícalos en el DNS de ejemplo.cl. Microsoft activa la firma cuando detecta los CNAME.</p>
+          <strong class="text-slate-900">3. Publica los CNAME en el DNS</strong>
+          <p class="mt-2 text-slate-600">En el DNS de ejemplo.cl crea exactamente esos dos CNAME. Espera unos minutos (o más) a que Microsoft 365 los detecte.</p>
         </li>
         <li class="leading-relaxed">
-          <strong class="text-slate-900">4. Activa la firma DKIM para el dominio</strong>
-          <p class="mt-2 text-slate-600">Vuelve al portal y habilita DKIM signing para ese dominio. Cada subdominio que envíe correo necesita su propia configuración DKIM según Microsoft.</p>
+          <strong class="text-slate-900">4. Activa la firma DKIM (interruptor Enabled)</strong>
+          <p class="mt-2 text-slate-600">Cuando los CNAME estén publicados, desliza el interruptor Sign messages for this domain with DKIM signatures a Enabled (o Set-DkimSigningConfig -Enabled $true). Si los CNAME faltan, el portal muestra error con los valores a publicar: no intentes dejar Enabled sin DNS. Cada subdominio que envíe correo necesita su propia configuración DKIM según Microsoft.</p>
         </li>
         <li class="leading-relaxed">
-          <strong class="text-slate-900">5. Verifica con el checker DKIM</strong>
-          <p class="mt-2 text-slate-600">Usa el verificador DKIM de InboxSeguro con los selectores que Microsoft te indicó (no inventes el nombre). Confirma también el dominio con el verificador de dominio si quieres ver SPF/DKIM/DMARC juntos.</p>
+          <strong class="text-slate-900">5. Verifica con el verificador DKIM</strong>
+          <p class="mt-2 text-slate-600">Usa el verificador DKIM de InboxSeguro con los selectores que Microsoft te indicó (no inventes el nombre).</p>
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">6. Publica el TXT DMARC en _dmarc</strong>
-          <p class="mt-2 text-slate-600">Hostname _dmarc, valor inicial: v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl. Microsoft documenta p=none para prueba, p=quarantine (aceptar pero marcar; a menudo spam/junk) y p=reject (típicamente descartar / no entregar).</p>
+          <p class="mt-2 text-slate-600">Hostname _dmarc, valor inicial: v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl. Microsoft documenta p=none para prueba, p=quarantine (aceptar pero marcar; a menudo spam/junk) y p=reject (típicamente descartar / no entregar). También documenta pct para despliegue gradual, aunque RFC 9989 lo marcó histórico.</p>
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">7. Monitorea y endurece la política</strong>
-          <p class="mt-2 text-slate-600">Revisa reportes agregados. Sube a quarantine (puedes usar pct) y luego reject solo con fuentes legítimas alineadas. Verifica el registro con el verificador DMARC. InboxSeguro ofrece guía gradual y analítica semanal desde reportes DMARC.</p>
+          <p class="mt-2 text-slate-600">Revisa reportes agregados (rua). Sube a quarantine y luego reject solo con fuentes legítimas alineadas. Verifica la política p= con el verificador DMARC.</p>
         </li></ol>
   </div>
 </section>
@@ -360,7 +352,7 @@
     <h2 class="text-2xl font-bold text-slate-900">Cómo verificar con herramientas del sitio</h2>
     <ul class="list-disc list-inside space-y-2 text-slate-600">
       <li><a href="/dkim-checker" class="text-brand-600 hover:underline">Verificador DKIM</a> — confirma el selector publicado.</li>
-      <li><a href="/dmarc-checker" class="text-brand-600 hover:underline">Verificador DMARC</a> — lee p=, rua y el registro completo.</li>
+      <li><a href="/dmarc-checker" class="text-brand-600 hover:underline">Verificador DMARC</a> — verifica la política DMARC (p=) de tu dominio.</li>
       <li><a href="/domain-checker" class="text-brand-600 hover:underline">Chequeo de seguridad del correo</a> — vista conjunta SPF/DKIM/DMARC.</li>
     </ul>
   </div>
@@ -370,24 +362,25 @@
     <h2 class="text-2xl font-bold text-slate-900">Avance none → quarantine → reject</h2>
     <ol class="list-decimal list-inside space-y-3 text-slate-600 leading-relaxed">
       <li><code>p=none</code>: observa reportes; no cambia la entrega por política DMARC.</li>
-      <li><code>p=quarantine</code> (opcionalmente con <code>pct</code>): los fallos pueden ir a spam/cuarentena del receptor.</li>
-      <li><code>p=reject</code>: los fallos no se entregan (rebote/descarte). No digas que reject «manda a spam».</li>
+      <li><code>p=quarantine</code>: los fallos pueden ir a spam/cuarentena del receptor. Google, Microsoft y Zoho aún documentan <code>pct</code> para aplicar la política a un porcentaje; el estándar actual (RFC 9989) eliminó <code>pct</code> y usa <code>t=y</code>/<code>t=n</code>.</li>
+      <li><code>p=reject</code>: los fallos no se entregan (rebote/descarte). No equivale a «enviar a spam».</li>
     </ol>
-    <p class="text-slate-600 leading-relaxed">InboxSeguro ofrece guía gradual DMARC, monitoreo de DNS (incl. SPF/DKIM/DMARC/BIMI/MTA-STS/RUA) con alertas de cambios no autorizados, detección de suplantación y analítica semanal desde reportes DMARC. No afirma corregir ni aplanar SPF.</p>
+    <p class="text-slate-600 leading-relaxed">InboxSeguro ofrece guía gradual DMARC, monitoreo de DNS (SPF/DKIM/DMARC/BIMI/MTA-STS/RUA) con alertas de cambios no autorizados, detección de suplantación y analítica semanal desde reportes DMARC.</p>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Errores frecuentes</h2>
-    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Habilitar DKIM en el portal sin publicar los CNAME.</li><li class="leading-relaxed">Configurar solo el dominio raíz y olvidar subdominios que envían.</li><li class="leading-relaxed">Interpretar p=reject como «va a spam» (incorrecto según la propia doc de Microsoft).</li><li class="leading-relaxed">Múltiples registros DMARC en el mismo nombre.</li></ul>
+    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Intentar Enabled sin haber publicado los CNAME.</li><li class="leading-relaxed">Mezclar formato CNAME antiguo y nuevo para el mismo selector.</li><li class="leading-relaxed">Configurar solo el dominio raíz y olvidar subdominios que envían.</li><li class="leading-relaxed">Interpretar p=reject como «va a spam».</li><li class="leading-relaxed">Múltiples registros DMARC en el mismo nombre.</li></ul>
   </div>
 </section>
 <section class="py-12 bg-slate-50">
   <div class="max-w-3xl mx-auto px-4 space-y-3">
     <h2 class="text-xl font-bold text-slate-900">Fuentes oficiales</h2>
-    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dkim-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Configure DKIM (Microsoft Learn)</a></li><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Configure DMARC (Microsoft Learn)</a></li></ul>
+    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dkim-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Configure DKIM (Microsoft Learn)</a></li><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Configure DMARC (Microsoft Learn)</a></li><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-spf-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Configure SPF (Microsoft Learn)</a></li></ul>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600 mt-2">
-      <li><a href="https://www.rfc-editor.org/rfc/rfc7489" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 7489 — DMARC</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9989" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9990" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — Aggregate Reporting</a></li>
       <li><a href="https://www.rfc-editor.org/rfc/rfc6376" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 6376 — DKIM</a></li>
     </ul>
   </div>
@@ -395,10 +388,10 @@
 <section class="py-16 bg-slate-900 text-white text-center">
   <div class="max-w-2xl mx-auto px-4">
     <h2 class="text-2xl font-bold mb-4">Verifica tu dominio ahora</h2>
-    <p class="text-slate-300 mb-6">Las herramientas de diagnóstico son gratuitas. Revisa DKIM y DMARC tras cada cambio DNS.</p>
+    <p class="text-slate-300 mb-6">Las herramientas de diagnóstico son gratuitas. Revisa DKIM y la política DMARC tras cada cambio DNS.</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
       <a href="/dkim-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 rounded-xl font-bold">Verificar DKIM</a>
-      <a href="/dmarc-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Verificar DMARC</a>
+      <a href="/dmarc-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Verificar política DMARC</a>
     </div>
   </div>
 </section>

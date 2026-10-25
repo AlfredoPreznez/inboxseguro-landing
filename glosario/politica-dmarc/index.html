@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Política DMARC none quarantine reject | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC y Google.">
+    <meta name="description" content="Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC 9989 y proveedores.">
     <link rel="canonical" href="https://www.inboxseguro.com/glosario/politica-dmarc/">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/glosario/politica-dmarc/">
     <meta property="og:title" content="Política DMARC none quarantine reject | InboxSeguro">
-    <meta property="og:description" content="Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC y Google.">
+    <meta property="og:description" content="Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC 9989 y proveedores.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Política DMARC none quarantine reject | InboxSeguro">
-    <meta name="twitter:description" content="Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC y Google.">
+    <meta name="twitter:description" content="Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC 9989 y proveedores.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -280,22 +280,24 @@
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Ejemplos seguros para ejemplo.cl</h2>
-    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto whitespace-pre-wrap">Observación:
+    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto" style="white-space: pre-wrap">Observación:
 v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl
 
-Cuarentena gradual:
+Cuarentena (práctica gradual documentada por proveedores):
 v=DMARC1; p=quarantine; pct=25; rua=mailto:dmarc@ejemplo.cl
 
 Rechazo (solo con reportes limpios):
 v=DMARC1; p=reject; rua=mailto:dmarc@ejemplo.cl
 
-Según RFC 7489 y la ayuda de Google: quarantine suele marcar como spam; reject suele rechazar (rebote). Reject no significa «mandar a spam».</pre>
+Según RFC 9989 y la ayuda de Google/Microsoft: quarantine suele marcar como spam; reject suele rechazar (rebote). Reject no equivale a «enviar a spam».
+
+Nota sobre pct: el estándar actual (RFC 9989) eliminó pct (histórico) y usa t=y / t=n para modo de prueba. Google, Microsoft y Zoho aún documentan pct como práctica gradual en sus consolas.</pre>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Errores comunes</h2>
-    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Pasar a p=reject sin inventariar todos los remitentes legítimos.</li><li class="leading-relaxed">Decir que reject envía a spam (incorrecto).</li><li class="leading-relaxed">Publicar varios TXT DMARC en el mismo nombre (_dmarc).</li></ul>
+    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Pasar a p=reject sin inventariar todos los remitentes legítimos.</li><li class="leading-relaxed">Interpretar p=reject como envío a spam.</li><li class="leading-relaxed">Publicar varios TXT DMARC en el mismo nombre (_dmarc).</li></ul>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
@@ -303,7 +305,7 @@ Según RFC 7489 y la ayuda de Google: quarantine suele marcar como spam; reject 
     <h2 class="text-2xl font-bold text-slate-900">Herramienta y lectura relacionada</h2>
     <p class="text-slate-600 leading-relaxed">
       <a href="/dmarc-checker" class="text-brand-600 hover:underline font-semibold">Verificar DMARC (gratis)</a>
-      — Lee la política p= de tu dominio.
+      — Verifica la política DMARC de tu dominio.
     </p>
     <p class="text-slate-600 leading-relaxed">
       Artículo:
@@ -317,12 +319,12 @@ Según RFC 7489 y la ayuda de Google: quarantine suele marcar como spam; reject 
 <section class="py-12 bg-slate-50">
   <div class="max-w-3xl mx-auto px-4 space-y-3">
     <h2 class="text-xl font-bold text-slate-900">Fuentes</h2>
-    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.rfc-editor.org/rfc/rfc7489#section-6.6.4" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 7489 — Policy enforcement (quarantine / reject)</a></li><li><a href="https://support.google.com/a/answer/2466580" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Workspace — Set up DMARC (p= tags)</a></li><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Microsoft Learn — Set up DMARC</a></li></ul>
+    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.rfc-editor.org/rfc/rfc9989" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC (política p= y t=)</a></li><li><a href="https://support.google.com/a/answer/2466580" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Workspace — Set up DMARC</a></li><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Microsoft Learn — Set up DMARC</a></li></ul>
   </div>
 </section>
 <section class="py-16 bg-slate-900 text-white text-center">
   <div class="max-w-2xl mx-auto px-4">
-    <h2 class="text-2xl font-bold mb-4">Lee la política p= de tu dominio</h2>
+    <h2 class="text-2xl font-bold mb-4">Verifica la política DMARC de tu dominio</h2>
     <p class="text-slate-300 mb-6">Herramienta de diagnóstico gratuita. La plataforma InboxSeguro es un servicio aparte de monitoreo y gobernanza.</p>
     <a href="/dmarc-checker" data-seo-event="checker_submit" class="inline-flex px-6 py-3 bg-brand-600 hover:bg-brand-700 rounded-xl font-bold">Verificar DMARC (gratis)</a>
   </div>

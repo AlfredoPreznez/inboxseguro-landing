@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alineación DMARC SPF y DKIM | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC.">
+    <meta name="description" content="La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC 9989.">
     <link rel="canonical" href="https://www.inboxseguro.com/glosario/alineacion-dmarc/">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/glosario/alineacion-dmarc/">
     <meta property="og:title" content="Alineación DMARC SPF y DKIM | InboxSeguro">
-    <meta property="og:description" content="La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC.">
+    <meta property="og:description" content="La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC 9989.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Alineación DMARC SPF y DKIM | InboxSeguro">
-    <meta name="twitter:description" content="La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC.">
+    <meta name="twitter:description" content="La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC 9989.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -280,12 +280,12 @@
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Ejemplo con ejemplo.cl</h2>
-    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto whitespace-pre-wrap">Registro (relajado, valores por defecto):
+    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto" style="white-space: pre-wrap">Registro (relajado, valores por defecto):
 v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl; adkim=r; aspf=r
 
 - SPF alineado (relajado): el dominio organizacional del MAIL FROM coincide con el del From: (p. ej. bounce.ejemplo.cl con From usuario@ejemplo.cl).
 - DKIM alineado (relajado): el d= de la firma es ejemplo.cl o un subdominio organizacional compatible.
-- Estricto (adkim=s / aspf=s): exige coincidencia exacta del FQDN (RFC 7489 §3.1).</pre>
+- Estricto (adkim=s / aspf=s): exige coincidencia exacta del FQDN (RFC 9989).</pre>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
@@ -299,7 +299,7 @@ v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl; adkim=r; aspf=r
     <h2 class="text-2xl font-bold text-slate-900">Herramienta y lectura relacionada</h2>
     <p class="text-slate-600 leading-relaxed">
       <a href="/dmarc-checker" class="text-brand-600 hover:underline font-semibold">Verificar DMARC (gratis)</a>
-      — Revisa tu registro DMARC y alineación.
+      — Verifica la política DMARC de tu dominio.
     </p>
     <p class="text-slate-600 leading-relaxed">
       Artículo:
@@ -313,12 +313,12 @@ v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl; adkim=r; aspf=r
 <section class="py-12 bg-slate-50">
   <div class="max-w-3xl mx-auto px-4 space-y-3">
     <h2 class="text-xl font-bold text-slate-900">Fuentes</h2>
-    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.rfc-editor.org/rfc/rfc7489#section-3.1" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 7489 — Identifier Alignment</a></li><li><a href="https://support.google.com/a/answer/2466580" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Workspace — DMARC alignment</a></li></ul>
+    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.rfc-editor.org/rfc/rfc9989" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — Identifier Alignment</a></li><li><a href="https://support.google.com/a/answer/2466580" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Workspace — Set up DMARC (alignment)</a></li></ul>
   </div>
 </section>
 <section class="py-16 bg-slate-900 text-white text-center">
   <div class="max-w-2xl mx-auto px-4">
-    <h2 class="text-2xl font-bold mb-4">Revisa tu registro DMARC y alineación</h2>
+    <h2 class="text-2xl font-bold mb-4">Verifica la política DMARC de tu dominio</h2>
     <p class="text-slate-300 mb-6">Herramienta de diagnóstico gratuita. La plataforma InboxSeguro es un servicio aparte de monitoreo y gobernanza.</p>
     <a href="/dmarc-checker" data-seo-event="checker_submit" class="inline-flex px-6 py-3 bg-brand-600 hover:bg-brand-700 rounded-xl font-bold">Verificar DMARC (gratis)</a>
   </div>

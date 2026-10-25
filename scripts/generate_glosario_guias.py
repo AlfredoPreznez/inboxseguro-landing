@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Genera HTML estático de glosario y guías DNS (uso único de contenido)."""
+"""Genera HTML estático de glosario y guías DNS."""
 
 from __future__ import annotations
 
@@ -29,6 +29,9 @@ HEAD_ASSETS = """    <link href="https://fonts.googleapis.com/css2?family=Inter:
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.8">
 """
+
+PRE_CLASS = 'bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto'
+PRE_STYLE = 'white-space: pre-wrap'
 
 
 def clip(s: str, n: int) -> str:
@@ -95,11 +98,11 @@ TERMS: list[dict] = [
         "description": "Qué es una RBL (lista negra de correo), por qué importa a tu empresa y cómo revisar tu IP o dominio con el verificador gratuito de InboxSeguro.",
         "definition": "Una RBL (Realtime Blackhole List o lista negra de correo) es un listado público de direcciones IP o dominios asociados a envío abusivo o no deseado, consultado por servidores receptores antes de aceptar o clasificar un mensaje.",
         "why": "Si la IP o el dominio de envío de tu empresa aparecen en una RBL, los receptores pueden rechazar el correo, enviarlo a spam o bajar su prioridad. InboxSeguro monitorea de forma horaria seis RBL (Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer) y ofrece guía de remoción cuando hay listado.",
-        "example_title": "Consulta conceptual (no es un registro DNS)",
-        "example": "Las RBL no se publican en el DNS de tu dominio como SPF o DMARC. Se consultan por consulta DNS inversa del listado (por ejemplo, una IP 203.0.113.10 se consulta como 10.113.0.203.bl.ejemplo-rbl.net). Para empresas, lo práctico es revisar IP/dominio con una herramienta: usa el verificador de listas negras de InboxSeguro.",
+        "example_title": "Cómo se consulta una RBL (RFC 5782)",
+        "example": "Las RBL no se publican en el DNS de tu dominio como SPF o DMARC. El receptor consulta el listado formando un nombre DNS: los octetos de la IP en orden inverso, seguidos de la zona de la lista.\n\nEjemplo: IP 203.0.113.10 → consulta 10.113.0.203.bl.ejemplo-rbl.net (RFC 5782).\n\nPara revisar tu dominio o IP puedes usar el verificador de listas negras de InboxSeguro.",
         "errors": [
             "Creer que «estar limpio» en una sola RBL basta: cada receptor usa listas distintas.",
-            "Intentar «arreglar» el listado sin corregir la causa (compromiso, formulario abierto, rebotes mal manejados).",
+            "Intentar salir del listado sin corregir la causa (compromiso, formulario abierto, rebotes mal manejados).",
             "Confundir RBL con cuarentena DMARC: son mecanismos distintos.",
         ],
         "tool_href": "/verificar-lista-negra",
@@ -108,22 +111,22 @@ TERMS: list[dict] = [
         "blog_href": "/blog/como-saber-si-mi-dominio-esta-en-lista-negra/",
         "blog_label": "Cómo saber si tu dominio está en lista negra",
         "sources": [
-            ("M3AAWG — Anti-Abuse Best Common Practices", "https://www.m3aawg.org/sites/default/files/m3aawg-email-authentication-recommended-best-practices-09-2020.pdf"),
-            ("Spamcop — About blacklists", "https://www.spamcop.net/fom-serve/cache/291.html"),
+            ("RFC 5782 — DNS Blacklists and Whitelists", "https://www.rfc-editor.org/rfc/rfc5782"),
+            ("Spamcop Blocking List", "https://www.spamcop.net/bl.shtml"),
         ],
     },
     {
         "slug": "registro-mx",
         "name": "Registro MX",
         "title": "Registro MX: qué es y ejemplo | InboxSeguro",
-        "description": "El registro MX indica a qué servidores entregar el correo de tu dominio. Ejemplo seguro con ejemplo.cl y verificación con MX Lookup.",
+        "description": "El registro MX indica a qué servidores entregar el correo de tu dominio. Ejemplo con ejemplo.cl según valores vigentes de Google Workspace y verificación con MX Lookup.",
         "definition": "Un registro MX (Mail Exchanger) es un registro DNS que indica el nombre de host que acepta correo para un dominio, junto con una prioridad numérica (menor número = mayor prioridad de intento).",
-        "why": "Sin MX correcto, el correo entrante no llega a tu empresa (o llega al host equivocado). Un MX mal apuntado también afecta diagnósticos de entregabilidad y la coherencia con SPF/DKIM/DMARC del proveedor de correo.",
-        "example_title": "Ejemplo de registros MX para ejemplo.cl",
-        "example": "ejemplo.cl.  IN  MX  10  ASPMX.L.GOOGLE.COM.\nejemplo.cl.  IN  MX  20  ALT1.ASPMX.L.GOOGLE.COM.\n\n(Valores ilustrativos al estilo Google Workspace; usa siempre los hosts que te indique tu proveedor. El destino del MX debe ser un nombre de host con A/AAAA, no una dirección IP ni un CNAME, según RFC 5321.)",
+        "why": "Sin MX correcto, el correo entrante no llega a tu empresa (o llega al host equivocado). Un MX mal apuntado también afecta diagnósticos de entregabilidad y la coherencia con la autenticación del proveedor de correo.",
+        "example_title": "Ejemplo MX para ejemplo.cl (Google Workspace)",
+        "example": "Valores vigentes documentados por Google (cuentas nuevas desde 2023):\nejemplo.cl.  IN  MX  1  smtp.google.com.\n\nCuentas anteriores pueden usar el conjunto legacy ASPMX (p. ej. prioridad 1 ASPMX.L.GOOGLE.COM, etc.). Si el correo ya funciona, Google recomienda no cambiar el MX.\n\nOtros proveedores entregan sus propios hosts y prioridades: usa siempre los que indique tu documentación.\n\nEl destino del MX debe ser un nombre de host con A/AAAA. RFC 2181 §10.3 prohíbe que un nombre de MX sea un alias (CNAME).",
         "errors": [
             "Apuntar el MX a una IP en lugar de un hostname.",
-            "Apuntar el MX a un CNAME (prohibido por RFC 5321 / prácticas DNS de correo).",
+            "Apuntar el MX a un CNAME (prohibido por RFC 2181 §10.3).",
             "Dejar MX de un proveedor anterior tras migrar a otro (correo perdido o dividido).",
         ],
         "tool_href": "/mx-lookup",
@@ -132,8 +135,9 @@ TERMS: list[dict] = [
         "blog_href": "/blog/mis-correos-llegan-a-spam/",
         "blog_label": "Por qué tus correos llegan a spam",
         "sources": [
-            ("RFC 5321 — SMTP (sección 5, resolución MX)", "https://www.rfc-editor.org/rfc/rfc5321#section-5"),
-            ("Google Workspace — Configurar registros MX", "https://support.google.com/a/answer/140951"),
+            ("RFC 5321 — SMTP (resolución MX)", "https://www.rfc-editor.org/rfc/rfc5321#section-5"),
+            ("RFC 2181 §10.3 — MX no puede ser CNAME", "https://www.rfc-editor.org/rfc/rfc2181#section-10.3"),
+            ("Google Workspace — MX record values", "https://support.google.com/a/answer/174125"),
         ],
     },
     {
@@ -142,22 +146,22 @@ TERMS: list[dict] = [
         "title": "BIMI: logo verificado en correo | InboxSeguro",
         "description": "BIMI permite mostrar el logo de tu marca en clientes de correo compatibles. Requisitos DMARC, ejemplo de registro y fuentes oficiales.",
         "definition": "BIMI (Brand Indicators for Message Identification) es un mecanismo que permite a los receptores mostrar el logo de una marca en mensajes autenticados, cuando el dominio publica un registro BIMI y cumple requisitos de autenticación (en particular DMARC en aplicación).",
-        "why": "Ayuda a que el destinatario reconozca mensajes legítimos de tu empresa. No sustituye SPF, DKIM ni DMARC: sin autenticación alineada y política DMARC en cuarentena o rechazo (con pct=100 cuando aplique), BIMI no se muestra en proveedores que lo exigen.",
+        "why": "Ayuda a que el destinatario reconozca mensajes legítimos de tu empresa. No sustituye SPF, DKIM ni DMARC: sin autenticación alineada y política DMARC en cuarentena o rechazo (con pct=100 cuando el proveedor lo exige para BIMI), el logo no se muestra.",
         "example_title": "Ejemplo de registro TXT BIMI para ejemplo.cl",
-        "example": "default._bimi.ejemplo.cl.  IN  TXT  \"v=BIMI1; l=https://ejemplo.cl/logo-bimi.svg; a=https://ejemplo.cl/vmc.pem\"\n\nEl SVG debe cumplir el perfil SVG Tiny PS / Portable-Secure que indica la guía BIMI. El tag a= (certificado de marca) es opcional en el registro, pero muchos proveedores solo muestran el logo con VMC/CMC.",
+        "example": "default._bimi.ejemplo.cl.  IN  TXT  \"v=BIMI1; l=https://ejemplo.cl/logo-bimi.svg; a=https://ejemplo.cl/vmc.pem\"\n\nEl SVG debe cumplir el perfil que indica la guía BIMI / Google. El tag a= (certificado de marca) es opcional en el registro, pero muchos proveedores solo muestran el logo con VMC/CMC.",
         "errors": [
-            "Publicar BIMI con DMARC en p=none (no cumple el requisito de aplicación de la guía BIMI Group).",
+            "Publicar BIMI con DMARC en p=none (Google y BIMI Group exigen quarantine o reject).",
             "Usar un SVG que no cumple el perfil requerido.",
             "Creer que BIMI autentica el correo por sí solo.",
         ],
         "tool_href": "/dmarc-checker",
         "tool_label": "Verificar DMARC (gratis)",
-        "tool_cta": "Comprueba si tu DMARC está listo para BIMI",
+        "tool_cta": "Verifica la política DMARC de tu dominio",
         "blog_href": "/blog/que-es-dmarc-como-activarlo/",
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
             ("BIMI Group — Implementation Guide", "https://bimigroup.org/implementation-guide/"),
-            ("Google Workspace — BIMI", "https://support.google.com/a/answer/10941517"),
+            ("Google Workspace — Set up BIMI", "https://support.google.com/a/answer/10911320"),
         ],
     },
     {
@@ -181,44 +185,45 @@ TERMS: list[dict] = [
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
             ("RFC 8461 — SMTP MTA Strict Transport Security", "https://www.rfc-editor.org/rfc/rfc8461"),
-            ("Google — MTA-STS", "https://support.google.com/a/answer/9261505"),
+            ("Google Workspace — Create an MTA-STS policy", "https://support.google.com/a/answer/9276511"),
         ],
     },
     {
         "slug": "rua",
         "name": "RUA (reportes agregados DMARC)",
         "title": "RUA DMARC: reportes agregados | InboxSeguro",
-        "description": "RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo sin inventar datos.",
+        "description": "RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo en tu empresa.",
         "definition": "RUA (Reporting URI for Aggregate reports) es la etiqueta DMARC que indica a dónde enviar reportes agregados periódicos sobre resultados de autenticación (pases y fallas) para mensajes que usan tu dominio.",
-        "why": "Sin rua, muchos receptores no generan reportes útiles y no ves quién envía con tu dominio. InboxSeguro usa analítica semanal a partir de reportes DMARC para inventariar envíos y detectar cambios; el registro DNS lo publicas tú en _dmarc.",
+        "why": "Sin la etiqueta rua, los receptores no deben generar reportes agregados (RFC 9989). Con rua publicas un destino para ver quién envía con tu dominio. InboxSeguro usa analítica semanal a partir de reportes DMARC; el registro DNS lo publicas tú en _dmarc.",
         "example_title": "Ejemplo de registro DMARC con RUA",
-        "example": "_dmarc.ejemplo.cl.  IN  TXT  \"v=DMARC1; p=none; rua=mailto:dmarc-reports@ejemplo.cl\"\n\nSi el buzón de reportes está en otro dominio, ese dominio debe autorizar la recepción según RFC 7489 §7.1.",
+        "example": "_dmarc.ejemplo.cl.  IN  TXT  \"v=DMARC1; p=none; rua=mailto:dmarc-reports@ejemplo.cl\"\n\nSi el buzón de reportes está en otro dominio, ese dominio debe autorizar la recepción (RFC 9989 / RFC 9990).",
         "errors": [
-            "Omitir rua y creer que «ya hay visibilidad».",
+            "Omitir rua y esperar reportes agregados de todos modos.",
             "Usar el correo personal del CEO: el volumen de reportes puede ser alto.",
             "Publicar dos registros DMARC distintos en el mismo dominio (el descubrimiento falla).",
         ],
         "tool_href": "/dmarc-checker",
         "tool_label": "Verificar DMARC (gratis)",
-        "tool_cta": "Comprueba si tu registro incluye rua",
+        "tool_cta": "Verifica la política DMARC de tu dominio",
         "blog_href": "/blog/que-es-dmarc-como-activarlo/",
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
-            ("RFC 7489 — DMARC (rua, reportes agregados)", "https://www.rfc-editor.org/rfc/rfc7489"),
-            ("Google Workspace — Set up DMARC (rua)", "https://support.google.com/a/answer/2466580"),
+            ("RFC 9989 — DMARC (etiqueta rua)", "https://www.rfc-editor.org/rfc/rfc9989"),
+            ("RFC 9990 — DMARC Aggregate Reporting", "https://www.rfc-editor.org/rfc/rfc9990"),
+            ("Google Workspace — Set up DMARC", "https://support.google.com/a/answer/2466580"),
         ],
     },
     {
         "slug": "selector-dkim",
         "name": "Selector DKIM",
         "title": "Selector DKIM: qué es y ejemplo | InboxSeguro",
-        "description": "El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el checker DKIM.",
-        "definition": "Un selector DKIM es un nombre corto que subdivida el espacio de claves públicas de un dominio; aparece en la cabecera DKIM-Signature como s= y determina la consulta DNS a selector._domainkey.dominio.",
-        "why": "Permite rotar claves, usar varias firmas (correo corporativo vs. marketing) y delegar firma a un proveedor. Sin el selector correcto publicado, la firma no se puede verificar y DMARC puede fallar aunque «tengas DKIM activado» en la consola.",
+        "description": "El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el verificador DKIM.",
+        "definition": "Un selector DKIM es un nombre corto que subdivide el espacio de claves públicas de un dominio; aparece en la cabecera DKIM-Signature como s= y determina la consulta DNS a selector._domainkey.dominio.",
+        "why": "Permite rotar claves, usar varias firmas (correo corporativo vs. marketing) y delegar firma a un proveedor. Sin el selector correcto publicado, la firma no se puede verificar y DMARC puede fallar aunque la consola diga que DKIM está activo.",
         "example_title": "Ejemplo de clave pública DKIM",
         "example": "Nombre DNS: google._domainkey.ejemplo.cl\nTipo: TXT\nValor (forma): v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA…\n\nEn el mensaje, la firma incluye s=google; d=ejemplo.cl. Google Workspace recomienda el selector google por defecto (puede variar si ya está en uso).",
         "errors": [
-            "Publicar la clave pero no pulsar «Start authentication» / Verificar / Enable en el proveedor.",
+            "Publicar la clave pero no activar la autenticación (Start authentication / Verify / Enable) en el proveedor.",
             "Truncar el valor TXT (p= incompleto) en el panel DNS.",
             "Buscar un selector inventado: DNS no lista selectores; hay que usar el s= real o el que da el proveedor.",
         ],
@@ -236,24 +241,24 @@ TERMS: list[dict] = [
         "slug": "politica-dmarc",
         "name": "Política DMARC (none / quarantine / reject)",
         "title": "Política DMARC none quarantine reject | InboxSeguro",
-        "description": "Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC y Google.",
+        "description": "Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC 9989 y proveedores.",
         "definition": "La política DMARC (etiqueta p=) indica a los receptores qué se sugiere hacer con mensajes que fallan la evaluación DMARC: none (sin acción especial), quarantine (tratar como sospechosos, p. ej. spam) o reject (no entregar / rechazar).",
         "why": "Define el nivel de protección de tu dominio frente a suplantación. Empezar en p=none permite observar con reportes; subir demasiado pronto puede afectar correo legítimo de CRM, facturación u otros remitentes aún no autenticados.",
         "example_title": "Ejemplos seguros para ejemplo.cl",
-        "example": "Observación:\nv=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl\n\nCuarentena gradual:\nv=DMARC1; p=quarantine; pct=25; rua=mailto:dmarc@ejemplo.cl\n\nRechazo (solo con reportes limpios):\nv=DMARC1; p=reject; rua=mailto:dmarc@ejemplo.cl\n\nSegún RFC 7489 y la ayuda de Google: quarantine suele marcar como spam; reject suele rechazar (rebote). Reject no significa «mandar a spam».",
+        "example": "Observación:\nv=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl\n\nCuarentena (práctica gradual documentada por proveedores):\nv=DMARC1; p=quarantine; pct=25; rua=mailto:dmarc@ejemplo.cl\n\nRechazo (solo con reportes limpios):\nv=DMARC1; p=reject; rua=mailto:dmarc@ejemplo.cl\n\nSegún RFC 9989 y la ayuda de Google/Microsoft: quarantine suele marcar como spam; reject suele rechazar (rebote). Reject no equivale a «enviar a spam».\n\nNota sobre pct: el estándar actual (RFC 9989) eliminó pct (histórico) y usa t=y / t=n para modo de prueba. Google, Microsoft y Zoho aún documentan pct como práctica gradual en sus consolas.",
         "errors": [
             "Pasar a p=reject sin inventariar todos los remitentes legítimos.",
-            "Decir que reject envía a spam (incorrecto).",
+            "Interpretar p=reject como envío a spam.",
             "Publicar varios TXT DMARC en el mismo nombre (_dmarc).",
         ],
         "tool_href": "/dmarc-checker",
         "tool_label": "Verificar DMARC (gratis)",
-        "tool_cta": "Lee la política p= de tu dominio",
+        "tool_cta": "Verifica la política DMARC de tu dominio",
         "blog_href": "/blog/que-es-dmarc-como-activarlo/",
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
-            ("RFC 7489 — Policy enforcement (quarantine / reject)", "https://www.rfc-editor.org/rfc/rfc7489#section-6.6.4"),
-            ("Google Workspace — Set up DMARC (p= tags)", "https://support.google.com/a/answer/2466580"),
+            ("RFC 9989 — DMARC (política p= y t=)", "https://www.rfc-editor.org/rfc/rfc9989"),
+            ("Google Workspace — Set up DMARC", "https://support.google.com/a/answer/2466580"),
             ("Microsoft Learn — Set up DMARC", "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure"),
         ],
     },
@@ -261,11 +266,11 @@ TERMS: list[dict] = [
         "slug": "alineacion-dmarc",
         "name": "Alineación DMARC",
         "title": "Alineación DMARC SPF y DKIM | InboxSeguro",
-        "description": "La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC.",
+        "description": "La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC 9989.",
         "definition": "La alineación DMARC es el requisito de que el dominio autenticado por SPF y/o DKIM coincida (de forma relajada o estricta) con el dominio del encabezado From: que ve el destinatario.",
         "why": "Un mensaje puede «pasar SPF» o «pasar DKIM» y aun así fallar DMARC si el dominio firmado o el MAIL FROM no alinean con el From: visible. Eso es habitual con reenvíos o herramientas de terceros mal configuradas.",
         "example_title": "Ejemplo con ejemplo.cl",
-        "example": "Registro (relajado, valores por defecto):\nv=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl; adkim=r; aspf=r\n\n- SPF alineado (relajado): el dominio organizacional del MAIL FROM coincide con el del From: (p. ej. bounce.ejemplo.cl con From usuario@ejemplo.cl).\n- DKIM alineado (relajado): el d= de la firma es ejemplo.cl o un subdominio organizacional compatible.\n- Estricto (adkim=s / aspf=s): exige coincidencia exacta del FQDN (RFC 7489 §3.1).",
+        "example": "Registro (relajado, valores por defecto):\nv=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl; adkim=r; aspf=r\n\n- SPF alineado (relajado): el dominio organizacional del MAIL FROM coincide con el del From: (p. ej. bounce.ejemplo.cl con From usuario@ejemplo.cl).\n- DKIM alineado (relajado): el d= de la firma es ejemplo.cl o un subdominio organizacional compatible.\n- Estricto (adkim=s / aspf=s): exige coincidencia exacta del FQDN (RFC 9989).",
         "errors": [
             "Activar alineación estricta sin necesidad y romper subdominios legítimos.",
             "Creer que SPF «pass» sin alineación basta para DMARC.",
@@ -273,21 +278,19 @@ TERMS: list[dict] = [
         ],
         "tool_href": "/dmarc-checker",
         "tool_label": "Verificar DMARC (gratis)",
-        "tool_cta": "Revisa tu registro DMARC y alineación",
+        "tool_cta": "Verifica la política DMARC de tu dominio",
         "blog_href": "/blog/que-es-dmarc-como-activarlo/",
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
-            ("RFC 7489 — Identifier Alignment", "https://www.rfc-editor.org/rfc/rfc7489#section-3.1"),
-            ("Google Workspace — DMARC alignment", "https://support.google.com/a/answer/2466580"),
+            ("RFC 9989 — Identifier Alignment", "https://www.rfc-editor.org/rfc/rfc9989"),
+            ("Google Workspace — Set up DMARC (alignment)", "https://support.google.com/a/answer/2466580"),
         ],
     },
 ]
 
 
 def term_main(term: dict) -> str:
-    errors = "".join(
-        f'<li class="leading-relaxed">{e}</li>' for e in term["errors"]
-    )
+    errors = "".join(f'<li class="leading-relaxed">{e}</li>' for e in term["errors"])
     sources = "".join(
         f'<li><a href="{url}" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">{label}</a></li>'
         for label, url in term["sources"]
@@ -317,7 +320,7 @@ def term_main(term: dict) -> str:
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">{term["example_title"]}</h2>
-    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto whitespace-pre-wrap">{term["example"]}</pre>
+    <pre class="{PRE_CLASS}" style="{PRE_STYLE}">{term["example"]}</pre>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
@@ -405,8 +408,9 @@ GUIDES: list[dict] = [
         "path": "/como-configurar-dkim-dmarc-google-workspace",
         "title": "DKIM y DMARC en Google Workspace | InboxSeguro",
         "h1": "Cómo configurar DKIM y DMARC en Google Workspace",
-        "description": "Pasos oficiales para activar DKIM y publicar DMARC en Google Workspace, verificar con herramientas gratis y avanzar none→quarantine→reject.",
+        "description": "Guía basada en la documentación oficial para activar DKIM y publicar DMARC en Google Workspace, verificar con herramientas gratis y avanzar none→quarantine→reject.",
         "provider": "Google Workspace",
+        "crumb": "Google Workspace",
         "docs": [
             ("Set up DKIM (Google Workspace Help)", "https://support.google.com/a/answer/174124"),
             ("Set up DMARC (Google Workspace Help)", "https://support.google.com/a/answer/2466580"),
@@ -418,7 +422,7 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Genera la clave DKIM en Admin console",
-                "text": "Entra como superadministrador. Ve a Apps → Google Workspace → Gmail → Authenticate email. Elige el dominio, Generate New Record. Preferencia: clave 2048 bits si tu DNS la admite; selector por defecto google (cámbialo solo si ya está en uso). Copia el nombre TXT (p. ej. google._domainkey) y el valor v=DKIM1; k=rsa; p=… No pulses Start authentication todavía.",
+                "text": "Ingresa como superadministrador. Ve a Apps → Google Workspace → Gmail → Authenticate email. Elige el dominio y haz clic en Generate New Record. Preferencia: clave 2048 bits si tu DNS la admite; selector por defecto google (cámbialo solo si ya está en uso). Copia el nombre TXT (p. ej. google._domainkey) y el valor v=DKIM1; k=rsa; p=…. Aún no actives Start authentication. Tras Generate, la página Authenticate email puede mostrar hasta 48 horas el aviso de actualizar DNS aunque el registro ya esté bien.",
             },
             {
                 "name": "Publica el TXT en tu DNS",
@@ -426,7 +430,7 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Activa la autenticación DKIM",
-                "text": "Vuelve a Authenticate email y pulsa Start authentication. El estado debería pasar a Authenticating email with DKIM. Google advierte que el aviso de actualizar DNS puede permanecer hasta 48 horas aunque el registro esté bien.",
+                "text": "Vuelve a Authenticate email y haz clic en Start authentication. El estado debería pasar a Authenticating email with DKIM. Google también indica que, tras agregar la clave, la autenticación puede tardar hasta 48 horas en empezar a funcionar.",
             },
             {
                 "name": "Verifica DKIM con herramientas del sitio",
@@ -434,15 +438,15 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Prepara buzón o grupo para reportes DMARC",
-                "text": "Google recomienda un buzón o grupo dedicado para reportes (rua). No uses el correo personal diario: el volumen puede ser alto.",
+                "text": "Google recomienda un buzón o grupo dedicado para reportes (rua). No uses el correo personal diario: el volumen puede ser alto. Sin rua, los receptores no deben generar reportes agregados (RFC 9989).",
             },
             {
                 "name": "Publica DMARC en p=none",
                 "text": "DMARC no se «enciende» dentro de Gmail: se publica un TXT en _dmarc.ejemplo.cl. Ejemplo inicial: v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl. Google recomienda SPF y/o DKIM activos y esperar ~48 horas tras SPF/DKIM antes de DMARC. Un solo registro DMARC por dominio.",
             },
             {
-                "name": "Verifica DMARC y avanza por etapas",
-                "text": "Comprueba con el verificador DMARC. Revisa reportes/rua. Luego p=quarantine con pct bajo (p. ej. 25) y sube el porcentaje. Solo con reportes limpios: p=reject. Quarantine puede ir a spam; reject suele no entregar (rebote). InboxSeguro puede guiar none→quarantine→reject y analizar reportes; no afirma arreglar SPF.",
+                "name": "Verifica la política DMARC y avanza por etapas",
+                "text": "Comprueba la política p= con el verificador DMARC. Revisa reportes vía rua. Google documenta pct para un despliegue gradual (p. ej. p=quarantine; pct=25) aunque RFC 9989 eliminó pct del estándar y usa t=y/t=n. Solo con reportes limpios: p=reject. Quarantine puede ir a spam; reject suele no entregar (rebote).",
             },
         ],
         "errors": [
@@ -458,46 +462,49 @@ GUIDES: list[dict] = [
         "path": "/como-configurar-dkim-dmarc-microsoft-365",
         "title": "DKIM y DMARC en Microsoft 365 | InboxSeguro",
         "h1": "Cómo configurar DKIM y DMARC en Microsoft 365",
-        "description": "Pasos con docs de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.",
+        "description": "Guía basada en la documentación oficial de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.",
         "provider": "Microsoft 365",
+        "crumb": "Microsoft 365",
         "docs": [
             ("Configure DKIM (Microsoft Learn)", "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dkim-configure"),
             ("Configure DMARC (Microsoft Learn)", "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure"),
+            ("Configure SPF (Microsoft Learn)", "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-spf-configure"),
         ],
         "steps": [
             {
                 "name": "Orden recomendado: SPF, luego DKIM, luego DMARC",
-                "text": "Microsoft recomienda autenticación SPF → DKIM → DMARC para cada dominio personalizado que envíe correo. Confirma SPF del dominio en DNS según la guía SPF de Microsoft 365 (consulta docs del proveedor; InboxSeguro no aplana ni «arregla» SPF).",
+                "text": "Microsoft recomienda autenticación SPF → DKIM → DMARC para cada dominio personalizado que envíe correo. SPF es la lista de orígenes autorizados en DNS; sigue la guía SPF de Microsoft Learn para tu dominio en ejemplo.cl.",
             },
             {
-                "name": "Abre DKIM en el portal Defender",
-                "text": "En el Microsoft Defender portal, Email authentication settings → DKIM. Selecciona el dominio personalizado. La UI puede variar entre Microsoft 365 Defender / Security; si no ves la opción, usa la doc Learn enlazada o PowerShell según esa misma guía.",
+                "name": "Obtén los dos CNAME DKIM (antes del interruptor)",
+                "text": "En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey que apuntan al formato vigente, por ejemplo selector1-ejemplo-cl._domainkey.<prefijo>.<partición>-v1.dkim.mail.microsoft. El formato antiguo (hacia *.onmicrosoft.com) y el nuevo no pueden coexistir para el mismo selector: usa solo los valores que Microsoft te muestra ahora.",
             },
             {
-                "name": "Publica los dos CNAME que indica Microsoft",
-                "text": "Al habilitar firma DKIM para un dominio personalizado, Microsoft muestra dos registros CNAME hacia hosts *.onmicrosoft.com / dominio de firma. Publícalos en el DNS de ejemplo.cl. Microsoft activa la firma cuando detecta los CNAME.",
+                "name": "Publica los CNAME en el DNS",
+                "text": "En el DNS de ejemplo.cl crea exactamente esos dos CNAME. Espera unos minutos (o más) a que Microsoft 365 los detecte.",
             },
             {
-                "name": "Activa la firma DKIM para el dominio",
-                "text": "Vuelve al portal y habilita DKIM signing para ese dominio. Cada subdominio que envíe correo necesita su propia configuración DKIM según Microsoft.",
+                "name": "Activa la firma DKIM (interruptor Enabled)",
+                "text": "Cuando los CNAME estén publicados, desliza el interruptor Sign messages for this domain with DKIM signatures a Enabled (o Set-DkimSigningConfig -Enabled $true). Si los CNAME faltan, el portal muestra error con los valores a publicar: no intentes dejar Enabled sin DNS. Cada subdominio que envíe correo necesita su propia configuración DKIM según Microsoft.",
             },
             {
-                "name": "Verifica con el checker DKIM",
-                "text": "Usa el verificador DKIM de InboxSeguro con los selectores que Microsoft te indicó (no inventes el nombre). Confirma también el dominio con el verificador de dominio si quieres ver SPF/DKIM/DMARC juntos.",
+                "name": "Verifica con el verificador DKIM",
+                "text": "Usa el verificador DKIM de InboxSeguro con los selectores que Microsoft te indicó (no inventes el nombre).",
             },
             {
                 "name": "Publica el TXT DMARC en _dmarc",
-                "text": "Hostname _dmarc, valor inicial: v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl. Microsoft documenta p=none para prueba, p=quarantine (aceptar pero marcar; a menudo spam/junk) y p=reject (típicamente descartar / no entregar).",
+                "text": "Hostname _dmarc, valor inicial: v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl. Microsoft documenta p=none para prueba, p=quarantine (aceptar pero marcar; a menudo spam/junk) y p=reject (típicamente descartar / no entregar). También documenta pct para despliegue gradual, aunque RFC 9989 lo marcó histórico.",
             },
             {
                 "name": "Monitorea y endurece la política",
-                "text": "Revisa reportes agregados. Sube a quarantine (puedes usar pct) y luego reject solo con fuentes legítimas alineadas. Verifica el registro con el verificador DMARC. InboxSeguro ofrece guía gradual y analítica semanal desde reportes DMARC.",
+                "text": "Revisa reportes agregados (rua). Sube a quarantine y luego reject solo con fuentes legítimas alineadas. Verifica la política p= con el verificador DMARC.",
             },
         ],
         "errors": [
-            "Habilitar DKIM en el portal sin publicar los CNAME.",
+            "Intentar Enabled sin haber publicado los CNAME.",
+            "Mezclar formato CNAME antiguo y nuevo para el mismo selector.",
             "Configurar solo el dominio raíz y olvidar subdominios que envían.",
-            "Interpretar p=reject como «va a spam» (incorrecto según la propia doc de Microsoft).",
+            "Interpretar p=reject como «va a spam».",
             "Múltiples registros DMARC en el mismo nombre.",
         ],
         "note_console": "El portal Microsoft Defender / Exchange admin center cambia de nombre y menús; sigue la URL canónica de Microsoft Learn si la consola no coincide con capturas antiguas.",
@@ -507,8 +514,9 @@ GUIDES: list[dict] = [
         "path": "/como-configurar-dkim-dmarc-zoho-mail",
         "title": "DKIM y DMARC en Zoho Mail | InboxSeguro",
         "h1": "Cómo configurar DKIM y DMARC en Zoho Mail",
-        "description": "Pasos oficiales de Zoho Mail Admin Console para DKIM y DMARC, verificación con checkers gratis y política gradual sin cortar correo.",
+        "description": "Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar correo.",
         "provider": "Zoho Mail",
+        "crumb": "Zoho Mail",
         "docs": [
             ("DKIM Configuration (Zoho Mail Help)", "https://www.zoho.com/mail/help/adminconsole/dkim-configuration.html"),
             ("DMARC policy (Zoho Mail Help)", "https://www.zoho.com/mail/help/adminconsole/dmarc-policy.html"),
@@ -516,7 +524,7 @@ GUIDES: list[dict] = [
         "steps": [
             {
                 "name": "Genera el selector DKIM en Admin Console",
-                "text": "Inicia sesión como administrador o superadministrador. Domains → dominio → Email Configuration → DKIM → Add. Elige un selector (p. ej. zoho) y longitud 1024 o 2048 bits. Copia el valor TXT generado. No pulses Verify hasta publicar el DNS.",
+                "text": "Inicia sesión como administrador o superadministrador. Domains → dominio → Email Configuration → DKIM → Add. Elige un selector (p. ej. zoho) y longitud 1024 o 2048 bits. Copia el valor TXT generado. No hagas clic en Verify hasta publicar el DNS.",
             },
             {
                 "name": "Crea el TXT en DNS",
@@ -528,19 +536,19 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Comprueba con el verificador DKIM del sitio",
-                "text": "Introduce ejemplo.cl y el selector (zoho u otro) en el verificador DKIM de InboxSeguro.",
+                "text": "Ingresa ejemplo.cl y el selector (zoho u otro) en el verificador DKIM de InboxSeguro.",
             },
             {
                 "name": "Genera DMARC en Zoho (fase 1: none)",
-                "text": "Zoho exige SPF y DKIM antes de publicar DMARC. En Email Configuration → DMARC elige «Do nothing» (Phase 1 / p=none), indica direcciones de reportes agregados (y forenses si aplica), genera el TXT y publícalo en _dmarc.ejemplo.cl. Un solo registro DMARC.",
+                "text": "Zoho exige SPF y DKIM antes de publicar DMARC. En Email Configuration → DMARC elige «Do nothing» (Phase 1 / p=none), indica direcciones de reportes agregados (y forenses si aplica), genera el TXT y publícalo en _dmarc.ejemplo.cl. Un solo registro DMARC. Sin rua, los receptores no deben generar reportes agregados (RFC 9989).",
             },
             {
-                "name": "Verifica DMARC y avanza Phase 2 y 3",
-                "text": "Usa el verificador DMARC. Tras revisar reportes y autorizar terceros (DKIM/SPF o SMTP autorizado), pasa a Quarantine (Phase 2) y luego Reject (Phase 3). Zoho permite pct; por defecto 100 si no se indica. Quarantine puede ir a spam; reject no entrega.",
+                "name": "Verifica la política DMARC y avanza Phase 2 y 3",
+                "text": "Usa el verificador DMARC para leer p=. Tras revisar reportes y autorizar terceros, pasa a Quarantine (Phase 2) y luego Reject (Phase 3). Zoho documenta Policy percentage (pct); por defecto 100 si no se indica, aunque RFC 9989 eliminó pct del estándar. Quarantine puede ir a spam; reject no entrega.",
             },
         ],
         "errors": [
-            "Pulsar Verify en Zoho antes de que el TXT sea visible en DNS.",
+            "Hacer clic en Verify en Zoho antes de que el TXT sea visible en DNS.",
             "Publicar DMARC estricto mientras un CRM envía sin DKIM/SPF alineados (Zoho lo advierte).",
             "Duplicar el nombre del dominio en el host TXT.",
             "Varios registros DMARC (error permanente de procesamiento).",
@@ -564,12 +572,10 @@ def guide_main(g: dict) -> str:
         for label, url in g["docs"]
     )
     errors = "".join(f'<li class="leading-relaxed">{e}</li>' for e in g["errors"])
-    howto_steps = [
+    g["_howto_steps"] = [
         {"@type": "HowToStep", "position": i, "name": s["name"], "text": s["text"]}
         for i, s in enumerate(g["steps"], 1)
     ]
-    # stored for caller
-    g["_howto_steps"] = howto_steps
     return f"""
 <section class="py-12 bg-slate-900 text-white">
   <div class="max-w-3xl mx-auto px-4">
@@ -577,9 +583,7 @@ def guide_main(g: dict) -> str:
       <ol class="flex flex-wrap gap-2 items-center">
         <li><a href="/" class="hover:text-white transition-colors">Inicio</a></li>
         <li aria-hidden="true">/</li>
-        <li><a href="/glosario/" class="hover:text-white transition-colors">Glosario</a></li>
-        <li aria-hidden="true">/</li>
-        <li class="text-slate-200">{g["provider"]}</li>
+        <li class="text-slate-200">{g["crumb"]}</li>
       </ol>
     </nav>
     <h1 class="text-3xl md:text-4xl font-extrabold mb-4">{g["h1"]}</h1>
@@ -604,7 +608,7 @@ def guide_main(g: dict) -> str:
     <h2 class="text-2xl font-bold text-slate-900">Cómo verificar con herramientas del sitio</h2>
     <ul class="list-disc list-inside space-y-2 text-slate-600">
       <li><a href="/dkim-checker" class="text-brand-600 hover:underline">Verificador DKIM</a> — confirma el selector publicado.</li>
-      <li><a href="/dmarc-checker" class="text-brand-600 hover:underline">Verificador DMARC</a> — lee p=, rua y el registro completo.</li>
+      <li><a href="/dmarc-checker" class="text-brand-600 hover:underline">Verificador DMARC</a> — verifica la política DMARC (p=) de tu dominio.</li>
       <li><a href="/domain-checker" class="text-brand-600 hover:underline">Chequeo de seguridad del correo</a> — vista conjunta SPF/DKIM/DMARC.</li>
     </ul>
   </div>
@@ -614,10 +618,10 @@ def guide_main(g: dict) -> str:
     <h2 class="text-2xl font-bold text-slate-900">Avance none → quarantine → reject</h2>
     <ol class="list-decimal list-inside space-y-3 text-slate-600 leading-relaxed">
       <li><code>p=none</code>: observa reportes; no cambia la entrega por política DMARC.</li>
-      <li><code>p=quarantine</code> (opcionalmente con <code>pct</code>): los fallos pueden ir a spam/cuarentena del receptor.</li>
+      <li><code>p=quarantine</code>: los fallos pueden ir a spam/cuarentena del receptor. Google, Microsoft y Zoho aún documentan <code>pct</code> para aplicar la política a un porcentaje; el estándar actual (RFC 9989) eliminó <code>pct</code> y usa <code>t=y</code>/<code>t=n</code>.</li>
       <li><code>p=reject</code>: los fallos no se entregan (rebote/descarte). No equivale a «enviar a spam».</li>
     </ol>
-    <p class="text-slate-600 leading-relaxed">InboxSeguro ofrece guía gradual DMARC, monitoreo de DNS (incl. SPF/DKIM/DMARC/BIMI/MTA-STS/RUA) con alertas de cambios no autorizados, detección de suplantación y analítica semanal desde reportes DMARC. No afirma corregir ni aplanar SPF.</p>
+    <p class="text-slate-600 leading-relaxed">InboxSeguro ofrece guía gradual DMARC, monitoreo de DNS (SPF/DKIM/DMARC/BIMI/MTA-STS/RUA) con alertas de cambios no autorizados, detección de suplantación y analítica semanal desde reportes DMARC.</p>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
@@ -631,7 +635,9 @@ def guide_main(g: dict) -> str:
     <h2 class="text-xl font-bold text-slate-900">Fuentes oficiales</h2>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600">{docs}</ul>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600 mt-2">
-      <li><a href="https://www.rfc-editor.org/rfc/rfc7489" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 7489 — DMARC</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9989" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9990" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — Aggregate Reporting</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9991" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9991 — Failure Reporting</a></li>
       <li><a href="https://www.rfc-editor.org/rfc/rfc6376" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 6376 — DKIM</a></li>
     </ul>
   </div>
@@ -639,10 +645,10 @@ def guide_main(g: dict) -> str:
 <section class="py-16 bg-slate-900 text-white text-center">
   <div class="max-w-2xl mx-auto px-4">
     <h2 class="text-2xl font-bold mb-4">Verifica tu dominio ahora</h2>
-    <p class="text-slate-300 mb-6">Las herramientas de diagnóstico son gratuitas. Revisa DKIM y DMARC tras cada cambio DNS.</p>
+    <p class="text-slate-300 mb-6">Las herramientas de diagnóstico son gratuitas. Revisa DKIM y la política DMARC tras cada cambio DNS.</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
       <a href="/dkim-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 rounded-xl font-bold">Verificar DKIM</a>
-      <a href="/dmarc-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Verificar DMARC</a>
+      <a href="/dmarc-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Verificar política DMARC</a>
     </div>
   </div>
 </section>
@@ -654,7 +660,6 @@ def main() -> None:
     chrome_nav = extract_chrome_nav(index_html)
     chrome_footer = extract_chrome_footer(index_html)
 
-    # Glossary index
     glosario_dir = ROOT / "glosario"
     glosario_dir.mkdir(parents=True, exist_ok=True)
     idx_url = f"{SITE}/glosario/"
@@ -744,8 +749,7 @@ def main() -> None:
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE}/"},
-                    {"@type": "ListItem", "position": 2, "name": "Glosario", "item": idx_url},
-                    {"@type": "ListItem", "position": 3, "name": g["h1"], "item": url},
+                    {"@type": "ListItem", "position": 2, "name": g["crumb"], "item": url},
                 ],
             },
         ]

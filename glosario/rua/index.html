@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RUA DMARC: reportes agregados | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo sin inventar datos.">
+    <meta name="description" content="RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo en tu empresa.">
     <link rel="canonical" href="https://www.inboxseguro.com/glosario/rua/">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/glosario/rua/">
     <meta property="og:title" content="RUA DMARC: reportes agregados | InboxSeguro">
-    <meta property="og:description" content="RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo sin inventar datos.">
+    <meta property="og:description" content="RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo en tu empresa.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="RUA DMARC: reportes agregados | InboxSeguro">
-    <meta name="twitter:description" content="RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo sin inventar datos.">
+    <meta name="twitter:description" content="RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo en tu empresa.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -274,21 +274,21 @@
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Por qué importa</h2>
-    <p class="text-slate-600 leading-relaxed">Sin rua, muchos receptores no generan reportes útiles y no ves quién envía con tu dominio. InboxSeguro usa analítica semanal a partir de reportes DMARC para inventariar envíos y detectar cambios; el registro DNS lo publicas tú en _dmarc.</p>
+    <p class="text-slate-600 leading-relaxed">Sin la etiqueta rua, los receptores no deben generar reportes agregados (RFC 9989). Con rua publicas un destino para ver quién envía con tu dominio. InboxSeguro usa analítica semanal a partir de reportes DMARC; el registro DNS lo publicas tú en _dmarc.</p>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Ejemplo de registro DMARC con RUA</h2>
-    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto whitespace-pre-wrap">_dmarc.ejemplo.cl.  IN  TXT  "v=DMARC1; p=none; rua=mailto:dmarc-reports@ejemplo.cl"
+    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto" style="white-space: pre-wrap">_dmarc.ejemplo.cl.  IN  TXT  "v=DMARC1; p=none; rua=mailto:dmarc-reports@ejemplo.cl"
 
-Si el buzón de reportes está en otro dominio, ese dominio debe autorizar la recepción según RFC 7489 §7.1.</pre>
+Si el buzón de reportes está en otro dominio, ese dominio debe autorizar la recepción (RFC 9989 / RFC 9990).</pre>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Errores comunes</h2>
-    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Omitir rua y creer que «ya hay visibilidad».</li><li class="leading-relaxed">Usar el correo personal del CEO: el volumen de reportes puede ser alto.</li><li class="leading-relaxed">Publicar dos registros DMARC distintos en el mismo dominio (el descubrimiento falla).</li></ul>
+    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Omitir rua y esperar reportes agregados de todos modos.</li><li class="leading-relaxed">Usar el correo personal del CEO: el volumen de reportes puede ser alto.</li><li class="leading-relaxed">Publicar dos registros DMARC distintos en el mismo dominio (el descubrimiento falla).</li></ul>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
@@ -296,7 +296,7 @@ Si el buzón de reportes está en otro dominio, ese dominio debe autorizar la re
     <h2 class="text-2xl font-bold text-slate-900">Herramienta y lectura relacionada</h2>
     <p class="text-slate-600 leading-relaxed">
       <a href="/dmarc-checker" class="text-brand-600 hover:underline font-semibold">Verificar DMARC (gratis)</a>
-      — Comprueba si tu registro incluye rua.
+      — Verifica la política DMARC de tu dominio.
     </p>
     <p class="text-slate-600 leading-relaxed">
       Artículo:
@@ -310,12 +310,12 @@ Si el buzón de reportes está en otro dominio, ese dominio debe autorizar la re
 <section class="py-12 bg-slate-50">
   <div class="max-w-3xl mx-auto px-4 space-y-3">
     <h2 class="text-xl font-bold text-slate-900">Fuentes</h2>
-    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.rfc-editor.org/rfc/rfc7489" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 7489 — DMARC (rua, reportes agregados)</a></li><li><a href="https://support.google.com/a/answer/2466580" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Workspace — Set up DMARC (rua)</a></li></ul>
+    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.rfc-editor.org/rfc/rfc9989" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC (etiqueta rua)</a></li><li><a href="https://www.rfc-editor.org/rfc/rfc9990" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — DMARC Aggregate Reporting</a></li><li><a href="https://support.google.com/a/answer/2466580" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Workspace — Set up DMARC</a></li></ul>
   </div>
 </section>
 <section class="py-16 bg-slate-900 text-white text-center">
   <div class="max-w-2xl mx-auto px-4">
-    <h2 class="text-2xl font-bold mb-4">Comprueba si tu registro incluye rua</h2>
+    <h2 class="text-2xl font-bold mb-4">Verifica la política DMARC de tu dominio</h2>
     <p class="text-slate-300 mb-6">Herramienta de diagnóstico gratuita. La plataforma InboxSeguro es un servicio aparte de monitoreo y gobernanza.</p>
     <a href="/dmarc-checker" data-seo-event="checker_submit" class="inline-flex px-6 py-3 bg-brand-600 hover:bg-brand-700 rounded-xl font-bold">Verificar DMARC (gratis)</a>
   </div>

@@ -279,14 +279,18 @@
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
-    <h2 class="text-2xl font-bold text-slate-900">Consulta conceptual (no es un registro DNS)</h2>
-    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto whitespace-pre-wrap">Las RBL no se publican en el DNS de tu dominio como SPF o DMARC. Se consultan por consulta DNS inversa del listado (por ejemplo, una IP 203.0.113.10 se consulta como 10.113.0.203.bl.ejemplo-rbl.net). Para empresas, lo práctico es revisar IP/dominio con una herramienta: usa el verificador de listas negras de InboxSeguro.</pre>
+    <h2 class="text-2xl font-bold text-slate-900">Cómo se consulta una RBL (RFC 5782)</h2>
+    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto" style="white-space: pre-wrap">Las RBL no se publican en el DNS de tu dominio como SPF o DMARC. El receptor consulta el listado formando un nombre DNS: los octetos de la IP en orden inverso, seguidos de la zona de la lista.
+
+Ejemplo: IP 203.0.113.10 → consulta 10.113.0.203.bl.ejemplo-rbl.net (RFC 5782).
+
+Para revisar tu dominio o IP puedes usar el verificador de listas negras de InboxSeguro.</pre>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Errores comunes</h2>
-    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Creer que «estar limpio» en una sola RBL basta: cada receptor usa listas distintas.</li><li class="leading-relaxed">Intentar «arreglar» el listado sin corregir la causa (compromiso, formulario abierto, rebotes mal manejados).</li><li class="leading-relaxed">Confundir RBL con cuarentena DMARC: son mecanismos distintos.</li></ul>
+    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Creer que «estar limpio» en una sola RBL basta: cada receptor usa listas distintas.</li><li class="leading-relaxed">Intentar salir del listado sin corregir la causa (compromiso, formulario abierto, rebotes mal manejados).</li><li class="leading-relaxed">Confundir RBL con cuarentena DMARC: son mecanismos distintos.</li></ul>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
@@ -308,7 +312,7 @@
 <section class="py-12 bg-slate-50">
   <div class="max-w-3xl mx-auto px-4 space-y-3">
     <h2 class="text-xl font-bold text-slate-900">Fuentes</h2>
-    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.m3aawg.org/sites/default/files/m3aawg-email-authentication-recommended-best-practices-09-2020.pdf" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">M3AAWG — Anti-Abuse Best Common Practices</a></li><li><a href="https://www.spamcop.net/fom-serve/cache/291.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Spamcop — About blacklists</a></li></ul>
+    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.rfc-editor.org/rfc/rfc5782" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 5782 — DNS Blacklists and Whitelists</a></li><li><a href="https://www.spamcop.net/bl.shtml" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Spamcop Blocking List</a></li></ul>
   </div>
 </section>
 <section class="py-16 bg-slate-900 text-white text-center">

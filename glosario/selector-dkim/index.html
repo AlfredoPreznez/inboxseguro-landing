@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Selector DKIM: qué es y ejemplo | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el checker DKIM.">
+    <meta name="description" content="El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el verificador DKIM.">
     <link rel="canonical" href="https://www.inboxseguro.com/glosario/selector-dkim/">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/glosario/selector-dkim/">
     <meta property="og:title" content="Selector DKIM: qué es y ejemplo | InboxSeguro">
-    <meta property="og:description" content="El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el checker DKIM.">
+    <meta property="og:description" content="El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el verificador DKIM.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Selector DKIM: qué es y ejemplo | InboxSeguro">
-    <meta name="twitter:description" content="El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el checker DKIM.">
+    <meta name="twitter:description" content="El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el verificador DKIM.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,7 +27,7 @@
   "@context": "https://schema.org",
   "@type": "DefinedTerm",
   "name": "Selector DKIM",
-  "description": "Un selector DKIM es un nombre corto que subdivida el espacio de claves públicas de un dominio; aparece en la cabecera DKIM-Signature como s= y determina la consulta DNS a selector._domainkey.dominio.",
+  "description": "Un selector DKIM es un nombre corto que subdivide el espacio de claves públicas de un dominio; aparece en la cabecera DKIM-Signature como s= y determina la consulta DNS a selector._domainkey.dominio.",
   "url": "https://www.inboxseguro.com/glosario/selector-dkim/",
   "inDefinedTermSet": "https://www.inboxseguro.com/glosario/"
 }
@@ -268,19 +268,19 @@
       </ol>
     </nav>
     <h1 class="text-3xl md:text-4xl font-extrabold mb-4">Selector DKIM</h1>
-    <p class="text-lg text-slate-300 font-light leading-relaxed">Un selector DKIM es un nombre corto que subdivida el espacio de claves públicas de un dominio; aparece en la cabecera DKIM-Signature como s= y determina la consulta DNS a selector._domainkey.dominio.</p>
+    <p class="text-lg text-slate-300 font-light leading-relaxed">Un selector DKIM es un nombre corto que subdivide el espacio de claves públicas de un dominio; aparece en la cabecera DKIM-Signature como s= y determina la consulta DNS a selector._domainkey.dominio.</p>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Por qué importa</h2>
-    <p class="text-slate-600 leading-relaxed">Permite rotar claves, usar varias firmas (correo corporativo vs. marketing) y delegar firma a un proveedor. Sin el selector correcto publicado, la firma no se puede verificar y DMARC puede fallar aunque «tengas DKIM activado» en la consola.</p>
+    <p class="text-slate-600 leading-relaxed">Permite rotar claves, usar varias firmas (correo corporativo vs. marketing) y delegar firma a un proveedor. Sin el selector correcto publicado, la firma no se puede verificar y DMARC puede fallar aunque la consola diga que DKIM está activo.</p>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Ejemplo de clave pública DKIM</h2>
-    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto whitespace-pre-wrap">Nombre DNS: google._domainkey.ejemplo.cl
+    <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto" style="white-space: pre-wrap">Nombre DNS: google._domainkey.ejemplo.cl
 Tipo: TXT
 Valor (forma): v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA…
 
@@ -290,7 +290,7 @@ En el mensaje, la firma incluye s=google; d=ejemplo.cl. Google Workspace recomie
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Errores comunes</h2>
-    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Publicar la clave pero no pulsar «Start authentication» / Verificar / Enable en el proveedor.</li><li class="leading-relaxed">Truncar el valor TXT (p= incompleto) en el panel DNS.</li><li class="leading-relaxed">Buscar un selector inventado: DNS no lista selectores; hay que usar el s= real o el que da el proveedor.</li></ul>
+    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Publicar la clave pero no activar la autenticación (Start authentication / Verify / Enable) en el proveedor.</li><li class="leading-relaxed">Truncar el valor TXT (p= incompleto) en el panel DNS.</li><li class="leading-relaxed">Buscar un selector inventado: DNS no lista selectores; hay que usar el s= real o el que da el proveedor.</li></ul>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">

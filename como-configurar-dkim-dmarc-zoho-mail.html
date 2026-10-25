@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DKIM y DMARC en Zoho Mail | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Pasos oficiales de Zoho Mail Admin Console para DKIM y DMARC, verificación con checkers gratis y política gradual sin cortar correo.">
+    <meta name="description" content="Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar…">
     <link rel="canonical" href="https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail">
     <meta property="og:title" content="DKIM y DMARC en Zoho Mail | InboxSeguro">
-    <meta property="og:description" content="Pasos oficiales de Zoho Mail Admin Console para DKIM y DMARC, verificación con checkers gratis y política gradual sin cortar correo.">
+    <meta property="og:description" content="Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar…">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DKIM y DMARC en Zoho Mail | InboxSeguro">
-    <meta name="twitter:description" content="Pasos oficiales de Zoho Mail Admin Console para DKIM y DMARC, verificación con checkers gratis y política gradual sin cortar correo.">
+    <meta name="twitter:description" content="Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar…">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,14 +27,14 @@
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "Cómo configurar DKIM y DMARC en Zoho Mail",
-  "description": "Pasos oficiales de Zoho Mail Admin Console para DKIM y DMARC, verificación con checkers gratis y política gradual sin cortar correo.",
+  "description": "Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar correo.",
   "url": "https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail",
   "step": [
     {
       "@type": "HowToStep",
       "position": 1,
       "name": "Genera el selector DKIM en Admin Console",
-      "text": "Inicia sesión como administrador o superadministrador. Domains → dominio → Email Configuration → DKIM → Add. Elige un selector (p. ej. zoho) y longitud 1024 o 2048 bits. Copia el valor TXT generado. No pulses Verify hasta publicar el DNS."
+      "text": "Inicia sesión como administrador o superadministrador. Domains → dominio → Email Configuration → DKIM → Add. Elige un selector (p. ej. zoho) y longitud 1024 o 2048 bits. Copia el valor TXT generado. No hagas clic en Verify hasta publicar el DNS."
     },
     {
       "@type": "HowToStep",
@@ -52,19 +52,19 @@
       "@type": "HowToStep",
       "position": 4,
       "name": "Comprueba con el verificador DKIM del sitio",
-      "text": "Introduce ejemplo.cl y el selector (zoho u otro) en el verificador DKIM de InboxSeguro."
+      "text": "Ingresa ejemplo.cl y el selector (zoho u otro) en el verificador DKIM de InboxSeguro."
     },
     {
       "@type": "HowToStep",
       "position": 5,
       "name": "Genera DMARC en Zoho (fase 1: none)",
-      "text": "Zoho exige SPF y DKIM antes de publicar DMARC. En Email Configuration → DMARC elige «Do nothing» (Phase 1 / p=none), indica direcciones de reportes agregados (y forenses si aplica), genera el TXT y publícalo en _dmarc.ejemplo.cl. Un solo registro DMARC."
+      "text": "Zoho exige SPF y DKIM antes de publicar DMARC. En Email Configuration → DMARC elige «Do nothing» (Phase 1 / p=none), indica direcciones de reportes agregados (y forenses si aplica), genera el TXT y publícalo en _dmarc.ejemplo.cl. Un solo registro DMARC. Sin rua, los receptores no deben generar reportes agregados (RFC 9989)."
     },
     {
       "@type": "HowToStep",
       "position": 6,
-      "name": "Verifica DMARC y avanza Phase 2 y 3",
-      "text": "Usa el verificador DMARC. Tras revisar reportes y autorizar terceros (DKIM/SPF o SMTP autorizado), pasa a Quarantine (Phase 2) y luego Reject (Phase 3). Zoho permite pct; por defecto 100 si no se indica. Quarantine puede ir a spam; reject no entrega."
+      "name": "Verifica la política DMARC y avanza Phase 2 y 3",
+      "text": "Usa el verificador DMARC para leer p=. Tras revisar reportes y autorizar terceros, pasa a Quarantine (Phase 2) y luego Reject (Phase 3). Zoho documenta Policy percentage (pct); por defecto 100 si no se indica, aunque RFC 9989 eliminó pct del estándar. Quarantine puede ir a spam; reject no entrega."
     }
   ]
 }
@@ -83,13 +83,7 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Glosario",
-      "item": "https://www.inboxseguro.com/glosario/"
-    },
-    {
-      "@type": "ListItem",
-      "position": 3,
-      "name": "Cómo configurar DKIM y DMARC en Zoho Mail",
+      "name": "Zoho Mail",
       "item": "https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail"
     }
   ]
@@ -299,8 +293,6 @@
       <ol class="flex flex-wrap gap-2 items-center">
         <li><a href="/" class="hover:text-white transition-colors">Inicio</a></li>
         <li aria-hidden="true">/</li>
-        <li><a href="/glosario/" class="hover:text-white transition-colors">Glosario</a></li>
-        <li aria-hidden="true">/</li>
         <li class="text-slate-200">Zoho Mail</li>
       </ol>
     </nav>
@@ -321,7 +313,7 @@
     <ol class="list-none space-y-6">
         <li class="leading-relaxed">
           <strong class="text-slate-900">1. Genera el selector DKIM en Admin Console</strong>
-          <p class="mt-2 text-slate-600">Inicia sesión como administrador o superadministrador. Domains → dominio → Email Configuration → DKIM → Add. Elige un selector (p. ej. zoho) y longitud 1024 o 2048 bits. Copia el valor TXT generado. No pulses Verify hasta publicar el DNS.</p>
+          <p class="mt-2 text-slate-600">Inicia sesión como administrador o superadministrador. Domains → dominio → Email Configuration → DKIM → Add. Elige un selector (p. ej. zoho) y longitud 1024 o 2048 bits. Copia el valor TXT generado. No hagas clic en Verify hasta publicar el DNS.</p>
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">2. Crea el TXT en DNS</strong>
@@ -333,15 +325,15 @@
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">4. Comprueba con el verificador DKIM del sitio</strong>
-          <p class="mt-2 text-slate-600">Introduce ejemplo.cl y el selector (zoho u otro) en el verificador DKIM de InboxSeguro.</p>
+          <p class="mt-2 text-slate-600">Ingresa ejemplo.cl y el selector (zoho u otro) en el verificador DKIM de InboxSeguro.</p>
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">5. Genera DMARC en Zoho (fase 1: none)</strong>
-          <p class="mt-2 text-slate-600">Zoho exige SPF y DKIM antes de publicar DMARC. En Email Configuration → DMARC elige «Do nothing» (Phase 1 / p=none), indica direcciones de reportes agregados (y forenses si aplica), genera el TXT y publícalo en _dmarc.ejemplo.cl. Un solo registro DMARC.</p>
+          <p class="mt-2 text-slate-600">Zoho exige SPF y DKIM antes de publicar DMARC. En Email Configuration → DMARC elige «Do nothing» (Phase 1 / p=none), indica direcciones de reportes agregados (y forenses si aplica), genera el TXT y publícalo en _dmarc.ejemplo.cl. Un solo registro DMARC. Sin rua, los receptores no deben generar reportes agregados (RFC 9989).</p>
         </li>
         <li class="leading-relaxed">
-          <strong class="text-slate-900">6. Verifica DMARC y avanza Phase 2 y 3</strong>
-          <p class="mt-2 text-slate-600">Usa el verificador DMARC. Tras revisar reportes y autorizar terceros (DKIM/SPF o SMTP autorizado), pasa a Quarantine (Phase 2) y luego Reject (Phase 3). Zoho permite pct; por defecto 100 si no se indica. Quarantine puede ir a spam; reject no entrega.</p>
+          <strong class="text-slate-900">6. Verifica la política DMARC y avanza Phase 2 y 3</strong>
+          <p class="mt-2 text-slate-600">Usa el verificador DMARC para leer p=. Tras revisar reportes y autorizar terceros, pasa a Quarantine (Phase 2) y luego Reject (Phase 3). Zoho documenta Policy percentage (pct); por defecto 100 si no se indica, aunque RFC 9989 eliminó pct del estándar. Quarantine puede ir a spam; reject no entrega.</p>
         </li></ol>
   </div>
 </section>
@@ -350,7 +342,7 @@
     <h2 class="text-2xl font-bold text-slate-900">Cómo verificar con herramientas del sitio</h2>
     <ul class="list-disc list-inside space-y-2 text-slate-600">
       <li><a href="/dkim-checker" class="text-brand-600 hover:underline">Verificador DKIM</a> — confirma el selector publicado.</li>
-      <li><a href="/dmarc-checker" class="text-brand-600 hover:underline">Verificador DMARC</a> — lee p=, rua y el registro completo.</li>
+      <li><a href="/dmarc-checker" class="text-brand-600 hover:underline">Verificador DMARC</a> — verifica la política DMARC (p=) de tu dominio.</li>
       <li><a href="/domain-checker" class="text-brand-600 hover:underline">Chequeo de seguridad del correo</a> — vista conjunta SPF/DKIM/DMARC.</li>
     </ul>
   </div>
@@ -360,16 +352,16 @@
     <h2 class="text-2xl font-bold text-slate-900">Avance none → quarantine → reject</h2>
     <ol class="list-decimal list-inside space-y-3 text-slate-600 leading-relaxed">
       <li><code>p=none</code>: observa reportes; no cambia la entrega por política DMARC.</li>
-      <li><code>p=quarantine</code> (opcionalmente con <code>pct</code>): los fallos pueden ir a spam/cuarentena del receptor.</li>
-      <li><code>p=reject</code>: los fallos no se entregan (rebote/descarte). No digas que reject «manda a spam».</li>
+      <li><code>p=quarantine</code>: los fallos pueden ir a spam/cuarentena del receptor. Google, Microsoft y Zoho aún documentan <code>pct</code> para aplicar la política a un porcentaje; el estándar actual (RFC 9989) eliminó <code>pct</code> y usa <code>t=y</code>/<code>t=n</code>.</li>
+      <li><code>p=reject</code>: los fallos no se entregan (rebote/descarte). No equivale a «enviar a spam».</li>
     </ol>
-    <p class="text-slate-600 leading-relaxed">InboxSeguro ofrece guía gradual DMARC, monitoreo de DNS (incl. SPF/DKIM/DMARC/BIMI/MTA-STS/RUA) con alertas de cambios no autorizados, detección de suplantación y analítica semanal desde reportes DMARC. No afirma corregir ni aplanar SPF.</p>
+    <p class="text-slate-600 leading-relaxed">InboxSeguro ofrece guía gradual DMARC, monitoreo de DNS (SPF/DKIM/DMARC/BIMI/MTA-STS/RUA) con alertas de cambios no autorizados, detección de suplantación y analítica semanal desde reportes DMARC.</p>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Errores frecuentes</h2>
-    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Pulsar Verify en Zoho antes de que el TXT sea visible en DNS.</li><li class="leading-relaxed">Publicar DMARC estricto mientras un CRM envía sin DKIM/SPF alineados (Zoho lo advierte).</li><li class="leading-relaxed">Duplicar el nombre del dominio en el host TXT.</li><li class="leading-relaxed">Varios registros DMARC (error permanente de procesamiento).</li></ul>
+    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Hacer clic en Verify en Zoho antes de que el TXT sea visible en DNS.</li><li class="leading-relaxed">Publicar DMARC estricto mientras un CRM envía sin DKIM/SPF alineados (Zoho lo advierte).</li><li class="leading-relaxed">Duplicar el nombre del dominio en el host TXT.</li><li class="leading-relaxed">Varios registros DMARC (error permanente de procesamiento).</li></ul>
   </div>
 </section>
 <section class="py-12 bg-slate-50">
@@ -377,7 +369,8 @@
     <h2 class="text-xl font-bold text-slate-900">Fuentes oficiales</h2>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.zoho.com/mail/help/adminconsole/dkim-configuration.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">DKIM Configuration (Zoho Mail Help)</a></li><li><a href="https://www.zoho.com/mail/help/adminconsole/dmarc-policy.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">DMARC policy (Zoho Mail Help)</a></li></ul>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600 mt-2">
-      <li><a href="https://www.rfc-editor.org/rfc/rfc7489" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 7489 — DMARC</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9989" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9990" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — Aggregate Reporting</a></li>
       <li><a href="https://www.rfc-editor.org/rfc/rfc6376" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 6376 — DKIM</a></li>
     </ul>
   </div>
@@ -385,10 +378,10 @@
 <section class="py-16 bg-slate-900 text-white text-center">
   <div class="max-w-2xl mx-auto px-4">
     <h2 class="text-2xl font-bold mb-4">Verifica tu dominio ahora</h2>
-    <p class="text-slate-300 mb-6">Las herramientas de diagnóstico son gratuitas. Revisa DKIM y DMARC tras cada cambio DNS.</p>
+    <p class="text-slate-300 mb-6">Las herramientas de diagnóstico son gratuitas. Revisa DKIM y la política DMARC tras cada cambio DNS.</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
       <a href="/dkim-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 rounded-xl font-bold">Verificar DKIM</a>
-      <a href="/dmarc-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Verificar DMARC</a>
+      <a href="/dmarc-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Verificar política DMARC</a>
     </div>
   </div>
 </section>
