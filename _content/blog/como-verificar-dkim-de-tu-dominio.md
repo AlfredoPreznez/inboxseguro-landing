@@ -33,7 +33,7 @@ El servicio que envía el correo lo firma con una clave privada y agrega una cab
 Dos etiquetas de la cabecera son clave:
 
 - **`d=`**: el dominio que firma, por ejemplo `ejemplo.cl`.
-- **`s=`**: el selector, el nombre de la clave usada, por ejemplo `google` o `selector1`.
+- **`s=`**: el [selector DKIM](/glosario/selector-dkim/), el nombre de la clave usada, por ejemplo `google` o `selector1`.
 
 Con ambos datos, la clave pública se publica como registro TXT en `selector._domainkey.dominio`.
 

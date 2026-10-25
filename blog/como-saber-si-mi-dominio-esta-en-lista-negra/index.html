@@ -164,6 +164,18 @@
                                     <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
                                         <span>Guía DMARC empresas</span>
                                     </a>
+                                    <a href="/glosario/" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Glosario DNS</span>
+                                    </a>
+                                    <a href="/como-configurar-dkim-dmarc-google-workspace" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>DKIM/DMARC Google Workspace</span>
+                                    </a>
+                                    <a href="/como-configurar-dkim-dmarc-microsoft-365" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>DKIM/DMARC Microsoft 365</span>
+                                    </a>
+                                    <a href="/como-configurar-dkim-dmarc-zoho-mail" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>DKIM/DMARC Zoho Mail</span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -224,6 +236,14 @@
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Detener Suplantación</a>
                     <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DMARC para empresas</a>
+                    <a href="/glosario/" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Glosario DNS</a>
+                    <a href="/como-configurar-dkim-dmarc-google-workspace" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DKIM/DMARC Google Workspace</a>
+                    <a href="/como-configurar-dkim-dmarc-microsoft-365" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DKIM/DMARC Microsoft 365</a>
+                    <a href="/como-configurar-dkim-dmarc-zoho-mail" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">DKIM/DMARC Zoho Mail</a>
                 </div>
 
                 <!-- Herramientas Gratuitas Mobile Section -->
@@ -372,7 +392,7 @@
                 
                 <p>Un día, un cliente te dice que no le llegó la factura. Al rato, alguien de ventas recibe un rebote con un código extraño. Si te preguntas cómo saber si tu dominio está en una lista negra, o si la que está bloqueada es la IP desde la que envías, esta guía te explica en lenguaje simple qué son estas listas, por qué una empresa puede terminar en una sin haber enviado spam y qué hacer para salir.</p>
 <h2  id="que-es-una-lista-negra-de-correo-dnsbl">Qué es una lista negra de correo (DNSBL)</h2>
-<p>Una lista negra, o <em>blacklist</em>, es una lista de direcciones IP o de dominios que alguien considera fuente de correo no deseado. La RFC 5782, que describe cómo funcionan, cuenta que su origen se remonta a 1997, cuando dos ingenieros empezaron a mantener una lista de direcciones IP que les enviaban spam, y explica que el término convencional hoy es DNSBL: <em>DNS blacklist</em> o <em>blocklist</em> (sección 1).</p>
+<p>Una lista negra, o <em>blacklist</em> (también llamada <a href="/glosario/rbl/">RBL</a>), es una lista de direcciones IP o de dominios que alguien considera fuente de correo no deseado. La RFC 5782, que describe cómo funcionan, cuenta que su origen se remonta a 1997, cuando dos ingenieros empezaron a mantener una lista de direcciones IP que les enviaban spam, y explica que el término convencional hoy es DNSBL: <em>DNS blacklist</em> o <em>blocklist</em> (sección 1).</p>
 <p>Se llaman así porque se publican en el DNS, el mismo sistema que traduce nombres de dominio a direcciones. Existen dos tipos:</p>
 <ul>
 <li><strong>Listas negras de IP.</strong> Son las más comunes: la RFC 5782 indica que la mayoría de las listas todavía usan direcciones IP (sección 2). Incluyen direcciones desde las que se envió spam u otro tráfico considerado abusivo.</li>
@@ -571,6 +591,7 @@
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
                         <ul class="space-y-2 text-sm text-slate-500">
                             <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/glosario/" class="hover:text-blue-400 transition-colors">Glosario</a></li>
                             <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
                             <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
                             <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>

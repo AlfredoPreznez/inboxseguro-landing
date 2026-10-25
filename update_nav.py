@@ -113,6 +113,9 @@ def iter_html_targets() -> list[Path]:
     blog_root = ROOT / "blog"
     if blog_root.is_dir():
         targets.extend(sorted(blog_root.rglob("*.html")))
+    glosario_root = ROOT / "glosario"
+    if glosario_root.is_dir():
+        targets.extend(sorted(glosario_root.rglob("*.html")))
     return targets
 
 
