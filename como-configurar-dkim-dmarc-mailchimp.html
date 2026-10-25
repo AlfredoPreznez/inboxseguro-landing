@@ -53,13 +53,13 @@
       "@type": "HowToStep",
       "position": 3,
       "name": "Publica DMARC según el panel",
-      "text": "El host TXT es _dmarc. Copia el valor que muestra Mailchimp en tu flujo de autenticación. No uses el include SPF servers.mcsv.net. Si el panel de Marketing pide un valor distinto o bloquea el envío sin DMARC, usa exactamente lo que muestra el panel. Para diseñar la política (none → quarantine → reject), consulta la guía DMARC para empresas y empieza en p=none sin atribuir esa política a Mailchimp."
+      "text": "El host TXT es _dmarc. Copia el valor que muestra Mailchimp en tu flujo de autenticación. Si el panel de Marketing pide un valor distinto o bloquea el envío sin DMARC, usa exactamente lo que muestra el panel. Para diseñar la política (none → quarantine → reject), consulta la guía DMARC para empresas y empieza en p=none sin atribuir esa política a Mailchimp."
     },
     {
       "@type": "HowToStep",
       "position": 4,
       "name": "Espera la validación",
-      "text": "Mailchimp indica que la mayoría de registros se validan en minutos, pero puede tardar hasta 48 horas. El estado pasa a Authenticated cuando la validación termina."
+      "text": "Mailchimp indica que la mayoría de registros se validan en minutos, pero puede tardar hasta 48 horas. Mailchimp envía un correo cuando termina la validación; mientras tanto, el dominio muestra Authentication in progress en la página Domains."
     },
     {
       "@type": "HowToStep",
@@ -228,7 +228,7 @@
                 </div>
 
                 <!-- Recursos: Herramientas gratis (móvil) -->
-                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                <div class="px-4 py-2 border-l-2 border-brand-600 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas gratis</span>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad</a>
@@ -294,11 +294,11 @@
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">3. Publica DMARC según el panel</strong>
-          <p class="mt-2 text-slate-600">El host TXT es _dmarc. Copia el valor que muestra Mailchimp en tu flujo de autenticación. No uses el include SPF servers.mcsv.net. Si el panel de Marketing pide un valor distinto o bloquea el envío sin DMARC, usa exactamente lo que muestra el panel. Para diseñar la política (none → quarantine → reject), consulta la guía DMARC para empresas y empieza en p=none sin atribuir esa política a Mailchimp.</p>
+          <p class="mt-2 text-slate-600">El host TXT es _dmarc. Copia el valor que muestra Mailchimp en tu flujo de autenticación. Si el panel de Marketing pide un valor distinto o bloquea el envío sin DMARC, usa exactamente lo que muestra el panel. Para diseñar la política (none → quarantine → reject), consulta la guía DMARC para empresas y empieza en p=none sin atribuir esa política a Mailchimp.</p>
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">4. Espera la validación</strong>
-          <p class="mt-2 text-slate-600">Mailchimp indica que la mayoría de registros se validan en minutos, pero puede tardar hasta 48 horas. El estado pasa a Authenticated cuando la validación termina.</p>
+          <p class="mt-2 text-slate-600">Mailchimp indica que la mayoría de registros se validan en minutos, pero puede tardar hasta 48 horas. Mailchimp envía un correo cuando termina la validación; mientras tanto, el dominio muestra Authentication in progress en la página Domains.</p>
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">5. Verifica DKIM y DMARC en InboxSeguro</strong>
@@ -334,8 +334,8 @@
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
-    <h2 class="text-2xl font-bold text-slate-900">Errores frecuentes</h2>
-    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Autenticar sin haber verificado el dominio primero.</li><li class="leading-relaxed">Inventar el segundo CNAME o los destinos en lugar de copiarlos del panel.</li><li class="leading-relaxed">Usar el include SPF servers.mcsv.net.</li><li class="leading-relaxed">Duplicar el dominio en el host (p. ej. k2._domainkey.ejemplo.cl.ejemplo.cl).</li></ul>
+    <h2 class="text-2xl font-bold text-slate-900">Errores que conviene evitar</h2>
+    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Autenticar sin haber verificado el dominio primero.</li><li class="leading-relaxed">Inventar el segundo CNAME o los destinos en lugar de copiarlos del panel.</li><li class="leading-relaxed">Duplicar el dominio en el host (p. ej. k2._domainkey.ejemplo.cl.ejemplo.cl).</li></ul>
   </div>
 </section>
 <section class="py-12 bg-slate-50">
@@ -391,7 +391,7 @@
                 </div>
 
                 <!-- Links Quick Access -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 md:gap-12">
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
                     <div>
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
                         <ul class="space-y-2 text-sm text-slate-500">

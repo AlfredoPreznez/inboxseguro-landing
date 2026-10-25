@@ -53,7 +53,7 @@
       "@type": "HowToStep",
       "position": 3,
       "name": "Un solo SPF y un solo DMARC; cuidado con Cloudflare",
-      "text": "Si ya tienes SPF, agrega el include de HubSpot al registro existente (un solo v=spf1 y un solo -all). Un solo TXT DMARC por dominio. En Cloudflare, desactiva el proxy y el CNAME flattening de dominio para estos registros. Evita duplicar el dominio en el host (p. ej. hs1-….ejemplo.cl.ejemplo.cl)."
+      "text": "Si ya tienes SPF, agrega el include de HubSpot al registro existente (una sola vez la versión v=spf1 y el cierre del registro, como en el ejemplo de HubSpot). Un solo TXT DMARC por dominio. En Cloudflare, desactiva el proxy y el CNAME flattening de dominio para estos registros. Evita duplicar el dominio en el host (p. ej. hs1-….ejemplo.cl.ejemplo.cl)."
     },
     {
       "@type": "HowToStep",
@@ -65,7 +65,7 @@
       "@type": "HowToStep",
       "position": 5,
       "name": "Verifica con las herramientas del sitio",
-      "text": "Usa el verificador DKIM (con el selector que muestra HubSpot) y el verificador DMARC. No asumas un selector fijo: el valor exacto es el del panel."
+      "text": "Usa el verificador DKIM y el verificador DMARC. Si el host DKIM que muestra el panel termina en ._domainkey, el selector es la parte anterior (p. ej. hs1-123456._domainkey → selector hs1-123456); si no, copia los valores del panel. No asumas un selector fijo."
     },
     {
       "@type": "HowToStep",
@@ -228,7 +228,7 @@
                 </div>
 
                 <!-- Recursos: Herramientas gratis (móvil) -->
-                <div class="px-4 py-2 border-l-2 border-brand-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                <div class="px-4 py-2 border-l-2 border-brand-600 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
                     <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas gratis</span>
                     <a href="/domain-checker" onclick="closeMobileMenu()"
                         class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad</a>
@@ -294,7 +294,7 @@
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">3. Un solo SPF y un solo DMARC; cuidado con Cloudflare</strong>
-          <p class="mt-2 text-slate-600">Si ya tienes SPF, agrega el include de HubSpot al registro existente (un solo v=spf1 y un solo -all). Un solo TXT DMARC por dominio. En Cloudflare, desactiva el proxy y el CNAME flattening de dominio para estos registros. Evita duplicar el dominio en el host (p. ej. hs1-….ejemplo.cl.ejemplo.cl).</p>
+          <p class="mt-2 text-slate-600">Si ya tienes SPF, agrega el include de HubSpot al registro existente (una sola vez la versión v=spf1 y el cierre del registro, como en el ejemplo de HubSpot). Un solo TXT DMARC por dominio. En Cloudflare, desactiva el proxy y el CNAME flattening de dominio para estos registros. Evita duplicar el dominio en el host (p. ej. hs1-….ejemplo.cl.ejemplo.cl).</p>
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">4. Espera la verificación en HubSpot</strong>
@@ -302,7 +302,7 @@
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">5. Verifica con las herramientas del sitio</strong>
-          <p class="mt-2 text-slate-600">Usa el verificador DKIM (con el selector que muestra HubSpot) y el verificador DMARC. No asumas un selector fijo: el valor exacto es el del panel.</p>
+          <p class="mt-2 text-slate-600">Usa el verificador DKIM y el verificador DMARC. Si el host DKIM que muestra el panel termina en ._domainkey, el selector es la parte anterior (p. ej. hs1-123456._domainkey → selector hs1-123456); si no, copia los valores del panel. No asumas un selector fijo.</p>
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">6. Avanza la política DMARC</strong>
@@ -334,7 +334,7 @@
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
-    <h2 class="text-2xl font-bold text-slate-900">Errores frecuentes</h2>
+    <h2 class="text-2xl font-bold text-slate-900">Errores que conviene evitar</h2>
     <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Crear un segundo registro SPF en lugar de ampliar el existente.</li><li class="leading-relaxed">Dejar proxy o CNAME flattening activos en Cloudflare.</li><li class="leading-relaxed">Duplicar el nombre de dominio en el host DNS.</li><li class="leading-relaxed">Varios registros DMARC en el mismo dominio.</li><li class="leading-relaxed">Inventar el include SPF o el selector DKIM en lugar de copiarlos del panel.</li></ul>
   </div>
 </section>
@@ -391,7 +391,7 @@
                 </div>
 
                 <!-- Links Quick Access -->
-                <div class="grid grid-cols-2 sm:grid-cols-4 gap-8 md:gap-12">
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
                     <div>
                         <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
                         <ul class="space-y-2 text-sm text-slate-500">

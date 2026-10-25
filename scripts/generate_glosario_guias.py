@@ -420,7 +420,7 @@ def card_excerpt(text: str, limit: int = 140) -> str:
 def index_main(terms: list[dict]) -> str:
     cards = "".join(
         f"""
-        <a href="/glosario/{t["slug"]}/" class="block p-5 border border-slate-200 rounded-xl hover:border-brand-600 hover:bg-slate-50 transition-colors">
+        <a href="/glosario/{t["slug"]}/" class="block p-5 border border-slate-200 rounded-xl hover:border-slate-300 hover:bg-slate-50 transition-colors">
           <h2 class="text-lg font-bold text-slate-900 mb-2">{t["name"]}</h2>
           <p class="text-sm text-slate-600 leading-relaxed">{card_excerpt(t["definition"])}</p>
         </a>"""
@@ -646,7 +646,7 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Publica un TXT DMARC mínimo en _dmarc",
-                "text": "Agrega un TXT en _dmarc con al menos v=DMARC1; p=none;. Un solo registro DMARC por dominio. No uses adkim=s ni aspf=s: Shopify indica que esa alineación estricta puede impedir autenticar el correo enviado por Shopify; si ya existen, quítalos o cámbialos a adkim=r y aspf=r.",
+                "text": "Agrega un TXT en _dmarc con al menos v=DMARC1; p=none;. Un solo registro DMARC por dominio. No uses adkim=s ni aspf=s: Shopify recomienda quitarlos o cambiarlos a adkim=r y aspf=r para la mejor entregabilidad.",
             },
             {
                 "name": "Verifica DKIM y la política DMARC",
@@ -667,6 +667,7 @@ GUIDES: list[dict] = [
         "extra_links": [
             ("Guía DMARC para empresas", "/dmarc-para-empresas"),
         ],
+        "errors_heading": "Errores que conviene evitar",
     },
     {
         "file": "como-configurar-dkim-dmarc-hubspot.html",
@@ -694,7 +695,7 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Un solo SPF y un solo DMARC; cuidado con Cloudflare",
-                "text": "Si ya tienes SPF, agrega el include de HubSpot al registro existente (un solo v=spf1 y un solo -all). Un solo TXT DMARC por dominio. En Cloudflare, desactiva el proxy y el CNAME flattening de dominio para estos registros. Evita duplicar el dominio en el host (p. ej. hs1-….ejemplo.cl.ejemplo.cl).",
+                "text": "Si ya tienes SPF, agrega el include de HubSpot al registro existente (una sola vez la versión v=spf1 y el cierre del registro, como en el ejemplo de HubSpot). Un solo TXT DMARC por dominio. En Cloudflare, desactiva el proxy y el CNAME flattening de dominio para estos registros. Evita duplicar el dominio en el host (p. ej. hs1-….ejemplo.cl.ejemplo.cl).",
             },
             {
                 "name": "Espera la verificación en HubSpot",
@@ -702,7 +703,7 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Verifica con las herramientas del sitio",
-                "text": "Usa el verificador DKIM (con el selector que muestra HubSpot) y el verificador DMARC. No asumas un selector fijo: el valor exacto es el del panel.",
+                "text": "Usa el verificador DKIM y el verificador DMARC. Si el host DKIM que muestra el panel termina en ._domainkey, el selector es la parte anterior (p. ej. hs1-123456._domainkey → selector hs1-123456); si no, copia los valores del panel. No asumas un selector fijo.",
             },
             {
                 "name": "Avanza la política DMARC",
@@ -720,6 +721,7 @@ GUIDES: list[dict] = [
         "extra_links": [
             ("Guía DMARC para empresas", "/dmarc-para-empresas"),
         ],
+        "errors_heading": "Errores que conviene evitar",
     },
     {
         "file": "como-configurar-dkim-dmarc-mailchimp.html",
@@ -747,11 +749,11 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Publica DMARC según el panel",
-                "text": "El host TXT es _dmarc. Copia el valor que muestra Mailchimp en tu flujo de autenticación. No uses el include SPF servers.mcsv.net. Si el panel de Marketing pide un valor distinto o bloquea el envío sin DMARC, usa exactamente lo que muestra el panel. Para diseñar la política (none → quarantine → reject), consulta la guía DMARC para empresas y empieza en p=none sin atribuir esa política a Mailchimp.",
+                "text": "El host TXT es _dmarc. Copia el valor que muestra Mailchimp en tu flujo de autenticación. Si el panel de Marketing pide un valor distinto o bloquea el envío sin DMARC, usa exactamente lo que muestra el panel. Para diseñar la política (none → quarantine → reject), consulta la guía DMARC para empresas y empieza en p=none sin atribuir esa política a Mailchimp.",
             },
             {
                 "name": "Espera la validación",
-                "text": "Mailchimp indica que la mayoría de registros se validan en minutos, pero puede tardar hasta 48 horas. El estado pasa a Authenticated cuando la validación termina.",
+                "text": "Mailchimp indica que la mayoría de registros se validan en minutos, pero puede tardar hasta 48 horas. Mailchimp envía un correo cuando termina la validación; mientras tanto, el dominio muestra Authentication in progress en la página Domains.",
             },
             {
                 "name": "Verifica DKIM y DMARC en InboxSeguro",
@@ -765,13 +767,13 @@ GUIDES: list[dict] = [
         "errors": [
             "Autenticar sin haber verificado el dominio primero.",
             "Inventar el segundo CNAME o los destinos en lugar de copiarlos del panel.",
-            "Usar el include SPF servers.mcsv.net.",
             "Duplicar el dominio en el host (p. ej. k2._domainkey.ejemplo.cl.ejemplo.cl).",
         ],
         "note_console": "La documentación de Mailchimp para autenticación de dominio está en inglés. Los valores exactos de CNAME y DMARC son los del panel de tu cuenta.",
         "extra_links": [
             ("Guía DMARC para empresas", "/dmarc-para-empresas"),
         ],
+        "errors_heading": "Errores que conviene evitar",
     },
 ]
 
@@ -854,7 +856,7 @@ def guide_main(g: dict) -> str:
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
-    <h2 class="text-2xl font-bold text-slate-900">Errores frecuentes</h2>
+    <h2 class="text-2xl font-bold text-slate-900">{g.get("errors_heading", "Errores frecuentes")}</h2>
     <ul class="list-disc list-inside space-y-2 text-slate-600">{errors}</ul>
   </div>
 </section>
@@ -890,7 +892,7 @@ def guide_main(g: dict) -> str:
 def guias_main(guides: list[dict]) -> str:
     cards = "".join(
         f"""
-        <a href="{g["path"]}" class="block p-5 border border-slate-200 rounded-xl hover:border-brand-600 hover:bg-slate-50 transition-colors">
+        <a href="{g["path"]}" class="block p-5 border border-slate-200 rounded-xl hover:border-slate-300 hover:bg-slate-50 transition-colors">
           <h2 class="text-lg font-bold text-slate-900 mb-2">{g["provider"]}</h2>
           <p class="text-sm text-slate-600 leading-relaxed">{g["blurb"]}</p>
         </a>"""
