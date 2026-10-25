@@ -17,7 +17,7 @@ import hashlib
 import json
 import re
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from xml.sax.saxutils import escape as xml_escape
 
@@ -64,12 +64,35 @@ LIST_RE = re.compile(r"^(\s*)([-*+]|\d+\.)\s+(.+)$")
 TABLE_LINE_RE = re.compile(r"^\s*\|.*\|\s*$")
 HTML_TABLE_RE = re.compile(r"<table\b[\s\S]*?</table>", re.I)
 
+# --- Normalización para lectura (no altera el texto visible del artículo) ---
+URL_RE = re.compile(r"\s*(?:https?://|www\.)\S+")
+SEPARATOR_RE = re.compile(r"\s*·\s*")
+# Números con punto de miles (24.768, 3.046.598.558). No toca 5.7.515 ni IPs.
+NUM_DOTS_RE = re.compile(r"(?<![\d.])\b\d{1,3}(?:\.\d{3})+\b(?![.,]\d)")
+USD_RE = re.compile(r"\bUSD\s+(\d{1,3}(?:\.\d{3})+|\d+)\b(?![.,]\d)")
+DATE_DMY_RE = re.compile(r"(?<![\w-])(\d{1,2})-(\d{1,2})-(\d{4})(?![\w-])")
+PAGE_RE = re.compile(r"(?<!\w)(pp?)\.\s*(\d+)(?:\s*-\s*(\d+))?")
+SPOKEN_TLDS = {"cl": "ce ele", "com": "com", "org": "org", "net": "net", "gov": "gov", "io": "i o"}
+_TLD_ALT = "|".join(sorted(SPOKEN_TLDS, key=len, reverse=True))
+EMAIL_RE = re.compile(rf"(?<![\w.+-])([\w.+-]+)@((?:[\w-]+\.)+(?:{_TLD_ALT}))(?![\w-])", re.I)
+DOMAIN_RE = re.compile(rf"(?<![\w@.-])((?:[A-Za-z0-9][\w-]*\.)+(?:{_TLD_ALT}))(?![\w-]|\.\w)", re.I)
+EMPH_STAR_RE = re.compile(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])")
+EMPH_UNDERSCORE_RE = re.compile(r"(?<![\w_])_(?!\s)(.+?)(?<!\s)_(?![\w_])")
+CODE_FALLBACK_SPOKEN = "el ejemplo que se muestra en la página"
+CARDINAL_MARK = "\x01"
+ALIAS_MARK = "\x02"
+MESES = (
+    "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+)
+
 
 @dataclass
 class Lexicon:
     version: int
     say_as_characters: list[str]
     sub_alias: dict[str, str]
+    skip_sections: dict[str, str] = field(default_factory=dict)
 
 
 @dataclass
@@ -133,11 +156,25 @@ def load_lexicon(path: Path = LEXICON_PATH) -> Lexicon:
         for k, v in (raw.get("sub_alias") or {}).items()
         if str(k).strip() and str(v).strip()
     }
+    skips = {
+        str(k).strip().lower(): str(v).strip()
+        for k, v in (raw.get("skip_sections") or {}).items()
+        if str(k).strip() and str(v).strip()
+    }
     return Lexicon(
         version=int(raw.get("version") or 1),
         say_as_characters=say,
         sub_alias=subs,
+        skip_sections=skips,
     )
+
+
+def load_audio_aliases(meta: dict) -> dict[str, str]:
+    """`audio_alias:` del front matter: fragmento visible → cómo se dice."""
+    raw = meta.get("audio_alias") or {}
+    if not isinstance(raw, dict):
+        raise ValueError("audio_alias debe ser un mapa YAML (fragmento: lectura)")
+    return {str(k): str(v).strip() for k, v in raw.items() if str(k).strip() and str(v).strip()}
 
 
 def _split_front_matter(text: str) -> tuple[dict, str]:
@@ -152,17 +189,63 @@ def _split_front_matter(text: str) -> tuple[dict, str]:
     return meta, parts[2].lstrip("\n")
 
 
-def _strip_inline_noise(text: str) -> str:
-    text = IMAGE_RE.sub(r"\1", text)
-    text = LINK_RE.sub(r"\1", text)
+def _speak_domain(domain: str) -> str:
+    labels = domain.split(".")
+    tld = SPOKEN_TLDS.get(labels[-1].lower(), labels[-1])
+    return " punto ".join([*labels[:-1], tld])
 
+
+def _normalize_for_speech(text: str) -> str:
+    """Correos, dominios, fechas, páginas, montos y números con punto de miles."""
+    text = EMAIL_RE.sub(lambda m: f"{m.group(1)} arroba {_speak_domain(m.group(2))}", text)
+    text = DOMAIN_RE.sub(lambda m: _speak_domain(m.group(1)), text)
+
+    def _date(m: re.Match) -> str:
+        day, month = int(m.group(1)), int(m.group(2))
+        if not (1 <= day <= 31 and 1 <= month <= 12):
+            return m.group(0)
+        return f"{day} de {MESES[month - 1]} de {m.group(3)}"
+
+    text = DATE_DMY_RE.sub(_date, text)
+    text = PAGE_RE.sub(
+        lambda m: f"páginas {m.group(2)} a {m.group(3)}" if m.group(3) else f"página {m.group(2)}",
+        text,
+    )
+
+    def _cardinal(digits: str) -> str:
+        return f"{CARDINAL_MARK}{digits.replace('.', '')}{CARDINAL_MARK}"
+
+    text = USD_RE.sub(lambda m: f"{_cardinal(m.group(1))} dólares", text)
+    text = NUM_DOTS_RE.sub(lambda m: _cardinal(m.group(0)), text)
+    return text
+
+
+def _protect_aliases(text: str, aliases: dict[str, str], store: list[tuple[str, str]]) -> str:
+    """Sustituye fragmentos con alias por marcas para que ninguna regla los altere."""
+    for key in sorted(aliases, key=len, reverse=True):
+        pattern = re.compile(rf"(?<!\w){re.escape(key)}(?!\w)")
+
+        def _mark(m: re.Match, _spoken: str = aliases[key]) -> str:
+            store.append((m.group(0), _spoken))
+            return f"{ALIAS_MARK}{len(store) - 1}{ALIAS_MARK}"
+
+        text = pattern.sub(_mark, text)
+    return text
+
+
+def _strip_inline_noise(text: str) -> str:
     def _code_repl(m: re.Match) -> str:
         inner = m.group(1).strip()
+        if re.fullmatch(rf"{ALIAS_MARK}\d+{ALIAS_MARK}", inner):
+            return inner
         spoken = POLICY_SPOKEN.get(inner.lower())
         if spoken:
             return spoken
+        if EMAIL_RE.fullmatch(inner) or DOMAIN_RE.fullmatch(inner):
+            return inner  # se lee después como «arroba» / «punto»
         if DNS_TOKEN_RE.search(inner) or len(inner) > 12:
-            return ""
+            # Sin alias: frase neutra para no dejar la oración rota.
+            return CODE_FALLBACK_SPOKEN
         return inner
 
     text = INLINE_CODE_RE.sub(_code_repl, text)
@@ -173,19 +256,58 @@ def _strip_inline_noise(text: str) -> str:
     return text.strip()
 
 
-def _plain_block(text: str) -> str:
-    text = text.replace("**", "").replace("__", "").replace("*", "").replace("_", "")
+def _strip_emphasis(text: str) -> str:
+    text = text.replace("**", "").replace("__", "")
+    text = EMPH_STAR_RE.sub(r"\1", text)
+    # El guion bajo solo se quita cuando marca énfasis (_así_), no dentro de palabras.
+    return EMPH_UNDERSCORE_RE.sub(r"\1", text)
+
+
+def _plain_block(
+    text: str,
+    aliases: dict[str, str] | None = None,
+    store: list[tuple[str, str]] | None = None,
+) -> str:
     text = re.sub(r"^>\s?", "", text, flags=re.M)
-    return _strip_inline_noise(text)
+    text = IMAGE_RE.sub(r"\1", text)
+    text = LINK_RE.sub(r"\1", text)
+    text = URL_RE.sub("", text)
+    text = SEPARATOR_RE.sub(" ", text)
+    if aliases and store is not None:
+        text = _protect_aliases(text, aliases, store)
+    text = _strip_inline_noise(text)
+    text = _strip_emphasis(text)
+    text = _normalize_for_speech(text)
+    return re.sub(r"\s{2,}", " ", text).strip()
 
 
-def extract_speakable_blocks(title: str, body_md: str) -> list[tuple[str, str]]:
-    """Devuelve lista de (kind, text) con kind in title|heading|paragraph|list_item."""
+def extract_speakable_blocks(
+    title: str,
+    body_md: str,
+    *,
+    aliases: dict[str, str] | None = None,
+    skip_sections: dict[str, str] | None = None,
+    alias_store: list[tuple[str, str]] | None = None,
+) -> list[tuple[str, str]]:
+    """Devuelve lista de (kind, text) con kind in title|heading|paragraph|list_item.
+
+    `aliases` (front matter `audio_alias`) se guardan en `alias_store` y quedan como
+    marcas en el texto; `apply_lexicon_ssml` las convierte en <sub alias>.
+    `skip_sections` (título en minúsculas → frase) omite la sección completa hasta el
+    siguiente título de igual o mayor nivel y la reemplaza por la frase.
+    """
     body = FENCE_RE.sub("", body_md)
     body = HTML_TABLE_RE.sub("", body)
     blocks: list[tuple[str, str]] = []
+    store = alias_store if alias_store is not None else []
+    skips = skip_sections or {}
+    skip_level = 0  # nivel del título que se está omitiendo (0 = no se omite)
+
+    def plain(text: str) -> str:
+        return _plain_block(text, aliases, store)
+
     if title.strip():
-        blocks.append(("title", title.strip()))
+        blocks.append(("title", plain(title.strip())))
 
     paragraph_buf: list[str] = []
 
@@ -193,9 +315,9 @@ def extract_speakable_blocks(title: str, body_md: str) -> list[tuple[str, str]]:
         nonlocal paragraph_buf
         if not paragraph_buf:
             return
-        text = _plain_block(" ".join(paragraph_buf))
+        text = plain(" ".join(paragraph_buf))
         paragraph_buf = []
-        if text:
+        if text and not skip_level:
             blocks.append(("paragraph", text))
 
     for raw_line in body.splitlines():
@@ -209,14 +331,25 @@ def extract_speakable_blocks(title: str, body_md: str) -> list[tuple[str, str]]:
         hm = HEADING_RE.match(line.strip())
         if hm:
             flush_paragraph()
-            heading = _plain_block(hm.group(2))
+            level = len(hm.group(1))
+            if skip_level and level > skip_level:
+                continue
+            skip_level = 0
+            raw_heading = _strip_emphasis(hm.group(2)).strip().lower()
+            if raw_heading in skips:
+                skip_level = level
+                blocks.append(("heading", skips[raw_heading]))
+                continue
+            heading = plain(hm.group(2))
             if heading:
                 blocks.append(("heading", heading))
+            continue
+        if skip_level:
             continue
         lm = LIST_RE.match(line)
         if lm:
             flush_paragraph()
-            item = _plain_block(lm.group(3))
+            item = plain(lm.group(3))
             if item:
                 blocks.append(("list_item", item))
             continue
@@ -226,8 +359,13 @@ def extract_speakable_blocks(title: str, body_md: str) -> list[tuple[str, str]]:
     return blocks
 
 
-def apply_lexicon_ssml(text: str, lexicon: Lexicon) -> str:
+def apply_lexicon_ssml(
+    text: str,
+    lexicon: Lexicon,
+    alias_store: list[tuple[str, str]] | None = None,
+) -> str:
     """Escapa XML y envuelve términos del diccionario en etiquetas SSML."""
+    text = text.replace(CARDINAL_MARK, "\x00CARD\x00")
     brand_aliases = sorted(lexicon.sub_alias.items(), key=lambda kv: len(kv[0]), reverse=True)
     acronyms = sorted(lexicon.say_as_characters, key=len, reverse=True)
 
@@ -243,7 +381,7 @@ def apply_lexicon_ssml(text: str, lexicon: Lexicon) -> str:
             token = f"\x00SUB{counter}\x00"
             counter += 1
             placeholders[token] = (
-                f'<sub alias="{xml_escape(_alias)}">{xml_escape(m.group(0))}</sub>'
+                f'<sub alias="{xml_escape(_alias, {chr(34): "&quot;"})}">{xml_escape(m.group(0))}</sub>'
             )
             return token
 
@@ -270,7 +408,18 @@ def apply_lexicon_ssml(text: str, lexicon: Lexicon) -> str:
         parts.append(placeholders[m.group(0)])
         cursor = m.end()
     parts.append(xml_escape(work[cursor:]))
-    return "".join(parts)
+    out = "".join(parts)
+    out = re.sub(
+        r"\x00CARD\x00(\d+)\x00CARD\x00",
+        r'<say-as interpret-as="cardinal">\1</say-as>',
+        out,
+    )
+
+    def _alias(m: re.Match) -> str:
+        original, spoken = (alias_store or [])[int(m.group(1))]
+        return f'<sub alias="{xml_escape(spoken, {chr(34): "&quot;"})}">{xml_escape(original)}</sub>'
+
+    return re.sub(rf"{ALIAS_MARK}(\d+){ALIAS_MARK}", _alias, out)
 
 
 def blocks_to_ssml_fragments(
@@ -278,6 +427,7 @@ def blocks_to_ssml_fragments(
     lexicon: Lexicon,
     *,
     max_billed: int = MAX_BILLED_CHARS_PER_REQUEST,
+    alias_store: list[tuple[str, str]] | None = None,
 ) -> list[str]:
     """Arma fragmentos SSML <speak> listos para Polly, sin cortar frases."""
     section_break = f'<break time="{BREAK_SECTION_MS}ms"/>'
@@ -285,8 +435,8 @@ def blocks_to_ssml_fragments(
 
     units: list[tuple[str, int]] = []  # (ssml_piece, billed_chars)
     for i, (kind, text) in enumerate(blocks):
-        inner = apply_lexicon_ssml(text, lexicon)
-        billed = len(text)
+        inner = apply_lexicon_ssml(text, lexicon, alias_store)
+        billed = len(re.sub(r"<[^>]+>", "", inner))
         prefix = ""
         if i > 0:
             if kind == "heading":
@@ -376,6 +526,12 @@ def audio_paths(slug: str) -> tuple[Path, Path]:
 
 def load_post_md(slug: str) -> tuple[str, str, Path]:
     """Retorna title, body_md, source_path."""
+    title, body, path, _meta = load_post(slug)
+    return title, body, path
+
+
+def load_post(slug: str) -> tuple[str, str, Path, dict]:
+    """Retorna title, body_md, source_path, front matter."""
     candidates = [
         CONTENT_DIR / f"{slug}.md",
         CONTENT_DIR / "_drafts" / f"{slug}.md",
@@ -389,7 +545,7 @@ def load_post_md(slug: str) -> tuple[str, str, Path]:
                 continue
             if not title:
                 raise SystemExit(f"Post sin title: {path}")
-            return title, body, path
+            return title, body, path, meta
     # buscar por slug en front matter
     for path in sorted(CONTENT_DIR.glob("*.md")):
         if path.name.lower() == "readme.md":
@@ -399,15 +555,22 @@ def load_post_md(slug: str) -> tuple[str, str, Path]:
             title = str(meta.get("title") or "").strip()
             if not title:
                 raise SystemExit(f"Post sin title: {path}")
-            return title, body, path
+            return title, body, path, meta
     raise SystemExit(f"No se encontró markdown para slug={slug}")
 
 
 def prepare_audio(slug: str) -> tuple[list[str], Lexicon, str, int]:
-    title, body, _path = load_post_md(slug)
+    title, body, _path, meta = load_post(slug)
     lexicon = load_lexicon()
-    blocks = extract_speakable_blocks(title, body)
-    fragments = blocks_to_ssml_fragments(blocks, lexicon)
+    store: list[tuple[str, str]] = []
+    blocks = extract_speakable_blocks(
+        title,
+        body,
+        aliases=load_audio_aliases(meta),
+        skip_sections=lexicon.skip_sections,
+        alias_store=store,
+    )
+    fragments = blocks_to_ssml_fragments(blocks, lexicon, alias_store=store)
     fp = fingerprint_ssml(fragments, lexicon)
     billed = 0
     for frag in fragments:
