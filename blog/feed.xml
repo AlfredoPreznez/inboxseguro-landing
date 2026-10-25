@@ -45,7 +45,7 @@
       <link>https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/</guid>
       <pubDate>Tue, 13 Oct 2026 00:00:00 -0000</pubDate>
-      <description>Qué es DMARC, qué significan p, rua, ruf, pct, sp, adkim y aspf, y cómo pasar de p=none a p=reject sin bloquear los correos legítimos de tu empresa.</description>
+      <description>Qué es DMARC, políticas none, quarantine y reject, y cómo avanzar por etapas sin cortar correo legítimo de tu empresa.</description>
     </item>
     <item>
       <title>SPF: cómo no pasar el límite de 10 consultas</title>
