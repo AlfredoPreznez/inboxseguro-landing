@@ -126,7 +126,7 @@ TERMS: list[dict] = [
         "definition": "Un registro MX (Mail Exchanger) es un registro DNS que indica el nombre de host que acepta correo para un dominio, junto con una prioridad numérica (menor número = mayor prioridad de intento).",
         "why": "Sin MX correcto, el correo entrante no llega a tu empresa (o llega al host equivocado). Un MX mal apuntado también afecta diagnósticos de entregabilidad y la coherencia con la autenticación del proveedor de correo.",
         "example_title": "Ejemplo MX para ejemplo.cl (Google Workspace)",
-        "example": "Valores vigentes documentados por Google (cuentas nuevas desde 2023):\nejemplo.cl.  IN  MX  1  smtp.google.com.\n\nCuentas anteriores pueden usar el conjunto legacy ASPMX (p. ej. prioridad 1 ASPMX.L.GOOGLE.COM, etc.). Si el correo ya funciona con Google Workspace, no hace falta cambiar los MX.\n\nOtros proveedores entregan sus propios hosts y prioridades: usa siempre los que indique tu documentación.\n\nEl destino del MX debe ser un nombre de host con A/AAAA. Según RFC 2181 §10.3, el destino de un registro MX no puede ser un alias (CNAME).",
+        "example": "Valor vigente documentado por Google, válido para cualquier cuenta de Google Workspace:\nejemplo.cl.  IN  MX  1  smtp.google.com.\n\nLos valores MX antiguos que comienzan con ASPMX (p. ej. prioridad 1 ASPMX.L.GOOGLE.COM) corresponden a configuraciones de Google Workspace anteriores a 2023 y Google los sigue admitiendo. Si el correo ya funciona con Google Workspace, no hace falta cambiar los MX.\n\nOtros proveedores entregan sus propios hosts y prioridades: usa siempre los que indique tu documentación.\n\nEl destino del MX debe ser un nombre de host con A/AAAA. Según RFC 2181 §10.3, el destino de un registro MX no puede ser un alias (CNAME).",
         "errors": [
             "Apuntar el MX a una IP en lugar de un hostname.",
             "Usar un CNAME como destino del MX (RFC 2181 §10.3).",
@@ -364,12 +364,42 @@ def term_main(term: dict) -> str:
 """
 
 
+_WEAK_TAIL_WORDS = {
+    "a", "al", "con", "de", "del", "el", "en", "es", "la", "las", "lo", "los", "no", "o",
+    "para", "por", "que", "se", "sin", "su", "sus", "u", "un", "una", "y", "e",
+}
+
+
+def card_excerpt(text: str, limit: int = 140) -> str:
+    """Extracto para tarjetas: corta en límite de palabra, sin cerrar en palabras sueltas."""
+    if len(text) <= limit:
+        return text
+    # Prefiere una frase completa: corta en el último ";" o ":" dentro del límite.
+    clause_end = max(text.rfind("; ", 0, limit), text.rfind(": ", 0, limit))
+    if clause_end >= limit // 2:
+        return text[:clause_end].rstrip() + "."
+    words = text[: limit + 1].split()
+    if len(text) > limit and not text[limit].isspace():
+        words = words[:-1]  # descarta la palabra cortada a la mitad
+    while words and (
+        words[-1].lower().strip(",;:()") in _WEAK_TAIL_WORDS
+        or words[-1].count("(") > words[-1].count(")")
+    ):
+        words.pop()
+    excerpt = " ".join(words).rstrip(",;:(")
+    if excerpt.count("(") > excerpt.count(")"):
+        excerpt = excerpt[: excerpt.rfind("(")].rstrip(" ,;:")
+        while excerpt.split() and excerpt.split()[-1].lower() in _WEAK_TAIL_WORDS:
+            excerpt = excerpt.rsplit(" ", 1)[0]
+    return excerpt + "…"
+
+
 def index_main(terms: list[dict]) -> str:
     cards = "".join(
         f"""
         <a href="/glosario/{t["slug"]}/" class="block p-5 border border-slate-200 rounded-xl hover:border-brand-600 hover:bg-slate-50 transition-colors">
           <h2 class="text-lg font-bold text-slate-900 mb-2">{t["name"]}</h2>
-          <p class="text-sm text-slate-600 leading-relaxed">{t["definition"][:140]}…</p>
+          <p class="text-sm text-slate-600 leading-relaxed">{card_excerpt(t["definition"])}</p>
         </a>"""
         for t in terms
     )
@@ -480,7 +510,7 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Obtén los dos CNAME DKIM (antes del interruptor)",
-                "text": "En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey. Para dominios personalizados nuevos desde mayo de 2025, el destino usa el formato …-v1.dkim.mail.microsoft (por ejemplo selector1-ejemplo-cl._domainkey.ejemplo.n-v1.dkim.mail.microsoft). Los dominios existentes suelen seguir con el formato hacia *.onmicrosoft.com. El formato antiguo y el nuevo no pueden coexistir para el mismo selector: publica solo los valores que Microsoft te muestra ahora.",
+                "text": "En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey. Para dominios personalizados nuevos desde mayo de 2025, el destino usa el formato …-v1.dkim.mail.microsoft (por ejemplo selector1-ejemplo-cl._domainkey.ejemplo.n-v1.dkim.mail.microsoft). Los dominios existentes siguen con el formato hacia *.onmicrosoft.com. El formato antiguo y el nuevo no pueden coexistir para el mismo selector: publica solo los valores que Microsoft te muestra ahora.",
             },
             {
                 "name": "Publica los CNAME en el DNS",
