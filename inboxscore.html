@@ -3,28 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>InboxScore: puntaje de seguridad del correo de tu dominio | InboxSeguro</title>
+    <title>InboxScore: puntaje 0-100 de tu dominio | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Calcula gratis el InboxScore de tu dominio: un puntaje de 0 a 100 según SPF, DKIM, DMARC y listas negras, con el desglose, qué corregir y un enlace para compartir.">
+    <meta name="description" content="Calcula gratis el InboxScore (0 a 100) según SPF, DKIM, DMARC y listas negras. Desglose, qué revisar y enlace para compartir.">
     <link rel="canonical" href="https://www.inboxseguro.com/inboxscore">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/inboxscore">
-    <meta property="og:title" content="¿Qué tan protegido está el correo de tu dominio? Calcula tu InboxScore">
-    <meta property="og:description" content="Puntaje de 0 a 100 según SPF, DKIM, DMARC y listas negras, con qué corregir. Gratis y sin registro.">
+    <meta property="og:title" content="InboxScore: puntaje 0-100 de tu dominio | InboxSeguro">
+    <meta property="og:description" content="Calcula gratis el InboxScore (0 a 100) según SPF, DKIM, DMARC y listas negras. Desglose, qué revisar y enlace para compartir.">
     <meta property="og:image" content="https://www.inboxseguro.com/assets/og/og-inboxscore.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="¿Qué tan protegido está el correo de tu dominio? Calcula tu InboxScore">
-    <meta name="twitter:description" content="Puntaje de 0 a 100 según SPF, DKIM, DMARC y listas negras, con qué corregir. Gratis y sin registro.">
+    <meta name="twitter:title" content="InboxScore: puntaje 0-100 de tu dominio | InboxSeguro">
+    <meta name="twitter:description" content="Calcula gratis el InboxScore (0 a 100) según SPF, DKIM, DMARC y listas negras. Desglose, qué revisar y enlace para compartir.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/assets/og/og-inboxscore.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.8">
-    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "InboxScore", "url": "https://www.inboxseguro.com/inboxscore", "applicationCategory": "SecurityApplication", "operatingSystem": "Web", "isAccessibleForFree": true, "description": "Calcula gratis el InboxScore de tu dominio: un puntaje de 0 a 100 según SPF, DKIM, DMARC y listas negras, con el desglose, qué corregir y un enlace para compartir."}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "InboxScore", "url": "https://www.inboxseguro.com/inboxscore", "applicationCategory": "SecurityApplication", "operatingSystem": "Web", "isAccessibleForFree": true, "description": "Calcula gratis el InboxScore (0 a 100) según SPF, DKIM, DMARC y listas negras. Desglose, qué revisar y enlace para compartir."}</script>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Inicio", "item": "https://www.inboxseguro.com/"}, {"@type": "ListItem", "position": 2, "name": "Herramientas", "item": "https://www.inboxseguro.com/herramientas"}, {"@type": "ListItem", "position": 3, "name": "InboxScore", "item": "https://www.inboxseguro.com/inboxscore"}]}</script>
     <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Qué es InboxScore?", "acceptedAnswer": {"@type": "Answer", "text": "Es un puntaje de 0 a 100 que resume cuatro señales públicas del correo de un dominio: SPF, DKIM, DMARC y presencia en listas negras. Se calcula en tu navegador con consultas DNS públicas."}}, {"@type": "Question", "name": "¿Un puntaje alto garantiza que mis correos lleguen a la bandeja de entrada?", "acceptedAnswer": {"@type": "Answer", "text": "No. InboxScore es una señal externa: revisa lo que el dominio publica en DNS. La entrega también depende de que tus mensajes reales autentiquen, del contenido y de la reputación que cada proveedor calcula por su cuenta."}}, {"@type": "Question", "name": "¿Por qué DMARC pesa más que las otras señales?", "acceptedAnswer": {"@type": "Answer", "text": "Porque es el único control que indica a los receptores qué hacer con el correo que suplanta tu dominio y el único que te envía informes sobre quién envía en tu nombre. Sin DMARC, SPF y DKIM no protegen tu dominio visible en el campo De."}}, {"@type": "Question", "name": "No encontraron mi DKIM, pero sé que lo tengo. ¿Por qué?", "acceptedAnswer": {"@type": "Answer", "text": "Solo probamos selectores habituales, como google, selector1 o default. Si tu proveedor usa un selector propio, no lo veremos; por eso asignamos 5 de 20 en lugar de 0. Puedes comprobarlo en el Verificador DKIM indicando el selector."}}, {"@type": "Question", "name": "¿Guardan el dominio que consulto?", "acceptedAnswer": {"@type": "Answer", "text": "No. Las consultas se hacen desde tu navegador a resolvers DNS públicos. El enlace para compartir solo lleva el dominio en la dirección y el puntaje se recalcula al abrirlo, salvo que nos dejes tu correo para recibir el detalle; en ese caso recibimos tu correo, el dominio y el resultado para responderte."}}, {"@type": "Question", "name": "¿Cada cuánto debería revisar mi puntaje?", "acceptedAnswer": {"@type": "Answer", "text": "Cada vez que cambies de proveedor de correo, agregues una herramienta que envíe en tu nombre o modifiques el DNS. Las listas negras cambian a diario; para eso conviene un monitoreo continuo."}}]}</script>
 </head>
@@ -233,7 +233,7 @@
                 <span class="text-slate-200">InboxScore</span>
             </nav>
             <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">InboxScore gratuito</div>
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">InboxScore: el puntaje de seguridad del correo de tu dominio</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Calcula el InboxScore de tu dominio</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">Escribe tu dominio y obtén un puntaje de 0 a 100 según SPF, DKIM, DMARC y listas negras, con el desglose y qué corregir.</p>
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12 text-left">
                 <form id="isForm" class="flex flex-col sm:flex-row gap-3">
