@@ -9,6 +9,15 @@ updated: 2026-10-19
 tags: [listas-negras, blacklist, dnsbl, entregabilidad, reputacion, empresas]
 keyword_objetivo: cómo saber si mi dominio está en lista negra
 draft: false
+audio_alias:
+  "550 5.1.8 Access denied, bad outbound sender": "quinientos cincuenta, cinco punto uno punto ocho: Access denied, bad outbound sender"
+  "550 5.1.8": "quinientos cincuenta, cinco punto uno punto ocho"
+  "550 5.7.1": "quinientos cincuenta, cinco punto siete punto uno"
+  "Remove-BlockedSenderAddress": "Remove Blocked Sender Address"
+  "192.0.2.99": "ciento noventa y dos punto cero punto dos punto noventa y nueve"
+  "99.2.0.192.bad.example.com": "noventa y nueve punto dos punto cero punto ciento noventa y dos punto bad punto example punto com"
+  "127.0.0.2": "ciento veintisiete punto cero punto cero punto dos"
+  "Email & collaboration > Review > Restricted entities": "Email and collaboration, luego Review, luego Restricted entities"
 ---
 
 Un día, un cliente te dice que no le llegó la factura. Al rato, alguien de ventas recibe un rebote con un código extraño. Si te preguntas cómo saber si tu dominio está en una lista negra, o si la que está bloqueada es la IP desde la que envías, esta guía te explica en lenguaje simple qué son estas listas, por qué una empresa puede terminar en una sin haber enviado spam y qué hacer para salir.

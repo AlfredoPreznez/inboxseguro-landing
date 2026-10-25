@@ -1,13 +1,33 @@
 # Diccionario de pronunciación Polly (SSML).
 # - say_as_characters → <say-as interpret-as="characters">SIGLA</say-as>
+#   (distingue mayúsculas, palabra completa)
 # - sub_alias → <sub alias="...">término</sub>
+#   (no distingue mayúsculas, palabra completa; gana la clave más larga y
+#   tiene prioridad sobre say_as_characters)
+# - skip_sections → títulos de sección que no se leen; se reemplazan por la frase.
 # Ampliar aquí; se aplica a todos los artículos en el build.
+# Fragmentos propios de un artículo (códigos, IP, registros DNS): usar
+# `audio_alias:` en el front matter del artículo.
 # SPF y DKIM se dejan tal cual. DMARC lleva la D audible.
-# CRM sí se deletrea.
-version: 4
+# Google, Yahoo, Microsoft, none, quarantine y reject se dejan como los lee la voz.
+version: 5
 
 say_as_characters:
   - CRM
+  - FBI
+  - IA
+  - NSA
+  - MFA
+  - SMS
+  - RFC
+  - IP
+  - DNS
+  - TXT
+  - PTR
+  - MX
+  - ASN
+  - SMTP
+  - TI
 
 sub_alias:
   InboxSeguro: "Inbox Seguro"
@@ -15,6 +35,33 @@ sub_alias:
   Outlook: "áut luk"
   "Google Workspace": "Google Guórk speis"
   "Microsoft 365": "Microsoft trescientos sesenta y cinco"
+  "Office 365": "Ófis trescientos sesenta y cinco"
   WhatsApp: "guasáp"
   LinkedIn: "linked in"
   DMARC: "di marc"
+  DMARC1: "di marc uno"
+  # Términos en inglés frecuentes
+  phishing: "fishing"
+  "Phishing/spoofing": "fishing y spúfing"
+  spoofing: "spúfing"
+  "business email compromise": "compromiso del correo empresarial"
+  newsletter: "niúsleter"
+  newsletters: "niúsleters"
+  blacklist: "blaclist"
+  blocklist: "bloclist"
+  "Postmaster Tools": "Póustmaster Tuls"
+  Postmaster: "Póustmaster"
+  hotmail: "jótmeil"
+  # Siglas que se dicen como palabra o con deletreo explícito
+  BEC: "be, e, ce"  # con say-as characters la voz decía «BSE»
+  CISA: "sisa"
+  "MS-ISAC": "eme ese áisac"
+  IC3: "i ce tres"
+  CEO: "ce e o"
+  BIMI: "bimi"
+  "MTA-STS": "eme te a, ese te ese"
+  USD: "dólares"
+
+skip_sections:
+  Fuentes: "Las fuentes de este artículo están enlazadas en la página."
+  Referencias: "Las fuentes de este artículo están enlazadas en la página."

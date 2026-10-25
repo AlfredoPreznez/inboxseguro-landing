@@ -9,6 +9,11 @@ updated: 2026-10-22
 tags: [phishing, inteligencia-artificial, dmarc, suplantacion, fraude-del-ceo, empresas]
 keyword_objetivo: phishing con inteligencia artificial
 draft: false
+audio_alias:
+  "I-120324-PSA": "i guion uno dos cero tres dos cuatro, pe ese a"
+  "550; 5.7.515": "quinientos cincuenta, cinco punto siete punto quinientos quince"
+  "v=DMARC1": "ve igual di marc uno"
+  '_dmarc.ejemplo.cl TXT "v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl"': "un registro TXT en guion bajo di marc punto ejemplo punto ce ele, con ve igual di marc uno, pe igual none, y los reportes rua a di marc arroba ejemplo punto ce ele"
 ---
 
 Un proveedor recibe un correo de `facturacion@ejemplo.cl` que le pide pagar la próxima factura a una cuenta bancaria nueva. Está bien escrito, en buen español y con el tono de siempre. Es un ejemplo, no un caso real, pero resume el phishing con inteligencia artificial: correos falsos que ya no se delatan por la forma. La IA no inventó el phishing, pero, como advierte el [FBI](https://www.ic3.gov/PSA/2024/PSA241203), lo hace más creíble y más rápido de producir. Aquí verás qué parte de ese problema puede frenar DMARC, qué parte no y por dónde empezar.
