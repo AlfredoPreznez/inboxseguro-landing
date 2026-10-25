@@ -8,7 +8,7 @@
 - Gobierno por sistema: permite asignar un responsable y un estado (aprobado, inactivo o revisión) a cada sistema de envío.
 - Alertas: avisa cuando aparece un remitente nuevo, cuando el volumen sale del rango mensual esperado y cuando hay fallas de SPF/DKIM, que se clasifican como posible suplantación después de descartar reenvíos.
 - Detección de reenvíos (forwarding), para no confundir correos reenviados con suplantación.
-- Estado DNS: revisa SPF, DKIM, DMARC, BIMI, MTA-STS y la dirección RUA, con alertas ante cambios DNS no autorizados.
+- Estado DNS: revisa SPF, DKIM, DMARC, BIMI, MTA-STS y la dirección RUA, y te avisa cuando cambian esos registros
 - Listas negras: revisión cada hora contra 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer), con guía para solicitar la remoción.
 - Configuración DNS guiada con asistente de IA para avanzar de p=none a p=quarantine y p=reject.
 - Informe técnico mensual y PDF de gobernanza como apoyo para auditoría interna (no es una certificación).
@@ -18,15 +18,61 @@
 
 Empresas B2B, de e-commerce y SaaS en LATAM que envían correo con su dominio desde varias herramientas (correo corporativo, CRM, newsletter, facturación, tienda en línea, mesa de ayuda) y necesitan saber quién envía en su nombre.
 
-## Páginas principales
+## Herramientas gratuitas
 
-- [Inicio](https://www.inboxseguro.com/): presentación de InboxSeguro.
-- [Plataforma](https://www.inboxseguro.com/plataforma): funciones de la plataforma.
-- [Blog](https://www.inboxseguro.com/blog/): guías prácticas sobre SPF, DKIM, DMARC y entregabilidad.
+Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gratis: prueba de 14 días sin tarjeta; planes en /precios.
+
+- [Verificar lista negra](https://www.inboxseguro.com/verificar-lista-negra): consulta Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer con IP o dominio.
+- [SPF Checker](https://www.inboxseguro.com/spf-checker): verifica el registro SPF publicado (solo lectura; no lo modifica).
+- [DMARC Checker](https://www.inboxseguro.com/dmarc-checker): verifica si el dominio publica none, quarantine o reject.
+- [DKIM Checker](https://www.inboxseguro.com/dkim-checker): verifica un selector DKIM o busca selectores habituales en DNS.
+- [MX Lookup](https://www.inboxseguro.com/mx-lookup): consulta hostname y prioridad de los registros MX públicos.
+- [Domain Checker](https://www.inboxseguro.com/domain-checker): revisa en una consulta SPF, DKIM, DMARC y MX (foto DNS del momento).
+- [InboxScore](https://www.inboxseguro.com/inboxscore): puntaje 0–100 según SPF, DKIM, DMARC y listas negras, con desglose.
+- [Quién puede enviar correos](https://www.inboxseguro.com/quien-puede-enviar-correos): estima qué servicios podrían estar autorizados a enviar con tu dominio.
 
 ## Artículos del blog
 
-- [Cómo saber si alguien suplanta tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/): detectar suplantación con reportes DMARC y separar servicios legítimos de falsos.
-- [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios sin dueño que envían con tu dominio y cómo encontrarlos.
-- [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y cómo avanzar por etapas.
+- [Cómo saber si mi dominio está en lista negra](https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/): cómo detectar listados, errores en Gmail y Microsoft 365, y pedir la salida.
+- [Cómo saber si alguien suplanta tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/): detectar envíos falsos con reportes DMARC y separar servicios legítimos.
+- [Cómo verificar DKIM de tu dominio](https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/): encontrar el selector, revisar el registro DNS y errores frecuentes.
+- [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios que envían con tu dominio sin administración clara.
+- [Phishing con IA: qué frena DMARC y qué no](https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/): qué ataques con el dominio exacto frena DMARC y cuáles no.
+- [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y avance por etapas.
 - [SPF: cómo no pasar el límite de 10 consultas](https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/): autorizar servicios en SPF sin superar el límite de la RFC 7208.
+
+## Glosario y guías
+
+- [Glosario](https://www.inboxseguro.com/glosario/): definiciones de correo y DNS para empresas.
+- [RBL](https://www.inboxseguro.com/glosario/rbl/): qué es una lista negra de correo y por qué importa.
+- [Registro MX](https://www.inboxseguro.com/glosario/registro-mx/): qué indica el MX y cómo verificarlo.
+- [BIMI](https://www.inboxseguro.com/glosario/bimi/): logo de marca en clientes compatibles y requisitos DMARC.
+- [MTA-STS](https://www.inboxseguro.com/glosario/mta-sts/): política para exigir SMTP sobre TLS verificado.
+- [RUA](https://www.inboxseguro.com/glosario/rua/): destino de reportes agregados DMARC.
+- [Selector DKIM](https://www.inboxseguro.com/glosario/selector-dkim/): qué es el selector y cómo se usa al verificar la firma.
+- [Política DMARC](https://www.inboxseguro.com/glosario/politica-dmarc/): significado de p=none, quarantine y reject.
+- [Alineación DMARC](https://www.inboxseguro.com/glosario/alineacion-dmarc/): coincidencia del dominio autenticado con el De: visible.
+- [DKIM y DMARC en Google Workspace](https://www.inboxseguro.com/como-configurar-dkim-dmarc-google-workspace): activar DKIM, publicar DMARC y verificar.
+- [DKIM y DMARC en Microsoft 365](https://www.inboxseguro.com/como-configurar-dkim-dmarc-microsoft-365): DKIM (CNAME), DMARC y avance gradual de política.
+- [DKIM y DMARC en Zoho Mail](https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail): activar DKIM y publicar DMARC en Zoho Mail.
+
+## Páginas de apoyo
+
+- [Plataforma](https://www.inboxseguro.com/plataforma): funciones de control de envíos e inventario.
+- [Precios](https://www.inboxseguro.com/precios): planes y prueba de 14 días (sin montos aquí).
+- [Cómo funciona](https://www.inboxseguro.com/como-funciona): pasos para conectar el dominio y demostrar control.
+- [FAQ](https://www.inboxseguro.com/faq): preguntas sobre vigilancia de envíos, SPF, DKIM y DMARC.
+- [Control de envíos del dominio](https://www.inboxseguro.com/control-envios-dominio): guía para saber quién envía y autorizar servicios.
+- [Suplantación de correo](https://www.inboxseguro.com/suplantacion-correo-empresa): qué es, cómo detectarla y qué hacer.
+- [DMARC para empresas](https://www.inboxseguro.com/dmarc-para-empresas): ruta práctica de p=none a p=reject.
+- [Due diligence de ciberseguridad](https://www.inboxseguro.com/due-diligence-ciberseguridad-empresas): preparar evidencia empezando por el correo.
+- [Informe de higiene de correo](https://www.inboxseguro.com/informe-higiene-correo-corporativo): qué incluir en un informe para due diligence.
+- [Seguridad de correo para proveedores](https://www.inboxseguro.com/seguridad-correo-proveedores): demostrar higiene cuando un cliente lo exige.
+- [Contacto](https://www.inboxseguro.com/contacto): soporte, demos y consultas.
+
+## Límites y precisión
+
+- Listas negras: cada hora se consultan Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer sobre las IP de los servidores de correo del dominio.
+- InboxSeguro no es una certificación.
+- El informe técnico mensual y el PDF de gobernanza son apoyo para auditoría interna.
+- Con DMARC `quarantine`, el correo puede ir a spam; con `reject`, no se entrega (rebota).
