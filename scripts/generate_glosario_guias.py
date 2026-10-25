@@ -33,6 +33,27 @@ HEAD_ASSETS = """    <link href="https://fonts.googleapis.com/css2?family=Inter:
 PRE_CLASS = 'bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto'
 PRE_STYLE = 'white-space: pre-wrap'
 
+_MONTHS_ES = (
+    "enero",
+    "febrero",
+    "marzo",
+    "abril",
+    "mayo",
+    "junio",
+    "julio",
+    "agosto",
+    "septiembre",
+    "octubre",
+    "noviembre",
+    "diciembre",
+)
+
+
+def format_revision_date(iso: str) -> str:
+    """YYYY-MM-DD → '25 de octubre de 2026'."""
+    y, m, d = iso.split("-")
+    return f"{int(d)} de {_MONTHS_ES[int(m) - 1]} de {y}"
+
 
 def clip(s: str, n: int) -> str:
     s = s.strip()
@@ -50,10 +71,12 @@ def page_shell(
     chrome_footer: str,
 ) -> str:
     title = clip(title, 60)
-    # Meta description: ≤160; no cortar con "…" — el contenido debe caber entero.
-    if len(description) > 160:
-        raise SystemExit(f"meta description >160 ({len(description)}): {description[:80]}…")
+    # Meta description: ≤155; no cortar con "…" — el contenido debe caber entero.
+    if len(description) > 155:
+        raise SystemExit(f"meta description >155 ({len(description)}): {description[:80]}…")
     description = description.strip()
+    if len(title) > 60:
+        raise SystemExit(f"title >60 ({len(title)}): {title}")
     ld = "\n".join(
         f'<script type="application/ld+json">\n{json.dumps(block, ensure_ascii=False, indent=2)}\n</script>'
         for block in json_ld_blocks
@@ -403,11 +426,10 @@ def index_main(terms: list[dict]) -> str:
         </a>"""
         for t in terms
     )
-    guide_links = """
-        <li><a href="/como-configurar-dkim-dmarc-google-workspace" class="text-brand-600 hover:underline">DKIM y DMARC en Google Workspace</a></li>
-        <li><a href="/como-configurar-dkim-dmarc-microsoft-365" class="text-brand-600 hover:underline">DKIM y DMARC en Microsoft 365</a></li>
-        <li><a href="/como-configurar-dkim-dmarc-zoho-mail" class="text-brand-600 hover:underline">DKIM y DMARC en Zoho Mail</a></li>
-    """
+    guide_links = "".join(
+        f'<li><a href="{g["path"]}" class="text-brand-600 hover:underline">{g["h1"].replace("Cómo configurar ", "")}</a></li>'
+        for g in GUIDES
+    )
     return f"""
 <section class="py-12 bg-slate-900 text-white">
   <div class="max-w-3xl mx-auto px-4 text-center">
@@ -429,7 +451,7 @@ def index_main(terms: list[dict]) -> str:
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Guías de configuración</h2>
     <ul class="list-disc list-inside space-y-2 text-slate-600">{guide_links}</ul>
-    <p class="text-slate-600 leading-relaxed">También puedes leer <a href="/blog/que-es-dmarc-como-activarlo/" class="text-brand-600 hover:underline">qué es DMARC y cómo activarlo</a>.</p>
+    <p class="text-slate-600 leading-relaxed">Ver el índice completo en <a href="/guias" class="text-brand-600 hover:underline">Guías de configuración</a>. También puedes leer <a href="/blog/que-es-dmarc-como-activarlo/" class="text-brand-600 hover:underline">qué es DMARC y cómo activarlo</a>.</p>
   </div>
 </section>
 """
@@ -442,8 +464,10 @@ GUIDES: list[dict] = [
         "title": "DKIM y DMARC en Google Workspace | InboxSeguro",
         "h1": "Cómo configurar DKIM y DMARC en Google Workspace",
         "description": "Cómo activar DKIM y publicar DMARC en Google Workspace, verificar con herramientas gratis y avanzar de p=none a quarantine y reject.",
+        "blurb": "Activa DKIM en Admin console y publica DMARC en el DNS de tu dominio.",
         "provider": "Google Workspace",
         "crumb": "Google Workspace",
+        "reviewed": "2026-10-24",
         "docs": [
             ("Set up DKIM (Google Workspace Help)", "https://knowledge.workspace.google.com/admin/security/set-up-dkim"),
             ("Set up DMARC (Google Workspace Help)", "https://knowledge.workspace.google.com/admin/security/set-up-dmarc"),
@@ -496,8 +520,10 @@ GUIDES: list[dict] = [
         "title": "DKIM y DMARC en Microsoft 365 | InboxSeguro",
         "h1": "Cómo configurar DKIM y DMARC en Microsoft 365",
         "description": "Guía basada en la documentación oficial de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.",
+        "blurb": "Publica los CNAME DKIM y el TXT DMARC según Microsoft Learn.",
         "provider": "Microsoft 365",
         "crumb": "Microsoft 365",
+        "reviewed": "2026-10-24",
         "docs": [
             ("Configure DKIM (Microsoft Learn)", "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dkim-configure"),
             ("Configure DMARC (Microsoft Learn)", "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure"),
@@ -548,8 +574,10 @@ GUIDES: list[dict] = [
         "title": "DKIM y DMARC en Zoho Mail | InboxSeguro",
         "h1": "Cómo configurar DKIM y DMARC en Zoho Mail",
         "description": "Cómo activar DKIM y publicar DMARC en Zoho Mail, verificar con herramientas gratis y avanzar de p=none a quarantine y reject sin cortar correo.",
+        "blurb": "Verifica el selector DKIM y avanza la política DMARC por fases en Zoho Mail.",
         "provider": "Zoho Mail",
         "crumb": "Zoho Mail",
+        "reviewed": "2026-10-24",
         "docs": [
             ("DKIM Configuration (Zoho Mail Help)", "https://www.zoho.com/mail/help/adminconsole/dkim-configuration.html"),
             ("DMARC policy (Zoho Mail Help)", "https://www.zoho.com/mail/help/adminconsole/dmarc-policy.html"),
@@ -588,6 +616,163 @@ GUIDES: list[dict] = [
         ],
         "note_console": "La Admin Console de Zoho Mail puede mostrar pestañas distintas según plan e idioma; la estructura Domains → Email Configuration → DKIM/DMARC es la documentada oficialmente.",
     },
+    {
+        "file": "como-configurar-dkim-dmarc-shopify.html",
+        "path": "/como-configurar-dkim-dmarc-shopify",
+        "title": "DKIM y DMARC en Shopify | InboxSeguro",
+        "h1": "Cómo configurar DKIM y DMARC en Shopify",
+        "description": "Autentica el dominio de envío en Shopify con CNAME (DKIM y SPF) y un TXT DMARC mínimo. Verifica con herramientas gratis de InboxSeguro.",
+        "blurb": "Autentica el dominio con CNAME (DKIM/SPF) y un TXT DMARC mínimo en Shopify.",
+        "provider": "Shopify",
+        "crumb": "Shopify",
+        "reviewed": "2026-10-25",
+        "docs": [
+            ("Setting up your email (Shopify Help)", "https://help.shopify.com/en/manual/intro-to-shopify/initial-setup/setup-your-email"),
+            ("Displaying your store's sending email (Shopify Help)", "https://help.shopify.com/en/manual/intro-to-shopify/initial-setup/email-rewrites"),
+            ("Building and maintaining your email deliverability (Shopify Messaging)", "https://help.shopify.com/en/manual/promoting-marketing/create-marketing/shopify-messaging/email/deliverability"),
+        ],
+        "steps": [
+            {
+                "name": "Abre la autenticación de dominio en Shopify",
+                "text": "En el admin de Shopify ve a Settings > Notifications > Sender email > Email domain authentication (en la interfaz en español: Configuración > Notifications > Correo electrónico del remitente > Autenticación de dominio de correo electrónico). La app de marketing/correo de Shopify se documenta como Shopify Messaging.",
+            },
+            {
+                "name": "Publica todos los CNAME que muestra Shopify",
+                "text": "Shopify autentica solo con registros CNAME: cubren DKIM y SPF. No hace falta un TXT SPF separado ni un include SPF adicional para este fin. La cantidad y el patrón de host/valor pueden variar: copia exactamente los registros que muestra el panel de Shopify (no inventes hosts). La documentación no indica requisitos de proxy Cloudflare para estos CNAME.",
+            },
+            {
+                "name": "Espera la propagación DNS",
+                "text": "Los cambios DNS pueden tardar hasta 48 horas. Si la verificación falla, confirma que los valores del DNS coinciden con los del admin de Shopify y vuelve a indicar que actualizaste los registros.",
+            },
+            {
+                "name": "Publica un TXT DMARC mínimo en _dmarc",
+                "text": "Agrega un TXT en _dmarc con al menos v=DMARC1; p=none;. Un solo registro DMARC por dominio. No uses adkim=s ni aspf=s: Shopify indica que esa alineación estricta puede impedir autenticar el correo enviado por Shopify; si ya existen, quítalos o cámbialos a adkim=r y aspf=r.",
+            },
+            {
+                "name": "Verifica DKIM y la política DMARC",
+                "text": "Usa el verificador DKIM y el verificador DMARC de InboxSeguro. Sin CNAME y DMARC, Shopify reescribe el remitente a store+123@shopifyemail.com. Desde el 1 de febrero de 2024, Gmail y Yahoo exigen autenticación de dominio y un registro DMARC para enviar desde una dirección de marca.",
+            },
+            {
+                "name": "Avanza la política DMARC con cuidado",
+                "text": "Cuando los envíos legítimos estén autenticados, consulta la guía DMARC para empresas y avanza de p=none a quarantine y luego reject. Quarantine puede ir a spam; reject no se entrega (rebota).",
+            },
+        ],
+        "errors": [
+            "Inventar hosts CNAME en lugar de copiar los del panel de Shopify.",
+            "Agregar un TXT SPF separado «por si acaso» cuando Shopify ya cubre SPF vía CNAME.",
+            "Publicar adkim=s o aspf=s en el DMARC.",
+            "Tener más de un registro DMARC en el mismo dominio.",
+        ],
+        "note_console": "Copia siempre los registros que muestra Shopify en Email domain authentication; la cantidad de CNAME puede variar según la tienda.",
+        "extra_links": [
+            ("Guía DMARC para empresas", "/dmarc-para-empresas"),
+        ],
+    },
+    {
+        "file": "como-configurar-dkim-dmarc-hubspot.html",
+        "path": "/como-configurar-dkim-dmarc-hubspot",
+        "title": "DKIM y DMARC en HubSpot | InboxSeguro",
+        "h1": "Cómo configurar DKIM y DMARC en HubSpot",
+        "description": "Conecta el dominio de envío en HubSpot: DKIM (dos CNAME), SPF y DMARC según el panel. Verifica con herramientas gratis de InboxSeguro.",
+        "blurb": "Conecta el dominio de envío con DKIM, SPF y DMARC desde el panel de HubSpot.",
+        "provider": "HubSpot",
+        "crumb": "HubSpot",
+        "reviewed": "2026-10-25",
+        "docs": [
+            ("Manage your email authentication (HubSpot Knowledge Base)", "https://knowledge.hubspot.com/marketing-email/manage-email-authentication-in-hubspot"),
+            ("Overview of email authentication (HubSpot Knowledge Base)", "https://knowledge.hubspot.com/marketing-email/overview-of-email-authentication"),
+            ("Troubleshoot email authentication issues (HubSpot)", "https://knowledge.hubspot.com/marketing-email/troubleshoot-email-authentication-issues"),
+        ],
+        "steps": [
+            {
+                "name": "Abre Connect sending domain",
+                "text": "En HubSpot: Settings > Content > Domains & URLs > Email Sending > Connect sending domain (en español: Contenido > Dominios y URL > Envío de correo electrónico). Ingresa la dirección From que usas para marketing y continúa.",
+            },
+            {
+                "name": "Copia DKIM, SPF y DMARC del panel",
+                "text": "HubSpot muestra los registros a publicar. DKIM: dos CNAME (ejemplo de forma: host hs1-123456._domainkey → yourdomain-com.hs[#]a.dkim.hubspotemail.net). SPF: un TXT con el include: de la columna Required data (ejemplo de forma: 123456.spf03.hubspotemail.net). DMARC: un TXT con al menos v=DMARC1; p=none;. El host, el include SPF exacto y el selector pueden variar: copia los valores del panel HubSpot, no inventes includes ni selectores.",
+            },
+            {
+                "name": "Un solo SPF y un solo DMARC; cuidado con Cloudflare",
+                "text": "Si ya tienes SPF, agrega el include de HubSpot al registro existente (un solo v=spf1 y un solo -all). Un solo TXT DMARC por dominio. En Cloudflare, desactiva el proxy y el CNAME flattening de dominio para estos registros. Evita duplicar el dominio en el host (p. ej. hs1-….ejemplo.cl.ejemplo.cl).",
+            },
+            {
+                "name": "Espera la verificación en HubSpot",
+                "text": "La propagación suele ser de 10 a 70 minutos y puede llegar a 48 horas. HubSpot recomienda esperar al menos 20 minutos antes de verificar. Solo DKIM es necesario para enviar desde tu dominio; el estado Authenticated exige DKIM + SPF + DMARC verificados.",
+            },
+            {
+                "name": "Verifica con las herramientas del sitio",
+                "text": "Usa el verificador DKIM (con el selector que muestra HubSpot) y el verificador DMARC. No asumas un selector fijo: el valor exacto es el del panel.",
+            },
+            {
+                "name": "Avanza la política DMARC",
+                "text": "Empieza en p=none, revisa reportes y pasa a quarantine y luego reject cuando los remitentes legítimos estén alineados. Lee la guía DMARC para empresas. Quarantine puede ir a spam; reject no se entrega (rebota).",
+            },
+        ],
+        "errors": [
+            "Crear un segundo registro SPF en lugar de ampliar el existente.",
+            "Dejar proxy o CNAME flattening activos en Cloudflare.",
+            "Duplicar el nombre de dominio en el host DNS.",
+            "Varios registros DMARC en el mismo dominio.",
+            "Inventar el include SPF o el selector DKIM en lugar de copiarlos del panel.",
+        ],
+        "note_console": "HubSpot puede mostrar registros adicionales en el flujo de conexión (por ejemplo MX). Publica exactamente lo que indica la columna Host / Required data de tu cuenta.",
+        "extra_links": [
+            ("Guía DMARC para empresas", "/dmarc-para-empresas"),
+        ],
+    },
+    {
+        "file": "como-configurar-dkim-dmarc-mailchimp.html",
+        "path": "/como-configurar-dkim-dmarc-mailchimp",
+        "title": "DKIM y DMARC en Mailchimp | InboxSeguro",
+        "h1": "Cómo configurar DKIM y DMARC en Mailchimp",
+        "description": "Autentica el dominio en Mailchimp con dos CNAME DKIM y un TXT DMARC. La documentación oficial está en inglés; verifica con InboxSeguro.",
+        "blurb": "Autentica el dominio con dos CNAME DKIM y un TXT DMARC en Mailchimp.",
+        "provider": "Mailchimp",
+        "crumb": "Mailchimp",
+        "reviewed": "2026-10-25",
+        "docs": [
+            ("Set Up Email Domain Authentication (Mailchimp Help, EN)", "https://mailchimp.com/help/set-up-email-domain-authentication/"),
+            ("About Email Domain Authentication (Mailchimp Help, EN)", "https://mailchimp.com/help/about-email-authentication/"),
+            ("Best Practices for Mailchimp Emails (Mailchimp Help, EN)", "https://mailchimp.com/help/best-practices-mailchimp-email/"),
+        ],
+        "steps": [
+            {
+                "name": "Verifica el dominio antes de autenticar",
+                "text": "En Mailchimp, primero verifica el dominio (enlace o código). Luego ve a Account & billing > Domains > Start authentication. Mailchimp no publica una guía equivalente en español: sigue la documentación en inglés enlazada abajo.",
+            },
+            {
+                "name": "Elige Entri (recomendado) o configuración manual",
+                "text": "Mailchimp recomienda Entri para crear los DNS automáticamente. Si prefieres manual, copia los dos CNAME DKIM y el TXT DMARC que muestra tu cuenta. Ejemplo de host documentado: k2._domainkey (el segundo CNAME y los destinos exactos salen del panel; no inventes valores).",
+            },
+            {
+                "name": "Publica DMARC según el panel",
+                "text": "El host TXT es _dmarc. Copia el valor que muestra Mailchimp en tu flujo de autenticación. No uses el include SPF servers.mcsv.net. Si el panel de Marketing pide un valor distinto o bloquea el envío sin DMARC, usa exactamente lo que muestra el panel. Para diseñar la política (none → quarantine → reject), consulta la guía DMARC para empresas y empieza en p=none sin atribuir esa política a Mailchimp.",
+            },
+            {
+                "name": "Espera la validación",
+                "text": "Mailchimp indica que la mayoría de registros se validan en minutos, pero puede tardar hasta 48 horas. El estado pasa a Authenticated cuando la validación termina.",
+            },
+            {
+                "name": "Verifica DKIM y DMARC en InboxSeguro",
+                "text": "Usa el verificador DKIM (con el selector que mostró Mailchimp) y el verificador DMARC. Gmail y Yahoo exigen DMARC publicado a quienes envían más de 5.000 correos en 24 horas a esas direcciones; Mailchimp recomienda autenticar el dominio y configurar DMARC.",
+            },
+            {
+                "name": "Avanza la política con reportes",
+                "text": "Cuando veas los remitentes legítimos alineados, endurece la política gradualmente. Quarantine puede ir a spam; reject no se entrega (rebota).",
+            },
+        ],
+        "errors": [
+            "Autenticar sin haber verificado el dominio primero.",
+            "Inventar el segundo CNAME o los destinos en lugar de copiarlos del panel.",
+            "Usar el include SPF servers.mcsv.net.",
+            "Duplicar el dominio en el host (p. ej. k2._domainkey.ejemplo.cl.ejemplo.cl).",
+        ],
+        "note_console": "La documentación de Mailchimp para autenticación de dominio está en inglés. Los valores exactos de CNAME y DMARC son los del panel de tu cuenta.",
+        "extra_links": [
+            ("Guía DMARC para empresas", "/dmarc-para-empresas"),
+        ],
+    },
 ]
 
 
@@ -605,6 +790,12 @@ def guide_main(g: dict) -> str:
         for label, url in g["docs"]
     )
     errors = "".join(f'<li class="leading-relaxed">{e}</li>' for e in g["errors"])
+    extra = g.get("extra_links") or []
+    extra_html = "".join(
+        f'<li><a href="{href}" class="text-brand-600 hover:underline">{label}</a></li>'
+        for label, href in extra
+    )
+    revision = format_revision_date(g["reviewed"])
     g["_howto_steps"] = [
         {"@type": "HowToStep", "position": i, "name": s["name"], "text": s["text"]}
         for i, s in enumerate(g["steps"], 1)
@@ -616,10 +807,13 @@ def guide_main(g: dict) -> str:
       <ol class="flex flex-wrap gap-2 items-center">
         <li><a href="/" class="hover:text-white transition-colors">Inicio</a></li>
         <li aria-hidden="true">/</li>
+        <li><a href="/guias" class="hover:text-white transition-colors">Guías</a></li>
+        <li aria-hidden="true">/</li>
         <li class="text-slate-200">{g["crumb"]}</li>
       </ol>
     </nav>
     <h1 class="text-3xl md:text-4xl font-extrabold mb-4">{g["h1"]}</h1>
+    <p class="text-sm text-slate-400 mb-4">Última revisión contra la documentación oficial: {revision}</p>
     <p class="text-lg text-slate-300 font-light leading-relaxed">Guía basada en la documentación oficial de {g["provider"]}. Verifica cada cambio con las herramientas de diagnóstico gratuitas de InboxSeguro.</p>
   </div>
 </section>
@@ -643,6 +837,7 @@ def guide_main(g: dict) -> str:
       <li><a href="/dkim-checker" class="text-brand-600 hover:underline">Verificador DKIM</a> — confirma el selector publicado.</li>
       <li><a href="/dmarc-checker" class="text-brand-600 hover:underline">Verificador DMARC</a> — verifica la política DMARC (p=) de tu dominio.</li>
       <li><a href="/domain-checker" class="text-brand-600 hover:underline">Chequeo de seguridad del correo</a> — vista conjunta SPF/DKIM/DMARC.</li>
+      {extra_html}
     </ul>
   </div>
 </section>
@@ -651,10 +846,10 @@ def guide_main(g: dict) -> str:
     <h2 class="text-2xl font-bold text-slate-900">Avance none → quarantine → reject</h2>
     <ol class="list-decimal list-inside space-y-3 text-slate-600 leading-relaxed">
       <li><code>p=none</code>: observa reportes; no cambia la entrega por política DMARC.</li>
-      <li><code>p=quarantine</code>: los fallos pueden ir a spam/cuarentena del receptor. Google, Microsoft y Zoho aún documentan <code>pct</code> para aplicar la política a un porcentaje; el estándar actual (RFC 9989) eliminó <code>pct</code> y usa <code>t=y</code>/<code>t=n</code>.</li>
+      <li><code>p=quarantine</code>: los fallos pueden ir a spam/cuarentena del receptor. Algunos proveedores aún documentan <code>pct</code> para aplicar la política a un porcentaje; el estándar actual (RFC 9989) eliminó <code>pct</code> y usa <code>t=y</code>/<code>t=n</code>.</li>
       <li><code>p=reject</code>: los fallos no se entregan (rebote/descarte). No equivale a «enviar a spam».</li>
     </ol>
-    <p class="text-slate-600 leading-relaxed">InboxSeguro ofrece guía gradual DMARC, monitoreo de DNS (SPF/DKIM/DMARC/BIMI/MTA-STS/RUA) con alertas de cambios no autorizados, detección de suplantación y analítica semanal desde reportes DMARC.</p>
+    <p class="text-slate-600 leading-relaxed">InboxSeguro ofrece inventario de sistemas de envío a partir de reportes DMARC, alertas cuando cambian SPF/DKIM/DMARC/BIMI/MTA-STS/RUA, revisión horaria de seis listas negras y guía gradual none → quarantine → reject. Las herramientas de diagnóstico son gratis; la plataforma no lo es.</p>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
@@ -678,14 +873,54 @@ def guide_main(g: dict) -> str:
 <section class="py-16 bg-slate-900 text-white text-center">
   <div class="max-w-2xl mx-auto px-4">
     <h2 class="text-2xl font-bold mb-4">Verifica tu dominio ahora</h2>
-    <p class="text-slate-300 mb-6">Las herramientas de diagnóstico son gratuitas. Revisa DKIM y la política DMARC tras cada cambio DNS.</p>
+    <p class="text-slate-300 mb-6">Primero confirma DKIM y la política DMARC con las herramientas gratis. Luego puedes probar 14 días sin tarjeta o el Plan Fundador.</p>
     <div class="flex flex-col sm:flex-row gap-3 justify-center">
       <a href="/dkim-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 rounded-xl font-bold">Verificar DKIM</a>
       <a href="/dmarc-checker" data-seo-event="checker_submit" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Verificar política DMARC</a>
     </div>
+    <div class="flex flex-col sm:flex-row gap-3 justify-center mt-3">
+      <a href="https://panel.inboxseguro.com/register?plan=starter" class="px-6 py-3 bg-white text-slate-900 rounded-xl font-semibold">Probar 14 días sin tarjeta</a>
+      <a href="/precios" class="px-6 py-3 bg-white/10 border border-white/20 rounded-xl font-semibold">Ver Plan Fundador</a>
+    </div>
   </div>
 </section>
 """
+
+
+def guias_main(guides: list[dict]) -> str:
+    cards = "".join(
+        f"""
+        <a href="{g["path"]}" class="block p-5 border border-slate-200 rounded-xl hover:border-brand-600 hover:bg-slate-50 transition-colors">
+          <h2 class="text-lg font-bold text-slate-900 mb-2">{g["provider"]}</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">{g["blurb"]}</p>
+        </a>"""
+        for g in guides
+    )
+    return f"""
+<section class="py-12 bg-slate-900 text-white">
+  <div class="max-w-3xl mx-auto px-4 text-center">
+    <nav aria-label="Breadcrumb" class="text-sm text-slate-400 mb-6">
+      <ol class="flex flex-wrap gap-2 items-center justify-center">
+        <li><a href="/" class="hover:text-white transition-colors">Inicio</a></li>
+        <li aria-hidden="true">/</li>
+        <li class="text-slate-200">Guías</li>
+      </ol>
+    </nav>
+    <h1 class="text-3xl md:text-5xl font-extrabold mb-4">Guías de configuración DKIM y DMARC</h1>
+    <p class="text-lg text-slate-300 font-light max-w-2xl mx-auto">Pasos basados en la documentación oficial de cada proveedor. Verifica cada cambio con las herramientas gratis de InboxSeguro.</p>
+  </div>
+</section>
+<section class="py-12 border-b border-slate-100">
+  <div class="max-w-4xl mx-auto px-4 grid md:grid-cols-2 gap-4">{cards}</div>
+</section>
+<section class="py-12 bg-slate-50">
+  <div class="max-w-3xl mx-auto px-4 space-y-4">
+    <h2 class="text-2xl font-bold text-slate-900">Siguiente paso</h2>
+    <p class="text-slate-600 leading-relaxed">Consulta el <a href="/glosario/" class="text-brand-600 hover:underline">glosario DNS</a>, verifica con el <a href="/dkim-checker" class="text-brand-600 hover:underline">verificador DKIM</a> o el <a href="/dmarc-checker" class="text-brand-600 hover:underline">verificador DMARC</a>, y lee la <a href="/dmarc-para-empresas" class="text-brand-600 hover:underline">guía DMARC para empresas</a>.</p>
+  </div>
+</section>
+"""
+
 
 
 def main() -> None:
@@ -765,9 +1000,61 @@ def main() -> None:
         )
         print(f"Wrote glosario/{term['slug']}/index.html")
 
+    guias_url = f"{SITE}/guias"
+    guias_ld = [
+        {
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "name": "Guías de configuración DKIM y DMARC",
+            "url": guias_url,
+            "description": "Guías de configuración DKIM y DMARC por proveedor, basadas en documentación oficial.",
+            "isPartOf": {"@type": "WebSite", "name": "InboxSeguro", "url": f"{SITE}/"},
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": i,
+                    "name": g["provider"],
+                    "url": f"{SITE}{g['path']}",
+                }
+                for i, g in enumerate(GUIDES, 1)
+            ],
+        },
+        {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE}/"},
+                {"@type": "ListItem", "position": 2, "name": "Guías", "item": guias_url},
+            ],
+        },
+    ]
+    (ROOT / "guias.html").write_text(
+        page_shell(
+            title="Guías DKIM y DMARC por proveedor | InboxSeguro",
+            description="Guías para configurar DKIM y DMARC en Google Workspace, Microsoft 365, Zoho, Shopify, HubSpot y Mailchimp.",
+            canonical=guias_url,
+            json_ld_blocks=guias_ld,
+            main_html=guias_main(GUIDES),
+            chrome_nav=chrome_nav,
+            chrome_footer=chrome_footer,
+        ),
+        encoding="utf-8",
+    )
+    print("Wrote guias.html")
+
+    publisher = {
+        "@type": "Organization",
+        "name": "InboxSeguro",
+        "url": f"{SITE}/",
+    }
     for g in GUIDES:
         main_html = guide_main(g)
         url = f"{SITE}{g['path']}"
+        reviewed = g["reviewed"]
         ld = [
             {
                 "@context": "https://schema.org",
@@ -775,6 +1062,9 @@ def main() -> None:
                 "name": g["h1"],
                 "description": g["description"],
                 "url": url,
+                "datePublished": reviewed,
+                "dateModified": reviewed,
+                "publisher": publisher,
                 "step": g["_howto_steps"],
             },
             {
@@ -782,7 +1072,8 @@ def main() -> None:
                 "@type": "BreadcrumbList",
                 "itemListElement": [
                     {"@type": "ListItem", "position": 1, "name": "Inicio", "item": f"{SITE}/"},
-                    {"@type": "ListItem", "position": 2, "name": g["crumb"], "item": url},
+                    {"@type": "ListItem", "position": 2, "name": "Guías", "item": guias_url},
+                    {"@type": "ListItem", "position": 3, "name": g["crumb"], "item": url},
                 ],
             },
         ]
