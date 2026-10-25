@@ -8,7 +8,7 @@
 - Gobierno por sistema: permite asignar un responsable y un estado (aprobado, inactivo o revisión) a cada sistema de envío.
 - Alertas: avisa cuando aparece un remitente nuevo, cuando el volumen sale del rango mensual esperado y cuando hay fallas de SPF/DKIM, que se clasifican como posible suplantación después de descartar reenvíos.
 - Detección de reenvíos (forwarding), para no confundir correos reenviados con suplantación.
-- Estado DNS: revisa SPF, DKIM, DMARC, BIMI, MTA-STS y la dirección RUA, y te avisa cuando cambian esos registros
+- Estado DNS: revisa SPF, DKIM, DMARC, BIMI, MTA-STS y la dirección RUA, y te avisa cuando cambian esos registros.
 - Listas negras: revisión cada hora contra 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer), con guía para solicitar la remoción.
 - Configuración DNS guiada con asistente de IA para avanzar de p=none a p=quarantine y p=reject.
 - Informe técnico mensual y PDF de gobernanza como apoyo para auditoría interna (no es una certificación).
@@ -26,10 +26,11 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 - [SPF Checker](https://www.inboxseguro.com/spf-checker): verifica el registro SPF publicado (solo lectura; no lo modifica).
 - [DMARC Checker](https://www.inboxseguro.com/dmarc-checker): verifica si el dominio publica none, quarantine o reject.
 - [DKIM Checker](https://www.inboxseguro.com/dkim-checker): verifica un selector DKIM o busca selectores habituales en DNS.
-- [MX Lookup](https://www.inboxseguro.com/mx-lookup): consulta hostname y prioridad de los registros MX públicos.
+- [MX Lookup](https://www.inboxseguro.com/mx-lookup): consulta hostname y prioridad de los registros MX públicos. El MX indica dónde se recibe el correo, no quién lo envía.
 - [Domain Checker](https://www.inboxseguro.com/domain-checker): revisa en una consulta SPF, DKIM, DMARC y MX (foto DNS del momento).
 - [InboxScore](https://www.inboxseguro.com/inboxscore): puntaje 0–100 según SPF, DKIM, DMARC y listas negras, con desglose.
-- [Quién puede enviar correos](https://www.inboxseguro.com/quien-puede-enviar-correos): estima qué servicios podrían estar autorizados a enviar con tu dominio.
+- [Verificador de remitentes](https://www.inboxseguro.com/quien-puede-enviar-correos): estima qué servicios podrían estar autorizados a enviar con tu dominio.
+- [Todas las herramientas gratuitas](https://www.inboxseguro.com/herramientas)
 
 ## Artículos del blog
 
@@ -59,7 +60,7 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 ## Páginas de apoyo
 
 - [Plataforma](https://www.inboxseguro.com/plataforma): funciones de control de envíos e inventario.
-- [Precios](https://www.inboxseguro.com/precios): planes y prueba de 14 días (sin montos aquí).
+- [Precios](https://www.inboxseguro.com/precios): planes y prueba de 14 días.
 - [Cómo funciona](https://www.inboxseguro.com/como-funciona): pasos para conectar el dominio y demostrar control.
 - [FAQ](https://www.inboxseguro.com/faq): preguntas sobre vigilancia de envíos, SPF, DKIM y DMARC.
 - [Control de envíos del dominio](https://www.inboxseguro.com/control-envios-dominio): guía para saber quién envía y autorizar servicios.
