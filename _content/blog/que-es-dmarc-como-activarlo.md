@@ -44,7 +44,7 @@ Revisa si ya tienes DMARC con el [verificador DMARC](/dmarc-checker).
 
 ## Las tres políticas
 
-DMARC tiene tres niveles:
+DMARC tiene [tres niveles](/glosario/politica-dmarc/):
 
 - **Observar (`none`):** no cambia nada en la entrega. Solo recibes reportes.
 - **Cuarentena (`quarantine`):** pide tratar como sospechosos los correos que fallan, por ejemplo mandarlos a spam.

@@ -24,7 +24,7 @@ Un día, un cliente te dice que no le llegó la factura. Al rato, alguien de ven
 
 ## Qué es una lista negra de correo (DNSBL)
 
-Una lista negra, o *blacklist*, es una lista de direcciones IP o de dominios que alguien considera fuente de correo no deseado. La RFC 5782, que describe cómo funcionan, cuenta que su origen se remonta a 1997, cuando dos ingenieros empezaron a mantener una lista de direcciones IP que les enviaban spam, y explica que el término convencional hoy es DNSBL: *DNS blacklist* o *blocklist* (sección 1).
+Una [lista negra](/glosario/rbl/), o *blacklist*, es una lista de direcciones IP o de dominios que alguien considera fuente de correo no deseado. La RFC 5782, que describe cómo funcionan, cuenta que su origen se remonta a 1997, cuando dos ingenieros empezaron a mantener una lista de direcciones IP que les enviaban spam, y explica que el término convencional hoy es DNSBL: *DNS blacklist* o *blocklist* (sección 1).
 
 Se llaman así porque se publican en el DNS, el mismo sistema que traduce nombres de dominio a direcciones. Existen dos tipos:
 
