@@ -56,6 +56,10 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 - [DKIM y DMARC en Google Workspace](https://www.inboxseguro.com/como-configurar-dkim-dmarc-google-workspace): activar DKIM, publicar DMARC y verificar.
 - [DKIM y DMARC en Microsoft 365](https://www.inboxseguro.com/como-configurar-dkim-dmarc-microsoft-365): DKIM (CNAME), DMARC y avance gradual de política.
 - [DKIM y DMARC en Zoho Mail](https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail): activar DKIM y publicar DMARC en Zoho Mail.
+- [Guías de configuración](https://www.inboxseguro.com/guias): índice de guías para configurar DKIM y DMARC por plataforma.
+- [DKIM y DMARC en Shopify](https://www.inboxseguro.com/como-configurar-dkim-dmarc-shopify): CNAME de Shopify y DMARC mínimo, según la documentación oficial.
+- [DKIM y DMARC en HubSpot](https://www.inboxseguro.com/como-configurar-dkim-dmarc-hubspot): DKIM, SPF y DMARC según los registros que muestra HubSpot.
+- [DKIM y DMARC en Mailchimp](https://www.inboxseguro.com/como-configurar-dkim-dmarc-mailchimp): CNAME DKIM y DMARC según la documentación de Mailchimp.
 
 ## Páginas de apoyo
 
