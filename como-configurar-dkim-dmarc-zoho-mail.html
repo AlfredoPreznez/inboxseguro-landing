@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DKIM y DMARC en Zoho Mail | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar…">
+    <meta name="description" content="Cómo activar DKIM y publicar DMARC en Zoho Mail, verificar con herramientas gratis y avanzar de p=none a quarantine y reject sin cortar correo.">
     <link rel="canonical" href="https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail">
     <meta property="og:title" content="DKIM y DMARC en Zoho Mail | InboxSeguro">
-    <meta property="og:description" content="Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar…">
+    <meta property="og:description" content="Cómo activar DKIM y publicar DMARC en Zoho Mail, verificar con herramientas gratis y avanzar de p=none a quarantine y reject sin cortar correo.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="DKIM y DMARC en Zoho Mail | InboxSeguro">
-    <meta name="twitter:description" content="Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar…">
+    <meta name="twitter:description" content="Cómo activar DKIM y publicar DMARC en Zoho Mail, verificar con herramientas gratis y avanzar de p=none a quarantine y reject sin cortar correo.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -27,7 +27,7 @@
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "Cómo configurar DKIM y DMARC en Zoho Mail",
-  "description": "Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar correo.",
+  "description": "Cómo activar DKIM y publicar DMARC en Zoho Mail, verificar con herramientas gratis y avanzar de p=none a quarantine y reject sin cortar correo.",
   "url": "https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail",
   "step": [
     {
@@ -369,9 +369,10 @@
     <h2 class="text-xl font-bold text-slate-900">Fuentes oficiales</h2>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.zoho.com/mail/help/adminconsole/dkim-configuration.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">DKIM Configuration (Zoho Mail Help)</a></li><li><a href="https://www.zoho.com/mail/help/adminconsole/dmarc-policy.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">DMARC policy (Zoho Mail Help)</a></li></ul>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600 mt-2">
-      <li><a href="https://www.rfc-editor.org/rfc/rfc9989" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC</a></li>
-      <li><a href="https://www.rfc-editor.org/rfc/rfc9990" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — Aggregate Reporting</a></li>
-      <li><a href="https://www.rfc-editor.org/rfc/rfc6376" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 6376 — DKIM</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9989.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9990.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — Aggregate Reporting</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9991.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9991 — Failure Reporting</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc6376.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 6376 — DKIM</a></li>
     </ul>
   </div>
 </section>

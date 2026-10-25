@@ -50,7 +50,10 @@ def page_shell(
     chrome_footer: str,
 ) -> str:
     title = clip(title, 60)
-    description = clip(description, 155)
+    # Meta description: ≤160; no cortar con "…" — el contenido debe caber entero.
+    if len(description) > 160:
+        raise SystemExit(f"meta description >160 ({len(description)}): {description[:80]}…")
+    description = description.strip()
     ld = "\n".join(
         f'<script type="application/ld+json">\n{json.dumps(block, ensure_ascii=False, indent=2)}\n</script>'
         for block in json_ld_blocks
@@ -111,7 +114,7 @@ TERMS: list[dict] = [
         "blog_href": "/blog/como-saber-si-mi-dominio-esta-en-lista-negra/",
         "blog_label": "Cómo saber si tu dominio está en lista negra",
         "sources": [
-            ("RFC 5782 — DNS Blacklists and Whitelists", "https://www.rfc-editor.org/rfc/rfc5782"),
+            ("RFC 5782 — DNS Blacklists and Whitelists", "https://www.rfc-editor.org/rfc/rfc5782.html"),
             ("Spamcop Blocking List", "https://www.spamcop.net/bl.shtml"),
         ],
     },
@@ -119,14 +122,14 @@ TERMS: list[dict] = [
         "slug": "registro-mx",
         "name": "Registro MX",
         "title": "Registro MX: qué es y ejemplo | InboxSeguro",
-        "description": "El registro MX indica a qué servidores entregar el correo de tu dominio. Ejemplo con ejemplo.cl según valores vigentes de Google Workspace y verificación con MX Lookup.",
+        "description": "Qué es el registro MX, ejemplo con ejemplo.cl según valores de Google Workspace y cómo verificarlo con MX Lookup gratis.",
         "definition": "Un registro MX (Mail Exchanger) es un registro DNS que indica el nombre de host que acepta correo para un dominio, junto con una prioridad numérica (menor número = mayor prioridad de intento).",
         "why": "Sin MX correcto, el correo entrante no llega a tu empresa (o llega al host equivocado). Un MX mal apuntado también afecta diagnósticos de entregabilidad y la coherencia con la autenticación del proveedor de correo.",
         "example_title": "Ejemplo MX para ejemplo.cl (Google Workspace)",
-        "example": "Valores vigentes documentados por Google (cuentas nuevas desde 2023):\nejemplo.cl.  IN  MX  1  smtp.google.com.\n\nCuentas anteriores pueden usar el conjunto legacy ASPMX (p. ej. prioridad 1 ASPMX.L.GOOGLE.COM, etc.). Si el correo ya funciona, Google recomienda no cambiar el MX.\n\nOtros proveedores entregan sus propios hosts y prioridades: usa siempre los que indique tu documentación.\n\nEl destino del MX debe ser un nombre de host con A/AAAA. RFC 2181 §10.3 prohíbe que un nombre de MX sea un alias (CNAME).",
+        "example": "Valores vigentes documentados por Google (cuentas nuevas desde 2023):\nejemplo.cl.  IN  MX  1  smtp.google.com.\n\nCuentas anteriores pueden usar el conjunto legacy ASPMX (p. ej. prioridad 1 ASPMX.L.GOOGLE.COM, etc.). Si el correo ya funciona con Google Workspace, no hace falta cambiar los MX.\n\nOtros proveedores entregan sus propios hosts y prioridades: usa siempre los que indique tu documentación.\n\nEl destino del MX debe ser un nombre de host con A/AAAA. Según RFC 2181 §10.3, el destino de un registro MX no puede ser un alias (CNAME).",
         "errors": [
             "Apuntar el MX a una IP en lugar de un hostname.",
-            "Apuntar el MX a un CNAME (prohibido por RFC 2181 §10.3).",
+            "Usar un CNAME como destino del MX (RFC 2181 §10.3).",
             "Dejar MX de un proveedor anterior tras migrar a otro (correo perdido o dividido).",
         ],
         "tool_href": "/mx-lookup",
@@ -135,9 +138,9 @@ TERMS: list[dict] = [
         "blog_href": "/blog/mis-correos-llegan-a-spam/",
         "blog_label": "Por qué tus correos llegan a spam",
         "sources": [
-            ("RFC 5321 — SMTP (resolución MX)", "https://www.rfc-editor.org/rfc/rfc5321#section-5"),
-            ("RFC 2181 §10.3 — MX no puede ser CNAME", "https://www.rfc-editor.org/rfc/rfc2181#section-10.3"),
-            ("Google Workspace — MX record values", "https://support.google.com/a/answer/174125"),
+            ("RFC 5321 — SMTP (resolución MX)", "https://www.rfc-editor.org/rfc/rfc5321.html#section-5"),
+            ("RFC 2181 §10.3 — destino MX no puede ser CNAME", "https://www.rfc-editor.org/rfc/rfc2181.html#section-10.3"),
+            ("Google Workspace — Set up MX records", "https://knowledge.workspace.google.com/admin/domains/set-up-mx-records-for-google-workspace"),
         ],
     },
     {
@@ -161,7 +164,7 @@ TERMS: list[dict] = [
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
             ("BIMI Group — Implementation Guide", "https://bimigroup.org/implementation-guide/"),
-            ("Google Workspace — Set up BIMI", "https://support.google.com/a/answer/10911320"),
+            ("Google Workspace — Set up BIMI", "https://knowledge.workspace.google.com/admin/security/set-up-bimi"),
         ],
     },
     {
@@ -184,8 +187,8 @@ TERMS: list[dict] = [
         "blog_href": "/blog/que-es-dmarc-como-activarlo/",
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
-            ("RFC 8461 — SMTP MTA Strict Transport Security", "https://www.rfc-editor.org/rfc/rfc8461"),
-            ("Google Workspace — Create an MTA-STS policy", "https://support.google.com/a/answer/9276511"),
+            ("RFC 8461 — SMTP MTA Strict Transport Security", "https://www.rfc-editor.org/rfc/rfc8461.html"),
+            ("Google Workspace — Create an MTA-STS policy", "https://knowledge.workspace.google.com/admin/gmail/advanced/create-an-mta-sts-policy"),
         ],
     },
     {
@@ -208,9 +211,9 @@ TERMS: list[dict] = [
         "blog_href": "/blog/que-es-dmarc-como-activarlo/",
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
-            ("RFC 9989 — DMARC (etiqueta rua)", "https://www.rfc-editor.org/rfc/rfc9989"),
-            ("RFC 9990 — DMARC Aggregate Reporting", "https://www.rfc-editor.org/rfc/rfc9990"),
-            ("Google Workspace — Set up DMARC", "https://support.google.com/a/answer/2466580"),
+            ("RFC 9989 — DMARC (etiqueta rua)", "https://www.rfc-editor.org/rfc/rfc9989.html"),
+            ("RFC 9990 — DMARC Aggregate Reporting", "https://www.rfc-editor.org/rfc/rfc9990.html"),
+            ("Google Workspace — Set up DMARC", "https://knowledge.workspace.google.com/admin/security/set-up-dmarc"),
         ],
     },
     {
@@ -233,8 +236,8 @@ TERMS: list[dict] = [
         "blog_href": "/blog/como-verificar-dkim-de-tu-dominio/",
         "blog_label": "Cómo verificar DKIM de tu dominio",
         "sources": [
-            ("RFC 6376 — DKIM Signatures (selectors)", "https://www.rfc-editor.org/rfc/rfc6376#section-3.1"),
-            ("Google Workspace — Set up DKIM", "https://support.google.com/a/answer/174124"),
+            ("RFC 6376 — DKIM Signatures (selectors)", "https://www.rfc-editor.org/rfc/rfc6376.html#section-3.1"),
+            ("Google Workspace — Set up DKIM", "https://knowledge.workspace.google.com/admin/security/set-up-dkim"),
         ],
     },
     {
@@ -257,8 +260,8 @@ TERMS: list[dict] = [
         "blog_href": "/blog/que-es-dmarc-como-activarlo/",
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
-            ("RFC 9989 — DMARC (política p= y t=)", "https://www.rfc-editor.org/rfc/rfc9989"),
-            ("Google Workspace — Set up DMARC", "https://support.google.com/a/answer/2466580"),
+            ("RFC 9989 — DMARC (política p= y t=)", "https://www.rfc-editor.org/rfc/rfc9989.html"),
+            ("Google Workspace — Set up DMARC", "https://knowledge.workspace.google.com/admin/security/set-up-dmarc"),
             ("Microsoft Learn — Set up DMARC", "https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure"),
         ],
     },
@@ -282,8 +285,8 @@ TERMS: list[dict] = [
         "blog_href": "/blog/que-es-dmarc-como-activarlo/",
         "blog_label": "Qué es DMARC y cómo activarlo",
         "sources": [
-            ("RFC 9989 — Identifier Alignment", "https://www.rfc-editor.org/rfc/rfc9989"),
-            ("Google Workspace — Set up DMARC (alignment)", "https://support.google.com/a/answer/2466580"),
+            ("RFC 9989 — Identifier Alignment", "https://www.rfc-editor.org/rfc/rfc9989.html"),
+            ("Google Workspace — Set up DMARC (alignment)", "https://knowledge.workspace.google.com/admin/security/set-up-dmarc"),
         ],
     },
 ]
@@ -408,12 +411,12 @@ GUIDES: list[dict] = [
         "path": "/como-configurar-dkim-dmarc-google-workspace",
         "title": "DKIM y DMARC en Google Workspace | InboxSeguro",
         "h1": "Cómo configurar DKIM y DMARC en Google Workspace",
-        "description": "Guía basada en la documentación oficial para activar DKIM y publicar DMARC en Google Workspace, verificar con herramientas gratis y avanzar none→quarantine→reject.",
+        "description": "Cómo activar DKIM y publicar DMARC en Google Workspace, verificar con herramientas gratis y avanzar de p=none a quarantine y reject.",
         "provider": "Google Workspace",
         "crumb": "Google Workspace",
         "docs": [
-            ("Set up DKIM (Google Workspace Help)", "https://support.google.com/a/answer/174124"),
-            ("Set up DMARC (Google Workspace Help)", "https://support.google.com/a/answer/2466580"),
+            ("Set up DKIM (Google Workspace Help)", "https://knowledge.workspace.google.com/admin/security/set-up-dkim"),
+            ("Set up DMARC (Google Workspace Help)", "https://knowledge.workspace.google.com/admin/security/set-up-dmarc"),
         ],
         "steps": [
             {
@@ -477,7 +480,7 @@ GUIDES: list[dict] = [
             },
             {
                 "name": "Obtén los dos CNAME DKIM (antes del interruptor)",
-                "text": "En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey que apuntan al formato vigente, por ejemplo selector1-ejemplo-cl._domainkey.<prefijo>.<partición>-v1.dkim.mail.microsoft. El formato antiguo (hacia *.onmicrosoft.com) y el nuevo no pueden coexistir para el mismo selector: usa solo los valores que Microsoft te muestra ahora.",
+                "text": "En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey. Para dominios personalizados nuevos desde mayo de 2025, el destino usa el formato …-v1.dkim.mail.microsoft (por ejemplo selector1-ejemplo-cl._domainkey.ejemplo.n-v1.dkim.mail.microsoft). Los dominios existentes suelen seguir con el formato hacia *.onmicrosoft.com. El formato antiguo y el nuevo no pueden coexistir para el mismo selector: publica solo los valores que Microsoft te muestra ahora.",
             },
             {
                 "name": "Publica los CNAME en el DNS",
@@ -514,7 +517,7 @@ GUIDES: list[dict] = [
         "path": "/como-configurar-dkim-dmarc-zoho-mail",
         "title": "DKIM y DMARC en Zoho Mail | InboxSeguro",
         "h1": "Cómo configurar DKIM y DMARC en Zoho Mail",
-        "description": "Guía basada en la documentación oficial de Zoho Mail Admin Console para DKIM y DMARC, verificación con verificadores gratis y política gradual sin cortar correo.",
+        "description": "Cómo activar DKIM y publicar DMARC en Zoho Mail, verificar con herramientas gratis y avanzar de p=none a quarantine y reject sin cortar correo.",
         "provider": "Zoho Mail",
         "crumb": "Zoho Mail",
         "docs": [
@@ -635,10 +638,10 @@ def guide_main(g: dict) -> str:
     <h2 class="text-xl font-bold text-slate-900">Fuentes oficiales</h2>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600">{docs}</ul>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600 mt-2">
-      <li><a href="https://www.rfc-editor.org/rfc/rfc9989" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC</a></li>
-      <li><a href="https://www.rfc-editor.org/rfc/rfc9990" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — Aggregate Reporting</a></li>
-      <li><a href="https://www.rfc-editor.org/rfc/rfc9991" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9991 — Failure Reporting</a></li>
-      <li><a href="https://www.rfc-editor.org/rfc/rfc6376" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 6376 — DKIM</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9989.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9990.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — Aggregate Reporting</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9991.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9991 — Failure Reporting</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc6376.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 6376 — DKIM</a></li>
     </ul>
   </div>
 </section>

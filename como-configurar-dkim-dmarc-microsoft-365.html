@@ -40,7 +40,7 @@
       "@type": "HowToStep",
       "position": 2,
       "name": "Obtén los dos CNAME DKIM (antes del interruptor)",
-      "text": "En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey que apuntan al formato vigente, por ejemplo selector1-ejemplo-cl._domainkey.<prefijo>.<partición>-v1.dkim.mail.microsoft. El formato antiguo (hacia *.onmicrosoft.com) y el nuevo no pueden coexistir para el mismo selector: usa solo los valores que Microsoft te muestra ahora."
+      "text": "En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey. Para dominios personalizados nuevos desde mayo de 2025, el destino usa el formato …-v1.dkim.mail.microsoft (por ejemplo selector1-ejemplo-cl._domainkey.ejemplo.n-v1.dkim.mail.microsoft). Los dominios existentes suelen seguir con el formato hacia *.onmicrosoft.com. El formato antiguo y el nuevo no pueden coexistir para el mismo selector: publica solo los valores que Microsoft te muestra ahora."
     },
     {
       "@type": "HowToStep",
@@ -323,7 +323,7 @@
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">2. Obtén los dos CNAME DKIM (antes del interruptor)</strong>
-          <p class="mt-2 text-slate-600">En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey que apuntan al formato vigente, por ejemplo selector1-ejemplo-cl._domainkey.<prefijo>.<partición>-v1.dkim.mail.microsoft. El formato antiguo (hacia *.onmicrosoft.com) y el nuevo no pueden coexistir para el mismo selector: usa solo los valores que Microsoft te muestra ahora.</p>
+          <p class="mt-2 text-slate-600">En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey. Para dominios personalizados nuevos desde mayo de 2025, el destino usa el formato …-v1.dkim.mail.microsoft (por ejemplo selector1-ejemplo-cl._domainkey.ejemplo.n-v1.dkim.mail.microsoft). Los dominios existentes suelen seguir con el formato hacia *.onmicrosoft.com. El formato antiguo y el nuevo no pueden coexistir para el mismo selector: publica solo los valores que Microsoft te muestra ahora.</p>
         </li>
         <li class="leading-relaxed">
           <strong class="text-slate-900">3. Publica los CNAME en el DNS</strong>
@@ -379,9 +379,10 @@
     <h2 class="text-xl font-bold text-slate-900">Fuentes oficiales</h2>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dkim-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Configure DKIM (Microsoft Learn)</a></li><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Configure DMARC (Microsoft Learn)</a></li><li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-spf-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Configure SPF (Microsoft Learn)</a></li></ul>
     <ul class="list-disc list-inside space-y-2 text-sm text-slate-600 mt-2">
-      <li><a href="https://www.rfc-editor.org/rfc/rfc9989" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC</a></li>
-      <li><a href="https://www.rfc-editor.org/rfc/rfc9990" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — Aggregate Reporting</a></li>
-      <li><a href="https://www.rfc-editor.org/rfc/rfc6376" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 6376 — DKIM</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9989.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9989 — DMARC</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9990.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9990 — Aggregate Reporting</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc9991.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 9991 — Failure Reporting</a></li>
+      <li><a href="https://www.rfc-editor.org/rfc/rfc6376.html" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 6376 — DKIM</a></li>
     </ul>
   </div>
 </section>

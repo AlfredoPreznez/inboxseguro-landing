@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro MX: qué es y ejemplo | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="El registro MX indica a qué servidores entregar el correo de tu dominio. Ejemplo con ejemplo.cl según valores vigentes de Google Workspace y verificación…">
+    <meta name="description" content="Qué es el registro MX, ejemplo con ejemplo.cl según valores de Google Workspace y cómo verificarlo con MX Lookup gratis.">
     <link rel="canonical" href="https://www.inboxseguro.com/glosario/registro-mx/">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/glosario/registro-mx/">
     <meta property="og:title" content="Registro MX: qué es y ejemplo | InboxSeguro">
-    <meta property="og:description" content="El registro MX indica a qué servidores entregar el correo de tu dominio. Ejemplo con ejemplo.cl según valores vigentes de Google Workspace y verificación…">
+    <meta property="og:description" content="Qué es el registro MX, ejemplo con ejemplo.cl según valores de Google Workspace y cómo verificarlo con MX Lookup gratis.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Registro MX: qué es y ejemplo | InboxSeguro">
-    <meta name="twitter:description" content="El registro MX indica a qué servidores entregar el correo de tu dominio. Ejemplo con ejemplo.cl según valores vigentes de Google Workspace y verificación…">
+    <meta name="twitter:description" content="Qué es el registro MX, ejemplo con ejemplo.cl según valores de Google Workspace y cómo verificarlo con MX Lookup gratis.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -283,17 +283,17 @@
     <pre class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-700 overflow-x-auto" style="white-space: pre-wrap">Valores vigentes documentados por Google (cuentas nuevas desde 2023):
 ejemplo.cl.  IN  MX  1  smtp.google.com.
 
-Cuentas anteriores pueden usar el conjunto legacy ASPMX (p. ej. prioridad 1 ASPMX.L.GOOGLE.COM, etc.). Si el correo ya funciona, Google recomienda no cambiar el MX.
+Cuentas anteriores pueden usar el conjunto legacy ASPMX (p. ej. prioridad 1 ASPMX.L.GOOGLE.COM, etc.). Si el correo ya funciona con Google Workspace, no hace falta cambiar los MX.
 
 Otros proveedores entregan sus propios hosts y prioridades: usa siempre los que indique tu documentación.
 
-El destino del MX debe ser un nombre de host con A/AAAA. RFC 2181 §10.3 prohíbe que un nombre de MX sea un alias (CNAME).</pre>
+El destino del MX debe ser un nombre de host con A/AAAA. Según RFC 2181 §10.3, el destino de un registro MX no puede ser un alias (CNAME).</pre>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
   <div class="max-w-3xl mx-auto px-4 space-y-4">
     <h2 class="text-2xl font-bold text-slate-900">Errores comunes</h2>
-    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Apuntar el MX a una IP en lugar de un hostname.</li><li class="leading-relaxed">Apuntar el MX a un CNAME (prohibido por RFC 2181 §10.3).</li><li class="leading-relaxed">Dejar MX de un proveedor anterior tras migrar a otro (correo perdido o dividido).</li></ul>
+    <ul class="list-disc list-inside space-y-2 text-slate-600"><li class="leading-relaxed">Apuntar el MX a una IP en lugar de un hostname.</li><li class="leading-relaxed">Usar un CNAME como destino del MX (RFC 2181 §10.3).</li><li class="leading-relaxed">Dejar MX de un proveedor anterior tras migrar a otro (correo perdido o dividido).</li></ul>
   </div>
 </section>
 <section class="py-12 border-b border-slate-100">
@@ -315,7 +315,7 @@ El destino del MX debe ser un nombre de host con A/AAAA. RFC 2181 §10.3 prohíb
 <section class="py-12 bg-slate-50">
   <div class="max-w-3xl mx-auto px-4 space-y-3">
     <h2 class="text-xl font-bold text-slate-900">Fuentes</h2>
-    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.rfc-editor.org/rfc/rfc5321#section-5" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 5321 — SMTP (resolución MX)</a></li><li><a href="https://www.rfc-editor.org/rfc/rfc2181#section-10.3" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 2181 §10.3 — MX no puede ser CNAME</a></li><li><a href="https://support.google.com/a/answer/174125" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Workspace — MX record values</a></li></ul>
+    <ul class="list-disc list-inside space-y-2 text-sm text-slate-600"><li><a href="https://www.rfc-editor.org/rfc/rfc5321.html#section-5" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 5321 — SMTP (resolución MX)</a></li><li><a href="https://www.rfc-editor.org/rfc/rfc2181.html#section-10.3" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 2181 §10.3 — destino MX no puede ser CNAME</a></li><li><a href="https://knowledge.workspace.google.com/admin/domains/set-up-mx-records-for-google-workspace" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">Google Workspace — Set up MX records</a></li></ul>
   </div>
 </section>
 <section class="py-16 bg-slate-900 text-white text-center">
