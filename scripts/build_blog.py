@@ -93,9 +93,13 @@ SITEMAP_STATIC: list[tuple[str, str, str, str]] = [
     ("/glosario/selector-dkim/", "glosario/selector-dkim/index.html", "monthly", "0.7"),
     ("/glosario/politica-dmarc/", "glosario/politica-dmarc/index.html", "monthly", "0.7"),
     ("/glosario/alineacion-dmarc/", "glosario/alineacion-dmarc/index.html", "monthly", "0.7"),
+    ("/guias", "guias.html", "monthly", "0.8"),
     ("/como-configurar-dkim-dmarc-google-workspace", "como-configurar-dkim-dmarc-google-workspace.html", "monthly", "0.75"),
     ("/como-configurar-dkim-dmarc-microsoft-365", "como-configurar-dkim-dmarc-microsoft-365.html", "monthly", "0.75"),
     ("/como-configurar-dkim-dmarc-zoho-mail", "como-configurar-dkim-dmarc-zoho-mail.html", "monthly", "0.75"),
+    ("/como-configurar-dkim-dmarc-shopify", "como-configurar-dkim-dmarc-shopify.html", "monthly", "0.75"),
+    ("/como-configurar-dkim-dmarc-hubspot", "como-configurar-dkim-dmarc-hubspot.html", "monthly", "0.75"),
+    ("/como-configurar-dkim-dmarc-mailchimp", "como-configurar-dkim-dmarc-mailchimp.html", "monthly", "0.75"),
     # /contacto tiene noindex: no debe entrar al sitemap.
     ("/terminos", "terminos.html", "yearly", "0.2"),
     ("/privacidad", "privacidad.html", "yearly", "0.2"),
