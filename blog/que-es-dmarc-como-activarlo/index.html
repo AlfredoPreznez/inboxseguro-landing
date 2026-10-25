@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Qué es DMARC y cómo activarlo sin riesgos | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Qué es DMARC, qué significan p, rua, ruf, pct, sp, adkim y aspf, y cómo pasar de p=none a p=reject sin bloquear los correos legítimos de tu empresa.">
+    <meta name="description" content="Qué es DMARC, políticas none, quarantine y reject, y cómo avanzar por etapas sin cortar correo legítimo de tu empresa.">
     <link rel="canonical" href="https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
@@ -13,11 +13,11 @@
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/">
     <meta property="og:title" content="Qué es DMARC y cómo activarlo sin riesgos | InboxSeguro">
-    <meta property="og:description" content="Qué es DMARC, qué significan p, rua, ruf, pct, sp, adkim y aspf, y cómo pasar de p=none a p=reject sin bloquear los correos legítimos de tu empresa.">
+    <meta property="og:description" content="Qué es DMARC, políticas none, quarantine y reject, y cómo avanzar por etapas sin cortar correo legítimo de tu empresa.">
     <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/que-es-dmarc-como-activarlo.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Qué es DMARC y cómo activarlo sin riesgos | InboxSeguro">
-    <meta name="twitter:description" content="Qué es DMARC, qué significan p, rua, ruf, pct, sp, adkim y aspf, y cómo pasar de p=none a p=reject sin bloquear los correos legítimos de tu empresa.">
+    <meta name="twitter:description" content="Qué es DMARC, políticas none, quarantine y reject, y cómo avanzar por etapas sin cortar correo legítimo de tu empresa.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/que-es-dmarc-como-activarlo.png">
     <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   "headline": "Qué es DMARC y cómo activarlo sin riesgos",
-  "description": "Qué es DMARC, qué significan p, rua, ruf, pct, sp, adkim y aspf, y cómo pasar de p=none a p=reject sin bloquear los correos legítimos de tu empresa.",
+  "description": "Qué es DMARC, políticas none, quarantine y reject, y cómo avanzar por etapas sin cortar correo legítimo de tu empresa.",
   "datePublished": "2026-10-13",
   "dateModified": "2026-10-13",
   "author": {
@@ -427,7 +427,7 @@
                     <p><strong>Respuesta corta:</strong> DMARC es una regla publicada en tu dominio que indica qué hacer con los correos que no pueden probar que son tuyos, y que además te envía reportes. Para activarlo sin riesgos, empieza en modo observación (p=none), corrige tus herramientas que fallan según los reportes, pasa a cuarentena de forma gradual y llega a rechazo (p=reject) solo cuando los reportes estén limpios.</p>
                 </div>
                 
-                <p>Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, tus propias facturas pueden ir a spam o no llegar. Aquí te explicamos cómo funciona y cómo activarlo por etapas.</p>
+                <p>Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, tus propias facturas pueden ir a spam o no llegar. Aquí te explicamos cómo funciona y cómo <a href="/dmarc-para-empresas">activarlo por etapas</a>.</p>
 <h2  id="que-es-dmarc-en-una-frase">Qué es DMARC, en una frase</h2>
 <p><strong>DMARC</strong> es una regla publicada en tu dominio que dice qué hacer con los correos que no pueden probar que son tuyos, y que además te envía reportes.</p>
 <p>Se apoya en otros dos controles:</p>

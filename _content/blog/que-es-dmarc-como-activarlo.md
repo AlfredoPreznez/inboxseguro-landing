@@ -1,7 +1,7 @@
 ---
 title: "Qué es DMARC y cómo activarlo sin riesgos"
 slug: que-es-dmarc-como-activarlo
-description: "Qué es DMARC, qué significan p, rua, ruf, pct, sp, adkim y aspf, y cómo pasar de p=none a p=reject sin bloquear los correos legítimos de tu empresa."
+description: "Qué es DMARC, políticas none, quarantine y reject, y cómo avanzar por etapas sin cortar correo legítimo de tu empresa."
 date: 2026-10-13
 updated: 2026-10-13
 tags: [dmarc, spf, dkim, suplantacion, entregabilidad, empresas]
@@ -21,7 +21,7 @@ faq:
 draft: false
 ---
 
-Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, tus propias facturas pueden ir a spam o no llegar. Aquí te explicamos cómo funciona y cómo activarlo por etapas.
+Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, tus propias facturas pueden ir a spam o no llegar. Aquí te explicamos cómo funciona y cómo [activarlo por etapas](/dmarc-para-empresas).
 
 ## Qué es DMARC, en una frase
 

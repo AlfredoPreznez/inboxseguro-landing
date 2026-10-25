@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verificar lista negra: ¿tu dominio o IP está en blacklist? | InboxSeguro</title>
+    <title>Verificar lista negra: ¿tu IP o dominio en blacklist?</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Verifica gratis si la IP o los servidores de correo de tu dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL o Backscatterer. Consulta DNS pública.">
+    <meta name="description" content="Consulta tu IP pública o los servidores de correo de tu dominio en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer. Diagnóstico gratuito.">
     <link rel="canonical" href="https://www.inboxseguro.com/verificar-lista-negra">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/verificar-lista-negra">
-    <meta property="og:title" content="Verificar lista negra: ¿tu dominio o IP está en blacklist? | InboxSeguro">
-    <meta property="og:description" content="Verifica gratis si la IP o los servidores de correo de tu dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL o Backscatterer. Consulta DNS pública.">
+    <meta property="og:title" content="Verificar lista negra: ¿tu IP o dominio en blacklist?">
+    <meta property="og:description" content="Consulta tu IP pública o los servidores de correo de tu dominio en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer. Diagnóstico gratuito.">
     <meta property="og:image" content="https://www.inboxseguro.com/assets/og/og-verificar-lista-negra.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Verificar lista negra: ¿tu dominio o IP está en blacklist? | InboxSeguro">
-    <meta name="twitter:description" content="Verifica gratis si la IP o los servidores de correo de tu dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL o Backscatterer. Consulta DNS pública.">
+    <meta name="twitter:title" content="Verificar lista negra: ¿tu IP o dominio en blacklist?">
+    <meta name="twitter:description" content="Consulta tu IP pública o los servidores de correo de tu dominio en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer. Diagnóstico gratuito.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/assets/og/og-verificar-lista-negra.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -25,7 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.8">
     <script type="application/ld+json">
-    {"@context":"https://schema.org","@type":"WebApplication","name":"Verificador de listas negras","url":"https://www.inboxseguro.com/verificar-lista-negra","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Consulta si una IP o los servidores de correo de un dominio aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer."}
+    {"@context":"https://schema.org","@type":"WebApplication","name":"Verificar lista negra: ¿tu IP o dominio en blacklist?","url":"https://www.inboxseguro.com/verificar-lista-negra","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"description":"Consulta tu IP pública o los servidores de correo de tu dominio en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer. Diagnóstico gratuito."}
     </script>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -252,7 +252,7 @@
                 <span class="text-slate-200">Verificar lista negra</span>
             </nav>
             <div class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">Blacklist Checker gratuito</div>
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">¿Tu dominio o IP está en una lista negra?</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">¿Tu IP o dominio está en una lista negra? Verifícalo</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">Revisa al instante si la IP, o los servidores de correo de tu dominio, aparecen en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer.</p>
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12 text-left">
                 <form id="rblForm" class="flex flex-col sm:flex-row gap-3">
@@ -288,12 +288,14 @@
     <section class="py-16 bg-white text-slate-800">
         <div class="max-w-3xl mx-auto px-4 space-y-8">
             <div>
-                <h2 class="text-2xl font-bold text-slate-900 mb-3">Qué es una lista negra de correo</h2>
-                <p class="text-slate-600 text-sm leading-relaxed">Una lista negra (RBL o DNSBL) es una base de datos pública de direcciones IP asociadas a spam, rebotes no solicitados o equipos comprometidos. Muchos servidores de correo la consultan por DNS antes de aceptar un mensaje. Si la IP que envía tu correo aparece listada, parte de tus mensajes puede terminar en spam o ser rechazada.</p>
+                <h2 class="text-2xl font-bold text-slate-900 mb-3">Qué es una RBL</h2>
+                <p class="text-slate-600 text-sm leading-relaxed mb-3">Una <a href="/glosario/rbl/" class="text-brand-600 hover:underline">RBL</a> (Realtime Blackhole List) o DNSBL es una base de datos pública de direcciones IP asociadas a spam, rebotes no solicitados o equipos comprometidos. Muchos servidores de correo la consultan por DNS antes de aceptar un mensaje.</p>
+                <p class="text-slate-600 text-sm leading-relaxed">Si la IP que envía tu correo aparece listada, parte de tus mensajes puede terminar en spam o ser rechazada. Las seis listas de esta herramienta trabajan con IP, no con el nombre del dominio en sí.</p>
             </div>
             <div class="border-t border-slate-200 pt-6">
-                <h2 class="text-2xl font-bold text-slate-900 mb-3">Cómo funciona la verificación</h2>
-                <p class="text-slate-600 text-sm leading-relaxed">Invertimos los octetos de la IP y consultamos ese nombre en la zona DNS de cada lista. Por ejemplo, 203.0.113.10 se consulta como 10.113.0.203.bl.spamcop.net. Si la zona responde con una dirección 127.x, la IP está listada; si responde que el nombre no existe, no lo está. Con un dominio, primero buscamos las IP de sus servidores MX y de su registro A.</p>
+                <h2 class="text-2xl font-bold text-slate-900 mb-3">Cómo saber si mi IP pública está en lista negra</h2>
+                <p class="text-slate-600 text-sm leading-relaxed mb-3">Escribe una IPv4 o un dominio. Con un dominio, la herramienta busca las IP de sus servidores MX y de su registro A (hasta 6) y consulta cada una en Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer por DNS pública.</p>
+                <p class="text-slate-600 text-sm leading-relaxed">El resultado es una foto del momento: listada, no listada o no verificada si la lista no responde. Para el contexto completo, lee <a href="/blog/como-saber-si-mi-dominio-esta-en-lista-negra/" class="text-brand-600 hover:underline">cómo saber si tu dominio está en lista negra</a>.</p>
             </div>
             <div class="border-t border-slate-200 pt-6">
                 <h2 class="text-2xl font-bold text-slate-900 mb-3">Las 6 listas que revisamos</h2>
