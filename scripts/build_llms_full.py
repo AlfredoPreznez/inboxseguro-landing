@@ -71,6 +71,8 @@ def extract_blog_posts(blog_dir: Path) -> list[tuple[str, str, str]]:
             parts = text.split("---", 2)
             if len(parts) >= 3:
                 header = parts[1]
+                if re.search(r"^draft:\s*true\b", header, re.MULTILINE | re.IGNORECASE):
+                    continue
                 body = parts[2].strip()
                 title_match = re.search(r"^title:\s*(.+)$", header, re.MULTILINE)
                 title = title_match.group(1).strip(" \"'") if title_match else md_file.stem
