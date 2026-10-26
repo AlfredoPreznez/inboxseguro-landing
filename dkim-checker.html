@@ -513,9 +513,9 @@
             box.classList.remove('hidden');
         }
 
-        async function handleDiagnostico(event) {
+        async function handleDiagnostico(event, isAuto) {
             event.preventDefault();
-            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '').replace(/^www\./, '').replace(/\.$/, '');
             const selectorInput = document.getElementById('selectorInput').value;
             if (!dominio) return;
 
@@ -568,7 +568,7 @@
                 scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + style[1];
 
                 var notifyResults = { dkim: dkimResult.text };
-                if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+                if (!isAuto && window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
                     tool: 'DKIM Checker',
                     domain: dominio,
                     score: 'DKIM: ' + dkimResult.label,
@@ -648,23 +648,25 @@
             iconClose.classList.add('hidden');
         }
     </script>
-    <script src="/analytics-config.js"></script>
-    <script src="/analytics-loader.js"></script>
-    <script src="/seo-analytics.js" defer></script>
-    <script src="/session-cta.js" defer>
+    <script>
         (function () {
             var params = new URLSearchParams(window.location.search);
             var raw = params.get('d') || params.get('domain');
-            var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/\.$/, '');
+            if (!raw) return;
+            var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '').replace(/^www\./, '').replace(/\.$/, '');
             if (/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/.test(clean)) {
                 var input = document.getElementById('dominioInput');
                 if (input) {
                     input.value = clean;
-                    handleDiagnostico({ preventDefault: function () {} });
+                    handleDiagnostico({ preventDefault: function () {} }, true);
                 }
             }
         })();
-</script>
+    </script>
+    <script src="/analytics-config.js"></script>
+    <script src="/analytics-loader.js"></script>
+    <script src="/seo-analytics.js" defer></script>
+    <script src="/session-cta.js" defer></script>
 </body>
 
 </html>

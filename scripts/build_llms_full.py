@@ -103,55 +103,72 @@ def main() -> int:
     out_lines.append(llms_base.strip())
     out_lines.append("")
 
-    # 2. Glosario Técnico
+    # 2. Glosario Técnico (TERMS: name, definition, why, example_title, example, errors)
     if TERMS:
         out_lines.append("---")
         out_lines.append("")
         out_lines.append("## Glosario Técnico Completo de Correo y DNS")
         out_lines.append("")
         for term in TERMS:
-            t_title = term.get("term", "")
+            t_name = term.get("name") or term.get("slug", "")
             t_slug = term.get("slug", "")
-            t_desc = term.get("description", "")
-            t_p1 = term.get("p1", "")
-            t_p2 = term.get("p2", "")
-            out_lines.append(f"### {t_title}")
+            t_def = term.get("definition", "")
+            t_why = term.get("why", "")
+            t_extitle = term.get("example_title", "")
+            t_ex = term.get("example", "")
+            t_errors = term.get("errors", [])
+
+            if not t_name:
+                continue
+
+            out_lines.append(f"### {t_name}")
             out_lines.append(f"- URL Canónica: https://www.inboxseguro.com/glosario/{t_slug}/")
-            if t_desc:
-                out_lines.append(f"- Definición: {t_desc}")
-            if t_p1:
-                out_lines.append(f"\n{t_p1}")
-            if t_p2:
-                out_lines.append(f"\n{t_p2}")
-            code_block = term.get("code", "")
-            if code_block:
-                out_lines.append(f"\n```text\n{code_block}\n```")
+            if t_def:
+                out_lines.append(f"- Definición: {t_def}")
+            if t_why:
+                out_lines.append(f"\n{t_why}")
+            if t_extitle and t_ex:
+                out_lines.append(f"\n#### {t_extitle}")
+                out_lines.append(f"\n{t_ex}")
+            if t_errors:
+                out_lines.append("\nErrores habituales:")
+                for err in t_errors:
+                    out_lines.append(f"- {err}")
             out_lines.append("")
 
-    # 3. Guías de Configuración por Proveedor
+    # 3. Guías de Configuración por Proveedor (GUIDES: h1 o provider, path, description, steps con name y text)
     if GUIDES:
         out_lines.append("---")
         out_lines.append("")
         out_lines.append("## Guías de Configuración Paso a Paso por Plataforma")
         out_lines.append("")
         for g in GUIDES:
-            g_title = g.get("platform", "")
-            g_file = g.get("filename", "")
+            g_title = g.get("h1") or g.get("provider", "")
+            g_path = g.get("path", "")
             g_desc = g.get("description", "")
+            steps = g.get("steps", [])
+            g_errors = g.get("errors", [])
+
+            if not g_title or not g_path:
+                continue
+
             out_lines.append(f"### {g_title}")
-            out_lines.append(f"- URL Canónica: https://www.inboxseguro.com/{g_file.replace('.html', '')}")
-            out_lines.append(f"- Resumen: {g_desc}")
-            pasos = g.get("steps", [])
-            if pasos:
+            out_lines.append(f"- URL Canónica: https://www.inboxseguro.com{g_path}")
+            if g_desc:
+                out_lines.append(f"- Resumen: {g_desc}")
+            if steps:
                 out_lines.append("\nPasos de configuración:")
-                for step in pasos:
-                    s_t = step.get("title", "")
-                    s_b = step.get("body", "")
-                    s_c = step.get("code", "")
-                    out_lines.append(f"\n#### {s_t}")
-                    out_lines.append(s_b)
-                    if s_c:
-                        out_lines.append(f"\n```text\n{s_c}\n```")
+                for step in steps:
+                    s_name = step.get("name", "").strip()
+                    s_text = step.get("text", "").strip()
+                    if s_name:
+                        out_lines.append(f"\n#### {s_name}")
+                    if s_text:
+                        out_lines.append(s_text)
+            if g_errors:
+                out_lines.append("\nErrores frecuentes:")
+                for err in g_errors:
+                    out_lines.append(f"- {err}")
             out_lines.append("")
 
     # 4. Artículos Técnicos del Blog
@@ -163,6 +180,8 @@ def main() -> int:
         out_lines.append("## Artículos Técnicos de Soporte y Diagnóstico (Blog)")
         out_lines.append("")
         for title, slug, body in blog_posts:
+            if not title:
+                continue
             out_lines.append(f"### {title}")
             out_lines.append(f"- URL Canónica: https://www.inboxseguro.com/blog/{slug}/")
             out_lines.append("")
@@ -178,6 +197,8 @@ def main() -> int:
         out_lines.append("## Preguntas Frecuentes de la Plataforma")
         out_lines.append("")
         for q, a in faqs:
+            if not q:
+                continue
             out_lines.append(f"### {q}")
             out_lines.append(f"{a}\n")
 

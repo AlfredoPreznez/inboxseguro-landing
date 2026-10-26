@@ -94,194 +94,366 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 
 ## Glosario Técnico Completo de Correo y DNS
 
-### 
+### RBL (lista negra de correo)
 - URL Canónica: https://www.inboxseguro.com/glosario/rbl/
-- Definición: Qué es una RBL (lista negra de correo), por qué importa a tu empresa y cómo revisar tu IP o dominio con el verificador gratuito de InboxSeguro.
+- Definición: Una RBL (Realtime Blackhole List o lista negra de correo) es un listado público de direcciones IP o dominios asociados a envío abusivo o no deseado, consultado por servidores receptores antes de aceptar o clasificar un mensaje.
 
-### 
+Si la IP o el dominio de envío de tu empresa aparecen en una RBL, los receptores pueden rechazar el correo, enviarlo a spam o bajar su prioridad. InboxSeguro monitorea de forma horaria seis RBL (Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer) y ofrece guía de remoción cuando hay listado.
+
+#### Cómo se consulta una RBL (RFC 5782)
+
+Las RBL no se publican en el DNS de tu dominio como SPF o DMARC. El receptor consulta el listado formando un nombre DNS: los octetos de la IP en orden inverso, seguidos de la zona de la lista.
+
+Ejemplo: IP 203.0.113.10 → consulta 10.113.0.203.bl.ejemplo-rbl.net (RFC 5782).
+
+Para revisar tu dominio o IP puedes usar el verificador de listas negras de InboxSeguro.
+
+Errores habituales:
+- Creer que «estar limpio» en una sola RBL basta: cada receptor usa listas distintas.
+- Intentar salir del listado sin corregir la causa (compromiso, formulario abierto, rebotes mal manejados).
+- Confundir RBL con cuarentena DMARC: son mecanismos distintos.
+
+### Registro MX
 - URL Canónica: https://www.inboxseguro.com/glosario/registro-mx/
-- Definición: Qué es el registro MX, ejemplo con ejemplo.cl según valores de Google Workspace y cómo verificarlo con MX Lookup gratis.
+- Definición: Un registro MX (Mail Exchanger) es un registro DNS que indica el nombre de host que acepta correo para un dominio, junto con una prioridad numérica (menor número = mayor prioridad de intento).
 
-### 
+Sin MX correcto, el correo entrante no llega a tu empresa (o llega al host equivocado). Un MX mal apuntado también afecta diagnósticos de entregabilidad y la coherencia con la autenticación del proveedor de correo.
+
+#### Ejemplo MX para ejemplo.cl (Google Workspace)
+
+Valor vigente documentado por Google, válido para cualquier cuenta de Google Workspace:
+ejemplo.cl.  IN  MX  1  smtp.google.com.
+
+Los valores MX antiguos que comienzan con ASPMX (p. ej. prioridad 1 ASPMX.L.GOOGLE.COM) corresponden a configuraciones de Google Workspace anteriores a 2023 y Google los sigue admitiendo. Si el correo ya funciona con Google Workspace, no hace falta cambiar los MX.
+
+Otros proveedores entregan sus propios hosts y prioridades: usa siempre los que indique tu documentación.
+
+El destino del MX debe ser un nombre de host con A/AAAA. Según RFC 2181 §10.3, el destino de un registro MX no puede ser un alias (CNAME).
+
+Errores habituales:
+- Apuntar el MX a una IP en lugar de un hostname.
+- Usar un CNAME como destino del MX (RFC 2181 §10.3).
+- Dejar MX de un proveedor anterior tras migrar a otro (correo perdido o dividido).
+
+### BIMI
 - URL Canónica: https://www.inboxseguro.com/glosario/bimi/
-- Definición: BIMI permite mostrar el logo de tu marca en clientes de correo compatibles. Requisitos DMARC, ejemplo de registro y fuentes oficiales.
+- Definición: BIMI (Brand Indicators for Message Identification) es un mecanismo que permite a los receptores mostrar el logo de una marca en mensajes autenticados, cuando el dominio publica un registro BIMI y cumple requisitos de autenticación (en particular DMARC en aplicación).
 
-### 
+Ayuda a que el destinatario reconozca mensajes legítimos de tu empresa. No sustituye SPF, DKIM ni DMARC: sin autenticación alineada y política DMARC en cuarentena o rechazo (con pct=100 cuando el proveedor lo exige para BIMI), el logo no se muestra.
+
+#### Ejemplo de registro TXT BIMI para ejemplo.cl
+
+default._bimi.ejemplo.cl.  IN  TXT  "v=BIMI1; l=https://ejemplo.cl/logo-bimi.svg; a=https://ejemplo.cl/vmc.pem"
+
+El SVG debe cumplir el perfil que indica la guía BIMI / Google. El tag a= (certificado de marca) es opcional en el registro, pero muchos proveedores solo muestran el logo con VMC/CMC.
+
+Errores habituales:
+- Publicar BIMI con DMARC en p=none (Google y BIMI Group exigen quarantine o reject).
+- Usar un SVG que no cumple el perfil requerido.
+- Creer que BIMI autentica el correo por sí solo.
+
+### MTA-STS
 - URL Canónica: https://www.inboxseguro.com/glosario/mta-sts/
-- Definición: MTA-STS declara que tu dominio exige SMTP sobre TLS verificado. Ejemplo de política, registro DNS y referencia a RFC 8461.
+- Definición: MTA-STS (SMTP MTA Strict Transport Security) es un mecanismo (RFC 8461) con el que un dominio receptor declara que acepta SMTP sobre TLS con certificado válido y si los remitentes deben rechazar la entrega cuando no se pueda verificar esa seguridad.
 
-### 
+Sin MTA-STS, el SMTP entre servidores suele usar TLS oportunista: un atacante en la ruta puede degradar o redirigir la sesión. MTA-STS protege el correo que otros envían hacia tu dominio (entrada), no reemplaza SPF/DKIM/DMARC de lo que tú envías.
+
+#### Ejemplo para ejemplo.cl
+
+DNS TXT:
+_mta-sts.ejemplo.cl.  IN  TXT  "v=STSv1; id=20261025T120000"
+
+Política HTTPS (sin redirecciones) en:
+https://mta-sts.ejemplo.cl/.well-known/mta-sts.txt
+
+version: STSv1
+mode: testing
+mx: mx1.ejemplo.cl
+mx: mx2.ejemplo.cl
+max_age: 604800
+
+Empieza en mode: testing; pasa a enforce solo cuando la política y los certificados estén correctos.
+
+Errores habituales:
+- Servir la política con redirección HTTP→HTTPS o a www (los remitentes no siguen redirects, RFC 8461).
+- Certificado inválido o no emitido para mta-sts.ejemplo.cl.
+- Lista mx: incompleta respecto a los MX reales del dominio.
+
+### RUA (reportes agregados DMARC)
 - URL Canónica: https://www.inboxseguro.com/glosario/rua/
-- Definición: RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo en tu empresa.
+- Definición: RUA (Reporting URI for Aggregate reports) es la etiqueta DMARC que indica a dónde enviar reportes agregados periódicos sobre resultados de autenticación (pases y fallas) para mensajes que usan tu dominio.
 
-### 
+Sin la etiqueta rua, los receptores no deben generar reportes agregados (RFC 9989). Con rua publicas un destino para ver quién envía con tu dominio. InboxSeguro usa analítica semanal a partir de reportes DMARC; el registro DNS lo publicas tú en _dmarc.
+
+#### Ejemplo de registro DMARC con RUA
+
+_dmarc.ejemplo.cl.  IN  TXT  "v=DMARC1; p=none; rua=mailto:dmarc-reports@ejemplo.cl"
+
+Si el buzón de reportes está en otro dominio, ese dominio debe autorizar la recepción (RFC 9989 / RFC 9990).
+
+Errores habituales:
+- Omitir rua y esperar reportes agregados de todos modos.
+- Usar el correo personal del CEO: el volumen de reportes puede ser alto.
+- Publicar dos registros DMARC distintos en el mismo dominio (el descubrimiento falla).
+
+### Selector DKIM
 - URL Canónica: https://www.inboxseguro.com/glosario/selector-dkim/
-- Definición: El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el verificador DKIM.
+- Definición: Un selector DKIM es un nombre corto que subdivide el espacio de claves públicas de un dominio; aparece en la cabecera DKIM-Signature como s= y determina la consulta DNS a selector._domainkey.dominio.
 
-### 
+Permite rotar claves, usar varias firmas (correo corporativo vs. marketing) y delegar firma a un proveedor. Sin el selector correcto publicado, la firma no se puede verificar y DMARC puede fallar aunque la consola diga que DKIM está activo.
+
+#### Ejemplo de clave pública DKIM
+
+Nombre DNS: google._domainkey.ejemplo.cl
+Tipo: TXT
+Valor (forma): v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA…
+
+En el mensaje, la firma incluye s=google; d=ejemplo.cl. Google Workspace recomienda el selector google por defecto (puede variar si ya está en uso).
+
+Errores habituales:
+- Publicar la clave pero no activar la autenticación (Start authentication / Verify / Enable) en el proveedor.
+- Truncar el valor TXT (p= incompleto) en el panel DNS.
+- Buscar un selector inventado: DNS no lista selectores; hay que usar el s= real o el que da el proveedor.
+
+### Política DMARC (none / quarantine / reject)
 - URL Canónica: https://www.inboxseguro.com/glosario/politica-dmarc/
-- Definición: Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC 9989 y proveedores.
+- Definición: La política DMARC (etiqueta p=) indica a los receptores qué se sugiere hacer con mensajes que fallan la evaluación DMARC: none (sin acción especial), quarantine (tratar como sospechosos, p. ej. spam) o reject (no entregar / rechazar).
 
-### 
+Define el nivel de protección de tu dominio frente a suplantación. Empezar en p=none permite observar con reportes; subir demasiado pronto puede afectar correo legítimo de CRM, facturación u otros remitentes aún no autenticados.
+
+#### Ejemplos seguros para ejemplo.cl
+
+Observación:
+v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl
+
+Cuarentena (práctica gradual documentada por proveedores):
+v=DMARC1; p=quarantine; pct=25; rua=mailto:dmarc@ejemplo.cl
+
+Rechazo (solo con reportes limpios):
+v=DMARC1; p=reject; rua=mailto:dmarc@ejemplo.cl
+
+Según RFC 9989 y la ayuda de Google/Microsoft: quarantine suele marcar como spam; reject suele rechazar (rebote). Reject no equivale a «enviar a spam».
+
+Nota sobre pct: el estándar actual (RFC 9989) eliminó pct (histórico) y usa t=y / t=n para modo de prueba. Google, Microsoft y Zoho aún documentan pct como práctica gradual en sus consolas.
+
+Errores habituales:
+- Pasar a p=reject sin inventariar todos los remitentes legítimos.
+- Interpretar p=reject como envío a spam.
+- Publicar varios TXT DMARC en el mismo nombre (_dmarc).
+
+### Alineación DMARC
 - URL Canónica: https://www.inboxseguro.com/glosario/alineacion-dmarc/
-- Definición: La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC 9989.
+- Definición: La alineación DMARC es el requisito de que el dominio autenticado por SPF y/o DKIM coincida (de forma relajada o estricta) con el dominio del encabezado From: que ve el destinatario.
+
+Un mensaje puede «pasar SPF» o «pasar DKIM» y aun así fallar DMARC si el dominio firmado o el MAIL FROM no alinean con el From: visible. Eso es habitual con reenvíos o herramientas de terceros mal configuradas.
+
+#### Ejemplo con ejemplo.cl
+
+Registro (relajado, valores por defecto):
+v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl; adkim=r; aspf=r
+
+- SPF alineado (relajado): el dominio organizacional del MAIL FROM coincide con el del From: (p. ej. bounce.ejemplo.cl con From usuario@ejemplo.cl).
+- DKIM alineado (relajado): el d= de la firma es ejemplo.cl o un subdominio organizacional compatible.
+- Estricto (adkim=s / aspf=s): exige coincidencia exacta del FQDN (RFC 9989).
+
+Errores habituales:
+- Activar alineación estricta sin necesidad y romper subdominios legítimos.
+- Creer que SPF «pass» sin alineación basta para DMARC.
+- Firmar DKIM con d= de un proveedor distinto al From: de la marca sin alineación.
 
 ---
 
 ## Guías de Configuración Paso a Paso por Plataforma
 
-### 
-- URL Canónica: https://www.inboxseguro.com/
+### Cómo configurar DKIM y DMARC en Google Workspace
+- URL Canónica: https://www.inboxseguro.com/como-configurar-dkim-dmarc-google-workspace
 - Resumen: Cómo activar DKIM y publicar DMARC en Google Workspace, verificar con herramientas gratis y avanzar de p=none a quarantine y reject.
 
 Pasos de configuración:
 
-#### 
+#### Espera tras activar Gmail (si aplica)
+Tras activar Gmail para la organización, Google indica esperar 24–72 horas antes de generar la clave DKIM en la Admin console. Si generas antes, puedes ver error de registro no creado. La interfaz de la consola puede variar según versión.
 
+#### Genera la clave DKIM en Admin console
+Ingresa como superadministrador. Ve a Apps → Google Workspace → Gmail → Authenticate email. Elige el dominio y haz clic en Generate New Record. Preferencia: clave 2048 bits si tu DNS la admite; selector por defecto google (cámbialo solo si ya está en uso). Copia el nombre TXT (p. ej. google._domainkey) y el valor v=DKIM1; k=rsa; p=…. Aún no actives Start authentication. Tras Generate, la página Authenticate email puede mostrar hasta 48 horas el aviso de actualizar DNS aunque el registro ya esté bien.
 
-#### 
+#### Publica el TXT en tu DNS
+En el proveedor DNS de ejemplo.cl crea el TXT con el host y valor que mostró Google. Algunos paneles agregan el dominio automáticamente: verifica que no quede duplicado (google._domainkey.ejemplo.cl.ejemplo.cl).
 
+#### Activa la autenticación DKIM
+Vuelve a Authenticate email y haz clic en Start authentication. El estado debería pasar a Authenticating email with DKIM. Google también indica que, tras agregar la clave, la autenticación puede tardar hasta 48 horas en empezar a funcionar.
 
-#### 
+#### Verifica DKIM con herramientas del sitio
+Usa el verificador DKIM de InboxSeguro con el selector (p. ej. google). Opcional: envía un correo a una cuenta Gmail externa y revisa Show original → DKIM=pass (no sirve enviarte a ti mismo según Google).
 
+#### Prepara buzón o grupo para reportes DMARC
+Google recomienda un buzón o grupo dedicado para reportes (rua). No uses el correo personal diario: el volumen puede ser alto. Sin rua, los receptores no deben generar reportes agregados (RFC 9989).
 
-#### 
+#### Publica DMARC en p=none
+DMARC no se «enciende» dentro de Gmail: se publica un TXT en _dmarc.ejemplo.cl. Ejemplo inicial: v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl. Google recomienda SPF y/o DKIM activos y esperar ~48 horas tras SPF/DKIM antes de DMARC. Un solo registro DMARC por dominio.
 
+#### Verifica la política DMARC y avanza por etapas
+Comprueba la política p= con el verificador DMARC. Revisa reportes vía rua. Google documenta pct para un despliegue gradual (p. ej. p=quarantine; pct=25) aunque RFC 9989 eliminó pct del estándar y usa t=y/t=n. Solo con reportes limpios: p=reject. Quarantine puede ir a spam; reject suele no entregar (rebote).
 
-#### 
+Errores frecuentes:
+- Generar DKIM antes de que Gmail esté listo (24–72 h).
+- Truncar el valor p= en el TXT.
+- Publicar DMARC sin autenticar herramientas de terceros que envían como tu dominio.
+- Pasar a reject sin leer reportes agregados.
 
-
-#### 
-
-
-#### 
-
-
-#### 
-
-
-### 
-- URL Canónica: https://www.inboxseguro.com/
+### Cómo configurar DKIM y DMARC en Microsoft 365
+- URL Canónica: https://www.inboxseguro.com/como-configurar-dkim-dmarc-microsoft-365
 - Resumen: Guía basada en la documentación oficial de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.
 
 Pasos de configuración:
 
-#### 
+#### Orden recomendado: SPF, luego DKIM, luego DMARC
+Microsoft recomienda autenticación SPF → DKIM → DMARC para cada dominio personalizado que envíe correo. SPF es la lista de orígenes autorizados en DNS; sigue la guía SPF de Microsoft Learn para tu dominio en ejemplo.cl.
 
+#### Obtén los dos CNAME DKIM (antes del interruptor)
+En el Microsoft Defender portal, Email authentication settings → DKIM, abre el dominio personalizado. Microsoft muestra (o puedes obtener con Get-DkimSigningConfig) dos hosts selector1._domainkey y selector2._domainkey. Para dominios personalizados nuevos desde mayo de 2025, el destino usa el formato …-v1.dkim.mail.microsoft (por ejemplo selector1-ejemplo-cl._domainkey.ejemplo.n-v1.dkim.mail.microsoft). Los dominios existentes siguen con el formato hacia *.onmicrosoft.com. El formato antiguo y el nuevo no pueden coexistir para el mismo selector: publica solo los valores que Microsoft te muestra ahora.
 
-#### 
+#### Publica los CNAME en el DNS
+En el DNS de ejemplo.cl crea exactamente esos dos CNAME. Espera unos minutos (o más) a que Microsoft 365 los detecte.
 
+#### Activa la firma DKIM (interruptor Enabled)
+Cuando los CNAME estén publicados, desliza el interruptor Sign messages for this domain with DKIM signatures a Enabled (o Set-DkimSigningConfig -Enabled $true). Si los CNAME faltan, el portal muestra error con los valores a publicar: no intentes dejar Enabled sin DNS. Cada subdominio que envíe correo necesita su propia configuración DKIM según Microsoft.
 
-#### 
+#### Verifica con el verificador DKIM
+Usa el verificador DKIM de InboxSeguro con los selectores que Microsoft te indicó (no inventes el nombre).
 
+#### Publica el TXT DMARC en _dmarc
+Hostname _dmarc, valor inicial: v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl. Microsoft documenta p=none para prueba, p=quarantine (aceptar pero marcar; a menudo spam/junk) y p=reject (típicamente descartar / no entregar). También documenta pct para despliegue gradual, aunque RFC 9989 lo marcó histórico.
 
-#### 
+#### Monitorea y endurece la política
+Revisa reportes agregados (rua). Sube a quarantine y luego reject solo con fuentes legítimas alineadas. Verifica la política p= con el verificador DMARC.
 
+Errores frecuentes:
+- Intentar Enabled sin haber publicado los CNAME.
+- Mezclar formato CNAME antiguo y nuevo para el mismo selector.
+- Configurar solo el dominio raíz y olvidar subdominios que envían.
+- Interpretar p=reject como «va a spam».
+- Múltiples registros DMARC en el mismo nombre.
 
-#### 
-
-
-#### 
-
-
-#### 
-
-
-### 
-- URL Canónica: https://www.inboxseguro.com/
+### Cómo configurar DKIM y DMARC en Zoho Mail
+- URL Canónica: https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail
 - Resumen: Cómo activar DKIM y publicar DMARC en Zoho Mail, verificar con herramientas gratis y avanzar de p=none a quarantine y reject sin cortar correo.
 
 Pasos de configuración:
 
-#### 
+#### Genera el selector DKIM en Admin Console
+Inicia sesión como administrador o superadministrador. Domains → dominio → Email Configuration → DKIM → Add. Elige un selector (p. ej. zoho) y longitud 1024 o 2048 bits. Copia el valor TXT generado. No hagas clic en Verify hasta publicar el DNS.
 
+#### Crea el TXT en DNS
+Nombre típico: zoho._domainkey.ejemplo.cl (o zoho._domainkey si el panel agrega el dominio solo). Pega el valor completo. Zoho advierte que GoDaddy/Wix/Namecheap, etc., suelen anexar el dominio automáticamente.
 
-#### 
+#### Verifica y habilita DKIM en Zoho
+En Admin Console, Verify el selector. Cuando esté verificado, Enable DKIM para firmar el correo saliente del dominio.
 
+#### Comprueba con el verificador DKIM del sitio
+Ingresa ejemplo.cl y el selector (zoho u otro) en el verificador DKIM de InboxSeguro.
 
-#### 
+#### Genera DMARC en Zoho (fase 1: none)
+Zoho exige SPF y DKIM antes de publicar DMARC. En Email Configuration → DMARC elige «Do nothing» (Phase 1 / p=none), indica direcciones de reportes agregados (y forenses si aplica), genera el TXT y publícalo en _dmarc.ejemplo.cl. Un solo registro DMARC. Sin rua, los receptores no deben generar reportes agregados (RFC 9989).
 
+#### Verifica la política DMARC y avanza Phase 2 y 3
+Usa el verificador DMARC para leer p=. Tras revisar reportes y autorizar terceros, pasa a Quarantine (Phase 2) y luego Reject (Phase 3). Zoho documenta Policy percentage (pct); por defecto 100 si no se indica, aunque RFC 9989 eliminó pct del estándar. Quarantine puede ir a spam; reject no entrega.
 
-#### 
+Errores frecuentes:
+- Hacer clic en Verify en Zoho antes de que el TXT sea visible en DNS.
+- Publicar DMARC estricto mientras un CRM envía sin DKIM/SPF alineados (Zoho lo advierte).
+- Duplicar el nombre del dominio en el host TXT.
+- Varios registros DMARC (error permanente de procesamiento).
 
-
-#### 
-
-
-#### 
-
-
-### 
-- URL Canónica: https://www.inboxseguro.com/
+### Cómo configurar DKIM y DMARC en Shopify
+- URL Canónica: https://www.inboxseguro.com/como-configurar-dkim-dmarc-shopify
 - Resumen: Autentica el dominio de envío en Shopify con CNAME (DKIM y SPF) y un TXT DMARC mínimo. Verifica con herramientas gratis de InboxSeguro.
 
 Pasos de configuración:
 
-#### 
+#### Abre la autenticación de dominio en Shopify
+En el admin de Shopify ve a Settings > Notifications > Sender email > Email domain authentication (en la interfaz en español: Configuración > Notifications > Correo electrónico del remitente > Autenticación de dominio de correo electrónico). La app de marketing/correo de Shopify se documenta como Shopify Messaging.
 
+#### Publica todos los CNAME que muestra Shopify
+Shopify autentica solo con registros CNAME: cubren DKIM y SPF. No hace falta un TXT SPF separado ni un include SPF adicional para este fin. La cantidad y el patrón de host/valor pueden variar: copia exactamente los registros que muestra el panel de Shopify (no inventes hosts). La documentación no indica requisitos de proxy Cloudflare para estos CNAME.
 
-#### 
+#### Espera la propagación DNS
+Los cambios DNS pueden tardar hasta 48 horas. Si la verificación falla, confirma que los valores del DNS coinciden con los del admin de Shopify y vuelve a indicar que actualizaste los registros.
 
+#### Publica un TXT DMARC mínimo en _dmarc
+Agrega un TXT en _dmarc con al menos v=DMARC1; p=none;. Un solo registro DMARC por dominio. No uses adkim=s ni aspf=s: Shopify recomienda quitarlos o cambiarlos a adkim=r y aspf=r para la mejor entregabilidad.
 
-#### 
+#### Verifica DKIM y la política DMARC
+Usa el verificador DKIM y el verificador DMARC de InboxSeguro. Sin CNAME y DMARC, Shopify reescribe el remitente a store+123@shopifyemail.com. Desde el 1 de febrero de 2024, Gmail y Yahoo exigen autenticación de dominio y un registro DMARC para enviar desde una dirección de marca.
 
+#### Avanza la política DMARC con cuidado
+Cuando los envíos legítimos estén autenticados, consulta la guía DMARC para empresas y avanza de p=none a quarantine y luego reject. Quarantine puede ir a spam; reject no se entrega (rebota).
 
-#### 
+Errores frecuentes:
+- Inventar hosts CNAME en lugar de copiar los del panel de Shopify.
+- Agregar un TXT SPF separado «por si acaso» cuando Shopify ya cubre SPF vía CNAME.
+- Publicar adkim=s o aspf=s en el DMARC.
+- Tener más de un registro DMARC en el mismo dominio.
 
-
-#### 
-
-
-#### 
-
-
-### 
-- URL Canónica: https://www.inboxseguro.com/
+### Cómo configurar DKIM y DMARC en HubSpot
+- URL Canónica: https://www.inboxseguro.com/como-configurar-dkim-dmarc-hubspot
 - Resumen: Conecta el dominio de envío en HubSpot: DKIM (dos CNAME), SPF y DMARC según el panel. Verifica con herramientas gratis de InboxSeguro.
 
 Pasos de configuración:
 
-#### 
+#### Abre Connect sending domain
+En HubSpot: Settings > Content > Domains & URLs > Email Sending > Connect sending domain (en español: Contenido > Dominios y URL > Envío de correo electrónico). Ingresa la dirección From que usas para marketing y continúa.
 
+#### Copia DKIM, SPF y DMARC del panel
+HubSpot muestra los registros a publicar. DKIM: dos CNAME (ejemplo de forma: host hs1-123456._domainkey → yourdomain-com.hs[#]a.dkim.hubspotemail.net). SPF: un TXT con el include: de la columna Required data (ejemplo de forma: 123456.spf03.hubspotemail.net). DMARC: un TXT con al menos v=DMARC1; p=none;. El host, el include SPF exacto y el selector pueden variar: copia los valores del panel HubSpot, no inventes includes ni selectores.
 
-#### 
+#### Un solo SPF y un solo DMARC; cuidado con Cloudflare
+Si ya tienes SPF, agrega el include de HubSpot al registro existente (una sola vez la versión v=spf1 y el cierre del registro, como en el ejemplo de HubSpot). Un solo TXT DMARC por dominio. En Cloudflare, desactiva el proxy y el CNAME flattening de dominio para estos registros. Evita duplicar el dominio en el host (p. ej. hs1-….ejemplo.cl.ejemplo.cl).
 
+#### Espera la verificación en HubSpot
+La propagación suele ser de 10 a 70 minutos y puede llegar a 48 horas. HubSpot recomienda esperar al menos 20 minutos antes de verificar. Solo DKIM es necesario para enviar desde tu dominio; el estado Authenticated exige DKIM + SPF + DMARC verificados.
 
-#### 
+#### Verifica con las herramientas del sitio
+Usa el verificador DKIM y el verificador DMARC. Si el host DKIM que muestra el panel termina en ._domainkey, el selector es la parte anterior (p. ej. hs1-123456._domainkey → selector hs1-123456); si no, copia los valores del panel. No asumas un selector fijo.
 
+#### Avanza la política DMARC
+Empieza en p=none, revisa reportes y pasa a quarantine y luego reject cuando los remitentes legítimos estén alineados. Lee la guía DMARC para empresas. Quarantine puede ir a spam; reject no se entrega (rebota).
 
-#### 
+Errores frecuentes:
+- Crear un segundo registro SPF en lugar de ampliar el existente.
+- Dejar proxy o CNAME flattening activos en Cloudflare.
+- Duplicar el nombre de dominio en el host DNS.
+- Varios registros DMARC en el mismo dominio.
+- Inventar el include SPF o el selector DKIM en lugar de copiarlos del panel.
 
-
-#### 
-
-
-#### 
-
-
-### 
-- URL Canónica: https://www.inboxseguro.com/
+### Cómo configurar DKIM y DMARC en Mailchimp
+- URL Canónica: https://www.inboxseguro.com/como-configurar-dkim-dmarc-mailchimp
 - Resumen: Autentica el dominio en Mailchimp con dos CNAME DKIM y un TXT DMARC. La documentación oficial está en inglés; verifica con InboxSeguro.
 
 Pasos de configuración:
 
-#### 
+#### Verifica el dominio antes de autenticar
+En Mailchimp, primero verifica el dominio (enlace o código). Luego ve a Account & billing > Domains > Start authentication. Mailchimp no publica una guía equivalente en español: sigue la documentación en inglés enlazada abajo.
 
+#### Elige Entri (recomendado) o configuración manual
+Mailchimp recomienda Entri para crear los DNS automáticamente. Si prefieres manual, copia los dos CNAME DKIM y el TXT DMARC que muestra tu cuenta. Ejemplo de host documentado: k2._domainkey (el segundo CNAME y los destinos exactos salen del panel; no inventes valores).
 
-#### 
+#### Publica DMARC según el panel
+El host TXT es _dmarc. Copia el valor que muestra Mailchimp en tu flujo de autenticación. Si el panel de Marketing pide un valor distinto o bloquea el envío sin DMARC, usa exactamente lo que muestra el panel. Para diseñar la política (none → quarantine → reject), consulta la guía DMARC para empresas y empieza en p=none sin atribuir esa política a Mailchimp.
 
+#### Espera la validación
+Mailchimp indica que la mayoría de registros se validan en minutos, pero puede tardar hasta 48 horas. Mailchimp envía un correo cuando termina la validación; mientras tanto, el dominio muestra Authentication in progress en la página Domains.
 
-#### 
+#### Verifica DKIM y DMARC en InboxSeguro
+Usa el verificador DKIM (con el selector que mostró Mailchimp) y el verificador DMARC. Gmail y Yahoo exigen DMARC publicado a quienes envían más de 5.000 correos en 24 horas a esas direcciones; Mailchimp recomienda autenticar el dominio y configurar DMARC.
 
+#### Avanza la política con reportes
+Cuando veas los remitentes legítimos alineados, endurece la política gradualmente. Quarantine puede ir a spam; reject no se entrega (rebota).
 
-#### 
-
-
-#### 
-
-
-#### 
-
+Errores frecuentes:
+- Autenticar sin haber verificado el dominio primero.
+- Inventar el segundo CNAME o los destinos en lugar de copiarlos del panel.
+- Duplicar el dominio en el host (p. ej. k2._domainkey.ejemplo.cl.ejemplo.cl).
 
 ---
 

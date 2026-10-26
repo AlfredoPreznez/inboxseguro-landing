@@ -545,9 +545,9 @@
     <script src="/notify.js?v=3"></script>
     <script src="/tool-lead.js?v=2"></script>
     <script>
-        async function handleDiagnostico(event) {
+        async function handleDiagnostico(event, isAuto) {
             event.preventDefault();
-            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '').replace(/^www\./, '').replace(/\.$/, '');
             if (!dominio) return;
 
             const btn = document.getElementById('diagBtn');
@@ -580,7 +580,7 @@
                 scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + scoreStyle[1];
 
                 var notifyResults = { dmarc: dmarcResult.text };
-                if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+                if (!isAuto && window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
                     tool: 'DMARC Checker',
                     domain: dominio,
                     score: 'DMARC: ' + dmarcResult.label,
@@ -673,12 +673,13 @@
         (function () {
             var params = new URLSearchParams(window.location.search);
             var raw = params.get('d') || params.get('domain');
-            var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/\.$/, '');
+            if (!raw) return;
+            var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '').replace(/^www\./, '').replace(/\.$/, '');
             if (/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/.test(clean)) {
                 var input = document.getElementById('dominioInput');
                 if (input) {
                     input.value = clean;
-                    handleDiagnostico({ preventDefault: function () {} });
+                    handleDiagnostico({ preventDefault: function () {} }, true);
                 }
             }
         })();

@@ -370,13 +370,13 @@
                 <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">Errores comunes al Configurar SPF</h2>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                        Muchas organizaciones cometen fallos críticos en sus registros DNS que invalidan su protección. Nuestro <strong>verificador SPF</strong> en LATAM ayuda a detectar:
+                        Muchas organizaciones cometen fallos en sus registros DNS que invalidan su protección. Este verificador lee el registro SPF que publica el dominio:
                     </p>
                     <div class="grid md:grid-cols-2 gap-4">
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
                             <h4 class="text-slate-900 font-bold text-sm mb-2">1. Límite de 10 Consultas DNS (10 DNS Lookup Limit)</h4>
                             <p class="text-slate-600 text-xs leading-relaxed">
-                                El estándar SPF limita a un máximo de 10 el número de resoluciones DNS adicionales (mechanisms como `include`, `a`, `mx`). Si incluyes demasiados servicios (Google, HubSpot, ActiveCampaign, Zendesk, etc.), el registro fallará silenciosamente.
+                                El estándar SPF limita a un máximo de 10 el número de resoluciones DNS adicionales (mechanisms como `include`, `a`, `mx`). Si incluyes demasiados servicios (Google, HubSpot, ActiveCampaign, Zendesk, etc.), el registro devuelve permerror.
                             </p>
                         </div>
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
@@ -526,9 +526,9 @@
     <script src="/notify.js?v=3"></script>
     <script src="/tool-lead.js?v=2"></script>
     <script>
-        async function handleDiagnostico(event) {
+        async function handleDiagnostico(event, isAuto) {
             event.preventDefault();
-            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '');
+            const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '').replace(/^www\./, '').replace(/\.$/, '');
             if (!dominio) return;
 
             const btn = document.getElementById('diagBtn');
@@ -563,7 +563,7 @@
                 scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + scoreStyle[1];
 
                 var notifyResults = { spf: spfResult.text };
-                if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+                if (!isAuto && window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
                     tool: 'SPF Checker',
                     domain: dominio,
                     score: 'SPF: ' + spfResult.label,
@@ -646,12 +646,13 @@
         (function () {
             var params = new URLSearchParams(window.location.search);
             var raw = params.get('d') || params.get('domain');
-            var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/\.$/, '');
+            if (!raw) return;
+            var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '').replace(/^www\./, '').replace(/\.$/, '');
             if (/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/.test(clean)) {
                 var input = document.getElementById('dominioInput');
                 if (input) {
                     input.value = clean;
-                    handleDiagnostico({ preventDefault: function () {} });
+                    handleDiagnostico({ preventDefault: function () {} }, true);
                 }
             }
         })();

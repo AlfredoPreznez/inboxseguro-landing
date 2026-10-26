@@ -19,6 +19,14 @@ TARGETS = [
     "como-configurar-dkim-dmarc-mailchimp.html",
     "index.html",
     "blog/index.html",
+    "dmarc-checker.html",
+    "spf-checker.html",
+    "dkim-checker.html",
+    "domain-checker.html",
+    "mx-lookup.html",
+    "verificar-lista-negra.html",
+    "quien-puede-enviar-correos.html",
+    "inboxscore.html",
 ]
 CLASS_RE = re.compile(r'class="([^"]*)"')
 TOKEN_RE = re.compile(r"[a-zA-Z_][a-zA-Z0-9_:/.-]*")

@@ -413,6 +413,7 @@ function renderRbl(data) {
     }).join('');
 }
 document.getElementById('rblForm').addEventListener('submit', async function (event) {
+    var isAuto = !!(event && event.isAuto);
     event.preventDefault();
     showRblError('');
     var btn = document.getElementById('rblBtn');
@@ -479,7 +480,7 @@ document.getElementById('rblForm').addEventListener('submit', async function (ev
                 listas: listas
             };
         })();
-        if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+        if (!isAuto && window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
             tool: 'Verificar lista negra',
             domain: data.input,
             score: badge.textContent,
@@ -521,14 +522,12 @@ function closeMobileMenu() {
     document.getElementById('menuIconClose').classList.add('hidden');
 }
 </script>
-<script src="/analytics-config.js"></script>
-<script src="/analytics-loader.js"></script>
-<script src="/seo-analytics.js" defer></script>
-<script src="/session-cta.js" defer>
+<script>
 (function () {
     var params = new URLSearchParams(window.location.search);
     var raw = params.get('d') || params.get('domain');
-    var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/\.$/, '');
+    if (!raw) return;
+    var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '').replace(/^www\./, '').replace(/\.$/, '');
     var ipRegex = /^(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     var domainRegex = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/;
     if (ipRegex.test(clean) || domainRegex.test(clean)) {
@@ -536,10 +535,16 @@ function closeMobileMenu() {
         var form = document.getElementById('rblForm');
         if (input && form) {
             input.value = clean;
-            form.dispatchEvent(new Event('submit', { cancelable: true }));
+            var ev = new Event('submit', { cancelable: true });
+            ev.isAuto = true;
+            form.dispatchEvent(ev);
         }
     }
 })();
 </script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
 </body>
 </html>
