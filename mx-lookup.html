@@ -444,6 +444,21 @@ function closeMobileMenu() {
 <script src="/analytics-config.js"></script>
 <script src="/analytics-loader.js"></script>
 <script src="/seo-analytics.js" defer></script>
-<script src="/session-cta.js" defer></script>
+<script src="/session-cta.js" defer>
+(function () {
+    var params = new URLSearchParams(window.location.search);
+    var raw = params.get('d') || params.get('domain');
+    var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/\.$/, '');
+    var domainRegex = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/;
+    if (domainRegex.test(clean)) {
+        var input = document.getElementById('dominioInput');
+        var form = document.getElementById('mxForm');
+        if (input && form) {
+            input.value = clean;
+            form.dispatchEvent(new Event('submit', { cancelable: true }));
+        }
+    }
+})();
+</script>
 </body>
 </html>

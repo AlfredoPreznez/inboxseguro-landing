@@ -29,6 +29,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.8">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"DMARC Checker","url":"https://www.inboxseguro.com/dmarc-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿DMARC funciona si no tengo SPF o DKIM configurados?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No de forma efectiva. DMARC requiere obligatoriamente apoyarse en los resultados de SPF o DKIM. Si implementas DMARC sin tener SPF o DKIM activos y alineados, todos tus correos legítimos podrían ser rechazados o enviados a spam al no poder verificarse."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué son los reportes agregados RUA y en qué se diferencian de RUF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Los reportes RUA (Agregados) proveen estadísticas generales diarias sobre los servidores de correo que envían mensajes a tu nombre. Los reportes RUF (Forenses o a nivel de falla) son notificaciones en tiempo real que se envían ante cada correo específico que falla la autenticación (contienen detalles más invasivos y a veces información confidencial, por lo que muchos proveedores ya no los envían)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo paso de p=none a p=reject de manera segura?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El proceso seguro recomendado consiste en: 1) Publicar p=none y analizar los reportes RUA durante varias semanas para identificar todos tus remitentes válidos. 2) Configurar SPF y DKIM para cada remitente legítimo. 3) Escalar gradualmente a p=quarantine con porcentajes parciales (ej: pct=25). 4) Finalmente, definir p=reject al 100%."
+      }
+    }
+  ]
+}
+</script>
 
 <style>
 @media (max-width:640px){
@@ -638,6 +670,19 @@
             iconOpen.classList.remove('hidden');
             iconClose.classList.add('hidden');
         }
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var raw = params.get('d') || params.get('domain');
+            var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/\.$/, '');
+            if (/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/.test(clean)) {
+                var input = document.getElementById('dominioInput');
+                if (input) {
+                    input.value = clean;
+                    handleDiagnostico({ preventDefault: function () {} });
+                }
+            }
+        })();
+
     </script>
     <script src="/analytics-config.js"></script>
     <script src="/analytics-loader.js"></script>

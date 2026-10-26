@@ -29,6 +29,38 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="/styles.css?v=1.0.8">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"SPF Checker","url":"https://www.inboxseguro.com/spf-checker","applicationCategory":"SecurityApplication","operatingSystem":"Web","isAccessibleForFree":true,"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa si mi dominio no tiene registro SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si tu dominio carece de SPF, queda vulnerable ante la suplantación de identidad básica. Los cibercriminales podrán enviar emails fraudulentos usando tu dominio exacto, y tus correos legítimos tendrán altas tasas de rechazo o serán enviados directamente a la carpeta de correo no deseado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué diferencia hay entre ~all (SoftFail) y -all (HardFail)?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "~all indica softfail y -all indica fail. El receptor decide el tratamiento final; antes de endurecer SPF conviene confirmar mediante DMARC que no faltan remitentes legítimos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tarda en propagarse un cambio en el registro SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La propagación DNS depende del valor TTL (Time To Live) configurado en tu proveedor DNS (como Cloudflare, GoDaddy, AWS Route 53). Habitualmente suele tardar entre unos minutos y 24 horas en aplicarse globalmente."
+      }
+    }
+  ]
+}
+</script>
 
 <style>
 @media (max-width:640px){
@@ -611,6 +643,19 @@
             iconOpen.classList.remove('hidden');
             iconClose.classList.add('hidden');
         }
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var raw = params.get('d') || params.get('domain');
+            var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/\.$/, '');
+            if (/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/.test(clean)) {
+                var input = document.getElementById('dominioInput');
+                if (input) {
+                    input.value = clean;
+                    handleDiagnostico({ preventDefault: function () {} });
+                }
+            }
+        })();
+
     </script>
     <script src="/analytics-config.js"></script>
     <script src="/analytics-loader.js"></script>

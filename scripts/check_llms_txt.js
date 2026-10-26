@@ -86,6 +86,10 @@ async function main() {
   const viaHttp = [];
   for (const u of unique) {
     if (sitemapUrls.has(u)) continue;
+    if (u === 'https://www.inboxseguro.com/llms-full.txt' && fs.existsSync(path.join(root, 'llms-full.txt'))) {
+      viaHttp.push(u);
+      continue;
+    }
     if (!checkHttp) {
       missing.push(`${u} (no está en sitemap; omite CHECK_LLMS_HTTP=0 o deja HTTP activo)`);
       continue;

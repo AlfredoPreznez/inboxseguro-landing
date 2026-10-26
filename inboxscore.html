@@ -514,7 +514,7 @@
         } catch (err) { $('isLeadErr').classList.remove('hidden'); }
         finally { btn.disabled = false; btn.textContent = 'Enviarme el detalle'; }
     });
-    var q = new URLSearchParams(location.search).get('d');
+    var isParams = new URLSearchParams(location.search); var q = isParams.get('d') || isParams.get('domain');
     if (q) submit(q, false);
 })();
 </script>

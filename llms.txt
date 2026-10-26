@@ -1,6 +1,7 @@
 # InboxSeguro
 
 > InboxSeguro es una plataforma de control de envíos de correo y protección contra la suplantación de dominio para empresas B2B, de e-commerce y SaaS en LATAM. Muestra qué sistemas envían correo con el dominio de la empresa, alerta sobre cambios y riesgos, y guía la activación de DMARC sin cortar correos legítimos. Configuración e interfaz en español.
+> Versión extendida para modelos de lenguaje: [llms-full.txt](https://www.inboxseguro.com/llms-full.txt)
 
 ## Qué hace InboxSeguro
 

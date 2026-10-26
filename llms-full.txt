@@ -1,0 +1,825 @@
+# InboxSeguro - Documentación Técnica Completa (llms-full.txt)
+
+> Este documento compila la totalidad de la documentación pública, definiciones de glosario, guías de configuración y artículos técnicos de InboxSeguro.
+> Fuente canónica: https://www.inboxseguro.com/
+
+---
+
+# InboxSeguro
+
+> InboxSeguro es una plataforma de control de envíos de correo y protección contra la suplantación de dominio para empresas B2B, de e-commerce y SaaS en LATAM. Muestra qué sistemas envían correo con el dominio de la empresa, alerta sobre cambios y riesgos, y guía la activación de DMARC sin cortar correos legítimos. Configuración e interfaz en español.
+> Versión extendida para modelos de lenguaje: [llms-full.txt](https://www.inboxseguro.com/llms-full.txt)
+
+## Qué hace InboxSeguro
+
+- Inventario de sistemas de envío: a partir de los reportes DMARC, identifica qué sistemas envían correo con tu dominio, usando PTR/ASN y detección de DKIM.
+- Gobierno por sistema: permite asignar un responsable y un estado (aprobado, inactivo o revisión) a cada sistema de envío.
+- Alertas: avisa cuando aparece un remitente nuevo, cuando el volumen sale del rango mensual esperado y cuando hay fallas de SPF/DKIM, que se clasifican como posible suplantación después de descartar reenvíos.
+- Detección de reenvíos (forwarding), para no confundir correos reenviados con suplantación.
+- Estado DNS: revisa SPF, DKIM, DMARC, BIMI, MTA-STS y la dirección RUA, y te avisa cuando cambian esos registros.
+- Listas negras: revisión cada hora contra 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer), con guía para solicitar la remoción.
+- Configuración DNS guiada con asistente de IA para avanzar de p=none a p=quarantine y p=reject.
+- Informe técnico mensual y PDF de gobernanza como apoyo para auditoría interna (no es una certificación).
+- Analítica semanal de envíos.
+
+## Para quién
+
+Empresas B2B, de e-commerce y SaaS en LATAM que envían correo con su dominio desde varias herramientas (correo corporativo, CRM, newsletter, facturación, tienda en línea, mesa de ayuda) y necesitan saber quién envía en su nombre.
+
+## Herramientas gratuitas
+
+Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gratis: prueba de 14 días sin tarjeta; planes en /precios.
+
+- [Verificar lista negra](https://www.inboxseguro.com/verificar-lista-negra): consulta Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer con IP o dominio.
+- [SPF Checker](https://www.inboxseguro.com/spf-checker): verifica el registro SPF publicado (solo lectura; no lo modifica).
+- [DMARC Checker](https://www.inboxseguro.com/dmarc-checker): verifica si el dominio publica none, quarantine o reject.
+- [DKIM Checker](https://www.inboxseguro.com/dkim-checker): verifica un selector DKIM o busca selectores habituales en DNS.
+- [MX Lookup](https://www.inboxseguro.com/mx-lookup): consulta hostname y prioridad de los registros MX públicos. El MX indica dónde se recibe el correo, no quién lo envía.
+- [Domain Checker](https://www.inboxseguro.com/domain-checker): revisa en una consulta SPF, DKIM, DMARC y MX (foto DNS del momento).
+- [InboxScore](https://www.inboxseguro.com/inboxscore): puntaje 0–100 según SPF, DKIM, DMARC y listas negras, con desglose.
+- [Verificador de remitentes](https://www.inboxseguro.com/quien-puede-enviar-correos): estima qué servicios podrían estar autorizados a enviar con tu dominio.
+- [Todas las herramientas gratuitas](https://www.inboxseguro.com/herramientas)
+
+## Artículos del blog
+
+- [Cómo saber si mi dominio está en lista negra](https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/): cómo detectar listados, errores en Gmail y Microsoft 365, y pedir la salida.
+- [Cómo saber si alguien suplanta tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/): detectar envíos falsos con reportes DMARC y separar servicios legítimos.
+- [Cómo verificar DKIM de tu dominio](https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/): encontrar el selector, revisar el registro DNS y errores frecuentes.
+- [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios que envían con tu dominio sin administración clara.
+- [Phishing con IA: qué frena DMARC y qué no](https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/): qué ataques con el dominio exacto frena DMARC y cuáles no.
+- [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y avance por etapas.
+- [SPF: cómo no pasar el límite de 10 consultas](https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/): autorizar servicios en SPF sin superar el límite de la RFC 7208.
+
+## Glosario y guías
+
+- [Glosario](https://www.inboxseguro.com/glosario/): definiciones de correo y DNS para empresas.
+- [RBL](https://www.inboxseguro.com/glosario/rbl/): qué es una lista negra de correo y por qué importa.
+- [Registro MX](https://www.inboxseguro.com/glosario/registro-mx/): qué indica el MX y cómo verificarlo.
+- [BIMI](https://www.inboxseguro.com/glosario/bimi/): logo de marca en clientes compatibles y requisitos DMARC.
+- [MTA-STS](https://www.inboxseguro.com/glosario/mta-sts/): política para exigir SMTP sobre TLS verificado.
+- [RUA](https://www.inboxseguro.com/glosario/rua/): destino de reportes agregados DMARC.
+- [Selector DKIM](https://www.inboxseguro.com/glosario/selector-dkim/): qué es el selector y cómo se usa al verificar la firma.
+- [Política DMARC](https://www.inboxseguro.com/glosario/politica-dmarc/): significado de p=none, quarantine y reject.
+- [Alineación DMARC](https://www.inboxseguro.com/glosario/alineacion-dmarc/): coincidencia del dominio autenticado con el De: visible.
+- [DKIM y DMARC en Google Workspace](https://www.inboxseguro.com/como-configurar-dkim-dmarc-google-workspace): activar DKIM, publicar DMARC y verificar.
+- [DKIM y DMARC en Microsoft 365](https://www.inboxseguro.com/como-configurar-dkim-dmarc-microsoft-365): DKIM (CNAME), DMARC y avance gradual de política.
+- [DKIM y DMARC en Zoho Mail](https://www.inboxseguro.com/como-configurar-dkim-dmarc-zoho-mail): activar DKIM y publicar DMARC en Zoho Mail.
+- [Guías de configuración](https://www.inboxseguro.com/guias): índice de guías para configurar DKIM y DMARC por plataforma.
+- [DKIM y DMARC en Shopify](https://www.inboxseguro.com/como-configurar-dkim-dmarc-shopify): CNAME de Shopify y DMARC mínimo, según la documentación oficial.
+- [DKIM y DMARC en HubSpot](https://www.inboxseguro.com/como-configurar-dkim-dmarc-hubspot): DKIM, SPF y DMARC según los registros que muestra HubSpot.
+- [DKIM y DMARC en Mailchimp](https://www.inboxseguro.com/como-configurar-dkim-dmarc-mailchimp): CNAME DKIM y DMARC según la documentación de Mailchimp.
+
+## Páginas de apoyo
+
+- [Plataforma](https://www.inboxseguro.com/plataforma): funciones de control de envíos e inventario.
+- [Precios](https://www.inboxseguro.com/precios): planes y prueba de 14 días.
+- [Cómo funciona](https://www.inboxseguro.com/como-funciona): pasos para conectar el dominio y demostrar control.
+- [FAQ](https://www.inboxseguro.com/faq): preguntas sobre vigilancia de envíos, SPF, DKIM y DMARC.
+- [Control de envíos del dominio](https://www.inboxseguro.com/control-envios-dominio): guía para saber quién envía y autorizar servicios.
+- [Suplantación de correo](https://www.inboxseguro.com/suplantacion-correo-empresa): qué es, cómo detectarla y qué hacer.
+- [DMARC para empresas](https://www.inboxseguro.com/dmarc-para-empresas): ruta práctica de p=none a p=reject.
+- [Due diligence de ciberseguridad](https://www.inboxseguro.com/due-diligence-ciberseguridad-empresas): preparar evidencia empezando por el correo.
+- [Informe de higiene de correo](https://www.inboxseguro.com/informe-higiene-correo-corporativo): qué incluir en un informe para due diligence.
+- [Seguridad de correo para proveedores](https://www.inboxseguro.com/seguridad-correo-proveedores): demostrar higiene cuando un cliente lo exige.
+- [Contacto](https://www.inboxseguro.com/contacto): soporte, demos y consultas.
+
+## Límites y precisión
+
+- Listas negras: cada hora se consultan Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer sobre las IP de los servidores de correo del dominio.
+- InboxSeguro no es una certificación.
+- El informe técnico mensual y el PDF de gobernanza son apoyo para auditoría interna.
+- Con DMARC `quarantine`, el correo puede ir a spam; con `reject`, no se entrega (rebota).
+
+---
+
+## Glosario Técnico Completo de Correo y DNS
+
+### 
+- URL Canónica: https://www.inboxseguro.com/glosario/rbl/
+- Definición: Qué es una RBL (lista negra de correo), por qué importa a tu empresa y cómo revisar tu IP o dominio con el verificador gratuito de InboxSeguro.
+
+### 
+- URL Canónica: https://www.inboxseguro.com/glosario/registro-mx/
+- Definición: Qué es el registro MX, ejemplo con ejemplo.cl según valores de Google Workspace y cómo verificarlo con MX Lookup gratis.
+
+### 
+- URL Canónica: https://www.inboxseguro.com/glosario/bimi/
+- Definición: BIMI permite mostrar el logo de tu marca en clientes de correo compatibles. Requisitos DMARC, ejemplo de registro y fuentes oficiales.
+
+### 
+- URL Canónica: https://www.inboxseguro.com/glosario/mta-sts/
+- Definición: MTA-STS declara que tu dominio exige SMTP sobre TLS verificado. Ejemplo de política, registro DNS y referencia a RFC 8461.
+
+### 
+- URL Canónica: https://www.inboxseguro.com/glosario/rua/
+- Definición: RUA es el destino de reportes agregados DMARC. Qué contiene, ejemplo de registro con ejemplo.cl y cómo usarlo en tu empresa.
+
+### 
+- URL Canónica: https://www.inboxseguro.com/glosario/selector-dkim/
+- Definición: El selector DKIM identifica qué clave pública usar al verificar la firma. Ejemplo con ejemplo.cl y verificación con el verificador DKIM.
+
+### 
+- URL Canónica: https://www.inboxseguro.com/glosario/politica-dmarc/
+- Definición: Qué significan p=none, p=quarantine y p=reject en DMARC. Cuarentena puede ir a spam; reject no se entrega. Fuentes RFC 9989 y proveedores.
+
+### 
+- URL Canónica: https://www.inboxseguro.com/glosario/alineacion-dmarc/
+- Definición: La alineación DMARC exige que el dominio autenticado coincida con el De: visible. Modos relaxed/strict (aspf/adkim) con fuentes RFC 9989.
+
+---
+
+## Guías de Configuración Paso a Paso por Plataforma
+
+### 
+- URL Canónica: https://www.inboxseguro.com/
+- Resumen: Cómo activar DKIM y publicar DMARC en Google Workspace, verificar con herramientas gratis y avanzar de p=none a quarantine y reject.
+
+Pasos de configuración:
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+### 
+- URL Canónica: https://www.inboxseguro.com/
+- Resumen: Guía basada en la documentación oficial de Microsoft Learn para DKIM (CNAME) y DMARC en Microsoft 365, verificación gratis y avance gradual de política.
+
+Pasos de configuración:
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+### 
+- URL Canónica: https://www.inboxseguro.com/
+- Resumen: Cómo activar DKIM y publicar DMARC en Zoho Mail, verificar con herramientas gratis y avanzar de p=none a quarantine y reject sin cortar correo.
+
+Pasos de configuración:
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+### 
+- URL Canónica: https://www.inboxseguro.com/
+- Resumen: Autentica el dominio de envío en Shopify con CNAME (DKIM y SPF) y un TXT DMARC mínimo. Verifica con herramientas gratis de InboxSeguro.
+
+Pasos de configuración:
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+### 
+- URL Canónica: https://www.inboxseguro.com/
+- Resumen: Conecta el dominio de envío en HubSpot: DKIM (dos CNAME), SPF y DMARC según el panel. Verifica con herramientas gratis de InboxSeguro.
+
+Pasos de configuración:
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+### 
+- URL Canónica: https://www.inboxseguro.com/
+- Resumen: Autentica el dominio en Mailchimp con dos CNAME DKIM y un TXT DMARC. La documentación oficial está en inglés; verifica con InboxSeguro.
+
+Pasos de configuración:
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+#### 
+
+
+---
+
+## Artículos Técnicos de Soporte y Diagnóstico (Blog)
+
+### Cómo saber si mi dominio está en lista negra
+- URL Canónica: https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/
+
+Un día, un cliente te dice que no le llegó la factura. Al rato, alguien de ventas recibe un rebote con un código extraño. Si te preguntas cómo saber si tu dominio está en una lista negra, o si la que está bloqueada es la IP desde la que envías, esta guía te explica en lenguaje simple qué son estas listas, por qué una empresa puede terminar en una sin haber enviado spam y qué hacer para salir.
+
+## Qué es una lista negra de correo (DNSBL)
+
+Una [lista negra](/glosario/rbl/), o *blacklist*, es una lista de direcciones IP o de dominios que alguien considera fuente de correo no deseado. La RFC 5782, que describe cómo funcionan, cuenta que su origen se remonta a 1997, cuando dos ingenieros empezaron a mantener una lista de direcciones IP que les enviaban spam, y explica que el término convencional hoy es DNSBL: *DNS blacklist* o *blocklist* (sección 1).
+
+Se llaman así porque se publican en el DNS, el mismo sistema que traduce nombres de dominio a direcciones. Existen dos tipos:
+
+- **Listas negras de IP.** Son las más comunes: la RFC 5782 indica que la mayoría de las listas todavía usan direcciones IP (sección 2). Incluyen direcciones desde las que se envió spam u otro tráfico considerado abusivo.
+- **Listas de dominios.** Algunas listas incluyen nombres de dominio en lugar de IP. La RFC 5782 indica que son mucho menos comunes que las listas negras de IP (sección 3).
+
+Por eso, cuando alguien sospecha de una blacklist de dominio, conviene revisar también si la lista negra incluye la IP pública del servidor que envía sus correos.
+
+## Cómo consultan las listas los servidores de correo
+
+Cuando tu servidor intenta entregar un correo, el servidor que lo recibe puede consultar una o varias listas negras. Según la RFC 5782 (sección 2.1), la consulta se arma invirtiendo los números de la IP y agregando el nombre de la lista. Si la lista se llama `bad.example.com` y la IP es `192.0.2.99`, el servidor pregunta por `99.2.0.192.bad.example.com`.
+
+- Si la IP está listada, la lista responde con un registro (normalmente con el valor `127.0.0.2`). La RFC indica que cualquier respuesta de ese tipo significa que la dirección está listada (sección 6).
+- Si no está listada, no debe haber ningún registro para esa dirección (sección 2.1).
+- La lista debería publicar además un texto que explique el motivo, que muchas veces incluye la dirección de una página con más información. Ese texto suele aparecer en el mensaje de error que recibe quien envía (sección 2.1).
+
+La RFC 5782 (sección 6) describe dos usos habituales. En uno, el servidor revisa las listas en cada conexión entrante y, si encuentra la IP en una, rechaza la conexión. En el otro, el resultado de la lista es un factor más dentro de un puntaje que decide si el mensaje es spam. Por eso, estar en una lista negra no siempre produce un rechazo: a veces solo hace que tus correos lleguen a spam.
+
+## Por qué tu empresa puede estar listada sin haber enviado spam
+
+### Una IP compartida en tu proveedor
+
+Muchas empresas envían correo desde servidores de un proveedor que comparten la misma IP con otros clientes. Google lo explica en sus directrices para remitentes: la actividad de cualquier remitente que usa una IP compartida afecta la reputación de todos los que la usan. Por eso recomienda que, si usas una IP compartida, te asegures de que no figure en ninguna lista de IP bloqueadas de internet, porque es más probable que los mensajes enviados desde esas direcciones se marquen como spam.
+
+### Una cuenta o un equipo comprometido
+
+Si alguien obtiene la contraseña de una cuenta de tu empresa, puede usarla para enviar spam en tu nombre. Microsoft indica que cuando un usuario supera los límites de envío de su servicio, eso es un indicio de que la cuenta está comprometida. La RFC 5782 (sección 2.3) también menciona, como ejemplo, listas dedicadas a equipos comprometidos por *malware*.
+
+### Prácticas propias que dañan la reputación
+
+Google advierte que no debes enviar mensajes de prueba de phishing ni campañas de prueba desde tu dominio, porque la reputación del dominio puede verse afectada y el dominio podría terminar en listas de bloqueo de internet.
+
+## Qué errores lo delatan
+
+Revisa el mensaje de rebote completo. Estos son los códigos que documentan Google y Microsoft:
+
+- **Gmail: `550 5.7.1`.** Según las directrices de Google, los mensajes se rechazan porque la IP del servidor que envía está en una lista de IP suspendidas, y es posible recibir este error si envías desde una IP compartida con mala reputación. Atención: Google también usa `550 5.7.1` para errores de IPv6 relacionados con registros PTR y autenticación, así que lee el texto completo del rebote.
+- **Microsoft 365: `550 5.1.8 Access denied, bad outbound sender`.** Este error no viene de una lista negra externa. Según Microsoft, aparece cuando un usuario de tu propia organización fue restringido por superar los límites de envío. El usuario puede seguir recibiendo correo, pero no enviarlo, y queda en la página de entidades restringidas del portal de Microsoft Defender.
+
+Si el error viene de una lista negra externa, el texto del rebote muchas veces incluye el motivo del listado y, a menudo, un enlace a una página con más información, como describe la RFC 5782 (sección 2.1).
+
+## Cómo consultar una blacklist
+
+Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Luego revisa si esa IP pública está en una lista negra, y haz lo mismo con tu dominio.
+
+Para el correo que llega a Gmail, Google recomienda Postmaster Tools, que muestra la reputación de tu dominio y de tu IP, si tus mensajes están autenticados y por qué algunos no se entregan.
+
+Revisa también tu configuración general con el [verificador de dominio](/domain-checker). Si tus correos están llegando a spam sin rebotes, lee [por qué tus correos llegan a spam](/blog/mis-correos-llegan-a-spam/).
+
+## Qué hacer para salir de una lista negra
+
+### 1. Corrige la causa primero
+
+Antes de pedir la salida, encuentra qué provocó el listado: una cuenta comprometida, un servicio mal configurado o un proveedor con una IP compartida de mala reputación.
+
+> **Advertencia:** si pides que retiren tu IP o tu usuario antes de corregir la causa, el problema puede repetirse. Microsoft pide recuperar el control de la cuenta comprometida antes de desbloquearla, y su portal de exclusión recuerda que el remitente es responsable de que el correo desde esa IP no sea abusivo ni malicioso.
+
+### 2. Usuarios restringidos en Microsoft 365
+
+Si recibes `550 5.1.8`, un administrador de tu organización puede quitar al usuario de la página de entidades restringidas del portal de Microsoft Defender, en **Email & collaboration > Review > Restricted entities**, o con el comando `Remove-BlockedSenderAddress` de Exchange Online PowerShell. Antes de hacerlo, Microsoft recomienda seguir los pasos para recuperar la cuenta y, en el mismo proceso, activar la autenticación multifactor y restablecer la contraseña. Según Microsoft, en la mayoría de los casos la restricción se elimina en una hora, y la espera total no debería superar las 24 horas.
+
+> **Advertencia:** si desbloqueas al usuario sin cambiar la contraseña ni cerrar el acceso del atacante, la cuenta puede volver a enviar spam y quedar restringida otra vez, cortando también su correo legítimo.
+
+### 3. IP bloqueada por Microsoft 365 u Outlook.com
+
+Si tus correos a destinatarios de Office 365 se rechazan por la IP desde la que envías, Microsoft ofrece un portal de exclusión en [sender.office.com](https://sender.office.com). El proceso tiene tres pasos: ingresas tu dirección de correo y la IP, confirmas tu dirección y luego solicitas la exclusión. Para Outlook.com, Microsoft mantiene un sitio Postmaster dirigido a los profesionales de TI que administran sistemas que envían correo a Outlook.com, con información sobre correos bloqueados o enviados a correo no deseado y sobre los códigos de error SMTP.
+
+### 4. Gmail
+
+Google no describe en sus directrices un formulario para salir de una lista. Lo que sí recomienda es usar Postmaster Tools para revisar la reputación de tu dominio y de tu IP, y verificar que tu proveedor cumpla sus directrices si envías a través de él.
+
+### 5. Listas negras externas
+
+Cada lista tiene su propio procedimiento. La RFC 5782 no define reglas para entrar o salir de una lista (sección 1), así que debes seguir las instrucciones de cada una. El texto que acompaña al listado suele incluir un enlace a la página de la lista con más información (sección 2.1).
+
+Si envías desde una IP compartida de tu proveedor, pídele a él que gestione la salida.
+
+## Monitorea tus listas negras de IP con InboxSeguro
+
+Puedes revisar ahora una IP, o las IP de los servidores de tu dominio, con la herramienta gratuita para [verificar lista negra](/verificar-lista-negra). El monitoreo de InboxSeguro revisa cada hora 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer) y te guía para pedir la salida.
+
+### Cómo saber si alguien suplanta tu dominio
+- URL Canónica: https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/
+
+Un cliente te reenvía una factura que tu empresa nunca emitió. Un proveedor pregunta por un cambio de cuenta bancaria que nadie pidió. Los dos correos dicen venir de `@ejemplo.cl`. Puede que alguien esté enviando correos falsos a tu nombre. Hay una forma de confirmarlo sin adivinar.
+
+## Por qué alguien puede enviar correos a tu nombre
+
+El correo permite escribir cualquier dirección en el campo "De". Por eso existen tres controles que ayudan a Gmail, Outlook y otros a distinguir un correo real de uno falso:
+
+- **SPF:** la lista de servidores que tienen permiso para enviar con tu dominio.
+- **DKIM:** una firma digital que prueba que el correo viene de tu dominio.
+- **DMARC:** la regla que dice qué hacer con los correos que fallan esas pruebas, y que además te manda reportes.
+
+Un detalle importante: un atacante puede firmar sus correos con su propio dominio. Esa firma es válida, pero no prueba que el correo sea tuyo. DMARC exige que la firma o el permiso correspondan a tu dominio, el mismo que ve el destinatario.
+
+## Paso 1: revisa qué tienes hoy
+
+Revisa tu dominio con el [verificador de dominio](/domain-checker). También puedes usar el [verificador SPF](/spf-checker), el [verificador DKIM](/dkim-checker) y el [verificador DMARC](/dmarc-checker).
+
+Si no tienes DMARC, no recibes reportes. Sin reportes, solo te enteras de una suplantación cuando alguien te avisa.
+
+## Paso 2: pide los reportes
+
+Pídele a quien administra tu dominio que publique un registro DMARC en "modo observación". En ese modo no cambia la entrega de ningún correo. Solo empiezas a recibir reportes de Gmail, Outlook y otros.
+
+> **Advertencia:** no intentes bloquear la suplantación de inmediato. Si alguna de tus herramientas legítimas (facturación, CRM, newsletter) todavía no está bien configurada, sus correos también se bloquearían o irían a spam.
+
+## Paso 3: lee los reportes
+
+Los reportes llegan normalmente una vez al día. Incluyen tanto los correos que pasaron las pruebas como los que fallaron. Google lo dice en su guía para remitentes: los reportes DMARC ayudan a identificar a quien podría estar suplantando tu dominio.
+
+Separa lo que ves en tres grupos:
+
+1. **Herramientas tuyas que pasan.** Todo bien.
+2. **Herramientas tuyas que fallan.** No es un ataque. Es un servicio legítimo mal configurado, y sus correos corren riesgo de no llegar. Hay que corregirlo antes de bloquear nada.
+3. **Fuentes que nadie reconoce y que fallan.** Es una señal de posible suplantación.
+
+El grupo 2 es el más difícil. Antes de hablar de ataque, pregunta en ventas, marketing, soporte y finanzas qué herramientas usan para enviar correos.
+
+## Paso 4: cruza los avisos con los reportes
+
+Cuando alguien te reenvía un correo dudoso, anota la fecha. Busca en los reportes de ese día una fuente desconocida que falle. Si envías a cuentas de Gmail, Google Postmaster Tools también te muestra si tus correos están autenticados.
+
+## Paso 5: bloquea los correos falsos, de a poco
+
+La protección real llega cuando pides a los receptores que manden a spam o rechacen los correos que fallan. Se puede aplicar primero a una parte de los correos y subir de forma gradual.
+
+> **Advertencia:** da este paso solo cuando todas tus herramientas legítimas pasen las pruebas. Si no, bloquearás tus propios correos junto con los falsos.
+
+Si tus correos legítimos ya llegan a spam, revisa [por qué tus correos llegan a spam](/blog/mis-correos-llegan-a-spam/). Para el contexto de negocio (riesgo, señales y qué pedir al equipo técnico), consulta la guía de [suplantación de correo en la empresa](/suplantacion-correo-empresa). El detalle de políticas y etapas está en [qué es DMARC y cómo activarlo](/blog/que-es-dmarc-como-activarlo/).
+
+## Para tu equipo técnico
+
+- SPF: RFC 7208. DKIM: RFC 6376, clave pública bajo `_domainkey`. DMARC: RFC 7489, alineación del `From:` con SPF o DKIM (sección 3.1; firma válida no basta, 3.1.1).
+- Registro TXT en `_dmarc.ejemplo.cl` (6.1). Modo observación: `v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl`. Sin `rua` no hay reportes agregados (6.3).
+- Reportes a otro dominio (por ejemplo `example.com`) requieren que ese dominio lo autorice (7.1).
+- Reportes agregados: diarios o más frecuentes, con mensajes que pasan y fallan (7.2).
+- Bloqueo: `p=quarantine` y luego `p=reject`, con `pct` para avanzar gradualmente (6.3).
+
+## Cómo ayuda InboxSeguro
+
+InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite asignar un responsable a cada uno y te guía para activar la protección contra suplantación sin cortar correos legítimos.
+
+### Cómo verificar DKIM de tu dominio paso a paso
+- URL Canónica: https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/
+
+DKIM es la firma digital que acompaña a cada correo y le permite al receptor comprobar que el mensaje viene de tu dominio y que no fue alterado en el camino. Es fácil suponer que "ya está configurado", pero cada servicio que envía con tu dominio necesita su propia firma. Aquí verás cómo comprobarlo sin depender de suposiciones.
+
+## Cómo funciona DKIM en dos líneas
+
+El servicio que envía el correo lo firma con una clave privada y agrega una cabecera `DKIM-Signature`. El receptor lee esa cabecera, busca la clave pública en el DNS de tu dominio y valida la firma. Así lo define el [RFC 6376](https://www.rfc-editor.org/rfc/rfc6376).
+
+Dos etiquetas de la cabecera son clave:
+
+- **`d=`**: el dominio que firma, por ejemplo `ejemplo.cl`.
+- **`s=`**: el [selector](/glosario/selector-dkim/), el nombre de la clave usada, por ejemplo `google` o `selector1`.
+
+Con ambos datos, la clave pública se publica como registro TXT en `selector._domainkey.dominio`.
+
+## Paso 1: encuentra el selector de cada servicio
+
+A diferencia de SPF o DMARC, DKIM no tiene una dirección fija en el DNS: no se puede revisar sin saber el selector. La forma más confiable de obtenerlo es mirar un correo real.
+
+1. Envía un correo desde el servicio que quieres revisar a una cuenta de Gmail.
+2. Abre el mensaje, entra al menú de tres puntos y elige **Mostrar original**.
+3. Busca la línea `DKIM-Signature` y anota los valores de `d=` y `s=`.
+
+Repite esto para cada herramienta que envía correo con tu dominio: correo corporativo, CRM, newsletters, facturación, tienda en línea y mesa de ayuda. Cada una puede usar un selector distinto. Como referencia, Google Workspace usa por defecto el selector `google` y Microsoft 365 usa `selector1` y `selector2`.
+
+## Paso 2: revisa el registro en el DNS
+
+Con el selector, consulta el registro. Puedes usar el [verificador DKIM](/dkim-checker) o la línea de comandos:
+
+```
+dig TXT google._domainkey.ejemplo.cl +short
+```
+
+Un registro válido se ve así (la clave aparece abreviada):
+
+```
+v=DKIM1; k=rsa; p=MIIBIjANBgkqh...
+```
+
+Revisa tres cosas:
+
+- **Que el registro exista** en el nombre exacto `selector._domainkey.tudominio`.
+- **Que `p=` no esté vacío.** Según el RFC 6376, una clave vacía significa que fue revocada.
+- **Que la clave tenga un tamaño adecuado.** El [RFC 8301](https://www.rfc-editor.org/rfc/rfc8301) exige al menos 1024 bits y recomienda 2048. Google también [recomienda 2048 bits](https://support.google.com/a/answer/174124).
+
+> **Advertencia:** algunos paneles DNS agregan el dominio automáticamente al final del nombre. Si escribes el nombre completo, puede quedar duplicado (`google._domainkey.ejemplo.cl.ejemplo.cl`) y la firma fallará.
+
+## Paso 3: confirma que la firma pasa y está alineada
+
+Que el registro exista no garantiza que la firma funcione. En el mismo **Mostrar original** de Gmail verás un resumen con el resultado de DKIM. Debe decir `PASS`.
+
+Luego compara el dominio de `d=` con el dominio de tu remitente. DMARC ([RFC 7489](https://www.rfc-editor.org/rfc/rfc7489)) exige que estén alineados. Muchos servicios firman por defecto con su propio dominio: DKIM da pass, pero no cuenta para tu DMARC. Para corregirlo, configura en ese servicio la firma con tu dominio, normalmente agregando los registros CNAME o TXT que te indica.
+
+Revisa también el resto de la autenticación con el [verificador de dominio](/domain-checker).
+
+## Errores comunes al verificar DKIM
+
+- **Probar un selector equivocado** y concluir que no hay DKIM.
+- **Revisar solo el correo corporativo** y olvidar CRM, facturación o newsletters.
+- **Dejar claves antiguas de 1024 bits** cuando el proveedor ya permite 2048.
+- **Firmar con el dominio del proveedor** en vez del tuyo, sin alineación para DMARC.
+- **Borrar un registro DKIM** de un servicio que todavía envía correos.
+
+> **Advertencia:** antes de eliminar o rotar una clave DKIM, confirma que ningún servicio la sigue usando. Si la borras antes de tiempo, esos correos dejarán de pasar la verificación.
+
+## Por qué importa ahora
+
+Google [pide a todos los remitentes](https://support.google.com/a/answer/81126) configurar SPF o DKIM, y a quienes envían más de 5.000 mensajes diarios a cuentas Gmail les exige SPF, DKIM y DMARC. [Yahoo](https://senders.yahooinc.com/best-practices/) y [Microsoft para Outlook.com](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730) tienen requisitos similares para remitentes de alto volumen.
+
+## Cómo ayuda InboxSeguro
+
+InboxSeguro arma un inventario de los sistemas que envían correo con tu dominio a partir de los reportes DMARC, identificándolos por PTR, ASN y firma DKIM, y te permite asignar un responsable y un estado a cada uno. También muestra el estado de SPF, DKIM, DMARC, BIMI, MTA-STS y RUA, y te avisa cuando aparece un remitente nuevo. Si necesitas corregir un registro, la configuración DNS guiada con asistente de IA te acompaña paso a paso. Puedes ver los planes en [precios](/precios).
+
+### Mis correos llegan a spam: la causa oculta
+- URL Canónica: https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/
+
+Si los correos de tu empresa terminan en spam, lo primero que se suele revisar es el contenido: palabras "sospechosas", demasiados enlaces o imágenes pesadas. Eso influye, pero muchas veces la causa está en otra parte: hay servicios que envían correo con el dominio de la empresa y que nadie configuró ni administra.
+
+## Tu dominio envía correo desde más lugares de los que crees
+
+Una empresa puede usar Google Workspace o Microsoft 365 para el correo diario, un CRM para ventas, una herramienta de marketing para newsletters, un sistema de facturación, la plataforma de su tienda en línea y una mesa de ayuda. Cada uno manda correos que dicen venir de `@ejemplo.cl`. Si alguno no está autorizado correctamente, Gmail u Outlook no pueden confirmar que esos mensajes son legítimos, y pueden mandarlos a spam o rechazarlos.
+
+## Qué revisan Gmail y Outlook antes de entregar un correo
+
+- **SPF:** la lista de servidores autorizados a enviar con tu dominio. Puedes revisarla con el [verificador SPF](/spf-checker).
+- **DKIM:** una firma digital que prueba que el mensaje no fue alterado y que viene de quien dice. Revísala con el [verificador DKIM](/dkim-checker).
+- **DMARC:** la regla que le dice al receptor qué hacer si un correo falla esas pruebas, y que además te envía reportes. Revísala con el [verificador DMARC](/dmarc-checker).
+
+Cuando un servicio no está incluido en SPF o no firma con DKIM usando tu dominio, sus correos pueden fallar aunque el texto sea impecable.
+
+Otra causa frecuente es que la IP de envío aparezca en una lista negra. Puedes [comprobar si tu dominio o IP está en lista negra](/verificar-lista-negra) contra Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer.
+
+## Por qué pasa: servicios sin dueño
+
+Alguien de marketing contrató una herramienta hace tiempo, un proveedor configuró la facturación y ya no trabaja con ustedes, o se probó un CRM que nunca se dio de baja. Nadie sabe que esos servicios siguen enviando correo y nadie se hace cargo de su configuración. El resultado son correos legítimos que no llegan y un dominio más fácil de suplantar, porque sin una lista clara de quién puede enviar no es posible activar con confianza una política DMARC que bloquee los correos falsos.
+
+## Cómo encontrarlos en 4 pasos
+
+1. **Hagan una lista** de todas las herramientas que mandan correos a clientes o proveedores: facturas, avisos, newsletters, recuperación de contraseña y tickets de soporte. Un buen punto de partida es revisar el dominio con el [verificador de dominio](/domain-checker).
+2. **Asignen un responsable** a cada servicio.
+3. **Revisen que cada servicio esté autorizado** en SPF y firme con DKIM usando su dominio.
+
+   > **Advertencia:** un dominio solo puede tener un registro SPF. Si crean un segundo registro en vez de editar el existente, o si borran un `include` que todavía se usa, pueden cortar correos legítimos.
+
+4. **Activen DMARC primero en modo monitoreo** (`p=none`) y lean los reportes para descubrir los servicios que faltaban. Solo después avancen a `p=quarantine` y luego a `p=reject`.
+
+   > **Advertencia:** pasar a cuarentena o rechazo antes de autorizar todos los servicios legítimos puede mandar a spam o bloquear sus propias facturas, avisos o newsletters.
+
+## Cómo ayuda InboxSeguro
+
+InboxSeguro muestra qué sistemas envían correo con el dominio de tu empresa, te permite asignar un responsable a cada uno y guía paso a paso para activar la protección contra la suplantación sin cortar los correos legítimos. Puedes ver los planes en [precios](/precios).
+
+### Phishing con IA: qué frena DMARC y qué no
+- URL Canónica: https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/
+
+Un proveedor recibe un correo de `facturacion@ejemplo.cl` que le pide pagar la próxima factura a una cuenta bancaria nueva. Está bien escrito, en buen español y con el tono de siempre. Es un ejemplo, no un caso real, pero resume el phishing con inteligencia artificial: correos falsos que ya no se delatan por la forma. La IA no inventó el phishing, pero, como advierte el [FBI](https://www.ic3.gov/PSA/2024/PSA241203), lo hace más creíble y más rápido de producir. Aquí verás qué parte de ese problema puede frenar DMARC, qué parte no y por dónde empezar.
+
+## Qué cambia con el phishing con inteligencia artificial
+
+### Correos sin las señales de siempre
+
+El **phishing** es un correo falso que busca que alguien entregue datos, haga un pago o abra un enlace malicioso. En diciembre de 2024, el FBI advirtió que los delincuentes usan IA generativa para crear mensajes creíbles de ingeniería social (engaños que se apoyan en la confianza), llegar más rápido a más personas y traducir textos con menos errores gramaticales u ortográficos ([FBI IC3, alerta I-120324-PSA](https://www.ic3.gov/PSA/2024/PSA241203)).
+
+Por eso, "fíjate en las faltas de ortografía" ya no basta como consejo.
+
+### Lo que dicen las cifras
+
+Las cifras del [informe 2025 del IC3](https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf), el centro de denuncias del FBI, corresponden a **denuncias recibidas por el FBI, principalmente de Estados Unidos**. No son cifras de Latinoamérica.
+
+- **Phishing/spoofing** fue el tipo de delito con más denuncias: 191.561.
+- El **fraude del CEO por correo**, que el FBI llama *business email compromise* (BEC), sumó 24.768 denuncias y USD 3.046.598.558 en pérdidas declaradas, el segundo tipo de delito con más pérdidas.
+- Por primera vez, el informe incluye una sección sobre IA: 22.364 denuncias marcadas como relacionadas con IA y USD 893.346.472 en pérdidas ([comunicado del FBI](https://www.fbi.gov/news/press-releases/cryptocurrency-and-ai-scams-bilk-americans-of-billions)).
+
+## El ataque que DMARC sí frena: la suplantación de tu dominio exacto
+
+### Cualquiera puede escribir tu dominio en el campo "De"
+
+El correo permite poner cualquier dirección como remitente. Por eso un correo puede decir que viene de `pagos@ejemplo.cl` sin haber salido de tu empresa. Eso es la **suplantación de dominio de correo**, o *spoofing*: tus clientes pueden recibir instrucciones de pago falsas con tu dirección exacta.
+
+### Cómo lo frena DMARC
+
+DMARC se apoya en dos controles:
+
+- **SPF:** la lista, publicada en tu dominio, de los servidores autorizados a enviar correo en tu nombre.
+- **DKIM:** una firma digital en cada correo que prueba que viene de tu dominio.
+
+**DMARC** es una regla publicada en tu dominio que pide a Gmail, Outlook, Yahoo y otros qué hacer con los correos que dicen ser tuyos y no lo pueden probar con SPF o DKIM, con el mismo dominio que aparece en "De" ([Google](https://support.google.com/a/answer/81126?hl=es-419)). El estándar actual, el [RFC 9989](https://www.rfc-editor.org/rfc/rfc9989.txt) de mayo de 2026, dice que DMARC está diseñado para impedir el uso no autorizado del dominio del autor, lo que se conoce como *spoofing* (sección 2.2).
+
+La regla tiene tres niveles: `p=none` (solo observar), `p=quarantine` (tratar como sospechoso, por ejemplo enviar a spam) y `p=reject` (rechazar). Con `p=reject`, los proveedores que aplican DMARC pueden rechazar los correos que suplantan tu dominio exacto antes de entregarlos. CISA, la agencia de ciberseguridad de Estados Unidos, junto con la NSA, el FBI y el MS-ISAC, recomienda configurar DMARC en "reject" para el correo que envía tu organización ([guía de CISA](https://www.cisa.gov/sites/default/files/2023-10/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One_508c.pdf), p. 6).
+
+Da igual lo bien redactado que esté el correo falso: DMARC no evalúa el texto, sino si puede probar que viene de tu dominio. Por eso la IA no cambia esta parte de la ecuación.
+
+> **Advertencia:** si tu CRM o tu sistema de facturación no pasan SPF o DKIM con tu dominio, `p=reject` también puede rechazar sus correos legítimos.
+
+### Una protección para tus clientes y proveedores
+
+DMARC protege sobre todo a quienes **reciben** correos con tu nombre: clientes, proveedores y tu equipo. Los reportes de DMARC te ayudan a identificar a quien podría estar suplantando tu dominio ([Google](https://support.google.com/a/answer/81126?hl=es-419)).
+
+## Lo que DMARC no frena
+
+El RFC 9989 dice que DMARC solo puede usarse para combatir directamente formas específicas de suplantación del dominio exacto. No aborda los dominios visualmente parecidos ni el abuso del nombre visible ([RFC 9989](https://www.rfc-editor.org/rfc/rfc9989.txt), sección 2.2).
+
+### Dominios parecidos
+
+Un atacante registra `ejemplo-cl.com` (dominio de ejemplo) o cambia una letra del tuyo. Ese dominio es suyo y puede tener SPF, DKIM y DMARC en regla. Tu DMARC no lo cubre.
+
+### Nombre visible falso
+
+El correo muestra "Gerencia de Finanzas Ejemplo", pero la dirección es otra. El RFC 9989 deja estos ataques al nombre visible fuera del alcance de DMARC (secciones 2.4 y 11.4).
+
+### Cuentas comprometidas
+
+Si roban la contraseña de una cuenta de tu empresa, los correos salen de tu propio servidor y pasan SPF, DKIM y DMARC. El FBI describe que el fraude del CEO se lleva a cabo comprometiendo cuentas de correo y otros medios mediante ingeniería social o intrusión ([informe IC3 2025](https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf), p. 59).
+
+Aquí ayuda la **autenticación multifactor (MFA)**, que pide un segundo paso además de la contraseña. CISA señala que reduce el uso de credenciales robadas, pero que sus formas débiles (SMS, voz o notificaciones push sin coincidencia de números) se pueden eludir ([guía de CISA](https://www.cisa.gov/sites/default/files/2023-10/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One_508c.pdf), p. 4).
+
+DMARC es **una capa**, no la solución al phishing. Acuerda con tu equipo que todo cambio de cuenta bancaria o pago urgente se confirme por otro canal, como una llamada a un número conocido, en línea con el consejo del FBI de verificar la identidad cortando y llamando directamente a la organización ([FBI IC3](https://www.ic3.gov/PSA/2024/PSA241203)).
+
+## Gmail, Yahoo y Outlook ya piden DMARC a quienes envían mucho
+
+No aplica a todas las empresas:
+
+- **Gmail:** desde el 1 de febrero de 2024, Google pide a quienes envían más de 5.000 mensajes al día a cuentas personales de Gmail que tengan SPF, DKIM y DMARC (la política puede ser `none`), con el dominio del "De" alineado con SPF o DKIM ([Google](https://support.google.com/a/answer/81126?hl=es-419)).
+- **Yahoo:** pide a los remitentes masivos una política DMARC válida de al menos `p=none` que pase ([Yahoo](https://senders.yahooinc.com/best-practices/)).
+- **Outlook.com** (hotmail.com, live.com y outlook.com): exige SPF, DKIM y DMARC de al menos `p=none` a los dominios que envían más de 5.000 correos al día. Según la actualización del 29 de abril de 2025, desde mayo de 2025 los mensajes que no cumplan se rechazan con el error `550; 5.7.515`; es decir, no llegan ([Microsoft](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730)).
+
+Ojo: `p=none` cumple estos requisitos, pero **no frena la suplantación**; solo da visibilidad. La protección llega con `quarantine` y `reject`.
+
+## Cómo empezar sin cortar tus propios correos
+
+El detalle está en [cómo activar DMARC por etapas](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/). En resumen:
+
+1. **Haz la lista** de lo que envía correo con tu dominio (correo de la empresa, CRM, facturación, newsletter, mesa de ayuda), con un responsable por servicio.
+2. **Empieza en `p=none`** para recibir reportes sin cambiar la entrega. Según el RFC 9989, así no pasas por alto ningún servidor o servicio externo (secciones 5.1.4 y 5.1.5).
+3. **Corrige los servicios legítimos que fallan.** Por ejemplo, [revisa que DKIM firme con tu dominio](https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/).
+4. **Avanza a `quarantine` y después a `reject`** cuando los reportes estén limpios. Para dominios cuyos usuarios escriben en listas de correo, el RFC 9989 da como ejemplo al menos un mes en `none` y otro periodo similar en `quarantine` antes de `reject` (sección 7.4).
+
+> **Advertencia:** si un servicio legítimo todavía falla, `quarantine` puede mandar sus correos a spam y `reject` puede hacer que no lleguen. No avances mientras tus herramientas aparezcan con fallas.
+
+Si ya sospechas que te suplantan, revisa [cómo detectar si alguien ya usa tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/).
+
+## Para tu equipo técnico
+
+- DMARC actual: RFC 9989 (protocolo), RFC 9990 (reportes agregados) y RFC 9991 (reportes de fallas), de mayo de 2026; reemplazan a RFC 7489 ([dmarc.org](https://dmarc.org/2026/05/ietf-publishes-updated-dmarc-specification/)). Los registros siguen siendo `v=DMARC1`.
+- Inicio: `_dmarc.ejemplo.cl TXT "v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl"`.
+- La etiqueta `pct` se retiró (RFC 9989, anexo A.6): avanza por etapas, sin porcentajes.
+
+## Cómo ayuda InboxSeguro
+
+InboxSeguro te muestra qué sistemas envían correo con tu dominio y te permite asignar un responsable a cada uno. Te guía en la activación gradual de DMARC, de `p=none` a `quarantine` y después a `reject`, sin cortar correos legítimos. Y detecta intentos de suplantación cuando fallan SPF o DKIM.
+
+**¿Sabes en qué punto está tu dominio?** Revisa gratis si tu dominio está protegido con el [verificador de dominio de InboxSeguro](https://www.inboxseguro.com/domain-checker). Te muestra si tiene SPF, DKIM y DMARC, y qué política usa. No te dice si alguien está suplantando tu dominio en este momento; para eso necesitas leer los reportes de DMARC.
+
+## Fuentes
+
+- FBI IC3, alerta I-120324-PSA (3-12-2024): IA generativa en fraudes y consejo de verificar. https://www.ic3.gov/PSA/2024/PSA241203
+- FBI IC3, Internet Crime Report 2025: cifras (pp. 7-8) y definición de BEC (p. 59). https://www.ic3.gov/AnnualReport/Reports/2025_IC3Report.pdf
+- FBI, comunicado: primera sección sobre IA. https://www.fbi.gov/news/press-releases/cryptocurrency-and-ai-scams-bilk-americans-of-billions
+- IETF, RFC 9989 (mayo de 2026): alcance de DMARC, etapas y retiro de `pct`. https://www.rfc-editor.org/rfc/rfc9989.txt
+- RFC Editor y dmarc.org: publicación de RFC 9989, 9990 y 9991. https://www.rfc-editor.org/subjects/dmarc/ · https://dmarc.org/2026/05/ietf-publishes-updated-dmarc-specification/
+- Google, lineamientos para remitentes: requisitos de Gmail e informes DMARC. https://support.google.com/a/answer/81126?hl=es-419
+- Yahoo Sender Hub: requisitos de Yahoo. https://senders.yahooinc.com/best-practices/
+- Microsoft, requisitos de Outlook.com (2-4-2025, actualizado 29-4-2025). https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730
+- CISA, NSA, FBI y MS-ISAC, guía de phishing (octubre de 2023): DMARC en "reject" (p. 6) y MFA (p. 4). https://www.cisa.gov/sites/default/files/2023-10/Phishing%20Guidance%20-%20Stopping%20the%20Attack%20Cycle%20at%20Phase%20One_508c.pdf
+
+### Qué es DMARC y cómo activarlo sin riesgos
+- URL Canónica: https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/
+
+Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, tus propias facturas pueden ir a spam o no llegar. Aquí te explicamos cómo funciona y cómo activarlo por etapas.
+
+## Qué es DMARC, en una frase
+
+**DMARC** es una regla publicada en tu dominio que dice qué hacer con los correos que no pueden probar que son tuyos, y que además te envía reportes.
+
+Se apoya en otros dos controles:
+
+- **SPF:** la lista de servidores que tienen permiso para enviar con tu dominio.
+- **DKIM:** una firma digital que prueba que el correo viene de tu dominio.
+
+Un correo pasa DMARC cuando pasa SPF o DKIM, y además ese resultado corresponde al mismo dominio que ve el destinatario en el campo "De". Google lo explica así en su guía para remitentes.
+
+Revisa si ya tienes DMARC con el [verificador DMARC](/dmarc-checker).
+
+## Por qué le importa a tu negocio
+
+- **Sin DMARC**, es más fácil que alguien envíe facturas o avisos falsos a tu nombre, y no te enteras.
+- **Con DMARC mal activado**, tus correos legítimos pueden ir a spam o no llegar.
+- **Gmail lo exige** a quienes envían más de 5.000 correos al día a cuentas de Gmail, aunque sea en modo observación.
+
+## Las tres políticas
+
+DMARC tiene [tres niveles](/glosario/politica-dmarc/):
+
+- **Observar (`none`):** no cambia nada en la entrega. Solo recibes reportes.
+- **Cuarentena (`quarantine`):** pide tratar como sospechosos los correos que fallan, por ejemplo mandarlos a spam.
+- **Rechazo (`reject`):** pide rechazar los correos que fallan.
+
+## Cómo activarlo sin cortar correos
+
+### 1. Haz la lista de lo que envía correo con tu dominio
+
+Correo de la empresa, CRM, newsletter, facturación, tienda en línea, mesa de ayuda. Cada uno debe estar autorizado en SPF o firmar con DKIM usando tu dominio. Revisa con el [verificador SPF](/spf-checker), el [verificador DKIM](/dkim-checker) o todo junto con el [verificador de dominio](/domain-checker).
+
+### 2. Empieza observando
+
+Publica DMARC en modo observación. No cambia nada para tus correos, pero empiezas a recibir reportes.
+
+> **Advertencia:** si tu dominio ya tiene un registro DMARC, hay que editarlo, no crear otro. Si hay dos, DMARC deja de aplicarse.
+
+### 3. Lee los reportes y corrige
+
+Los reportes muestran qué correos pasaron y cuáles fallaron. Busca tus propias herramientas entre las que fallan y corrígelas. Una opción es activar en esa herramienta la firma DKIM con tu dominio.
+
+### 4. Pasa a cuarentena, de a poco
+
+Puedes aplicar la cuarentena solo a una parte de tus correos y subir el porcentaje cuando los reportes salgan limpios.
+
+> **Advertencia:** si una herramienta legítima todavía falla, la cuarentena puede mandar sus correos a spam. No subas el porcentaje mientras tus propias herramientas aparezcan con fallas.
+
+### 5. Llega a rechazo
+
+Cuando la cuarentena esté al 100 % y los reportes estén limpios, pasa a rechazo.
+
+> **Advertencia:** en rechazo, los correos que fallan pueden no llegar nunca. Revisa también los subdominios que envían correo: si no se dice otra cosa, heredan la misma política.
+
+Si tus correos ya llegan a spam, revisa primero [por qué tus correos llegan a spam](/blog/mis-correos-llegan-a-spam/).
+
+## Para tu equipo técnico
+
+- DMARC: RFC 7489. Registro TXT en `_dmarc.ejemplo.cl` (6.1). `v=DMARC1` primero, seguido de `p` (6.3).
+- Observación: `v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl`. Gradual: `p=quarantine; pct=25`. `pct` va de 0 a 100, por defecto 100 (6.3).
+- `rua` (agregados) y `ruf` (fallas): si faltan, no se generan reportes (6.3). Reportes a otro dominio, como `example.com`, requieren autorización de ese dominio (7.1). Agregados incluyen pases y fallas (7.2).
+- `sp`: política de subdominios; si falta, se aplica `p` (6.3).
+- Alineación (3.1, 3.1.1): relajada por defecto con `adkim`/`aspf=r`; `d=example.com` alinea con `news.example.com` en relajado, no en estricto (`s`). Evita `s` sin necesidad.
+- Varios registros DMARC: el descubrimiento de la política termina (6.6.3, paso 5).
+
+## Cómo ayuda InboxSeguro
+
+InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite asignar un responsable a cada uno y te guía para activar la protección contra suplantación sin cortar correos legítimos.
+
+### SPF: cómo no pasar el límite de 10 consultas
+- URL Canónica: https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/
+
+Cada vez que tu empresa contrata una herramienta que envía correos (un CRM, una newsletter, la facturación), alguien la agrega a tu registro SPF. Funciona hasta que un día deja de funcionar. Si el registro se llena demasiado, falla para todos tus correos, no solo para el último servicio. El resultado: correos que no llegan o que terminan en spam.
+
+## Qué es SPF, en una frase
+
+**SPF** es la lista, publicada en tu dominio, de los servidores que tienen permiso para enviar correos con tu nombre.
+
+Revisa la tuya con el [verificador SPF](/spf-checker).
+
+## El límite que pocos conocen
+
+SPF tiene un límite: cuando Gmail u Outlook revisan tu lista, solo pueden hacer **10 consultas** para comprobarla. Cada herramienta que se agrega con la instrucción "include" gasta una. Si la lista de esa herramienta incluye a su vez otras, esas también cuentan.
+
+Si pasas de 10, SPF da error. Google advierte que los correos que no se autentican pueden ir a spam o ser rechazados.
+
+## Un solo registro por dominio
+
+Tu dominio debe tener una sola lista SPF. Si hay dos, SPF da error.
+
+> **Advertencia:** para autorizar una herramienta nueva, hay que editar la lista existente. Si alguien crea una segunda, todos tus correos pueden fallar.
+
+## Cómo autorizar herramientas sin pasarte
+
+### 1. Cuenta lo que tienes
+
+Revisa tu dominio con el [verificador de dominio](/domain-checker) o el [verificador SPF](/spf-checker) para ver la lista completa y cuánto ocupa.
+
+### 2. Saca las herramientas que ya no usan
+
+Un CRM que se probó y se abandonó, o el sistema de un proveedor anterior, siguen ocupando espacio.
+
+> **Advertencia:** antes de sacar una herramienta, confirma con el área que la usaba que ya no envía correos con tu dominio. Si todavía envía, sus correos empezarán a fallar.
+
+### 3. Usa direcciones fijas para tus propios servidores
+
+Si un servidor tuyo envía desde una dirección IP fija que tú controlas, autorizarla directamente no gasta consultas.
+
+> **Advertencia:** no hagas esto con herramientas externas copiando las IP que ves hoy. Si el proveedor cambia sus IP, tus correos fallarán sin que nadie lo note.
+
+### 4. Usa un subdominio para envíos masivos
+
+Si una plataforma te permite enviar desde un subdominio como `news.ejemplo.cl`, ese subdominio puede tener su propia lista SPF, con su propio límite.
+
+### 5. Apóyate en DKIM
+
+**DKIM** es una firma digital que prueba que el correo viene de tu dominio. Para pasar DMARC (la regla que dice qué hacer con los correos que no prueban ser tuyos), basta con SPF **o** DKIM. Si una herramienta firma con DKIM usando tu dominio, depende menos de tu lista SPF. Revisa con el [verificador DKIM](/dkim-checker) y el [verificador DMARC](/dmarc-checker).
+
+Si tus correos ya llegan a spam, revisa [por qué tus correos llegan a spam](/blog/mis-correos-llegan-a-spam/).
+
+## Para tu equipo técnico
+
+- SPF: RFC 7208. Solo como registro TXT (3.1). Un único registro; si hay varios, `permerror` (3.2, 4.5).
+- Límite de 10 (4.6.4): cuentan `include`, `a`, `mx`, `ptr`, `exists` y `redirect`; exceso = `permerror`. `ip4`, `ip6` y `all` no cuentan. Cada MX no puede resolver a más de 10 A/AAAA.
+- `include` evalúa recursivamente el registro del proveedor, así que los anidados suman (5.2).
+- Void lookups (respuestas vacías o NXDOMAIN): deberían limitarse a dos (4.6.4). Un `include` a un dominio que ya no existe consume una.
+- No publicar `ptr` (5.5).
+- Ejemplo: `v=spf1 include:_spf.example.com ip4:192.0.2.10 -all`.
+- Subdominios: con alineación relajada, la opción por defecto de DMARC (RFC 7489, 3.1 y 6.3), `news.ejemplo.cl` sigue alineado con `ejemplo.cl`.
+
+## Cómo ayuda InboxSeguro
+
+InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite asignar un responsable a cada uno y te guía para activar la protección contra suplantación sin cortar correos legítimos.
+
+---
+
+## Preguntas Frecuentes de la Plataforma
+
+### ¿Qué hace distinto a InboxSeguro?
+No es una herramienta técnica para especialistas. Es una plataforma de protección que cualquier empresa puede activar hoy: muestra qué sistemas envían correo con tu dominio, avisa cuando aparece uno nuevo y te guía para protegerlo sin interrumpir la operación.
+
+### ¿Necesito entregarles mis contraseñas?
+Nunca. InboxSeguro analiza solo DNS público.
+
+### ¿Qué pasa si me suplantan el dominio?
+Detectamos envíos sin SPF/DKIM válidos, los marcamos en el inventario y te ayudamos a aplicar políticas DMARC. El rechazo del correo lo aplican los receptores según tu DNS (p=quarantine o p=reject).
+
+### ¿De qué sirve definir un rango de envíos?
+Alertas si un proveedor supera el volumen mensual habitual.
+
+### ¿Qué pasa si caigo en blacklist?
+Monitorizamos RBL y alertamos en el panel.

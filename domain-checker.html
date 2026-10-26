@@ -632,7 +632,20 @@
     <script src="/analytics-config.js"></script>
     <script src="/analytics-loader.js"></script>
     <script src="/seo-analytics.js" defer></script>
-    <script src="/session-cta.js" defer></script>
+    <script src="/session-cta.js" defer>
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var raw = params.get('d') || params.get('domain');
+            var clean = normalizeDomain(raw);
+            if (/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/.test(clean)) {
+                var input = document.getElementById('dominioInput');
+                if (input) {
+                    input.value = clean;
+                    handleDiagnostico({ preventDefault: function () {} });
+                }
+            }
+        })();
+</script>
 </body>
 
 </html>
