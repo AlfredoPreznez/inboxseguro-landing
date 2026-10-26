@@ -579,8 +579,12 @@
             try {
                 const spfData = await fetchDNS(dominio, 'TXT');
                 const queryOk = !!(spfData && (spfData.Status === 0 || spfData.Status === 3));
-                const spfRecords = extractTXT(spfData);
-                const spfOnlyRecords = spfRecords.filter(r => r.toLowerCase().startsWith('v=spf1'));
+                const spfRecords = extractTXT(spfData).map(function (r) {
+                    return r.replace(/^["'\s]+|["'\s]+$/g, '');
+                });
+                const spfOnlyRecords = spfRecords.filter(function (r) {
+                    return r.toLowerCase().startsWith('v=spf1');
+                });
                 const spfRecord = spfOnlyRecords[0];
                 let spfResult;
 
@@ -703,7 +707,11 @@
                     }
                 }
 
-                const records = extractTXT(data).filter(r => r.toLowerCase().startsWith('v=spf1'));
+                const records = extractTXT(data).map(function (r) {
+                    return r.replace(/^["'\s]+|["'\s]+$/g, '');
+                }).filter(function (r) {
+                    return r.toLowerCase().startsWith('v=spf1');
+                });
                 if (records.length === 0) {
                     voidLookups++;
                     return {
