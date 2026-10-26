@@ -398,6 +398,7 @@
     <script src="/notify.js?v=3"></script>
     <script src="/tool-lead.js?v=2"></script>
     <script>
+      function normalizeDomain(value){return String(value||'').trim().toLowerCase().replace(/^https?:\/\//,'').replace(/^www\./,'').split('/')[0].split(':')[0];}
       (function(){
         const form=document.getElementById('systemsForm');
         const input=document.getElementById('systemsDomain');
@@ -405,10 +406,10 @@
         const loading=document.getElementById('systemsLoading');
         const results=document.getElementById('systemsResults');
         const error=document.getElementById('systemsError');
-        function normalizeDomain(value){return String(value||'').trim().toLowerCase().replace(/^https?:\/\//,'').replace(/^www\./,'').split('/')[0].split(':')[0];}
         function setBusy(busy){button.disabled=busy;button.textContent=busy?'Analizando DNS…':'Analizar dominio';loading.classList.toggle('hidden',!busy);}
         function showError(message){error.textContent=message;error.classList.remove('hidden');results.classList.add('hidden');}
         form.addEventListener('submit',async function(event){
+          var isAuto = !!(event && event.isAuto);
           event.preventDefault(); error.classList.add('hidden'); results.classList.add('hidden');
           const domain=normalizeDomain(input.value);
           if(!/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/i.test(domain)){if(typeof window.trackCheckerOutcome==='function')window.trackCheckerOutcome('sending_systems','invalid');showError('Escribe un dominio válido, por ejemplo tuempresa.com.');return;}
@@ -452,7 +453,7 @@
                     getScore: function () { return document.getElementById('resultHeadline').textContent; },
                     getResults: function () { return notifyResults; }
                 });
-            if(window.InboxSeguroNotify)window.InboxSeguroNotify.notifyToolUse({
+            if(!isAuto&&window.InboxSeguroNotify)window.InboxSeguroNotify.notifyToolUse({
               tool: 'Email Sender Checker',
               domain:data.domain||domain,
               score:document.getElementById('resultHeadline').textContent,
@@ -469,6 +470,24 @@
       })();
       function toggleMobileMenu(){const m=document.getElementById('mobileMenu'),o=document.getElementById('menuIconOpen'),c=document.getElementById('menuIconClose');m.classList.toggle('hidden');o.classList.toggle('hidden');c.classList.toggle('hidden');}
       function closeMobileMenu(){const m=document.getElementById('mobileMenu'),o=document.getElementById('menuIconOpen'),c=document.getElementById('menuIconClose');m.classList.add('hidden');o.classList.remove('hidden');c.classList.add('hidden');}
+    </script>
+    <script>
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var raw = params.get('d') || params.get('domain');
+            if (!raw) return;
+            var clean = normalizeDomain(raw);
+            if (/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/.test(clean)) {
+                var input = document.getElementById('systemsDomain');
+                var form = document.getElementById('systemsForm');
+                if (input && form) {
+                    input.value = clean;
+                    var ev = new Event('submit', { cancelable: true });
+                    ev.isAuto = true;
+                    form.dispatchEvent(ev);
+                }
+            }
+        })();
     </script>
     <script src="/analytics-config.js"></script>
     <script src="/analytics-loader.js"></script>

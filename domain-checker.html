@@ -507,7 +507,7 @@
             document.getElementById('diagResults').classList.add('hidden');
         }
 
-        async function handleDiagnostico(event) {
+        async function handleDiagnostico(event, isAuto) {
             event.preventDefault();
             const dominio = normalizeDomain(document.getElementById('dominioInput').value);
             const error = document.getElementById('diagError');
@@ -557,7 +557,7 @@
                     dkim: dkimResult.text,
                     mx: mxResult.text
                 };
-                if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+                if (!isAuto && window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
                     tool: 'Email Security Check',
                     domain: dominio,
                     score: states.map(function (item, index) {
@@ -628,6 +628,21 @@
             iconOpen.classList.remove('hidden');
             iconClose.classList.add('hidden');
         }
+    </script>
+    <script>
+        (function () {
+            var params = new URLSearchParams(window.location.search);
+            var raw = params.get('d') || params.get('domain');
+            if (!raw) return;
+            var clean = normalizeDomain(raw);
+            if (/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/.test(clean)) {
+                var input = document.getElementById('dominioInput');
+                if (input) {
+                    input.value = clean;
+                    handleDiagnostico({ preventDefault: function () {} }, true);
+                }
+            }
+        })();
     </script>
     <script src="/analytics-config.js"></script>
     <script src="/analytics-loader.js"></script>

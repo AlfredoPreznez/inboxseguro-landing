@@ -376,6 +376,7 @@ function renderMxTable(records) {
     wrap.innerHTML = '<table class="w-full text-left"><thead class="bg-white/5 text-xs uppercase tracking-wider text-slate-400"><tr><th class="px-4 py-3">Prioridad</th><th class="px-4 py-3">Hostname</th></tr></thead><tbody>' + rows + '</tbody></table>' + extra;
 }
 document.getElementById('mxForm').addEventListener('submit', async function (event) {
+    var isAuto = !!(event && event.isAuto);
     event.preventDefault();
     var domain = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/\.$/, '');
     var valid = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/.test(domain);
@@ -404,7 +405,7 @@ document.getElementById('mxForm').addEventListener('submit', async function (eve
         badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start ' + (tones[result.status] || tones.unknown);
         renderMxTable(result.status === 'ok' ? records : []);
         var notifyResults = { mx: result.text };
-        if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+        if (!isAuto && window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
             tool: 'MX Lookup',
             domain: domain,
             score: 'MX: ' + result.label,
@@ -440,6 +441,25 @@ function closeMobileMenu() {
     document.getElementById('menuIconOpen').classList.remove('hidden');
     document.getElementById('menuIconClose').classList.add('hidden');
 }
+</script>
+<script>
+(function () {
+    var params = new URLSearchParams(window.location.search);
+    var raw = params.get('d') || params.get('domain');
+    if (!raw) return;
+    var clean = raw.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '').replace(/^www\./, '').replace(/\.$/, '');
+    var domainRegex = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?)+$/;
+    if (domainRegex.test(clean)) {
+        var input = document.getElementById('dominioInput');
+        var form = document.getElementById('mxForm');
+        if (input && form) {
+            input.value = clean;
+            var ev = new Event('submit', { cancelable: true });
+            ev.isAuto = true;
+            form.dispatchEvent(ev);
+        }
+    }
+})();
 </script>
 <script src="/analytics-config.js"></script>
 <script src="/analytics-loader.js"></script>

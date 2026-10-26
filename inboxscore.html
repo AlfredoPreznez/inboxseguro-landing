@@ -442,7 +442,7 @@
         $('isResults').classList.remove('hidden');
     }
 
-    async function submit(value, push) {
+    async function submit(value, push, isAuto) {
         $('isError').classList.add('hidden');
         var d = S.normalizeDomain(value);
         if (!d) { $('isError').textContent = 'Escribe un dominio válido, por ejemplo tuempresa.com.'; $('isError').classList.remove('hidden'); return; }
@@ -466,7 +466,7 @@
                     detalle: lines.join('\n')
                 };
             })();
-            if (window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
+            if (!isAuto && window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
                 tool: 'InboxScore',
                 domain: res.domain,
                 score: res.total.score === null ? 'sin datos' : res.total.score + '/100',
@@ -514,8 +514,11 @@
         } catch (err) { $('isLeadErr').classList.remove('hidden'); }
         finally { btn.disabled = false; btn.textContent = 'Enviarme el detalle'; }
     });
-    var q = new URLSearchParams(location.search).get('d');
-    if (q) submit(q, false);
+    var isParams = new URLSearchParams(location.search);
+    var raw = isParams.get('d') || isParams.get('domain');
+    if (!raw) return;
+    var clean = S.normalizeDomain(raw);
+    if (clean) submit(clean, false, true);
 })();
 </script>
 <script src="/analytics-config.js"></script>

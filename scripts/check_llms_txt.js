@@ -84,8 +84,17 @@ async function main() {
   const unique = [...seen.keys()];
   const missing = [];
   const viaHttp = [];
+  const viaLocal = [];
   for (const u of unique) {
     if (sitemapUrls.has(u)) continue;
+    if (u === 'https://www.inboxseguro.com/llms-full.txt') {
+      if (!fs.existsSync(path.join(root, 'llms-full.txt'))) {
+        missing.push(`${u} (archivo local llms-full.txt no encontrado)`);
+      } else {
+        viaLocal.push(u);
+      }
+      continue;
+    }
     if (!checkHttp) {
       missing.push(`${u} (no está en sitemap; omite CHECK_LLMS_HTTP=0 o deja HTTP activo)`);
       continue;
@@ -114,6 +123,7 @@ async function main() {
   console.log(
     `OK: ${unique.length} URLs únicas en llms.txt (${viaSitemap} en sitemap` +
       (viaHttp.length ? `, ${viaHttp.length} por HTTP 200` : '') +
+      (viaLocal.length ? `, ${viaLocal.length} archivo local` : '') +
       `).`
   );
   if (viaHttp.length) {
