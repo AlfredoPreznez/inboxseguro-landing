@@ -8,7 +8,7 @@
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <meta name="description" content="Consulta el registro SPF de tu dominio. Ve si está publicado, abierto o ausente. Solo verificación DNS; no lo modifica. Herramienta gratuita.">
+    <meta name="description" content="Consulta el registro SPF de tu dominio y calcula cuántas consultas DNS gasta. Solo verificación DNS; no lo modifica. Herramienta gratuita.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/spf-checker">
     <meta name="robots" content="index, follow">
@@ -17,11 +17,11 @@
     <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/spf-checker">
     <meta property="og:title" content="SPF check online: verifica tu registro | InboxSeguro">
-    <meta property="og:description" content="Consulta el registro SPF de tu dominio. Ve si está publicado, abierto o ausente. Solo verificación DNS; no lo modifica. Herramienta gratuita.">
+    <meta property="og:description" content="Consulta el registro SPF de tu dominio y calcula cuántas consultas DNS gasta. Solo verificación DNS; no lo modifica. Herramienta gratuita.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="SPF check online: verifica tu registro | InboxSeguro">
-    <meta name="twitter:description" content="Consulta el registro SPF de tu dominio. Ve si está publicado, abierto o ausente. Solo verificación DNS; no lo modifica. Herramienta gratuita.">
+    <meta name="twitter:description" content="Consulta el registro SPF de tu dominio y calcula cuántas consultas DNS gasta. Solo verificación DNS; no lo modifica. Herramienta gratuita.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -56,6 +56,14 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "La propagación DNS depende del valor TTL (Time To Live) configurado en tu proveedor DNS (como Cloudflare, GoDaddy, AWS Route 53). Habitualmente suele tardar entre unos minutos y 24 horas en aplicarse globalmente."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo calcula esta herramienta las consultas DNS del registro SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La herramienta lee el registro SPF que publica el dominio y suma cada mecanismo que realiza consultas DNS adicionales (include, a, mx, ptr, exists y redirect) según la RFC 7208, sección 4.6.4. Si el total supera 10 consultas, SPF devuelve permerror."
       }
     }
   ]
@@ -251,7 +259,7 @@
 
             <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verifica el registro SPF de tu dominio</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Verifica el registro SPF publicado: si falta, está abierto o se lee bien. Solo consulta DNS; no lo modifica.
+                Lee el registro SPF publicado y calcula cuántas consultas DNS gasta. Solo consulta DNS; no lo modifica.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
@@ -296,6 +304,28 @@
                             <span id="badge-spf"
                                 class="text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0"></span>
                         </div>
+                    </div>
+
+                    <!-- Contador de Consultas DNS (RFC 7208 §4.6.4) -->
+                    <div id="spfCounterBox" class="hidden mb-6 p-4 rounded-xl bg-white/5 border border-white/10">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+                            <div>
+                                <h4 class="text-white font-bold text-sm">Consultas DNS del registro SPF</h4>
+                                <p id="spfCounterSummary" class="text-slate-300 text-sm mt-1"></p>
+                            </div>
+                            <div id="spfCounterBadge" class="px-3 py-1 rounded-full text-xs font-bold self-start"></div>
+                        </div>
+                        <div id="spfCounterWarning" class="hidden p-3 rounded-lg bg-red-500/10 border border-red-400/25 text-red-200 text-xs mb-3"></div>
+                        <div id="spfMechanismsContainer" class="border-t border-white/10 pt-4 mt-4">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Mecanismos evaluados</span>
+                                <span id="spfMechanismsCount" class="text-xs text-slate-400"></span>
+                            </div>
+                            <div id="spfMechanismsList" class="space-y-2"></div>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-4 pt-4 border-t border-white/5">
+                            El límite es de 10 consultas DNS por evaluación (RFC 7208, sección 4.6.4).
+                        </p>
                     </div>
 
                     <!-- SEO/UX CTA Box leading to domain-checker -->
@@ -370,7 +400,7 @@
                 <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">Errores comunes al Configurar SPF</h2>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
-                        Muchas organizaciones cometen fallos en sus registros DNS que invalidan su protección. Este verificador lee el registro SPF que publica el dominio:
+                        Errores frecuentes en un registro SPF (la herramienta lee el registro publicado y calcula cuántas consultas DNS gasta):
                     </p>
                     <div class="grid md:grid-cols-2 gap-4">
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
@@ -405,7 +435,7 @@
 
                 <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">Ver SPF junto al resto</h2>
-                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Esta herramienta solo verifica el registro SPF publicado. El <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Chequeo de seguridad del correo</a> lo muestra junto a DKIM, DMARC y MX. Para entender el límite de 10 consultas DNS, lee <a href="/blog/spf-limite-10-consultas-dns/" class="text-brand-600 hover:underline">cómo no pasar el límite de 10 consultas SPF</a>. Para servicios reconocibles, sigue con el <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Verificador de remitentes</a>.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Esta herramienta solo verifica el registro SPF publicado y calcula cuántas consultas DNS gasta. El <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Chequeo de seguridad del correo</a> lo muestra junto a DKIM, DMARC y MX. Para entender el límite de 10 consultas DNS, lee <a href="/blog/spf-limite-10-consultas-dns/" class="text-brand-600 hover:underline">cómo no pasar el límite de 10 consultas SPF</a>. Para servicios reconocibles, sigue con el <a href="/quien-puede-enviar-correos" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Verificador de remitentes</a>.</p>
                     <h2 class="text-2xl font-bold text-slate-900 mb-4">Preguntas Frecuentes (FAQ) sobre el Verificador SPF</h2>
                     <div class="space-y-4">
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
@@ -424,6 +454,12 @@
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Cuánto tarda en propagarse un cambio en el registro SPF?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
                                 La propagación DNS depende del valor TTL (Time To Live) configurado en tu proveedor DNS (como Cloudflare, GoDaddy, AWS Route 53). Habitualmente suele tardar entre unos minutos y 24 horas en aplicarse globalmente.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Cómo calcula esta herramienta las consultas DNS del registro SPF?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                La herramienta lee el registro SPF que publica el dominio y suma cada mecanismo que realiza consultas DNS adicionales (include, a, mx, ptr, exists y redirect) según la RFC 7208, sección 4.6.4. Si el total supera 10 consultas, SPF devuelve permerror.
                             </p>
                         </div>
                     </div>
@@ -544,10 +580,17 @@
                 const spfData = await fetchDNS(dominio, 'TXT');
                 const queryOk = !!(spfData && (spfData.Status === 0 || spfData.Status === 3));
                 const spfRecords = extractTXT(spfData);
-                const spfRecord = spfRecords.find(r => r.toLowerCase().startsWith('v=spf1'));
-                const spfResult = queryOk
-                    ? analyzeSpf(spfRecord)
-                    : { status: 'unknown', label: 'No verificable', text: 'No pudimos consultar el TXT del dominio, así que no afirmamos si hay SPF.' };
+                const spfOnlyRecords = spfRecords.filter(r => r.toLowerCase().startsWith('v=spf1'));
+                const spfRecord = spfOnlyRecords[0];
+                let spfResult;
+
+                if (!queryOk) {
+                    spfResult = { status: 'unknown', label: 'No verificable', text: 'No pudimos consultar el TXT del dominio, así que no afirmamos si hay SPF.' };
+                } else if (spfOnlyRecords.length > 1) {
+                    spfResult = { status: 'warn', label: 'Requiere atención', text: 'El dominio publica múltiples registros SPF (v=spf1), lo que genera permerror según la RFC 7208.' };
+                } else {
+                    spfResult = analyzeSpf(spfRecord);
+                }
 
                 setResult('spf', spfResult);
                 document.getElementById('diagDomain').textContent = dominio;
@@ -561,6 +604,38 @@
                 const scoreStyle = scoreStyles[spfResult.status] || ['No detectado', 'bg-slate-500/20 text-slate-300'];
                 scoreEl.textContent = scoreStyle[0];
                 scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold ' + scoreStyle[1];
+
+                // Contador de consultas DNS (RFC 7208 §4.6.4)
+                if (queryOk) {
+                    if (spfOnlyRecords.length > 1) {
+                        renderSpfCounter(dominio, {
+                            domain: dominio,
+                            multipleRecords: true,
+                            lookupCount: null,
+                            warnings: ['El dominio publica más de un registro v=spf1 en la misma zona DNS (permerror según RFC 7208 §3.2).'],
+                            mechanisms: []
+                        });
+                    } else if (!spfRecord) {
+                        renderSpfCounter(dominio, {
+                            domain: dominio,
+                            noSpf: true,
+                            lookupCount: 0,
+                            warnings: [],
+                            mechanisms: []
+                        });
+                    } else {
+                        const counterResult = await countSpfLookups(dominio, spfData);
+                        renderSpfCounter(dominio, counterResult);
+                    }
+                } else {
+                    renderSpfCounter(dominio, {
+                        domain: dominio,
+                        incomplete: true,
+                        lookupCount: null,
+                        warnings: ['No pudimos consultar los registros DNS del dominio.'],
+                        mechanisms: []
+                    });
+                }
 
                 var notifyResults = { spf: spfResult.text };
                 if (!isAuto && window.InboxSeguroNotify) window.InboxSeguroNotify.notifyToolUse({
@@ -589,6 +664,329 @@
                 btn.disabled = false;
                 btn.innerText = 'Analizar SPF';
                 loadingDiv.classList.add('hidden');
+            }
+        }
+
+        async function countSpfLookups(domain, initialData) {
+            const maxQueries = 30;
+            let queryCount = initialData ? 1 : 0;
+            let lookupCount = 0;
+            let voidLookups = 0;
+            const warnings = [];
+            let incomplete = false;
+            let multipleRecords = false;
+
+            async function evaluateDomain(targetDomain, visitedChain, presetData) {
+                if (queryCount >= maxQueries) {
+                    incomplete = true;
+                    return null;
+                }
+
+                const norm = targetDomain.toLowerCase();
+                if (visitedChain.indexOf(norm) !== -1) {
+                    warnings.push('Hay un lazo de include: ' + targetDomain);
+                    return {
+                        domain: targetDomain,
+                        loop: true,
+                        mechanisms: []
+                    };
+                }
+
+                let data = presetData;
+                if (!data) {
+                    queryCount++;
+                    try {
+                        data = await fetchDNS(targetDomain, 'TXT');
+                    } catch (err) {
+                        incomplete = true;
+                        return null;
+                    }
+                }
+
+                const records = extractTXT(data).filter(r => r.toLowerCase().startsWith('v=spf1'));
+                if (records.length === 0) {
+                    voidLookups++;
+                    return {
+                        domain: targetDomain,
+                        voidLookup: true,
+                        mechanisms: []
+                    };
+                }
+
+                if (records.length > 1) {
+                    multipleRecords = true;
+                    warnings.push('El dominio ' + targetDomain + ' tiene múltiples registros SPF (v=spf1), lo que genera permerror.');
+                    return {
+                        domain: targetDomain,
+                        multipleRecords: true,
+                        mechanisms: []
+                    };
+                }
+
+                const record = records[0];
+                const terms = record.split(/\s+/).slice(1);
+                const mechanisms = [];
+
+                for (let i = 0; i < terms.length; i++) {
+                    const rawTerm = terms[i];
+                    if (!rawTerm) continue;
+
+                    const cleanTerm = rawTerm.replace(/^[+\-~?]/, '');
+                    const lower = cleanTerm.toLowerCase();
+
+                    if (lower.startsWith('include:')) {
+                        lookupCount++;
+                        const incTarget = cleanTerm.substring(8);
+                        const child = await evaluateDomain(incTarget, visitedChain.concat([norm]));
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: 'include',
+                            target: incTarget,
+                            lookups: 1,
+                            child: child
+                        });
+                    } else if (lower.startsWith('redirect=')) {
+                        lookupCount++;
+                        const redTarget = cleanTerm.substring(9);
+                        const child = await evaluateDomain(redTarget, visitedChain.concat([norm]));
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: 'redirect',
+                            target: redTarget,
+                            lookups: 1,
+                            child: child
+                        });
+                    } else if (lower === 'a' || lower.startsWith('a:') || lower.startsWith('a/')) {
+                        lookupCount++;
+                        const hasMacro = /%\{/.test(cleanTerm);
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: 'a',
+                            lookups: 1,
+                            macro: hasMacro,
+                            note: hasMacro ? 'no evaluable aquí' : null
+                        });
+                    } else if (lower === 'mx' || lower.startsWith('mx:') || lower.startsWith('mx/')) {
+                        lookupCount++;
+                        const hasMacro = /%\{/.test(cleanTerm);
+                        let mxCount = null;
+                        if (!hasMacro && queryCount < maxQueries) {
+                            queryCount++;
+                            try {
+                                const mxTarget = lower.startsWith('mx:') ? cleanTerm.split(':')[1].split('/')[0] : targetDomain;
+                                const mxData = await fetchDNS(mxTarget, 'MX');
+                                if (mxData && mxData.Answer) {
+                                    const mxAnswers = mxData.Answer.filter(a => a.type === 15);
+                                    mxCount = mxAnswers.length;
+                                    if (mxCount > 10) {
+                                        warnings.push('El mecanismo mx devolvió más de 10 nombres (' + mxCount + '), causa de permerror según RFC 7208.');
+                                    }
+                                }
+                            } catch (err) {}
+                        }
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: 'mx',
+                            lookups: 1,
+                            macro: hasMacro,
+                            mxCount: mxCount,
+                            note: hasMacro ? 'no evaluable aquí' : (mxCount !== null && mxCount > 10 ? 'más de 10 nombres (permerror)' : null)
+                        });
+                    } else if (lower === 'ptr' || lower.startsWith('ptr:')) {
+                        lookupCount++;
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: 'ptr',
+                            lookups: 1,
+                            note: 'desaconsejado por RFC 7208 §5.5'
+                        });
+                    } else if (lower.startsWith('exists:')) {
+                        lookupCount++;
+                        const hasMacro = /%\{/.test(cleanTerm);
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: 'exists',
+                            lookups: 1,
+                            macro: hasMacro,
+                            note: hasMacro ? 'no evaluable aquí' : null
+                        });
+                    } else if (lower.startsWith('ip4:') || lower.startsWith('ip6:') || lower === 'all' || lower.startsWith('exp=')) {
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: lower.split(/[:=]/)[0],
+                            lookups: 0
+                        });
+                    } else {
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: 'modifier',
+                            lookups: 0
+                        });
+                    }
+                }
+
+                return {
+                    domain: targetDomain,
+                    record: record,
+                    mechanisms: mechanisms
+                };
+            }
+
+            const root = await evaluateDomain(domain, [], initialData);
+
+            if (voidLookups > 2) {
+                warnings.push('Hay más de 2 consultas sin registro (' + voidLookups + ' void lookups; la RFC recomienda un máximo de 2).');
+            }
+
+            return {
+                domain: domain,
+                lookupCount: lookupCount,
+                queryCount: queryCount,
+                voidLookups: voidLookups,
+                multipleRecords: multipleRecords,
+                warnings: warnings,
+                incomplete: incomplete,
+                root: root
+            };
+        }
+
+        function renderSpfCounter(domain, res) {
+            const box = document.getElementById('spfCounterBox');
+            const summary = document.getElementById('spfCounterSummary');
+            const badge = document.getElementById('spfCounterBadge');
+            const warningEl = document.getElementById('spfCounterWarning');
+            const listEl = document.getElementById('spfMechanismsList');
+            const countEl = document.getElementById('spfMechanismsCount');
+
+            box.classList.remove('hidden');
+            listEl.innerHTML = '';
+
+            if (res.noSpf) {
+                summary.textContent = 'El dominio no publica un registro SPF.';
+                badge.textContent = 'Sin registro';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-slate-500/20 text-slate-300';
+                warningEl.classList.add('hidden');
+                countEl.textContent = '0 consultas DNS';
+                return;
+            }
+
+            if (res.multipleRecords) {
+                summary.textContent = 'El dominio publica más de un registro v=spf1 en DNS. SPF devuelve permerror y no es posible calcular un número válido.';
+                badge.textContent = 'Múltiples registros (permerror)';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-red-500/20 text-red-400';
+                warningEl.textContent = 'Si hay más de un registro v=spf1 en el mismo dominio, la RFC 7208 establece que la evaluación falla con permerror.';
+                warningEl.classList.remove('hidden');
+                countEl.textContent = 'Inválido';
+                return;
+            }
+
+            if (res.incomplete) {
+                summary.textContent = 'No pudimos terminar el conteo de consultas DNS.';
+                badge.textContent = 'No pudimos terminar el conteo';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-slate-500/20 text-slate-300';
+                warningEl.textContent = (res.warnings && res.warnings.length)
+                    ? res.warnings.join(' · ')
+                    : 'Se alcanzó el límite de seguridad de consultas en el navegador o un servidor DNS no respondió a tiempo.';
+                warningEl.classList.remove('hidden');
+                countEl.textContent = 'Incompleto';
+                return;
+            }
+
+            const total = res.lookupCount;
+            countEl.textContent = total + ' de 10 consultas DNS';
+
+            if (total <= 7) {
+                summary.textContent = 'Tu SPF usa ' + total + ' de 10 consultas DNS.';
+                badge.textContent = 'Dentro del límite';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-emerald-500/20 text-emerald-400';
+            } else if (total <= 10) {
+                summary.textContent = 'Tu SPF usa ' + total + ' de 10 consultas DNS.';
+                badge.textContent = 'Cerca del límite';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-amber-500/20 text-amber-400';
+            } else {
+                summary.textContent = 'Tu SPF usa ' + total + ' de 10 consultas DNS (supera el límite; SPF devuelve permerror).';
+                badge.textContent = 'Supera el límite; SPF devuelve permerror';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-red-500/20 text-red-400';
+            }
+
+            if (res.warnings && res.warnings.length > 0) {
+                warningEl.textContent = res.warnings.join(' · ');
+                warningEl.classList.remove('hidden');
+            } else {
+                warningEl.classList.add('hidden');
+            }
+
+            if (res.root && res.root.mechanisms) {
+                renderMechanismsTree(res.root.mechanisms, listEl);
+            }
+        }
+
+        function renderMechanismsTree(mechanisms, container) {
+            for (let i = 0; i < mechanisms.length; i++) {
+                const m = mechanisms[i];
+                const card = document.createElement('div');
+                card.className = 'p-3 rounded-lg bg-white/5 border border-white/5 flex flex-col gap-2 text-xs';
+
+                const header = document.createElement('div');
+                header.className = 'flex items-center justify-between gap-2';
+
+                const termCode = document.createElement('code');
+                termCode.className = 'font-mono text-white text-xs break-all';
+                termCode.textContent = m.raw;
+
+                const costBadge = document.createElement('span');
+                if (m.lookups > 0) {
+                    costBadge.className = 'text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-slate-800 text-slate-300';
+                    costBadge.textContent = '+1 consulta';
+                } else {
+                    costBadge.className = 'text-xs font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-slate-800 text-slate-400';
+                    costBadge.textContent = '0 consultas';
+                }
+
+                header.appendChild(termCode);
+                header.appendChild(costBadge);
+                card.appendChild(header);
+
+                if (m.note) {
+                    const noteDiv = document.createElement('div');
+                    noteDiv.className = 'text-slate-400 text-xs';
+                    noteDiv.textContent = m.note;
+                    card.appendChild(noteDiv);
+                }
+
+                if (m.child) {
+                    if (m.child.voidLookup) {
+                        const voidDiv = document.createElement('div');
+                        voidDiv.className = 'text-amber-400 text-xs';
+                        voidDiv.textContent = 'sin registro (void lookup)';
+                        card.appendChild(voidDiv);
+                    } else if (m.child.loop) {
+                        const loopDiv = document.createElement('div');
+                        loopDiv.className = 'text-amber-400 text-xs';
+                        loopDiv.textContent = 'Hay un lazo de include';
+                        card.appendChild(loopDiv);
+                    } else if (m.child.multipleRecords) {
+                        const multDiv = document.createElement('div');
+                        multDiv.className = 'text-red-400 text-xs';
+                        multDiv.textContent = 'El dominio incluido tiene múltiples registros v=spf1';
+                        card.appendChild(multDiv);
+                    } else if (m.child.mechanisms && m.child.mechanisms.length > 0) {
+                        const subContainer = document.createElement('div');
+                        subContainer.className = 'ml-2 pl-2 border-l-2 border-slate-700 space-y-2 mt-2';
+                        renderMechanismsTree(m.child.mechanisms, subContainer);
+                        card.appendChild(subContainer);
+                    }
+                }
+
+                container.appendChild(card);
             }
         }
 
