@@ -6,6 +6,13 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
+      <title>Cómo verificar el registro SPF de tu dominio</title>
+      <link>https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/</guid>
+      <pubDate>Mon, 26 Oct 2026 00:00:00 -0000</pubDate>
+      <description>Aprende a verificar el SPF de tu dominio: dónde ver el registro, cómo leer ~all y -all, qué significa cada resultado y cómo corregir errores comunes.</description>
+    </item>
+    <item>
       <title>Phishing con IA: qué frena DMARC y qué no</title>
       <link>https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/</guid>
