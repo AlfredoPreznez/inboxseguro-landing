@@ -38,6 +38,7 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 - [Cómo saber si mi dominio está en lista negra](https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/): cómo detectar listados, errores en Gmail y Microsoft 365, y pedir la salida.
 - [Cómo saber si alguien suplanta tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/): detectar envíos falsos con reportes DMARC y separar servicios legítimos.
 - [Cómo verificar DKIM de tu dominio](https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/): encontrar el selector, revisar el registro DNS y errores frecuentes.
+- [Cómo verificar el registro SPF de tu dominio](https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/): revisar que haya un solo registro, leer ~all y -all, comprobar el resultado en un correo real y errores frecuentes.
 - [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios que envían con tu dominio sin administración clara.
 - [Phishing con IA: qué frena DMARC y qué no](https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/): qué ataques con el dominio exacto frena DMARC y cuáles no.
 - [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y avance por etapas.

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo verificar el registro SPF de tu dominio | InboxSeguro</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Aprende a verificar el SPF de tu dominio: dónde ver el registro, cómo leer ~all y -all, qué significa cada resultado y cómo corregir errores comunes.">
+    <link rel="canonical" href="https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/">
+    <meta property="og:title" content="Cómo verificar el registro SPF de tu dominio | InboxSeguro">
+    <meta property="og:description" content="Aprende a verificar el SPF de tu dominio: dónde ver el registro, cómo leer ~all y -all, qué significa cada resultado y cómo corregir errores comunes.">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/como-verificar-spf-de-tu-dominio.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cómo verificar el registro SPF de tu dominio | InboxSeguro">
+    <meta name="twitter:description" content="Aprende a verificar el SPF de tu dominio: dónde ver el registro, cómo leer ~all y -all, qué significa cada resultado y cómo corregir errores comunes.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/como-verificar-spf-de-tu-dominio.png">
+    <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css?v=1.0.8">
+    <link rel="stylesheet" href="/blog.css?v=1.2.3">
+    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Cómo verificar el registro SPF de tu dominio",
+  "description": "Aprende a verificar el SPF de tu dominio: dónde ver el registro, cómo leer ~all y -all, qué significa cada resultado y cómo corregir errores comunes.",
+  "datePublished": "2026-10-26",
+  "dateModified": "2026-10-26",
+  "author": {
+    "@type": "Organization",
+    "name": "InboxSeguro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InboxSeguro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.inboxseguro.com/logo.png"
+    }
+  },
+  "image": [
+    "https://www.inboxseguro.com/blog/covers/como-verificar-spf-de-tu-dominio.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/"
+  },
+  "url": "https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.inboxseguro.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://www.inboxseguro.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Cómo verificar el registro SPF de tu dominio",
+      "item": "https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Qué diferencia hay entre ~all y -all?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Con ~all (softfail) le dices al receptor que un servidor no listado probablemente no está autorizado; con -all (fail), que no lo está. Google recomienda ~all. Microsoft recomienda -all para dominios de Microsoft 365, junto con DKIM y DMARC."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo tener dos registros SPF en el mismo dominio?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. El RFC 7208 indica que un dominio no debe tener más de un registro SPF; si hay más de uno, el resultado es permerror. Para agregar un servicio, edita el registro existente."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tarda en funcionar un cambio en el registro SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Google indica que la autenticación SPF puede tardar hasta 48 horas en comenzar a funcionar después de agregar el registro."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Basta con que SPF dé pass para cumplir con DMARC?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No necesariamente. SPF revisa el dominio de la dirección técnica de envío, que puede ser distinto del que ve el destinatario en el campo \"De\". Para que SPF cuente en DMARC, ambos dominios deben estar alineados."
+      }
+    }
+  ]
+}
+</script>
+
+
+</head>
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors whitespace-nowrap">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas gratis -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas gratis</span>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Chequeo de seguridad</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Verificador de remitentes</span>
+                                    </a>
+                                    <a href="/verificar-lista-negra" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador de listas negras</span>
+                                    </a>
+                                    <a href="/inboxscore" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>InboxScore</span>
+                                    </a>
+                                    <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Todas las herramientas</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Aprender -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Aprender</span>
+                                <div class="space-y-1">
+                                    <a href="/guias" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guías de configuración</span>
+                                    </a>
+                                    <a href="/glosario/" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Glosario DNS</span>
+                                    </a>
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC para empresas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min"
+                        target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
+                        onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                <!-- Recursos: Aprender (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Aprender</span>
+                    <a href="/guias" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guías de configuración</a>
+                    <a href="/glosario/" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Glosario DNS</a>
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guía DMARC para empresas</a>
+                </div>
+
+                <!-- Recursos: Herramientas gratis (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-brand-600 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas gratis</span>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad</a>
+                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Verificador de remitentes</a>
+                    <a href="/verificar-lista-negra" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador de listas negras</a>
+                    <a href="/inboxscore" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">InboxScore</a>
+                    <a href="/herramientas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" onclick="closeMobileMenu(); if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Cómo verificar el registro SPF de tu dominio
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">Autenticación</span>
+            <h1 class="blog-article-h1">Cómo verificar el registro SPF de tu dominio</h1>
+            <p class="blog-meta blog-meta--on-dark">
+                <time datetime="2026-10-26" data-updated="2026-10-26">
+                    26 de octubre de 2026
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>7 min de lectura</span>
+                
+            </p>
+            
+            <div class="blog-listen" data-nosnippet>
+                <p class="blog-listen-label" id="blog-listen-label-como-verificar-spf-de-tu-dominio">
+                    Escuchar este artículo · 10:06
+                </p>
+                <audio
+                    class="blog-listen-audio"
+                    controls
+                    preload="none"
+                    controlslist="nodownload"
+                    aria-labelledby="blog-listen-label-como-verificar-spf-de-tu-dominio"
+                >
+                    <source src="/blog/como-verificar-spf-de-tu-dominio/audio.mp3" type="audio/mpeg">
+                    Tu navegador no admite audio HTML5.
+                </audio>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="blog-article-body blog-article-body--with-toc">
+        
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-es-spf-y-que-revisa-el-receptor">Qué es SPF y qué revisa el receptor</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-1-busca-tu-registro-spf">Paso 1: busca tu registro SPF</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-2-confirma-que-hay-un-solo-registro">Paso 2: confirma que hay un solo registro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-3-revisa-que-esten-todos-los-que-envian-correo">Paso 3: revisa que estén todos los que envían correo</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-4-revisa-como-termina-all-o-all">Paso 4: revisa cómo termina: ~all o -all</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-5-comprueba-el-resultado-en-un-correo-real">Paso 5: comprueba el resultado en un correo real</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#errores-comunes-y-como-corregirlos">Errores comunes y cómo corregirlos</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#para-tu-equipo-tecnico">Para tu equipo técnico</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </details>
+        
+
+        <div class="blog-article-main">
+            <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> Para verificar SPF revisa que tu dominio tenga un solo registro TXT que empiece con v=spf1, que incluya todos los servicios que envían correo con tu dominio y que termine con un all. Luego confirma en un correo real que el resultado sea pass. Google recomienda terminar en ~all y Microsoft recomienda -all para dominios de Microsoft 365.</p>
+                </div>
+                
+                <p>Contratas una nueva herramienta para enviar facturas, alguien agrega una línea en el DNS y todo parece funcionar. Semanas después, un cliente dice que tus correos le llegan a spam. Una causa posible es el registro SPF de tu dominio. Aquí verás cómo verificar SPF paso a paso y cómo corregir los errores más comunes cuidando de no cortar correos legítimos.</p>
+<h2  id="que-es-spf-y-que-revisa-el-receptor">Qué es SPF y qué revisa el receptor</h2>
+<p><strong>SPF</strong> (Sender Policy Framework) es la lista, publicada en tu dominio, de los servidores que tienen permiso para enviar correos en su nombre. Se publica en el <strong>DNS</strong>, el sistema que guarda la información pública de tu dominio, como un registro de tipo <strong>TXT</strong> (un registro de texto). Así lo define el <a href="https://www.rfc-editor.org/rfc/rfc7208">RFC 7208</a>.</p>
+<p>Cuando un servidor recibe un correo, consulta esa lista y comprueba si el servidor que lo envió está autorizado. Según Microsoft, SPF revisa el dominio de la dirección técnica de envío, llamada <strong>MAIL FROM</strong> o remitente de sobre, que no siempre es la misma que ve el destinatario en el campo &ldquo;De&rdquo;.</p>
+<h2  id="paso-1-busca-tu-registro-spf">Paso 1: busca tu registro SPF</h2>
+<p>Para comprobar el registro SPF (en inglés, &ldquo;check SPF&rdquo;) puedes usar el <a href="/spf-checker">verificador SPF</a>, que lee el registro publicado en tu dominio y te señala si falta. Si prefieres la línea de comandos, consulta los registros TXT de tu dominio:</p>
+<pre><code>dig TXT ejemplo.cl +short
+</code></pre>
+<p>Un registro SPF correcto se ve así:</p>
+<pre><code>v=spf1 include:_spf.example.com ip4:192.0.2.10 ~all
+</code></pre>
+<p>Tiene tres partes:</p>
+<ul>
+<li><strong><code>v=spf1</code></strong>: indica que es un registro SPF. Google recuerda que siempre debe ir al comienzo.</li>
+<li><strong>Los servicios autorizados</strong>: <code>include:</code> agrega la lista de otro proveedor y <code>ip4:</code> o <code>ip6:</code> autorizan direcciones IP concretas.</li>
+<li><strong>El final con <code>all</code></strong>: dice qué hacer con los servidores que no aparecen en la lista.</li>
+</ul>
+<p>Si no aparece ninguna línea que empiece con <code>v=spf1</code>, tu dominio no tiene SPF. Google indica que, después de agregarlo, la autenticación puede tardar hasta 48 horas en comenzar a funcionar.</p>
+<h2  id="paso-2-confirma-que-hay-un-solo-registro">Paso 2: confirma que hay un solo registro</h2>
+<p>Tu dominio debe tener un solo registro SPF. El RFC 7208 lo exige: si el receptor encuentra más de uno, el resultado es permerror, un error permanente. Microsoft explica que, en ese caso, el receptor no puede saber cuál evaluar.</p>
+<blockquote>
+<p><strong>Advertencia:</strong> para autorizar un servicio nuevo, edita el registro existente y agrega su <code>include:</code>. No crees un segundo registro: todos tus correos pueden empezar a fallar SPF.</p>
+</blockquote>
+<p>Revisa también los <strong>subdominios</strong> que envían correo, como <code>news.ejemplo.cl</code>. Google y Microsoft coinciden en que cada subdominio necesita su propio registro SPF: el del dominio principal no lo cubre.</p>
+<h2  id="paso-3-revisa-que-esten-todos-los-que-envian-correo">Paso 3: revisa que estén todos los que envían correo</h2>
+<p>Google pide que el registro incluya a todos los servidores que envían correo para tu dominio. Su lista de ejemplos incluye servidores web, servidores de correo propios, formularios de contacto y cualquier proveedor externo que envíe en tu nombre. Si agregas un remitente nuevo y no actualizas el registro, Google advierte que sus mensajes podrían marcarse como spam.</p>
+<p>Como punto de partida, el <a href="/quien-puede-enviar-correos">verificador de remitentes</a> muestra qué servicios podrían estar autorizados según el DNS público de tu dominio. Luego completa la lista con cada área: correo corporativo, CRM, newsletters, facturación y mesa de ayuda.</p>
+<p>Cada <code>include:</code> consume consultas al DNS, y el RFC 7208 pone un límite de 10 por evaluación. Si tu registro tiene muchos servicios, revisa <a href="/blog/spf-limite-10-consultas-dns/">cómo no pasar el límite de 10 consultas</a>.</p>
+<h2  id="paso-4-revisa-como-termina-all-o-all">Paso 4: revisa cómo termina: ~all o -all</h2>
+<p>El final del registro es donde Google y Microsoft dan recomendaciones distintas.</p>
+<ul>
+<li><strong><code>~all</code> (softfail):</strong> según el RFC 7208, es una declaración débil de que el servidor probablemente no está autorizado. Google dice que esta etiqueta indica a los receptores que marquen como spam los mensajes de servidores que no figuran en el registro, y <strong>recomienda usar <code>~all</code></strong>. Su ejemplo es <code>v=spf1 include:_spf.google.com ~all</code>.</li>
+<li><strong><code>-all</code> (fail):</strong> es una declaración explícita de que el servidor no está autorizado. Para dominios de Microsoft 365, <strong>Microsoft recomienda <code>-all</code></strong>, porque también recomienda configurar DKIM y DMARC. Microsoft agrega que, con <code>~all</code>, la política DMARC en la práctica no actúa sobre los mensajes que fallan SPF y tampoco traen firma DKIM.</li>
+<li><strong><code>?all</code> (neutral):</strong> no sugiere ninguna acción. Microsoft no lo recomienda en producción.</li>
+</ul>
+<p>En todos los casos, lo que pasa con el mensaje lo decide el receptor. El RFC 7208 no fija cómo tratar cada resultado, y Microsoft aclara que depende del sistema de destino.</p>
+<p>Si tu registro no termina en <code>all</code> (ni usa <code>redirect</code>) y el servidor no coincide con ningún mecanismo, el RFC indica que el resultado es neutral, como si terminara en <code>?all</code>.</p>
+<blockquote>
+<p><strong>Advertencia:</strong> pasar de <code>~all</code> a <code>-all</code> puede hacer que se rechacen correos de un servicio legítimo que olvidaste incluir. Hazlo solo cuando tengas el inventario completo, DKIM activo y reportes DMARC que confirmen que tus servicios pasan.</p>
+</blockquote>
+<h2  id="paso-5-comprueba-el-resultado-en-un-correo-real">Paso 5: comprueba el resultado en un correo real</h2>
+<p>Que el registro exista no garantiza que funcione. Envía un correo desde cada servicio y revisa las cabeceras del mensaje (en Gmail, la opción <strong>Mostrar original</strong>, como explicamos en la <a href="/blog/como-verificar-dkim-de-tu-dominio/">guía para verificar DKIM</a>). El RFC 7208 define estos resultados:</p>
+<ul>
+<li><strong>pass:</strong> el servidor está autorizado.</li>
+<li><strong>fail:</strong> el servidor no está autorizado.</li>
+<li><strong>softfail:</strong> probablemente no está autorizado.</li>
+<li><strong>neutral:</strong> el dominio no se pronuncia.</li>
+<li><strong>none:</strong> no se encontró registro SPF.</li>
+<li><strong>temperror:</strong> error temporal, normalmente del DNS; puede resolverse al reintentar.</li>
+<li><strong>permerror:</strong> el registro no se pudo interpretar y hay que corregirlo en el DNS.</li>
+</ul>
+<p>Luego compara el dominio de la dirección técnica de envío con el de tu remitente visible. Para que SPF cuente en DMARC, ambos deben estar <strong>alineados</strong>, según el <a href="https://www.rfc-editor.org/rfc/rfc9989">RFC 9989</a>, el estándar actual de DMARC (mayo de 2026). Google lo resume así para los correos directos: el dominio del encabezado &ldquo;De:&rdquo; debe estar alineado con el dominio de SPF o con el de DKIM. Si quieres entender este paso, revisa <a href="/blog/que-es-dmarc-como-activarlo/">qué es DMARC y cómo activarlo</a>.</p>
+<h2  id="errores-comunes-y-como-corregirlos">Errores comunes y cómo corregirlos</h2>
+<ul>
+<li><strong>Dos registros SPF.</strong> Únelos en uno solo con todos los servicios.</li>
+<li><strong>Errores de escritura.</strong> Microsoft muestra tres casos típicos: un punto al final del dominio (<code>include:_spf.example.com.</code>), un signo igual en vez de dos puntos (<code>include=</code>) y un espacio después de los dos puntos.</li>
+<li><strong>Un <code>include:</code> que apunta a un dominio sin SPF.</strong> Si el dominio incluido no se resuelve o no tiene registro SPF, Microsoft indica que la validación devuelve permerror y los mensajes pueden rechazarse.</li>
+<li><strong>Más de 10 consultas.</strong> El resultado también es permerror. Recuerda que los <code>include:</code> anidados también cuentan.</li>
+<li><strong>Usar <code>ptr</code>.</strong> El RFC 7208 dice que este mecanismo no debería publicarse: es lento y menos confiable que otras opciones.</li>
+<li><strong>Servicios que ya no se usan.</strong> Google recomienda quitar los dominios o IP que ya no envían correo.</li>
+</ul>
+<blockquote>
+<p><strong>Advertencia:</strong> antes de quitar un <code>include:</code>, confirma con el área que usaba ese servicio que ya no envía correos con tu dominio. Si todavía envía, sus mensajes empezarán a fallar.</p>
+</blockquote>
+<p>Si tus correos ya están llegando a spam, revisa también <a href="/blog/mis-correos-llegan-a-spam/">por qué tus correos llegan a spam</a> y usa el <a href="/domain-checker">chequeo de seguridad del correo</a> para ver SPF, DKIM, DMARC y MX de una vez.</p>
+<h2  id="para-tu-equipo-tecnico">Para tu equipo técnico</h2>
+<ul>
+<li>Solo registro TXT; el tipo SPF quedó descontinuado (RFC 7208, 3.1).</li>
+<li>Un único registro; varios <code>v=spf1</code> = <code>permerror</code> (3.2, 4.5).</li>
+<li>Resultados: none, neutral, pass, fail, softfail, temperror, permerror (2.6). Calificadores <code>+</code>, <code>-</code>, <code>~</code>, <code>?</code> (4.6.2). Sin <code>all</code> ni <code>redirect</code>, resultado neutral (4.7).</li>
+<li>Límite de 10 términos con consulta DNS (<code>include</code>, <code>a</code>, <code>mx</code>, <code>ptr</code>, <code>exists</code>, <code>redirect</code>), contando los anidados; superarlo da <code>permerror</code>. Los void lookups deberían limitarse a dos (4.6.4).</li>
+<li><code>ptr</code>: no debería publicarse (5.5).</li>
+<li>Alineación SPF: DMARC solo usa la identidad MAIL FROM; relajada exige el mismo dominio organizacional entre MAIL FROM y From; estricta, coincidencia exacta (RFC 9989, 3.2.10 y 4.4.2; reemplaza al RFC 7489).</li>
+<li>Microsoft recomienda un TTL mínimo de 3600 segundos y <code>v=spf1 -all</code> en dominios que no envían correo.</li>
+</ul>
+<h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
+<p>InboxSeguro arma un inventario de los sistemas que envían correo con tu dominio a partir de los reportes DMARC, te permite asignar un responsable a cada uno y te avisa cuando aparece un servicio nuevo. Así sabes qué debe estar en tu registro SPF antes de endurecerlo. La configuración DNS guiada te muestra los valores de cada registro para que los copies y pegues en el proveedor de tu dominio.</p>
+<h2  id="fuentes">Fuentes</h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc7208">RFC 7208: Sender Policy Framework (SPF)</a>, secciones 2.6, 3.1, 3.2, 4.5, 4.6.2, 4.6.4, 4.7 y 5.5.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9989">RFC 9989: DMARC</a> (mayo de 2026, reemplaza al RFC 7489), secciones 3.2.10 y 4.4.2.</li>
+<li><a href="https://support.google.com/a/answer/33786?hl=es-419">Google: Configura SPF</a>.</li>
+<li><a href="https://support.google.com/a/answer/81126?hl=es-419">Google: Directrices para remitentes de correos</a>.</li>
+<li><a href="https://learn.microsoft.com/es-es/defender-office-365/email-authentication-spf-configure">Microsoft: Configuración de SPF para Microsoft 365</a>.</li>
+<li><a href="https://learn.microsoft.com/es-es/defender-office-365/email-authentication-dmarc-configure">Microsoft: Configuración de DMARC</a>.</li>
+</ul>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿Qué diferencia hay entre ~all y -all?</h3>
+                    <p>Con ~all (softfail) le dices al receptor que un servidor no listado probablemente no está autorizado; con -all (fail), que no lo está. Google recomienda ~all. Microsoft recomienda -all para dominios de Microsoft 365, junto con DKIM y DMARC.</p>
+                    
+                    <h3>¿Puedo tener dos registros SPF en el mismo dominio?</h3>
+                    <p>No. El RFC 7208 indica que un dominio no debe tener más de un registro SPF; si hay más de uno, el resultado es permerror. Para agregar un servicio, edita el registro existente.</p>
+                    
+                    <h3>¿Cuánto tarda en funcionar un cambio en el registro SPF?</h3>
+                    <p>Google indica que la autenticación SPF puede tardar hasta 48 horas en comenzar a funcionar después de agregar el registro.</p>
+                    
+                    <h3>¿Basta con que SPF dé pass para cumplir con DMARC?</h3>
+                    <p>No necesariamente. SPF revisa el dominio de la dirección técnica de envío, que puede ser distinto del que ve el destinatario en el campo &#34;De&#34;. Para que SPF cuente en DMARC, ambos dominios deben estar alineados.</p>
+                    
+                </section>
+                
+            </div>
+
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary" href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener"
+                       data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+
+        
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-es-spf-y-que-revisa-el-receptor">Qué es SPF y qué revisa el receptor</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-1-busca-tu-registro-spf">Paso 1: busca tu registro SPF</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-2-confirma-que-hay-un-solo-registro">Paso 2: confirma que hay un solo registro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-3-revisa-que-esten-todos-los-que-envian-correo">Paso 3: revisa que estén todos los que envían correo</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-4-revisa-como-termina-all-o-all">Paso 4: revisa cómo termina: ~all o -all</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#paso-5-comprueba-el-resultado-en-un-correo-real">Paso 5: comprueba el resultado en un correo real</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#errores-comunes-y-como-corregirlos">Errores comunes y cómo corregirlos</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#para-tu-equipo-tecnico">Para tu equipo técnico</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </nav>
+        
+    </div>
+</article>
+
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Soluciones</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/seguridad-correo-proveedores" class="hover:text-blue-400 transition-colors">Seguridad para proveedores</a></li>
+                            <li><a href="/informe-higiene-correo-corporativo" class="hover:text-blue-400 transition-colors">Informe de higiene</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Detener suplantación</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas gratis</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad</a></li>
+                            <li><a href="/verificar-lista-negra" class="hover:text-blue-400 transition-colors">Verificador de listas negras</a></li>
+                            <li><a href="/inboxscore" class="hover:text-blue-400 transition-colors">InboxScore</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/guias" class="hover:text-blue-400 transition-colors">Guías</a></li>
+                            <li><a href="/glosario/" class="hover:text-blue-400 transition-colors">Glosario</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>
