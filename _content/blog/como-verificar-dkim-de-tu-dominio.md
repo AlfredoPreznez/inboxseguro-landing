@@ -24,7 +24,9 @@ faq:
 draft: false
 ---
 
-DKIM es la firma digital que acompaña a cada correo y le permite al receptor comprobar que el mensaje viene de tu dominio y que no fue alterado en el camino. Es fácil suponer que "ya está configurado", pero cada servicio que envía con tu dominio necesita su propia firma. Aquí verás cómo comprobarlo sin depender de suposiciones.
+DKIM es la firma digital que acompaña a cada correo y le permite al receptor comprobar que el mensaje viene de tu dominio y que no fue alterado en el camino. Es fácil suponer que "ya está configurado", pero cada servicio que envía con tu dominio necesita su propia firma. Esta guía paso a paso te enseña cómo comprobarlo sin depender de suposiciones.
+
+> **¿Quieres comprobar si tu registro está publicado ahora?** Si ya conoces el selector o deseas escanear los selectores más habituales de tu dominio, usa directamente nuestro [verificador DKIM online](/dkim-checker). A continuación, te mostramos cómo encontrar el selector en un correo real y validar la firma.
 
 ## Cómo funciona DKIM en dos líneas
 

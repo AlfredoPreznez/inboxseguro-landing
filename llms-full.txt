@@ -465,6 +465,8 @@ Errores frecuentes:
 
 Un día, un cliente te dice que no le llegó la factura. Al rato, alguien de ventas recibe un rebote con un código extraño. Si te preguntas cómo saber si tu dominio está en una lista negra, o si la que está bloqueada es la IP desde la que envías, esta guía te explica en lenguaje simple qué son estas listas, por qué una empresa puede terminar en una sin haber enviado spam y qué hacer para salir.
 
+> **¿Necesitas comprobar tu servidor ahora mismo?** Si tus mensajes están rebotando o quieres saber si tu servidor de correo aparece listado, usa directamente nuestro [verificador de listas negras](/verificar-lista-negra).
+
 ## Qué es una lista negra de correo (DNSBL)
 
 Una [lista negra](/glosario/rbl/), o *blacklist*, es una lista de direcciones IP o de dominios que alguien considera fuente de correo no deseado. La RFC 5782, que describe cómo funcionan, cuenta que su origen se remonta a 1997, cuando dos ingenieros empezaron a mantener una lista de direcciones IP que les enviaban spam, y explica que el término convencional hoy es DNSBL: *DNS blacklist* o *blocklist* (sección 1).
@@ -511,7 +513,7 @@ Si el error viene de una lista negra externa, el texto del rebote muchas veces i
 
 ## Cómo consultar una blacklist
 
-Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Luego revisa si esa IP pública está en una lista negra, y haz lo mismo con tu dominio.
+Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Puedes escanear en tiempo real las 6 listas de reputación más consultadas ingresando la IP o tu dominio en el [verificador de listas negras](/verificar-lista-negra), que analiza tanto la IP como los servidores MX y el registro A.
 
 Para el correo que llega a Gmail, Google recomienda Postmaster Tools, que muestra la reputación de tu dominio y de tu IP, si tus mensajes están autenticados y por qué algunos no se entregan.
 
@@ -615,7 +617,9 @@ InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite a
 ### Cómo verificar DKIM de tu dominio paso a paso
 - URL Canónica: https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/
 
-DKIM es la firma digital que acompaña a cada correo y le permite al receptor comprobar que el mensaje viene de tu dominio y que no fue alterado en el camino. Es fácil suponer que "ya está configurado", pero cada servicio que envía con tu dominio necesita su propia firma. Aquí verás cómo comprobarlo sin depender de suposiciones.
+DKIM es la firma digital que acompaña a cada correo y le permite al receptor comprobar que el mensaje viene de tu dominio y que no fue alterado en el camino. Es fácil suponer que "ya está configurado", pero cada servicio que envía con tu dominio necesita su propia firma. Esta guía paso a paso te enseña cómo comprobarlo sin depender de suposiciones.
+
+> **¿Quieres comprobar si tu registro está publicado ahora?** Si ya conoces el selector o deseas escanear los selectores más habituales de tu dominio, usa directamente nuestro [verificador DKIM online](/dkim-checker). A continuación, te mostramos cómo encontrar el selector en un correo real y validar la firma.
 
 ## Cómo funciona DKIM en dos líneas
 
@@ -965,7 +969,7 @@ Se apoya en otros dos controles:
 - **SPF:** la lista de servidores que tienen permiso para enviar con tu dominio.
 - **DKIM:** una firma digital que prueba que el correo viene de tu dominio.
 
-Un correo pasa DMARC cuando pasa SPF o DKIM, y además ese resultado corresponde al mismo dominio que ve el destinatario en el campo "De". Google lo explica así en su guía para remitentes.
+Un correo pasa DMARC cuando pasa SPF o DKIM, y además ese resultado corresponde al mismo dominio que ve el destinatario en el campo "De" (concordancia o alineación DMARC). Así lo detallan las [directrices para remitentes de correo de Google](https://support.google.com/mail/answer/81126).
 
 Revisa si ya tienes DMARC con el [verificador DMARC](/dmarc-checker).
 
@@ -973,7 +977,11 @@ Revisa si ya tienes DMARC con el [verificador DMARC](/dmarc-checker).
 
 - **Sin DMARC**, es más fácil que alguien envíe facturas o avisos falsos a tu nombre, y no te enteras.
 - **Con DMARC mal activado**, tus correos legítimos pueden ir a spam o no llegar.
-- **Gmail lo exige** a quienes envían más de 5.000 correos al día a cuentas de Gmail, aunque sea en modo observación.
+- **Exigencia de Google y Microsoft para remitentes masivos:**
+  - Según las [directrices para remitentes de Google](https://support.google.com/mail/answer/81126), quienes envían más de 5.000 correos al día a cuentas personales de Gmail deben configurar SPF y DKIM, contar con un registro DMARC en el dominio de envío (que puede iniciar en política `p=none`) y asegurar que el dominio del encabezado "From:" alinee con SPF o DKIM.
+  - Microsoft, en sus [requisitos de autenticación para remitentes masivos en Outlook.com](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730), exige igualmente a dominios que envían más de 5.000 correos diarios a cuentas personales (Outlook.com, Hotmail, Live) que SPF y DKIM pasen, publicar DMARC al menos con `p=none` y alinear con SPF o DKIM. Los mensajes que no cumplen van a la carpeta de correo no deseado (Junk) o son rechazados con error `550; 5.7.515 Access denied`.
+
+Si buscas una ruta de implementación gradual diseñada para organizaciones, revisa también la guía de [DMARC para empresas](/dmarc-para-empresas).
 
 ## Las tres políticas
 

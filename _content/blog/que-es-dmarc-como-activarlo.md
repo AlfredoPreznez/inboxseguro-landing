@@ -14,8 +14,8 @@ faq:
     a: "Cuando pasa SPF o DKIM y ese resultado corresponde al mismo dominio que ve el destinatario en el campo \"De\"."
   - q: "¿Cuáles son las políticas de DMARC?"
     a: "Observar (none), que no cambia la entrega; cuarentena (quarantine), que pide tratar como sospechosos los correos que fallan; y rechazo (reject), que pide rechazarlos."
-  - q: "¿Gmail exige DMARC?"
-    a: "Sí, a quienes envían más de 5.000 correos al día a cuentas de Gmail, aunque sea en modo observación."
+  - q: "¿Gmail y Microsoft Outlook exigen DMARC?"
+    a: "Sí. Ambos exigen DMARC (al menos en política p=none), junto con SPF, DKIM y alineación de dominio, a quienes envían más de 5.000 correos diarios a cuentas personales (Gmail, Outlook.com, Hotmail y Live)."
   - q: "¿Qué pasa si mi dominio tiene dos registros DMARC?"
     a: "DMARC deja de aplicarse. Si ya existe un registro, hay que editarlo, no crear otro."
 draft: false
@@ -32,7 +32,7 @@ Se apoya en otros dos controles:
 - **SPF:** la lista de servidores que tienen permiso para enviar con tu dominio.
 - **DKIM:** una firma digital que prueba que el correo viene de tu dominio.
 
-Un correo pasa DMARC cuando pasa SPF o DKIM, y además ese resultado corresponde al mismo dominio que ve el destinatario en el campo "De". Google lo explica así en su guía para remitentes.
+Un correo pasa DMARC cuando pasa SPF o DKIM, y además ese resultado corresponde al mismo dominio que ve el destinatario en el campo "De" (concordancia o alineación DMARC). Así lo detallan las [directrices para remitentes de correo de Google](https://support.google.com/mail/answer/81126).
 
 Revisa si ya tienes DMARC con el [verificador DMARC](/dmarc-checker).
 
@@ -40,7 +40,11 @@ Revisa si ya tienes DMARC con el [verificador DMARC](/dmarc-checker).
 
 - **Sin DMARC**, es más fácil que alguien envíe facturas o avisos falsos a tu nombre, y no te enteras.
 - **Con DMARC mal activado**, tus correos legítimos pueden ir a spam o no llegar.
-- **Gmail lo exige** a quienes envían más de 5.000 correos al día a cuentas de Gmail, aunque sea en modo observación.
+- **Exigencia de Google y Microsoft para remitentes masivos:**
+  - Según las [directrices para remitentes de Google](https://support.google.com/mail/answer/81126), quienes envían más de 5.000 correos al día a cuentas personales de Gmail deben configurar SPF y DKIM, contar con un registro DMARC en el dominio de envío (que puede iniciar en política `p=none`) y asegurar que el dominio del encabezado "From:" alinee con SPF o DKIM.
+  - Microsoft, en sus [requisitos de autenticación para remitentes masivos en Outlook.com](https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730), exige igualmente a dominios que envían más de 5.000 correos diarios a cuentas personales (Outlook.com, Hotmail, Live) que SPF y DKIM pasen, publicar DMARC al menos con `p=none` y alinear con SPF o DKIM. Los mensajes que no cumplen van a la carpeta de correo no deseado (Junk) o son rechazados con error `550; 5.7.515 Access denied`.
+
+Si buscas una ruta de implementación gradual diseñada para organizaciones, revisa también la guía de [DMARC para empresas](/dmarc-para-empresas).
 
 ## Las tres políticas
 

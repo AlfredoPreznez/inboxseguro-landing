@@ -22,6 +22,8 @@ audio_alias:
 
 Un día, un cliente te dice que no le llegó la factura. Al rato, alguien de ventas recibe un rebote con un código extraño. Si te preguntas cómo saber si tu dominio está en una lista negra, o si la que está bloqueada es la IP desde la que envías, esta guía te explica en lenguaje simple qué son estas listas, por qué una empresa puede terminar en una sin haber enviado spam y qué hacer para salir.
 
+> **¿Necesitas comprobar tu servidor ahora mismo?** Si tus mensajes están rebotando o quieres saber si tu servidor de correo aparece listado, usa directamente nuestro [verificador de listas negras](/verificar-lista-negra).
+
 ## Qué es una lista negra de correo (DNSBL)
 
 Una [lista negra](/glosario/rbl/), o *blacklist*, es una lista de direcciones IP o de dominios que alguien considera fuente de correo no deseado. La RFC 5782, que describe cómo funcionan, cuenta que su origen se remonta a 1997, cuando dos ingenieros empezaron a mantener una lista de direcciones IP que les enviaban spam, y explica que el término convencional hoy es DNSBL: *DNS blacklist* o *blocklist* (sección 1).
@@ -68,7 +70,7 @@ Si el error viene de una lista negra externa, el texto del rebote muchas veces i
 
 ## Cómo consultar una blacklist
 
-Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Luego revisa si esa IP pública está en una lista negra, y haz lo mismo con tu dominio.
+Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Puedes escanear en tiempo real las 6 listas de reputación más consultadas ingresando la IP o tu dominio en el [verificador de listas negras](/verificar-lista-negra), que analiza tanto la IP como los servidores MX y el registro A.
 
 Para el correo que llega a Gmail, Google recomienda Postmaster Tools, que muestra la reputación de tu dominio y de tu IP, si tus mensajes están autenticados y por qué algunos no se entregan.
 
