@@ -51,7 +51,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/dkim-checker</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -63,7 +63,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/verificar-lista-negra</loc>
-    <lastmod>2026-10-26</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
@@ -99,7 +99,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/dmarc-para-empresas</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
   </url>
@@ -231,13 +231,13 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/blog/</loc>
-    <lastmod>2026-10-28</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -249,7 +249,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -273,7 +273,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

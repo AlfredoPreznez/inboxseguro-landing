@@ -70,7 +70,7 @@ Si el error viene de una lista negra externa, el texto del rebote muchas veces i
 
 ## Cómo consultar una blacklist
 
-Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Puedes escanear en tiempo real las 6 listas de reputación más consultadas ingresando la IP o tu dominio en el [verificador de listas negras](/verificar-lista-negra), que analiza tanto la IP como los servidores MX y el registro A.
+Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Puedes consultar en tiempo real 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL, Backscatterer) ingresando la IP o tu dominio en el [verificador de listas negras](/verificar-lista-negra); si se ingresa un dominio, revisa las IP de sus servidores MX y de su registro A (hasta 6).
 
 Para el correo que llega a Gmail, Google recomienda Postmaster Tools, que muestra la reputación de tu dominio y de tu IP, si tus mensajes están autenticados y por qué algunos no se entregan.
 
