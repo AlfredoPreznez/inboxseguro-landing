@@ -251,13 +251,13 @@
                     19 de octubre de 2026
                 </time>
                 <span aria-hidden="true">·</span>
-                <span>7 min de lectura</span>
+                <span>8 min de lectura</span>
                 
             </p>
             
             <div class="blog-listen" data-nosnippet>
                 <p class="blog-listen-label" id="blog-listen-label-como-saber-si-mi-dominio-esta-en-lista-negra">
-                    Escuchar este artículo · 9:58
+                    Escuchar este artículo · 10:22
                 </p>
                 <audio
                     class="blog-listen-audio"
@@ -348,6 +348,9 @@
             <div class="blog-prose">
                 
                 <p>Un día, un cliente te dice que no le llegó la factura. Al rato, alguien de ventas recibe un rebote con un código extraño. Si te preguntas cómo saber si tu dominio está en una lista negra, o si la que está bloqueada es la IP desde la que envías, esta guía te explica en lenguaje simple qué son estas listas, por qué una empresa puede terminar en una sin haber enviado spam y qué hacer para salir.</p>
+<blockquote>
+<p><strong>¿Necesitas comprobar tu servidor ahora mismo?</strong> Si tus mensajes están rebotando o quieres saber si tu servidor de correo aparece listado, usa directamente nuestro <a href="/verificar-lista-negra">verificador de listas negras</a>.</p>
+</blockquote>
 <h2  id="que-es-una-lista-negra-de-correo-dnsbl">Qué es una lista negra de correo (DNSBL)</h2>
 <p>Una <a href="/glosario/rbl/">lista negra</a>, o <em>blacklist</em>, es una lista de direcciones IP o de dominios que alguien considera fuente de correo no deseado. La RFC 5782, que describe cómo funcionan, cuenta que su origen se remonta a 1997, cuando dos ingenieros empezaron a mantener una lista de direcciones IP que les enviaban spam, y explica que el término convencional hoy es DNSBL: <em>DNS blacklist</em> o <em>blocklist</em> (sección 1).</p>
 <p>Se llaman así porque se publican en el DNS, el mismo sistema que traduce nombres de dominio a direcciones. Existen dos tipos:</p>
@@ -379,7 +382,7 @@
 </ul>
 <p>Si el error viene de una lista negra externa, el texto del rebote muchas veces incluye el motivo del listado y, a menudo, un enlace a una página con más información, como describe la RFC 5782 (sección 2.1).</p>
 <h2  id="como-consultar-una-blacklist">Cómo consultar una blacklist</h2>
-<p>Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Luego revisa si esa IP pública está en una lista negra, y haz lo mismo con tu dominio.</p>
+<p>Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Puedes consultar en tiempo real 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL, Backscatterer) ingresando la IP o tu dominio en el <a href="/verificar-lista-negra">verificador de listas negras</a>; si se ingresa un dominio, revisa las IP de sus servidores MX y de su registro A (hasta 6).</p>
 <p>Para el correo que llega a Gmail, Google recomienda Postmaster Tools, que muestra la reputación de tu dominio y de tu IP, si tus mensajes están autenticados y por qué algunos no se entregan.</p>
 <p>Revisa también tu configuración general con el <a href="/domain-checker">verificador de dominio</a>. Si tus correos están llegando a spam sin rebotes, lee <a href="/blog/mis-correos-llegan-a-spam/">por qué tus correos llegan a spam</a>.</p>
 <h2  id="que-hacer-para-salir-de-una-lista-negra">Qué hacer para salir de una lista negra</h2>
