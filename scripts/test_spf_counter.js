@@ -284,6 +284,63 @@ const MOCK_DNS = {
                 ]
             }
         }
+    },
+
+    // 15. Fragmentos TXT RFC 7208 §3.3: corte en IP, dominio y espacio
+    'test-chunked-ip.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    { name: 'test-chunked-ip.fake.', type: 16, data: '"v=spf1 ip4:192.0." "2.1 -all"' }
+                ]
+            }
+        }
+    },
+    'test-chunked-domain.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    { name: 'test-chunked-domain.fake.', type: 16, data: '"v=spf1 include:sub" "1.test-nested.fake -all"' }
+                ]
+            }
+        }
+    },
+    'test-chunked-space.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    { name: 'test-chunked-space.fake.', type: 16, data: '"v=spf1 ip4:192.0.2.1 " "-all"' }
+                ]
+            }
+        }
+    },
+
+    // 16. Falsos verdes prevenidos
+    // a) v=spf10 no es SPF (RFC 7208 exige v=spf1)
+    'test-spf10.fake': {
+        TXT: { response: txtAnswer('test-spf10.fake', 'v=spf10 ip4:192.0.2.1 -all') }
+    },
+    // b) ip4 e ip6 inválidos o vacíos
+    'test-invalid-ip4.fake': {
+        TXT: { response: txtAnswer('test-invalid-ip4.fake', 'v=spf1 ip4:999.999.999.999 -all') }
+    },
+    'test-invalid-ip6.fake': {
+        TXT: { response: txtAnswer('test-invalid-ip6.fake', 'v=spf1 ip6:2001:db8:::1 -all') }
+    },
+    // c) Dos redirect= en un registro (RFC 7208 §6 permerror)
+    'test-multiple-redirect.fake': {
+        TXT: { response: txtAnswer('test-multiple-redirect.fake', 'v=spf1 redirect=sub1.test-nested.fake redirect=sub2.test-nested.fake') }
+    },
+    // d) Modificador con calificador es sintaxis inválida (§4.6.1)
+    'test-qualified-modifier.fake': {
+        TXT: { response: txtAnswer('test-qualified-modifier.fake', 'v=spf1 -redirect=sub1.test-nested.fake -all') }
+    },
+    // e) include: vacío es sintaxis inválida permerror (§5.2)
+    'test-empty-include.fake': {
+        TXT: { response: txtAnswer('test-empty-include.fake', 'v=spf1 include: -all') }
     }
 };
 
@@ -370,21 +427,24 @@ async function runSuite() {
             category: 'SERVFAIL (no es void, marca incompleto)',
             expectedLookups: null,
             expectedBadge: 'No pudimos terminar el conteo',
-            expectedWarningText: 'SERVFAIL'
+            expectedWarningText: 'SERVFAIL',
+            expectedSummaryText: 'Tu SPF usa al menos'
         },
         {
             domain: 'test-refused.fake',
             category: 'REFUSED RCODE 5 (no es sin SPF, marca incompleto)',
             expectedLookups: null,
             expectedBadge: 'No pudimos terminar el conteo',
-            expectedWarningText: 'RCODE 5'
+            expectedWarningText: 'RCODE 5',
+            expectedSummaryText: 'Tu SPF usa al menos'
         },
         {
             domain: 'test-timeout.fake',
             category: 'Timeout global de 5s (marca incompleto)',
             expectedLookups: null,
             expectedBadge: 'No pudimos terminar el conteo',
-            expectedWarningText: '5 segundos'
+            expectedWarningText: '5 segundos',
+            expectedSummaryText: 'Tu SPF usa al menos'
         },
         {
             domain: 'test-exceed-10.fake',
@@ -420,16 +480,84 @@ async function runSuite() {
             expectedLookups: 1,
             expectedBadge: 'Múltiples registros en include (permerror)',
             expectedSummaryText: 'sub-dup.fake'
+        },
+
+        // Fragmentos TXT RFC 7208 §3.3
+        {
+            domain: 'test-chunked-ip.fake',
+            category: 'Fragmentos TXT RFC 7208 §3.3 (corte dentro de IP)',
+            expectedLookups: 0,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-chunked-domain.fake',
+            category: 'Fragmentos TXT RFC 7208 §3.3 (corte dentro de nombre de dominio)',
+            expectedLookups: 2,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-chunked-space.fake',
+            category: 'Fragmentos TXT RFC 7208 §3.3 (corte en un espacio)',
+            expectedLookups: 0,
+            expectedBadge: 'Dentro del límite'
+        },
+
+        // Prevención de falsos verdes
+        {
+            domain: 'test-spf10.fake',
+            category: 'v=spf10 no es SPF (RFC 7208 exige v=spf1 seguido de espacio/fin)',
+            expectedLookups: 0,
+            expectedBadge: 'Sin registro'
+        },
+        {
+            domain: 'test-invalid-ip4.fake',
+            category: 'ip4 con formato/CIDR inválido causa permerror (§5.6)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en ip4'
+        },
+        {
+            domain: 'test-invalid-ip6.fake',
+            category: 'ip6 con formato/CIDR inválido causa permerror (§5.6)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en ip6'
+        },
+        {
+            domain: 'test-multiple-redirect.fake',
+            category: 'Múltiples modificadores redirect causan permerror (RFC 7208 §6)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'más de un modificador redirect'
+        },
+        {
+            domain: 'test-qualified-modifier.fake',
+            category: 'Modificador con calificador es sintaxis inválida (§4.6.1)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Modificador con calificador'
+        },
+        {
+            domain: 'test-empty-include.fake',
+            category: 'include: vacío es sintaxis inválida permerror (§5.2)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en include'
         }
     ];
 
-    // 2. Pruebas de humo con dominios reales (sin conteo exacto)
+    // 2. Pruebas de humo con dominios reales (sin conteo exacto fijo pero exigiendo resultados concretos)
     const smokeCases = [
-        { domain: 'google.com', category: 'Humo real: Google Workspace' },
-        { domain: 'microsoft.com', category: 'Humo real: Microsoft 365' },
-        { domain: 'shopify.com', category: 'Humo real: Shopify' },
+        { domain: 'google.com', category: 'Humo real: Google Workspace', requireConcrete: true, expectedBadge: 'Dentro del límite' },
+        { domain: 'microsoft.com', category: 'Humo real: Microsoft 365', requireConcrete: true, allowedBadges: ['Dentro del límite', 'Cerca del límite'] },
+        { domain: 'amazon.com', category: 'Humo real: Amazon', requireConcrete: true },
+        { domain: 'hubspot.com', category: 'Humo real: HubSpot', requireConcrete: true },
+        { domain: 'zoho.com', category: 'Humo real: Zoho', requireConcrete: true },
+        { domain: 'shopify.com', category: 'Humo real: Shopify', requireConcrete: true },
+        { domain: 'mailchimp.com', category: 'Humo real: Mailchimp', requireConcrete: true },
+        { domain: 'github.com', category: 'Humo real: GitHub', requireConcrete: true },
         { domain: 'test.com', category: 'Humo real: Dominio sin SPF', expectedBadge: 'Sin registro' },
-        { domain: 'badsecurityinc.be', category: 'Humo real: Política +all' },
+        { domain: 'badsecurityinc.be', category: 'Humo real: Política +all', requireConcrete: true },
         { domain: 'nxdomain-inboxseguro-test-1234567.com', category: 'Humo real: NXDOMAIN', expectedBadge: 'Sin registro' },
         { domain: 'dominio invalido!!!', category: 'Humo real: Entrada sintácticamente inválida', isInvalidInput: true }
     ];
@@ -557,6 +685,7 @@ async function runSuite() {
 
             const badgeText = await page.$eval('#spfCounterBadge', el => el.textContent.trim());
             const summaryText = await page.$eval('#spfCounterSummary', el => el.textContent.trim());
+            const countText = await page.$eval('#spfMechanismsCount', el => el.textContent.trim());
             const warningEl = await page.$('#spfCounterWarning');
             const warningText = warningEl ? await warningEl.textContent() : '';
 
@@ -564,6 +693,8 @@ async function runSuite() {
             const match = summaryText.match(/(\d+)\s+de\s+10/);
             if (match) {
                 actualLookups = parseInt(match[1], 10);
+            } else if (countText.includes('0 consultas DNS')) {
+                actualLookups = 0;
             }
 
             let failed = false;
@@ -589,6 +720,11 @@ async function runSuite() {
             if (tc.expectedSummaryText && !summaryText.includes(tc.expectedSummaryText)) {
                 failed = true;
                 failureReason += `Resumen no contiene "${tc.expectedSummaryText}". `;
+            }
+
+            if (summaryText.includes('Tu SPF usa al menos') && !countText.includes('Al menos')) {
+                failed = true;
+                failureReason += `Contador ("${countText}") no coincide con redacción de resumen ("${summaryText}"). `;
             }
 
             if (tc.checkCutoff) {
@@ -659,28 +795,49 @@ async function runSuite() {
 
             const badgeText = await page.$eval('#spfCounterBadge', el => el.textContent.trim());
             const summaryText = await page.$eval('#spfCounterSummary', el => el.textContent.trim());
+            const countText = await page.$eval('#spfMechanismsCount', el => el.textContent.trim());
 
             let failed = false;
             let failureReason = '';
             if (tc.expectedBadge && badgeText !== tc.expectedBadge) {
                 failed = true;
-                failureReason = `Badge esperado "${tc.expectedBadge}" != "${badgeText}"`;
+                failureReason += `Badge esperado "${tc.expectedBadge}" != "${badgeText}". `;
+            }
+
+            if (tc.allowedBadges && !tc.allowedBadges.includes(badgeText)) {
+                failed = true;
+                failureReason += `Badge "${badgeText}" no está en permitidos [${tc.allowedBadges.join(', ')}]. `;
+            }
+
+            if (tc.requireConcrete) {
+                if (badgeText === 'Sin registro') {
+                    failed = true;
+                    failureReason += 'No debe dar «Sin registro» para un dominio real configurado. ';
+                }
+                if (badgeText.toLowerCase().includes('permerror') || badgeText.toLowerCase().includes('sintaxis')) {
+                    failed = true;
+                    failureReason += `Falso permerror detectado en dominio real: "${badgeText}". `;
+                }
+                if (badgeText === 'No pudimos terminar el conteo') {
+                    failed = true;
+                    failureReason += 'Fallo de red o timeout al consultar el resolver DoH en el entorno. ';
+                }
             }
 
             if (!summaryText || summaryText.length === 0) {
                 failed = true;
-                failureReason = 'Resumen vacío';
+                failureReason += 'Resumen vacío. ';
             }
 
             results.push({
                 domain: tc.domain,
-                expected: tc.expectedBadge || 'Cualquier estado válido',
-                actual: `${badgeText}: "${summaryText.substring(0, 45)}..."`,
+                expected: tc.expectedBadge || (tc.allowedBadges ? tc.allowedBadges.join(' / ') : 'Resultado DoH concreto'),
+                actual: `${badgeText}: "${summaryText.substring(0, 45)}..." (${countText})`,
                 diff: failed ? failureReason : 0,
                 status: failed ? 'FALLO' : 'OK'
             });
 
-            console.log(`  -> Smoke OK: Badge="${badgeText}" | Resumen="${summaryText}"`);
+            console.log(`  -> Smoke OK: Badge="${badgeText}" | Resumen="${summaryText}" | Conteo="${countText}"`);
 
             // Capturas de pantalla opcionales solo si ARTIFACT_DIR está configurado y existe
             if (ARTIFACT_DIR && fs.existsSync(ARTIFACT_DIR)) {
@@ -699,9 +856,9 @@ async function runSuite() {
             console.error(`  -> Error de humo en ${tc.domain}:`, err.message);
             results.push({
                 domain: tc.domain,
-                expected: 'Ejecución exitosa',
-                actual: 'Error / Timeout',
-                diff: err.message,
+                expected: tc.expectedBadge || 'Resultado DoH concreto',
+                actual: 'Error / Timeout de red',
+                diff: `Fallo de red en resolver DoH: ${err.message}`,
                 status: 'FALLO'
             });
         }
