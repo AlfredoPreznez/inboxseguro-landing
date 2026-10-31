@@ -306,7 +306,7 @@
             
             <div class="blog-listen" data-nosnippet>
                 <p class="blog-listen-label" id="blog-listen-label-como-verificar-dkim-de-tu-dominio">
-                    Escuchar este artículo · 4:52
+                    Escuchar este artículo · 5:20
                 </p>
                 <audio
                     class="blog-listen-audio"
@@ -368,7 +368,10 @@
                     <p><strong>Respuesta corta:</strong> Para verificar DKIM necesitas el selector que usa cada servicio que envía correo con tu dominio y revisar que exista un registro TXT en selector._domainkey.tudominio con una clave pública válida. Luego confirma en un correo real que la firma da DKIM=pass y que el dominio de la firma (d=) coincide con el de tu remitente, que es lo que exige DMARC.</p>
                 </div>
                 
-                <p>DKIM es la firma digital que acompaña a cada correo y le permite al receptor comprobar que el mensaje viene de tu dominio y que no fue alterado en el camino. Es fácil suponer que &ldquo;ya está configurado&rdquo;, pero cada servicio que envía con tu dominio necesita su propia firma. Aquí verás cómo comprobarlo sin depender de suposiciones.</p>
+                <p>DKIM es la firma digital que acompaña a cada correo y le permite al receptor comprobar que el mensaje viene de tu dominio y que no fue alterado en el camino. Es fácil suponer que &ldquo;ya está configurado&rdquo;, pero cada servicio que envía con tu dominio necesita su propia firma. Esta guía paso a paso te enseña cómo comprobarlo sin depender de suposiciones.</p>
+<blockquote>
+<p><strong>¿Quieres comprobar si tu registro está publicado ahora?</strong> Si ya conoces el selector o deseas escanear los selectores más habituales de tu dominio, usa directamente nuestro <a href="/dkim-checker">verificador DKIM online</a>. A continuación, te mostramos cómo encontrar el selector en un correo real y validar la firma.</p>
+</blockquote>
 <h2  id="como-funciona-dkim-en-dos-lineas">Cómo funciona DKIM en dos líneas</h2>
 <p>El servicio que envía el correo lo firma con una clave privada y agrega una cabecera <code>DKIM-Signature</code>. El receptor lee esa cabecera, busca la clave pública en el DNS de tu dominio y valida la firma. Así lo define el <a href="https://www.rfc-editor.org/rfc/rfc6376">RFC 6376</a>.</p>
 <p>Dos etiquetas de la cabecera son clave:</p>

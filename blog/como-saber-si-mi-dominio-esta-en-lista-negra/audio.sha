@@ -1,12 +1,12 @@
 {
   "version": "audio-v1",
-  "fingerprint": "0a3272309d3599cb19b4768a1c98b30d",
+  "fingerprint": "26a2ebacb63b27d22943b4d4a89f5a61",
   "engine": "generative",
   "voice": "Pedro",
   "language": "es-US",
   "lexicon_version": 5,
-  "billed_chars": 8848,
-  "duration_sec": 598,
-  "bytes": 3591536,
-  "cost_usd_est": 0.2654
+  "billed_chars": 9213,
+  "duration_sec": 622,
+  "bytes": 3737264,
+  "cost_usd_est": 0.2764
 }

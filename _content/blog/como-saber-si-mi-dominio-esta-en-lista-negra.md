@@ -3,6 +3,7 @@ title: "Cómo saber si mi dominio está en lista negra"
 slug: como-saber-si-mi-dominio-esta-en-lista-negra
 description: "Cómo saber si tu dominio o tu IP está en una lista negra, qué errores revisar en Gmail y Microsoft 365, y cómo pedir la salida sin volver a caer."
 excerpt: "Cómo saber si tu dominio o tu IP está en una lista negra, qué errores revisar en Gmail y Microsoft 365, y cómo pedir la salida."
+resumen: "Para saber si tu dominio está en una lista negra, primero averigua desde qué IP pública salen tus correos: según la RFC 5782, la mayoría de las listas negras (DNSBL) registran direcciones IP, y las listas de dominios son mucho menos comunes. Luego consulta esa IP, o tu dominio, en un verificador de listas negras y lee el texto completo de los rebotes. En Gmail, el error 550 5.7.1 puede indicar que la IP de envío está en una lista de IP suspendidas. En Microsoft 365, el error 550 5.1.8 no viene de una lista externa: indica que un usuario de tu organización fue restringido por superar los límites de envío. Para Gmail, Google recomienda revisar la reputación de tu dominio y de tu IP en Postmaster Tools. Antes de pedir la salida de una lista, corrige la causa."
 category: Entregabilidad
 date: 2026-10-19
 updated: 2026-10-19
@@ -21,6 +22,8 @@ audio_alias:
 ---
 
 Un día, un cliente te dice que no le llegó la factura. Al rato, alguien de ventas recibe un rebote con un código extraño. Si te preguntas cómo saber si tu dominio está en una lista negra, o si la que está bloqueada es la IP desde la que envías, esta guía te explica en lenguaje simple qué son estas listas, por qué una empresa puede terminar en una sin haber enviado spam y qué hacer para salir.
+
+> **¿Necesitas comprobar tu servidor ahora mismo?** Si tus mensajes están rebotando o quieres saber si tu servidor de correo aparece listado, usa directamente nuestro [verificador de listas negras](/verificar-lista-negra).
 
 ## Qué es una lista negra de correo (DNSBL)
 
@@ -68,7 +71,7 @@ Si el error viene de una lista negra externa, el texto del rebote muchas veces i
 
 ## Cómo consultar una blacklist
 
-Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Luego revisa si esa IP pública está en una lista negra, y haz lo mismo con tu dominio.
+Para consultar una blacklist, primero averigua desde qué IP pública salen tus correos; si usas un proveedor o una plataforma de envío, pregúntale. Puedes consultar en tiempo real 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL, Backscatterer) ingresando la IP o tu dominio en el [verificador de listas negras](/verificar-lista-negra); si se ingresa un dominio, revisa las IP de sus servidores MX y de su registro A (hasta 6).
 
 Para el correo que llega a Gmail, Google recomienda Postmaster Tools, que muestra la reputación de tu dominio y de tu IP, si tus mensajes están autenticados y por qué algunos no se entregan.
 
