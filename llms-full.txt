@@ -1107,13 +1107,13 @@ InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite a
 No es una herramienta técnica para especialistas. Es una plataforma de protección que cualquier empresa puede activar hoy: muestra qué sistemas envían correo con tu dominio, avisa cuando aparece uno nuevo y te guía para protegerlo sin interrumpir la operación.
 
 ### ¿Necesito entregarles mis contraseñas?
-Nunca. InboxSeguro analiza solo DNS público.
+Nunca. InboxSeguro analiza solo la información pública de tu dominio (DNS). Tú mantienes el control total de tus accesos. Nosotros solo te decimos qué copiar y pegar en tu panel de control actual.
 
 ### ¿Qué pasa si me suplantan el dominio?
-Detectamos envíos sin SPF/DKIM válidos, los marcamos en el inventario y te ayudamos a aplicar políticas DMARC. El rechazo del correo lo aplican los receptores según tu DNS (p=quarantine o p=reject).
+InboxSeguro no detiene el ataque en tiempo real: analiza tus informes DMARC. Si un origen envía sin SPF ni DKIM válidos, lo marcamos como no autorizado en el inventario, te alertamos y te ayudamos a gestionar la decisión. Que el correo falso no llegue al destinatario depende de tu política DMARC (cuarentena o rechazo), aplicada por los servidores receptores. Si no reconoces el sistema, mantenlo marcado como no autorizado y avanza la política DNS.
 
-### ¿De qué sirve definir un rango de envíos?
-Alertas si un proveedor supera el volumen mensual habitual.
+### ¿De qué sirve definir un rango de envíos por servicio?
+Indicas cuántos correos al mes es normal para cada proveedor (por ejemplo Zoho o Resend). Si el volumen supera ese rango, recibes una alerta — útil para detectar cuentas comprometidas o herramientas que activó alguien sin avisar.
 
-### ¿Qué pasa si caigo en blacklist?
-Monitorizamos RBL y alertamos en el panel.
+### ¿Qué pasa si mi dominio cae en una blacklist?
+Monitorizamos tus IPs frente a listas negras (RBL). Si apareces listado, verás alertas en el panel. Suele deberse a spam saliente o IPs compartidas del proveedor; revisa el detalle y contacta a tu proveedor de envío si es necesario.

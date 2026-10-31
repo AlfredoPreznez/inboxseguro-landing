@@ -347,6 +347,10 @@
         <div class="blog-article-main">
             <div class="blog-prose">
                 
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> Para saber si tu dominio está en una lista negra, primero averigua desde qué IP pública salen tus correos: según la RFC 5782, la mayoría de las listas negras (DNSBL) registran direcciones IP, y las listas de dominios son mucho menos comunes. Luego consulta esa IP, o tu dominio, en un verificador de listas negras y lee el texto completo de los rebotes. En Gmail, el error 550 5.7.1 puede indicar que la IP de envío está en una lista de IP suspendidas. En Microsoft 365, el error 550 5.1.8 no viene de una lista externa: indica que un usuario de tu organización fue restringido por superar los límites de envío. Para Gmail, Google recomienda revisar la reputación de tu dominio y de tu IP en Postmaster Tools. Antes de pedir la salida de una lista, corrige la causa.</p>
+                </div>
+                
                 <p>Un día, un cliente te dice que no le llegó la factura. Al rato, alguien de ventas recibe un rebote con un código extraño. Si te preguntas cómo saber si tu dominio está en una lista negra, o si la que está bloqueada es la IP desde la que envías, esta guía te explica en lenguaje simple qué son estas listas, por qué una empresa puede terminar en una sin haber enviado spam y qué hacer para salir.</p>
 <blockquote>
 <p><strong>¿Necesitas comprobar tu servidor ahora mismo?</strong> Si tus mensajes están rebotando o quieres saber si tu servidor de correo aparece listado, usa directamente nuestro <a href="/verificar-lista-negra">verificador de listas negras</a>.</p>

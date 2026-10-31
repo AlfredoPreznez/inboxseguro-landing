@@ -47,7 +47,7 @@
       "name": "¿Necesito entregarles mis contraseñas?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Nunca. InboxSeguro analiza solo DNS público."
+        "text": "Nunca. InboxSeguro analiza solo la información pública de tu dominio (DNS). Tú mantienes el control total de tus accesos. Nosotros solo te decimos qué copiar y pegar en tu panel de control actual."
       }
     },
     {
@@ -55,23 +55,23 @@
       "name": "¿Qué pasa si me suplantan el dominio?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Detectamos envíos sin SPF/DKIM válidos, los marcamos en el inventario y te ayudamos a aplicar políticas DMARC. El rechazo del correo lo aplican los receptores según tu DNS (p=quarantine o p=reject)."
+        "text": "InboxSeguro no detiene el ataque en tiempo real: analiza tus informes DMARC. Si un origen envía sin SPF ni DKIM válidos, lo marcamos como no autorizado en el inventario, te alertamos y te ayudamos a gestionar la decisión. Que el correo falso no llegue al destinatario depende de tu política DMARC (cuarentena o rechazo), aplicada por los servidores receptores. Si no reconoces el sistema, mantenlo marcado como no autorizado y avanza la política DNS."
       }
     },
     {
       "@type": "Question",
-      "name": "¿De qué sirve definir un rango de envíos?",
+      "name": "¿De qué sirve definir un rango de envíos por servicio?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Alertas si un proveedor supera el volumen mensual habitual."
+        "text": "Indicas cuántos correos al mes es normal para cada proveedor (por ejemplo Zoho o Resend). Si el volumen supera ese rango, recibes una alerta — útil para detectar cuentas comprometidas o herramientas que activó alguien sin avisar."
       }
     },
     {
       "@type": "Question",
-      "name": "¿Qué pasa si caigo en blacklist?",
+      "name": "¿Qué pasa si mi dominio cae en una blacklist?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Monitorizamos RBL y alertamos en el panel."
+        "text": "Monitorizamos tus IPs frente a listas negras (RBL). Si apareces listado, verás alertas en el panel. Suele deberse a spam saliente o IPs compartidas del proveedor; revisa el detalle y contacta a tu proveedor de envío si es necesario."
       }
     }
   ]

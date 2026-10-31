@@ -3,6 +3,7 @@ title: "Cómo saber si mi dominio está en lista negra"
 slug: como-saber-si-mi-dominio-esta-en-lista-negra
 description: "Cómo saber si tu dominio o tu IP está en una lista negra, qué errores revisar en Gmail y Microsoft 365, y cómo pedir la salida sin volver a caer."
 excerpt: "Cómo saber si tu dominio o tu IP está en una lista negra, qué errores revisar en Gmail y Microsoft 365, y cómo pedir la salida."
+resumen: "Para saber si tu dominio está en una lista negra, primero averigua desde qué IP pública salen tus correos: según la RFC 5782, la mayoría de las listas negras (DNSBL) registran direcciones IP, y las listas de dominios son mucho menos comunes. Luego consulta esa IP, o tu dominio, en un verificador de listas negras y lee el texto completo de los rebotes. En Gmail, el error 550 5.7.1 puede indicar que la IP de envío está en una lista de IP suspendidas. En Microsoft 365, el error 550 5.1.8 no viene de una lista externa: indica que un usuario de tu organización fue restringido por superar los límites de envío. Para Gmail, Google recomienda revisar la reputación de tu dominio y de tu IP en Postmaster Tools. Antes de pedir la salida de una lista, corrige la causa."
 category: Entregabilidad
 date: 2026-10-19
 updated: 2026-10-19
