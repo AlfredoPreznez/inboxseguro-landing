@@ -22,13 +22,22 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-let playwrightModule = 'playwright';
-if (process.env.NODE_PATH) {
-    playwrightModule = path.join(process.env.NODE_PATH, 'playwright');
-} else if (fs.existsSync('/home/ubuntu/consent-test/node_modules/playwright')) {
-    playwrightModule = '/home/ubuntu/consent-test/node_modules/playwright';
+let chromium;
+try {
+    const pw = require('playwright');
+    chromium = pw.chromium;
+} catch (e1) {
+    if (process.env.NODE_PATH) {
+        try {
+            const pw = require(path.join(process.env.NODE_PATH, 'playwright'));
+            chromium = pw.chromium;
+        } catch (e2) {}
+    }
 }
-const { chromium } = require(playwrightModule);
+if (!chromium) {
+    console.error('ERROR: No se encontró Playwright en el entorno. Asegúrate de tener Playwright disponible o define NODE_PATH.');
+    process.exit(1);
+}
 
 const ROOT = path.resolve(__dirname, '..');
 const ARTIFACT_DIR = process.env.ARTIFACT_DIR || null;
@@ -160,13 +169,24 @@ const MOCK_DNS = {
         TXT: { response: txtAnswer('test-void-lookups.fake', 'v=spf1 a:nxdomain-a.fake mx:empty-mx.fake exists:nxdomain-exists.fake ~all') }
     },
     'nxdomain-a.fake': {
-        A: { response: { Status: 3 } } // NXDOMAIN
+        A: { response: { Status: 3 } }, // NXDOMAIN
+        AAAA: { response: { Status: 3 } }
     },
     'empty-mx.fake': {
         MX: { response: { Status: 0, Answer: [] } } // NOERROR, 0 records
     },
     'nxdomain-exists.fake': {
-        A: { response: { Status: 3 } } // NXDOMAIN
+        A: { response: { Status: 3 } }, // NXDOMAIN
+        AAAA: { response: { Status: 3 } }
+    },
+
+    // 5b. Host con solo AAAA (no debe contarse como void lookup)
+    'test-a-aaaa-only.fake': {
+        TXT: { response: txtAnswer('test-a-aaaa-only.fake', 'v=spf1 a:ipv6-only.fake ~all') }
+    },
+    'ipv6-only.fake': {
+        A: { response: { Status: 0, Answer: [] } },
+        AAAA: { response: { Status: 0, Answer: [{ name: 'ipv6-only.fake.', type: 28, data: '2001:db8::1' }] } }
     },
 
     // 6. Include a dominio sin SPF (RFC 7208 §5.2: permerror directo, no es void lookup)
@@ -182,12 +202,25 @@ const MOCK_DNS = {
         TXT: { response: txtAnswer('test-macros.fake', 'v=spf1 exists:%{i}._spf.test-macros.fake a:%{d}._spf.test-macros.fake ~all') }
     },
 
+    // 7b. Macros en include y redirect (no deben consultarse literalmente ni dar falso permerror)
+    'test-macros-include.fake': {
+        TXT: { response: txtAnswer('test-macros-include.fake', 'v=spf1 include:%{d}._spf.test-macros.fake redirect=%{d}._spf.test-macros.fake') }
+    },
+
     // 8. SERVFAIL (no es void, marca conteo incompleto)
     'test-servfail.fake': {
         TXT: { response: txtAnswer('test-servfail.fake', 'v=spf1 include:broken-servfail.fake -all') }
     },
     'broken-servfail.fake': {
         TXT: { response: { Status: 2 } } // SERVFAIL
+    },
+
+    // 8b. REFUSED (RCODE 5 != 0/2/3, marca conteo incompleto, no "sin SPF")
+    'test-refused.fake': {
+        TXT: { response: txtAnswer('test-refused.fake', 'v=spf1 include:broken-refused.fake -all') }
+    },
+    'broken-refused.fake': {
+        TXT: { response: { Status: 5 } } // REFUSED
     },
 
     // 9. Timeout global de 5s
@@ -220,6 +253,37 @@ const MOCK_DNS = {
                 'v=spf1 a:h1.fake a:h2.fake a:h3.fake a:h4.fake a:h5.fake a:h6.fake a:h7.fake a:h8.fake a:h9.fake a:h10.fake a:h11.fake include:slow-delay.fake -all'
             )
         }
+    },
+
+    // 12. Posición de redirect: al inicio se evalúa después de todos los mecanismos (§6.1, consulta 11 corte)
+    'test-redirect-position.fake': {
+        TXT: {
+            response: txtAnswer(
+                'test-redirect-position.fake',
+                'v=spf1 redirect=sub2.test-nested.fake a:h1.fake a:h2.fake a:h3.fake a:h4.fake a:h5.fake a:h6.fake a:h7.fake a:h8.fake a:h9.fake a:h10.fake'
+            )
+        }
+    },
+
+    // 13. Sintaxis inválida en include (sin dos puntos) o mecanismo desconocido (§4.6.1 permerror)
+    'test-unknown-mech.fake': {
+        TXT: { response: txtAnswer('test-unknown-mech.fake', 'v=spf1 include broken.fake -all') }
+    },
+
+    // 14. Dominio incluido con múltiples registros v=spf1 (§3.2 permerror, no oculta conteo)
+    'test-included-duplicate.fake': {
+        TXT: { response: txtAnswer('test-included-duplicate.fake', 'v=spf1 include:sub-dup.fake ~all') }
+    },
+    'sub-dup.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    { name: 'sub-dup.fake.', type: 16, data: '"v=spf1 ip4:192.0.2.1 -all"' },
+                    { name: 'sub-dup.fake.', type: 16, data: '"v=spf1 ip4:192.0.2.2 -all"' }
+                ]
+            }
+        }
     }
 };
 
@@ -251,16 +315,16 @@ async function runSuite() {
         },
         {
             domain: 'test-loop.fake',
-            category: 'Lazo de include (bucle)',
+            category: 'Lazo de include (bucle causa permerror)',
             expectedLookups: 2,
-            expectedBadge: 'Dentro del límite',
+            expectedBadge: 'Lazo de include (permerror)',
             expectedWarningText: 'lazo de include'
         },
         {
             domain: 'test-mx-overflow.fake',
             category: 'MX con más de 10 nombres (RFC 7208 permerror)',
             expectedLookups: 1,
-            expectedBadge: 'Dentro del límite',
+            expectedBadge: 'Más de 10 nombres MX (permerror)',
             expectedWarningText: 'más de 10 nombres'
         },
         {
@@ -271,16 +335,22 @@ async function runSuite() {
         },
         {
             domain: 'test-void-lookups.fake',
-            category: 'Void lookups (§4.6.4: 3 void lookups supera límite de 2)',
+            category: 'Void lookups (§4.6.4: 3 void lookups supera recomendación de 2)',
             expectedLookups: 3,
-            expectedBadge: 'Supera el límite; SPF devuelve permerror',
-            expectedWarningText: 'void lookups; superarlo da permerror según RFC 7208 §4.6.4'
+            expectedBadge: 'Requiere atención',
+            expectedWarningText: 'recomienda limitar las consultas sin resultado a 2'
+        },
+        {
+            domain: 'test-a-aaaa-only.fake',
+            category: 'Mecanismo a sin IPv4 pero con AAAA (no debe ser void lookup)',
+            expectedLookups: 1,
+            expectedBadge: 'Dentro del límite'
         },
         {
             domain: 'test-include-no-spf.fake',
             category: 'Include a dominio sin SPF (§5.2: permerror directo, no es void)',
             expectedLookups: 1,
-            expectedBadge: 'Dentro del límite',
+            expectedBadge: 'Include sin SPF (permerror)',
             expectedWarningText: 'permerror según RFC 7208 §5.2'
         },
         {
@@ -290,11 +360,24 @@ async function runSuite() {
             expectedBadge: 'Dentro del límite'
         },
         {
+            domain: 'test-macros-include.fake',
+            category: 'Include y redirect con macros (no evaluables, suman 1 c/u)',
+            expectedLookups: 2,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
             domain: 'test-servfail.fake',
             category: 'SERVFAIL (no es void, marca incompleto)',
             expectedLookups: null,
             expectedBadge: 'No pudimos terminar el conteo',
             expectedWarningText: 'SERVFAIL'
+        },
+        {
+            domain: 'test-refused.fake',
+            category: 'REFUSED RCODE 5 (no es sin SPF, marca incompleto)',
+            expectedLookups: null,
+            expectedBadge: 'No pudimos terminar el conteo',
+            expectedWarningText: 'RCODE 5'
         },
         {
             domain: 'test-timeout.fake',
@@ -316,6 +399,27 @@ async function runSuite() {
             expectedLookups: null, // conteo parcial interrumpido
             expectedBadge: 'Supera el límite; SPF devuelve permerror',
             expectedSummaryText: 'Tu SPF usa al menos'
+        },
+        {
+            domain: 'test-redirect-position.fake',
+            category: 'Redirect al inicio (§6.1: se evalúa al final como consulta 11)',
+            expectedLookups: 11,
+            expectedBadge: 'Supera el límite; SPF devuelve permerror',
+            checkCutoff: true
+        },
+        {
+            domain: 'test-unknown-mech.fake',
+            category: 'Include sin : o mecanismo desconocido (§4.6.1 permerror)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'permerror según RFC 7208 §4.6.1'
+        },
+        {
+            domain: 'test-included-duplicate.fake',
+            category: 'Dominio incluido con múltiples registros v=spf1 (§3.2 permerror sin ocultar conteo)',
+            expectedLookups: 1,
+            expectedBadge: 'Múltiples registros en include (permerror)',
+            expectedSummaryText: 'sub-dup.fake'
         }
     ];
 
@@ -396,9 +500,9 @@ async function runSuite() {
         return page;
     }
 
-    // Autorun con ?d=google.com (sin notificaciones)
-    console.log('\nVerificando autorun con ?d=google.com (no debe disparar notificaciones ni tickets)...');
-    {
+    // Autorun con ?d=google.com y ?domain=google.com (sin notificaciones)
+    console.log('\nVerificando autorun con ?d=google.com y ?domain=google.com (no deben disparar notificaciones ni tickets)...');
+    for (const q of ['?d=google.com', '?domain=google.com']) {
         const page = await createCleanPage();
         let notified = false;
         page.on('request', req => {
@@ -408,24 +512,24 @@ async function runSuite() {
             }
         });
 
-        await page.goto(`${baseUrl}/spf-checker.html?d=google.com`, { waitUntil: 'networkidle' });
-        await page.waitForSelector('#diagResults:not(.hidden)', { timeout: 10000 });
+        await page.goto(`${baseUrl}/spf-checker.html${q}`, { waitUntil: 'networkidle' });
+        await page.waitForSelector('#diagResults:not(.hidden)', { timeout: 15000 });
         const summaryText = await page.$eval('#spfCounterSummary', el => el.textContent.trim());
         const badgeText = await page.$eval('#spfCounterBadge', el => el.textContent.trim());
 
         if (notified) {
-            console.error('FALLO: El autorun disparó una notificación al panel.');
+            console.error(`FALLO: El autorun con ${q} disparó una notificación al panel.`);
             results.push({
-                domain: '?d=google.com',
+                domain: q,
                 expected: 'Sin notify',
                 actual: 'Notificación disparada',
                 diff: 'N/A',
                 status: 'FALLO'
             });
         } else {
-            console.log(`OK: Autorun completado sin notificaciones. Resultado: "${summaryText}" [${badgeText}]`);
+            console.log(`OK: Autorun ${q} completado sin notificaciones. Resultado: "${summaryText}" [${badgeText}]`);
             results.push({
-                domain: '?d=google.com',
+                domain: q,
                 expected: 'Sin notify',
                 actual: `${badgeText}`,
                 diff: 0,
