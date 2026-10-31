@@ -351,6 +351,10 @@
         <div class="blog-article-main">
             <div class="blog-prose">
                 
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> DMARC frena la suplantación de tu dominio exacto: pide a Gmail, Outlook, Yahoo y otros receptores qué hacer con los correos que usan tu dominio en el campo &#34;De&#34; y no pueden probarlo con SPF o DKIM. Como no evalúa el texto, da igual lo bien redactado que esté un correo falso hecho con IA. DMARC no frena los dominios parecidos, el nombre visible falso ni los correos que salen de cuentas comprometidas de tu empresa, que pasan SPF, DKIM y DMARC. La protección llega con las políticas quarantine y reject; p=none solo da visibilidad. Para lo demás, usa autenticación multifactor y confirma por otro canal, como una llamada a un número conocido, cualquier cambio de cuenta bancaria o pago urgente.</p>
+                </div>
+                
                 <p>Un proveedor recibe un correo de <code>facturacion@ejemplo.cl</code> que le pide pagar la próxima factura a una cuenta bancaria nueva. Está bien escrito, en buen español y con el tono de siempre. Es un ejemplo, no un caso real, pero resume el phishing con inteligencia artificial: correos falsos que ya no se delatan por la forma. La IA no inventó el phishing, pero, como advierte el <a href="https://www.ic3.gov/PSA/2024/PSA241203">FBI</a>, lo hace más creíble y más rápido de producir. Aquí verás qué parte de ese problema puede frenar DMARC, qué parte no y por dónde empezar.</p>
 <h2  id="que-cambia-con-el-phishing-con-inteligencia-artificial">Qué cambia con el phishing con inteligencia artificial</h2>
 <h3  id="correos-sin-las-senales-de-siempre">Correos sin las señales de siempre</h3>

@@ -3,6 +3,7 @@ title: "Phishing con IA: qué frena DMARC y qué no"
 slug: phishing-con-ia-dmarc
 description: "La IA ayuda a crear correos falsos más creíbles. Te explicamos cómo DMARC frena los que usan tu dominio exacto y qué ataques no detiene."
 excerpt: "La IA ayuda a crear correos falsos más creíbles. Te explicamos cómo DMARC frena los que usan tu dominio exacto y qué ataques no detiene."
+resumen: "DMARC frena la suplantación de tu dominio exacto: pide a Gmail, Outlook, Yahoo y otros receptores qué hacer con los correos que usan tu dominio en el campo \"De\" y no pueden probarlo con SPF o DKIM. Como no evalúa el texto, da igual lo bien redactado que esté un correo falso hecho con IA. DMARC no frena los dominios parecidos, el nombre visible falso ni los correos que salen de cuentas comprometidas de tu empresa, que pasan SPF, DKIM y DMARC. La protección llega con las políticas quarantine y reject; p=none solo da visibilidad. Para lo demás, usa autenticación multifactor y confirma por otro canal, como una llamada a un número conocido, cualquier cambio de cuenta bancaria o pago urgente."
 category: Seguridad
 date: 2026-10-22
 updated: 2026-10-22
