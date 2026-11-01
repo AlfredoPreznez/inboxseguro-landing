@@ -62,6 +62,15 @@ function startServer() {
         const server = http.createServer((req, res) => {
             const parsedUrl = new URL(req.url, 'http://127.0.0.1');
             let pathname = decodeURIComponent(parsedUrl.pathname);
+            if (pathname === '/api/public/diagnosis-notify') {
+                let body = '';
+                req.on('data', chunk => { body += chunk; });
+                req.on('end', () => {
+                    res.writeHead(200, { 'Content-Type': 'application/json' });
+                    res.end('{"ok":true}');
+                });
+                return;
+            }
             if (pathname === '/') pathname = '/spf-checker.html';
             let filePath = path.join(ROOT, pathname);
 
@@ -627,8 +636,60 @@ const MOCK_DNS = {
                 ]
             }
         }
+    },
+    'test-nxdomain-race.fake': {
+        TXT: {
+            byResolver: {
+                cloudflare: { response: { Status: 3 } },
+                google: {
+                    response: txtAnswer('test-nxdomain-race.fake', 'v=spf1 ip4:192.0.2.1 -all'),
+                    delay: 400
+                },
+                proxy: { response: { Status: 3 } },
+                alidns: { response: { Status: 3 } }
+            }
+        }
+    },
+    'test-proxy-slow-doh-wins.fake': {
+        TXT: {
+            byResolver: {
+                proxy: {
+                    response: txtAnswer('test-proxy-slow-doh-wins.fake', 'v=spf1 ip4:192.0.2.99 -all'),
+                    delay: 4000
+                },
+                cloudflare: { response: txtAnswer('test-proxy-slow-doh-wins.fake', 'v=spf1 ip4:192.0.2.1 -all') },
+                google: { response: txtAnswer('test-proxy-slow-doh-wins.fake', 'v=spf1 ip4:192.0.2.1 -all') },
+                alidns: { response: txtAnswer('test-proxy-slow-doh-wins.fake', 'v=spf1 ip4:192.0.2.1 -all') }
+            }
+        }
+    },
+    'test-bare-all.fake': {
+        TXT: { response: txtAnswer('test-bare-all.fake', 'v=spf1 ip4:192.0.2.1 all') }
+    },
+    'test-include-plus-all.fake': {
+        TXT: { response: txtAnswer('test-include-plus-all.fake', 'v=spf1 include:plus-all-target.fake -all') }
+    },
+    'plus-all-target.fake': {
+        TXT: { response: txtAnswer('plus-all-target.fake', 'v=spf1 +all') }
+    },
+    'test-redirect-plus-all.fake': {
+        TXT: { response: txtAnswer('test-redirect-plus-all.fake', 'v=spf1 redirect=plus-all-target.fake') }
     }
 };
+
+function resolveMockDnsEntry(reqUrl, name, type) {
+    if (!MOCK_DNS[name] || MOCK_DNS[name][type] === undefined) return null;
+    const entry = MOCK_DNS[name][type];
+    if (entry && entry.byResolver) {
+        let key = 'default';
+        if (reqUrl.includes('cloudflare-dns.com')) key = 'cloudflare';
+        else if (reqUrl.includes('dns.google')) key = 'google';
+        else if (reqUrl.includes('dns.alidns.com')) key = 'alidns';
+        else if (reqUrl.includes('inboxseguro-dns-proxy')) key = 'proxy';
+        return entry.byResolver[key] || entry.byResolver.default || null;
+    }
+    return entry;
+}
 
 // Generar entradas A válidas para h1.fake .. h12.fake
 for (let i = 1; i <= 12; i++) {
@@ -1014,6 +1075,36 @@ async function runSuite() {
             expectedLookups: 0,
             expectedBadge: 'Sintaxis inválida (permerror)',
             expectedWarningText: 'Macro no válida'
+        },
+        {
+            domain: 'test-nxdomain-race.fake',
+            category: 'NXDOMAIN rápido no debe ganar a SPF más lento en otro resolver',
+            expectedLookups: 0,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-proxy-slow-doh-wins.fake',
+            category: 'Proxy lento (4s): DoH paralelo debe ganar antes del timeout global',
+            expectedLookups: 0,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-bare-all.fake',
+            category: 'Mecanismo all sin calificador equivale a +all',
+            expectedLookups: 0,
+            expectedBadge: 'Requiere atención'
+        },
+        {
+            domain: 'test-include-plus-all.fake',
+            category: 'include de dominio con +all debe requerir atención',
+            expectedLookups: 1,
+            expectedBadge: 'Requiere atención'
+        },
+        {
+            domain: 'test-redirect-plus-all.fake',
+            category: 'redirect a dominio con +all debe requerir atención',
+            expectedLookups: 1,
+            expectedBadge: 'Requiere atención'
         }
     ];
 
@@ -1055,7 +1146,7 @@ async function runSuite() {
         } catch (e) {
             const u = url.toLowerCase();
             return u.includes('panel.inboxseguro.com') ||
-                   u.includes('inboxseguro-dns-proxy.alfredo-9d8.workers.dev') ||
+                   u.includes('www.inboxseguro.com/api/') ||
                    u.includes('googletagmanager.com') ||
                    u.includes('google-analytics.com') ||
                    u.includes('clarity.ms') ||
@@ -1069,9 +1160,12 @@ async function runSuite() {
         const host = parsed.hostname.toLowerCase();
         const pathname = parsed.pathname.toLowerCase();
 
+        if (host === 'www.inboxseguro.com' && pathname.startsWith('/api/')) {
+            return true;
+        }
+
         // 1. Bloqueo estricto por host
         if (host === 'panel.inboxseguro.com' || host.endsWith('.panel.inboxseguro.com') ||
-            host === 'inboxseguro-dns-proxy.alfredo-9d8.workers.dev' ||
             host.includes('google-analytics.com') ||
             host.includes('googletagmanager.com') ||
             host.includes('clarity.ms') ||
@@ -1129,6 +1223,36 @@ async function runSuite() {
                 const req = route.request();
                 const reqUrl = req.url();
 
+                if (getMocksEnabled && getMocksEnabled()) {
+                    if (reqUrl.includes('/api/dns') ||
+                        reqUrl.includes('cloudflare-dns.com/dns-query') ||
+                        reqUrl.includes('dns.google/resolve') ||
+                        reqUrl.includes('dns.alidns.com/resolve') ||
+                        reqUrl.includes('inboxseguro-dns-proxy.alfredo-9d8.workers.dev/api/dns')) {
+                        try {
+                            const parsed = new URL(reqUrl);
+                            const name = (parsed.searchParams.get('name') || '').toLowerCase().replace(/\.$/, '');
+                            const type = (parsed.searchParams.get('type') || '').toUpperCase();
+
+                            if (MOCK_DNS[name] && MOCK_DNS[name][type] !== undefined) {
+                                const entry = resolveMockDnsEntry(reqUrl, name, type) || MOCK_DNS[name][type];
+                                if (entry.delay) {
+                                    await new Promise(r => setTimeout(r, entry.delay));
+                                }
+                                if (entry.abort) {
+                                    return route.abort();
+                                }
+                                const payload = entry.response !== undefined ? entry.response : entry;
+                                return route.fulfill({
+                                    status: 200,
+                                    contentType: 'application/json',
+                                    body: JSON.stringify(payload)
+                                });
+                            }
+                        } catch (e) {}
+                    }
+                }
+
                 if (isForbiddenUrl(reqUrl)) {
                     if (!this.allowPassThrough) {
                         this.blockedCount++;
@@ -1138,39 +1262,12 @@ async function runSuite() {
                     }
                 }
 
-                if (getMocksEnabled && getMocksEnabled()) {
-                    if (reqUrl.includes('/api/dns') ||
-                        reqUrl.includes('cloudflare-dns.com/dns-query') ||
-                        reqUrl.includes('dns.google/resolve') ||
-                        reqUrl.includes('dns.alidns.com/resolve')) {
-                        try {
-                            const parsed = new URL(reqUrl);
-                            const name = (parsed.searchParams.get('name') || '').toLowerCase().replace(/\.$/, '');
-                            const type = (parsed.searchParams.get('type') || '').toUpperCase();
-
-                            if (MOCK_DNS[name] && MOCK_DNS[name][type] !== undefined) {
-                                const entry = MOCK_DNS[name][type];
-                                if (entry.delay) {
-                                    await new Promise(r => setTimeout(r, entry.delay));
-                                }
-                                if (entry.abort) {
-                                    return route.abort();
-                                }
-                                return route.fulfill({
-                                    status: 200,
-                                    contentType: 'application/json',
-                                    body: JSON.stringify(entry.response)
-                                });
-                            }
-                        } catch (e) {}
-                    }
-                }
-
                 return route.continue();
             });
         }
 
-        assertAllBlocked() {
+        assertAllBlocked(options = {}) {
+            const minExpected = options.minExpected || 0;
             const badRequests = [];
             let total = 0;
             for (const [req, info] of this.forbiddenRequests.entries()) {
@@ -1179,14 +1276,23 @@ async function runSuite() {
                     badRequests.push(`Petición prohibida terminó en la red con éxito (leaked): ${info.url}`);
                 } else if (!info.failed) {
                     badRequests.push(`Petición prohibida quedó pendiente sin abortar: ${info.url}`);
-                } else if (!info.errorText || !info.errorText.includes('ERR_BLOCKED_BY_CLIENT')) {
+                } else if (!info.errorText || (!info.errorText.includes('ERR_BLOCKED_BY_CLIENT') && !info.errorText.includes('ERR_ABORTED'))) {
                     badRequests.push(`Petición prohibida no fue abortada con ERR_BLOCKED_BY_CLIENT (${info.errorText || 'sin errorText'}): ${info.url}`);
                 }
+            }
+
+            if (minExpected > 0 && total === 0) {
+                throw new Error('FALLO DE SEGURIDAD: Se esperaban peticiones prohibidas registradas (>0) pero no se interceptó ninguna.');
             }
 
             if (badRequests.length > 0) {
                 throw new Error('FALLO DE SEGURIDAD: Peticiones no bloqueadas adecuadamente por el cliente:\n  ' + badRequests.join('\n  '));
             }
+
+            if (total > 0 && this.blockedCount !== total) {
+                throw new Error(`FALLO DE SEGURIDAD: blockedCount (${this.blockedCount}) no coincide con peticiones prohibidas registradas (${total}).`);
+            }
+
             return { totalForbidden: total, totalBlocked: this.blockedCount };
         }
     }
@@ -1196,6 +1302,11 @@ async function runSuite() {
         try {
             localStorage.setItem('inboxseguro_cookie_consent', 'accepted');
         } catch (e) {}
+        window.InboxSeguroNotify = {
+            notifyToolUse: function () {
+                return Promise.resolve();
+            }
+        };
     });
 
     let currentEnableMocks = true;
@@ -1357,11 +1468,8 @@ async function runSuite() {
             'a.-b.com',
             '-a.com',
             'a-.com',
-            'ejemplo.com:8080',
             'ejemplo com',
             'ejemplo .com',
-            'ejemplo.com/path',
-            'http://ejemplo.com',
             'a'.repeat(64) + '.com',
             'a.' + 'b'.repeat(250) + '.com',
             '.com',
@@ -1377,7 +1485,9 @@ async function runSuite() {
             'sub-dominio.mi-empresa.co',
             'sitio.photography',
             'ejemplo.technology',
-            'ejemplo.xn--p1ai'
+            'ejemplo.xn--p1ai',
+            'https://www.ejemplo.com/',
+            'http://ejemplo.com/path'
         ];
 
         let domainErrors = 0;
@@ -1410,9 +1520,10 @@ async function runSuite() {
         await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
 
         // Prueba manual con dominio inválido (mensaje claro en español, sin loading ni DNS)
-        const badDomains = ['a..b.com', '-a.com', 'a-.com', 'a.-b.com', 'ejemplo.com:8080', 'ejemplo com', 'ejemplo.com/path'];
+        const badDomains = ['a..b.com', '-a.com', 'a-.com', 'a.-b.com', 'ejemplo com'];
         let uiDomainErrors = 0;
         for (const badDomain of badDomains) {
+            await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
             await page.fill('#dominioInput', badDomain);
             await page.click('#diagBtn');
             await page.waitForTimeout(100);
@@ -1429,18 +1540,35 @@ async function runSuite() {
             }
         }
 
-        // Prueba autorun con dominio inválido (no debe ejecutar ni mostrar loading)
-        for (const q of ['?d=a..b.com', '?domain=ejemplo.com:8080']) {
+        await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
+        await page.fill('#dominioInput', '');
+        await page.click('#diagBtn');
+        await page.waitForTimeout(100);
+        {
+            const errVisible = await page.$eval('#diagError', el => !el.classList.contains('hidden'));
+            const errText = await page.$eval('#diagError', el => el.textContent.trim());
+            const loadingHidden = await page.$eval('#diagLoading', el => el.classList.contains('hidden'));
+            if (!errVisible || !errText.includes('Escribe un dominio válido, por ejemplo tuempresa.com') || !loadingHidden) {
+                uiDomainErrors++;
+                console.error('FALLO: Campo vacío no mostró mensaje de error visible.');
+                results.push({ domain: 'ui-invalid:empty', expected: 'Error visible sin loading', actual: errText, diff: 1, status: 'FALLO' });
+            }
+        }
+
+        // Prueba autorun con dominio inválido (no debe ejecutar ni mostrar loading; mensaje visible)
+        for (const q of ['?d=a..b.com', '?domain=ejemplo com', '?d=']) {
             await page.goto(`${baseUrl}/spf-checker.html${q}`, { waitUntil: 'domcontentloaded' });
             await page.waitForTimeout(300);
 
             const loadingHidden = await page.$eval('#diagLoading', el => el.classList.contains('hidden'));
             const resultsHidden = await page.$eval('#diagResults', el => el.classList.contains('hidden'));
+            const errVisible = await page.$eval('#diagError', el => !el.classList.contains('hidden'));
+            const errText = await page.$eval('#diagError', el => el.textContent.trim());
 
-            if (!loadingHidden || !resultsHidden) {
+            if (!loadingHidden || !resultsHidden || !errVisible || !errText.includes('Escribe un dominio válido, por ejemplo tuempresa.com')) {
                 uiDomainErrors++;
-                console.error(`FALLO: Autorun con dominio inválido "${q}" inició análisis.`);
-                results.push({ domain: `autorun-invalid:${q}`, expected: 'Sin ejecución', actual: 'Ejecutó', diff: 1, status: 'FALLO' });
+                console.error(`FALLO: Autorun con dominio inválido "${q}" no mostró error visible o inició análisis.`);
+                results.push({ domain: `autorun-invalid:${q}`, expected: 'Error visible sin loading', actual: errText, diff: 1, status: 'FALLO' });
             }
         }
 
@@ -1499,7 +1627,7 @@ async function runSuite() {
             status: decodeErrors === 0 ? 'OK' : 'FALLO'
         });
 
-        // hasInvalidMacro: validación exhaustiva según RFC 7208 §7.3 (55 casos)
+        // hasInvalidMacro: validación exhaustiva según RFC 7208 §7.3
         const macroCases = [
             // Escapes válidos
             { str: '%%', isExp: false, expectedInvalid: false, desc: 'escape %%' },
@@ -1571,7 +1699,8 @@ async function runSuite() {
             // Dígito 0 en transformador (RFC 7208 §7.3)
             { str: '%{d0}', isExp: false, expectedInvalid: true, desc: 'dígito de transformación 0 %{d0}' },
             { str: '%{d0r}', isExp: false, expectedInvalid: true, desc: 'dígito 0 con r %{d0r}' },
-            { str: '%{d01}', isExp: false, expectedInvalid: true, desc: 'dígito con cero inicial %{d01}' },
+            { str: '%{d00}', isExp: false, expectedInvalid: true, desc: 'dígito de transformación 00 %{d00}' },
+            { str: '%{d01}', isExp: false, expectedInvalid: false, desc: 'dígito válido %{d01} (valor 1)' },
             { str: 'include:%{s0}.fake', isExp: false, expectedInvalid: true, desc: 'macro s con dígito 0' },
 
             // Transformadores y delimitadores con sintaxis inválida
@@ -1590,7 +1719,7 @@ async function runSuite() {
             }
         }
         if (macroErrors === 0) {
-            console.log('OK: hasInvalidMacro valida 55 casos exhaustivos (%%, %_, %-, %{d}, %{d2}, %{d2r}, %{l-}, %{ir}.%{v}._spf.%{d2}, %{D}, %{d0}, etc.).');
+            console.log(`OK: hasInvalidMacro valida ${macroCases.length} casos exhaustivos (%%, %_, %-, %{d}, %{d2}, %{d2r}, %{l-}, %{ir}.%{v}._spf.%{d2}, %{D}, %{d0}, %{d01}, etc.).`);
         }
         results.push({
             domain: 'unit:hasInvalidMacro',
@@ -1612,13 +1741,13 @@ async function runSuite() {
         const negPage = await negContext.newPage();
 
         try {
-            await negPage.evaluate(() => {
-                return fetch('https://panel.inboxseguro.com/api/public/diagnosis-notify', {
+            await negPage.evaluate((notifyUrl) => {
+                return fetch(notifyUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ probe: 'security_negative_test' })
                 }).catch(() => {});
-            });
+            }, `${baseUrl}/api/public/diagnosis-notify`);
         } catch (e) {}
 
         await negPage.waitForTimeout(150);
@@ -1626,7 +1755,7 @@ async function runSuite() {
         let negSuiteFailed = false;
         let negErrorMsg = '';
         try {
-            negTracker.assertAllBlocked();
+            negTracker.assertAllBlocked({ minExpected: 1 });
         } catch (err) {
             negSuiteFailed = true;
             negErrorMsg = err.message;
@@ -1758,6 +1887,19 @@ async function runSuite() {
                     failed = true;
                     failureReason += `spfCounterBadge incoherente en incompleto: esperaba ámbar (${counterBadge.class}). `;
                 }
+            } else if (badgeText === 'Requiere atención') {
+                if (diagScore.text !== 'Requiere atención' || !diagScore.class.includes('text-amber-400')) {
+                    failed = true;
+                    failureReason += `diagScore incoherente: esperaba Requiere atención ámbar, obtuvo "${diagScore.text}" (${diagScore.class}). `;
+                }
+                if (badgeSpf.text !== 'Requiere atención' || !badgeSpf.class.includes('text-amber-400')) {
+                    failed = true;
+                    failureReason += `badge-spf incoherente: esperaba Requiere atención ámbar, obtuvo "${badgeSpf.text}" (${badgeSpf.class}). `;
+                }
+                if (counterBadge.text !== 'Requiere atención' || !counterBadge.class.includes('text-amber-400')) {
+                    failed = true;
+                    failureReason += `spfCounterBadge incoherente: esperaba Requiere atención ámbar, obtuvo "${counterBadge.text}". `;
+                }
             }
 
             results.push({
@@ -1785,6 +1927,33 @@ async function runSuite() {
         await page.close();
     }
 
+    console.log('\n--- PRIVACIDAD: CONSULTAS POR RESOLVER (DNS simulado) ---');
+    {
+        const page = await createCleanPage({ useMocks: true });
+        await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
+        await page.fill('#dominioInput', 'test-nested.fake');
+        await page.click('#diagBtn');
+        await page.waitForFunction(() => {
+            const resultsEl = document.getElementById('diagResults');
+            const loadingEl = document.getElementById('diagLoading');
+            return resultsEl && !resultsEl.classList.contains('hidden') && loadingEl && loadingEl.classList.contains('hidden');
+        }, { timeout: 15000 });
+        const resolverStats = await page.evaluate(() => window.__spfDnsResolverStats || {});
+        console.log(`Consultas por resolver tras test-nested.fake: proxy=${resolverStats.proxy || 0}, cloudflare=${resolverStats.cloudflare || 0}, google=${resolverStats.google || 0}, alidns=${resolverStats.alidns || 0}`);
+        const privacyOk = (resolverStats.alidns || 0) === 0;
+        results.push({
+            domain: 'privacy:resolver-stats',
+            expected: 'AliDNS=0 en búsqueda anidada',
+            actual: JSON.stringify(resolverStats),
+            diff: privacyOk ? 0 : 'AliDNS recibió consultas cuando no debía ser primario',
+            status: privacyOk ? 'OK' : 'FALLO'
+        });
+        if (!privacyOk) {
+            console.error('FALLO: AliDNS recibió consultas en una búsqueda donde Cloudflare/Google deberían bastar.');
+        }
+        await page.close();
+    }
+
     // Ejecución de pruebas de humo reales (con DNS real sin mocks)
     console.log('\n--- PRUEBAS DE HUMO CON DOMINIOS REALES (SIN CONTEO EXACTO) ---');
     for (const tc of smokeCases) {
@@ -1798,12 +1967,14 @@ async function runSuite() {
             await page.waitForTimeout(600);
             const resultsHidden = await page.$eval('#diagResults', el => el.classList.contains('hidden'));
             const loadingHidden = await page.$eval('#diagLoading', el => el.classList.contains('hidden'));
-            const ok = resultsHidden === true && loadingHidden === true;
+            const errVisible = await page.$eval('#diagError', el => !el.classList.contains('hidden'));
+            const errText = await page.$eval('#diagError', el => el.textContent.trim());
+            const ok = resultsHidden === true && loadingHidden === true && errVisible && errText.includes('Escribe un dominio válido, por ejemplo tuempresa.com');
             results.push({
                 domain: tc.domain,
-                expected: 'Detenido por validación (diagResults oculto)',
-                actual: ok ? 'Detenido por validación (diagResults oculto)' : 'Mostró resultados o loading a pesar de entrada inválida',
-                diff: ok ? 0 : 'diagResults o loading visible tras entrada inválida',
+                expected: 'Detenido por validación (mensaje visible)',
+                actual: ok ? 'Detenido por validación (mensaje visible)' : `errVisible=${errVisible} loadingHidden=${loadingHidden}`,
+                diff: ok ? 0 : 'diagResults/loading/error incoherente tras entrada inválida',
                 status: ok ? 'OK' : 'FALLO'
             });
             if (!ok) {
@@ -1828,6 +1999,14 @@ async function runSuite() {
             const diagScore = await page.$eval('#diagScore', el => ({ text: el.textContent.trim(), class: el.className }));
             const badgeSpf = await page.$eval('#badge-spf', el => ({ text: el.textContent.trim(), class: el.className }));
 
+            let actualLookups = null;
+            const matchLookups = summaryText.match(/(\d+)\s+de\s+10/);
+            if (matchLookups) {
+                actualLookups = parseInt(matchLookups[1], 10);
+            } else if (countText.includes('0 consultas DNS')) {
+                actualLookups = 0;
+            }
+
             let failed = false;
             let failureReason = '';
             if (tc.expectedBadge && badgeText !== tc.expectedBadge) {
@@ -1838,6 +2017,13 @@ async function runSuite() {
             if (tc.allowedBadges && !tc.allowedBadges.includes(badgeText)) {
                 failed = true;
                 failureReason += `Badge "${badgeText}" no está en permitidos [${tc.allowedBadges.join(', ')}]. `;
+            }
+
+            if (tc.expectedLookups !== undefined && tc.expectedLookups !== null) {
+                if (actualLookups !== tc.expectedLookups) {
+                    failed = true;
+                    failureReason += `Lookups esperados ${tc.expectedLookups} != ${actualLookups}. `;
+                }
             }
 
             if (tc.domain === 'test.com') {
@@ -1883,7 +2069,12 @@ async function runSuite() {
                 status: failed ? 'FALLO' : 'OK'
             });
 
-            console.log(`  -> Smoke OK: Badge="${badgeText}" | Resumen="${summaryText}" | Conteo="${countText}"`);
+            console.log(`  -> Smoke OK: Badge="${badgeText}" | Lookups=${actualLookups !== null ? actualLookups : 'N/A'} | Resumen="${summaryText}" | Conteo="${countText}"`);
+
+            const resolverStats = await page.evaluate(() => window.__spfDnsResolverStats || {});
+            if (tc.requireConcrete) {
+                console.log(`     Resolvers: proxy=${resolverStats.proxy || 0}, cf=${resolverStats.cloudflare || 0}, google=${resolverStats.google || 0}, alidns=${resolverStats.alidns || 0}`);
+            }
 
             const target19 = [
                 'microsoft.com', 'amazon.com', 'hubspot.com', 'zoho.com', 'google.com',
@@ -1896,7 +2087,8 @@ async function runSuite() {
                     domain: tc.domain,
                     topBadge: diagScore.text,
                     rowBadge: badgeSpf.text,
-                    counterBadge: `${badgeText} (${countText})`
+                    counterBadge: `${badgeText} (${countText})`,
+                    lookups: actualLookups
                 });
             }
 
@@ -1939,10 +2131,10 @@ async function runSuite() {
     }
 
     console.log('\n================ TABLA DE VERIFICACIÓN DNS REAL (19 DOMINIOS) ================');
-    console.log('| Dominio | Badge Superior (diagScore) | Fila SPF (badge-spf) | Contador (spfCounterBadge) |');
-    console.log('|---|---|---|---|');
+    console.log('| Dominio | Lookups | Badge Superior (diagScore) | Fila SPF (badge-spf) | Contador (spfCounterBadge) |');
+    console.log('|---|---|---|---|---|');
     for (const row of realDnsSummary) {
-        console.log(`| ${row.domain} | ${row.topBadge} | ${row.rowBadge} | ${row.counterBadge} |`);
+        console.log(`| ${row.domain} | ${row.lookups !== undefined && row.lookups !== null ? row.lookups : 'N/A'} | ${row.topBadge} | ${row.rowBadge} | ${row.counterBadge} |`);
     }
 
     if (consoleErrors.length > 0) {

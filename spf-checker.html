@@ -266,8 +266,7 @@
                 <form onsubmit="handleDiagnostico(event)" class="flex flex-col sm:flex-row gap-3" id="diagForm">
                     <label for="dominioInput" class="sr-only">Dominio de tu empresa</label>
                     <input type="text" id="dominioInput" inputmode="url" autocomplete="off" spellcheck="false" placeholder="ej: tuempresa.com"
-                        class="flex-1 px-5 py-4 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-lg transition-all"
-                        required>
+                        class="flex-1 px-5 py-4 rounded-xl bg-slate-900/50 border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-brand-600 focus:border-transparent text-lg transition-all">
                     <button type="submit" id="diagBtn"
                         class="px-8 py-4 bg-brand-600 hover:bg-brand-500 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5 whitespace-nowrap">
                         Analizar SPF
@@ -613,18 +612,40 @@
             return records;
         }
 
+        const DNS_QUERY_TIMEOUT_MS = 5000;
+        let preferredDnsMode = null; // null | 'proxy' | 'doh'
+
+        const DNS_TYPE_CODES = { A: 1, NS: 2, CNAME: 5, MX: 15, TXT: 16, AAAA: 28 };
+
+        function dnsResponseHasRecords(data, type) {
+            if (!data || typeof data.Status !== 'number') return false;
+            if (data.Status === 3) return false;
+            if (data.Status !== 0) return false;
+            if (!data.Answer || !data.Answer.length) return false;
+            const typeCode = DNS_TYPE_CODES[(type || 'TXT').toUpperCase()];
+            if (!typeCode) return data.Answer.length > 0;
+            return data.Answer.some(function (a) { return a.type === typeCode; });
+        }
+
+        function noteResolverQuery(resolverName) {
+            if (!window.__spfDnsResolverStats) {
+                window.__spfDnsResolverStats = { proxy: 0, cloudflare: 0, google: 0, alidns: 0 };
+            }
+            if (Object.prototype.hasOwnProperty.call(window.__spfDnsResolverStats, resolverName)) {
+                window.__spfDnsResolverStats[resolverName]++;
+            }
+        }
+
         async function queryDns(name, type, signal) {
             if (signal && signal.aborted) {
                 throw new DOMException('Aborted', 'AbortError');
             }
 
-            const DNS_TIMEOUT_MS = 5000;
-
-            function queryOne(url, headers) {
+            function queryOne(url, headers, resolverName) {
                 const controller = new AbortController();
                 const timeoutId = setTimeout(function () {
                     controller.abort();
-                }, DNS_TIMEOUT_MS);
+                }, DNS_QUERY_TIMEOUT_MS);
 
                 let onParentAbort = null;
                 if (signal) {
@@ -637,6 +658,8 @@
                         signal.addEventListener('abort', onParentAbort, { once: true });
                     }
                 }
+
+                noteResolverQuery(resolverName);
 
                 return {
                     controller: controller,
@@ -666,68 +689,139 @@
                 };
             }
 
-            const proxyUrl = 'https://inboxseguro-dns-proxy.alfredo-9d8.workers.dev/api/dns?name=' + encodeURIComponent(name) + '&type=' + type;
-            try {
-                const proxyReq = queryOne(proxyUrl, {});
-                return await proxyReq.promise;
-            } catch (e) {
-                if (signal && signal.aborted) throw e;
-                if (e && e.dnsData) return e.dnsData;
-            }
-
-            const dohConfigs = [
-                { url: 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(name) + '&type=' + type, headers: { Accept: 'application/dns-json' } },
-                { url: 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type, headers: {} },
-                { url: 'https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type, headers: {} }
-            ];
-
-            const activeQueries = dohConfigs.map(function (c) {
-                return queryOne(c.url, c.headers);
-            });
-
-            function cancelOthers(winningIdx) {
-                activeQueries.forEach(function (q, idx) {
-                    if (idx !== winningIdx) {
-                        try { q.controller.abort(); } catch (_) {}
+            function attemptWithData(queryObj, idx, controllers, resolverName) {
+                return queryObj.promise.then(function (data) {
+                    if (dnsResponseHasRecords(data, type)) {
+                        controllers.forEach(function (q, i) {
+                            if (i !== idx) {
+                                try { q.controller.abort(); } catch (_) {}
+                            }
+                        });
+                        if (resolverName === 'proxy') {
+                            preferredDnsMode = 'proxy';
+                        } else if (resolverName) {
+                            preferredDnsMode = 'doh';
+                        }
+                        return data;
                     }
+                    var emptyErr = new Error('Respuesta DNS sin registros');
+                    emptyErr.emptyDnsData = data;
+                    throw emptyErr;
                 });
             }
 
-            const attempts = activeQueries.map(function (q, idx) {
-                return q.promise.then(function (data) {
-                    cancelOthers(idx);
-                    return data;
-                });
-            });
+            function pickBestEmptyFromErrors(errs) {
+                const list = errs || [];
+                for (let i = 0; i < list.length; i++) {
+                    const e = list[i];
+                    if (e && e.emptyDnsData) return e.emptyDnsData;
+                }
+                const sf = list.find(function (e) { return e && e.dnsData; });
+                if (sf) return sf.dnsData;
+                return { Status: 3 };
+            }
 
-            if (typeof Promise.any === 'function') {
+            async function raceForDnsData(queriesWithMeta) {
+                const controllers = queriesWithMeta.map(function (q) { return q.query; });
+                const attempts = queriesWithMeta.map(function (entry, idx) {
+                    return attemptWithData(entry.query, idx, controllers, entry.resolver);
+                });
+
+                if (typeof Promise.any === 'function') {
+                    try {
+                        return await Promise.any(attempts);
+                    } catch (aggErr) {
+                        if (signal && signal.aborted) throw new DOMException('Aborted', 'AbortError');
+                        const errs = (aggErr && aggErr.errors) ? aggErr.errors : [aggErr];
+                        return pickBestEmptyFromErrors(errs);
+                    }
+                }
+
+                return new Promise(function (resolve, reject) {
+                    let rejected = 0;
+                    const errors = [];
+                    let settled = false;
+                    attempts.forEach(function (p) {
+                        Promise.resolve(p).then(function (data) {
+                            if (!settled) {
+                                settled = true;
+                                resolve(data);
+                            }
+                        }).catch(function (err) {
+                            if (signal && signal.aborted) return reject(new DOMException('Aborted', 'AbortError'));
+                            errors.push(err);
+                            rejected++;
+                            if (rejected === attempts.length && !settled) {
+                                settled = true;
+                                resolve(pickBestEmptyFromErrors(errors));
+                            }
+                        });
+                    });
+                });
+            }
+
+            const proxyUrl = 'https://inboxseguro-dns-proxy.alfredo-9d8.workers.dev/api/dns?name=' + encodeURIComponent(name) + '&type=' + type;
+            const primaryDoh = [
+                { url: 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(name) + '&type=' + type, headers: { Accept: 'application/dns-json' }, resolver: 'cloudflare' },
+                { url: 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type, headers: {}, resolver: 'google' }
+            ];
+            const alidnsConfig = {
+                url: 'https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type,
+                headers: {},
+                resolver: 'alidns'
+            };
+
+            if (preferredDnsMode === 'doh') {
                 try {
-                    return await Promise.any(attempts);
-                } catch (aggErr) {
-                    if (signal && signal.aborted) throw new DOMException('Aborted', 'AbortError');
-                    const errs = (aggErr && aggErr.errors) ? aggErr.errors : [aggErr];
-                    const sf = errs.find(function (e) { return e && e.dnsData; });
-                    if (sf) return sf.dnsData;
-                    throw aggErr;
+                    return await raceForDnsData(primaryDoh.map(function (c) {
+                        return { query: queryOne(c.url, c.headers, c.resolver), resolver: c.resolver };
+                    }));
+                } catch (e) {
+                    if (signal && signal.aborted) throw e;
+                }
+                return raceForDnsData([{ query: queryOne(alidnsConfig.url, alidnsConfig.headers, alidnsConfig.resolver), resolver: alidnsConfig.resolver }]);
+            }
+
+            if (preferredDnsMode === 'proxy') {
+                try {
+                    const proxyData = await raceForDnsData([{ query: queryOne(proxyUrl, {}, 'proxy'), resolver: 'proxy' }]);
+                    if (dnsResponseHasRecords(proxyData, type) || (proxyData && typeof proxyData.Status === 'number')) {
+                        return proxyData;
+                    }
+                } catch (e) {
+                    if (signal && signal.aborted) throw e;
+                    preferredDnsMode = null;
                 }
             }
 
-            return new Promise(function (resolve, reject) {
-                let rejected = 0;
-                const errors = [];
-                attempts.forEach(function (p) {
-                    Promise.resolve(p).then(resolve).catch(function (err) {
-                        if (signal && signal.aborted) return reject(new DOMException('Aborted', 'AbortError'));
-                        errors.push(err);
-                        rejected++;
-                        if (rejected === attempts.length) {
-                            const sf = errors.find(function (e) { return e && e.dnsData; });
-                            if (sf) return resolve(sf.dnsData);
-                            reject(errors[0]);
-                        }
-                    });
-                });
+            const parallelEntries = primaryDoh.map(function (c) {
+                return { query: queryOne(c.url, c.headers, c.resolver), resolver: c.resolver };
             });
+            if (preferredDnsMode !== 'doh') {
+                parallelEntries.unshift({ query: queryOne(proxyUrl, {}, 'proxy'), resolver: 'proxy' });
+            }
+
+            try {
+                const data = await raceForDnsData(parallelEntries);
+                if (dnsResponseHasRecords(data, type)) {
+                    return data;
+                }
+                if (preferredDnsMode === null && data && typeof data.Status === 'number') {
+                    preferredDnsMode = 'doh';
+                }
+                return data;
+            } catch (e) {
+                if (signal && signal.aborted) throw e;
+            }
+
+            try {
+                const fallback = await raceForDnsData([{ query: queryOne(alidnsConfig.url, alidnsConfig.headers, alidnsConfig.resolver), resolver: alidnsConfig.resolver }]);
+                preferredDnsMode = 'doh';
+                return fallback;
+            } catch (e) {
+                if (signal && signal.aborted) throw e;
+                throw e;
+            }
         }
 
         function isValidIp4(val) {
@@ -847,8 +941,11 @@
                             const match = rest.match(/^(\d*)(r?)([.\-+,\/_=]*)$/i);
                             if (!match) return true;
                             const digits = match[1];
-                            if (digits && (digits === '0' || digits.startsWith('0') || parseInt(digits, 10) === 0)) {
-                                return true;
+                            if (digits) {
+                                const digitVal = parseInt(digits, 10);
+                                if (Number.isNaN(digitVal) || digitVal === 0) {
+                                    return true;
+                                }
                             }
                         }
                         i = closeIdx + 1;
@@ -861,9 +958,19 @@
             return false;
         }
 
+        function normalizeDomainInput(raw) {
+            if (!raw || typeof raw !== 'string') return '';
+            return raw.trim().toLowerCase()
+                .replace(/^https?:\/\//, '')
+                .replace(/\/.*$/, '')
+                .replace(/:\d+$/, '')
+                .replace(/^www\./, '')
+                .replace(/\.$/, '');
+        }
+
         function validateDomainInput(raw) {
             if (!raw || typeof raw !== 'string') return { valid: false };
-            const str = raw.trim().toLowerCase();
+            const str = normalizeDomainInput(raw);
             if (!str) return { valid: false };
 
             // Rechazar espacios internos
@@ -920,8 +1027,27 @@
             if (error) error.classList.add('hidden');
         }
 
+        function spfRecordHasPlusAll(record) {
+            if (!record || typeof record !== 'string') return false;
+            const terms = record.split(/ +/).slice(1);
+            for (let ti = 0; ti < terms.length; ti++) {
+                const rawTerm = terms[ti];
+                if (!rawTerm) continue;
+                if (/^[+\-~?][a-zA-Z][a-zA-Z0-9_.-]*=/.test(rawTerm)) continue;
+                const cleanTerm = rawTerm.replace(/^[+\-~?]/, '').toLowerCase();
+                if (cleanTerm.startsWith('redirect=') || cleanTerm.startsWith('exp=')) continue;
+                const allMatch = rawTerm.match(/^([+\-~?])?(all)$/i);
+                if (allMatch) {
+                    const qual = allMatch[1] || '+';
+                    if (qual === '+') return true;
+                }
+            }
+            return false;
+        }
+
         async function handleDiagnostico(event, isAuto) {
             event.preventDefault();
+            window.__spfDnsResolverStats = { proxy: 0, cloudflare: 0, google: 0, alidns: 0 };
             const raw = document.getElementById('dominioInput').value;
             const validation = validateDomainInput(raw);
             if (!validation.valid) {
@@ -1068,6 +1194,24 @@
                             setResult('spf', spfResult);
                             scoreEl.textContent = 'Requiere atención';
                             scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
+                        } else if (counterResult.hasPlusAll) {
+                            spfResult = {
+                                status: 'warn',
+                                label: 'Requiere atención',
+                                text: 'La política +all (o all sin calificador) autoriza cualquier origen en SPF. Revisa todos tus remitentes antes de aplicar una política restrictiva.'
+                            };
+                            setResult('spf', spfResult);
+                            scoreEl.textContent = 'Requiere atención';
+                            scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
+                        } else if (counterResult.voidLookups > 2) {
+                            spfResult = {
+                                status: 'warn',
+                                label: 'Requiere atención',
+                                text: 'Hay más de 2 consultas DNS sin resultado (void lookups). Algunos receptores devuelven permerror al superarlo (RFC 7208 §4.6.4).'
+                            };
+                            setResult('spf', spfResult);
+                            scoreEl.textContent = 'Requiere atención';
+                            scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
                         }
                         renderSpfCounter(dominio, counterResult);
                     }
@@ -1136,6 +1280,7 @@
             let hasIncludedMultipleRecords = false;
             let includedMultipleRecordsDomain = null;
             let hasUnevaluableMacro = false;
+            let hasPlusAll = false;
             let rootSpfRecord = null;
 
             function checkTimeout() {
@@ -1247,6 +1392,9 @@
                 const record = records[0];
                 if (visitedChain.length === 0) {
                     rootSpfRecord = record;
+                }
+                if (spfRecordHasPlusAll(record)) {
+                    hasPlusAll = true;
                 }
                 if (/\t/.test(record)) {
                     hasUnknownMechanism = true;
@@ -1372,6 +1520,9 @@
                             mech.note = 'no evaluable: usa macros';
                         } else if (!checkTimeout() && queryCount < maxQueries) {
                             mech.child = await evaluateDomain(incTarget, visitedChain.concat([norm]));
+                            if (mech.child && mech.child.record && spfRecordHasPlusAll(mech.child.record)) {
+                                hasPlusAll = true;
+                            }
                         } else {
                             incomplete = true;
                         }
@@ -1783,6 +1934,9 @@
                             mech.note = 'no evaluable: usa macros';
                         } else if (!checkTimeout() && queryCount < maxQueries) {
                             mech.child = await evaluateDomain(redTarget, visitedChain.concat([norm]));
+                            if (mech.child && mech.child.record && spfRecordHasPlusAll(mech.child.record)) {
+                                hasPlusAll = true;
+                            }
                         } else {
                             incomplete = true;
                         }
@@ -1814,7 +1968,7 @@
                 hasUnknownMechanism: hasUnknownMechanism,
                 hasIncludedMultipleRecords: hasIncludedMultipleRecords,
                 includedMultipleRecordsDomain: includedMultipleRecordsDomain,
-                hasPlusAll: !!(rootSpfRecord && /\+all(\s|$)/i.test(rootSpfRecord)),
+                hasPlusAll: hasPlusAll,
                 hasUnevaluableMacro: hasUnevaluableMacro,
                 warnings: warnings,
                 incomplete: incomplete,
@@ -2009,7 +2163,9 @@
 
         function analyzeSpf(record) {
             if (!record) return { status: 'none', label: 'No detectado', text: 'No encontramos un registro SPF. El dominio no publica qué servidores están autorizados.' };
-            if (record.toLowerCase().includes('+all')) return { status: 'warn', label: 'Requiere atención', text: 'La política +all autoriza cualquier origen en SPF. Revisa todos tus remitentes antes de aplicar una política restrictiva.' };
+            if (spfRecordHasPlusAll(record)) {
+                return { status: 'warn', label: 'Requiere atención', text: 'La política +all (o all sin calificador) autoriza cualquier origen en SPF. Revisa todos tus remitentes antes de aplicar una política restrictiva.' };
+            }
             return { status: 'ok', label: 'Configurado', text: record };
         }
 
@@ -2065,8 +2221,10 @@
         }
         (function () {
             var params = new URLSearchParams(window.location.search);
-            var raw = params.get('d') || params.get('domain');
-            if (!raw) return;
+            var hasD = params.has('d');
+            var hasDomain = params.has('domain');
+            if (!hasD && !hasDomain) return;
+            var raw = hasD ? params.get('d') : params.get('domain');
             var validation = validateDomainInput(raw);
             if (validation.valid) {
                 var input = document.getElementById('dominioInput');
@@ -2074,6 +2232,8 @@
                     input.value = validation.domain;
                     handleDiagnostico({ preventDefault: function () {} }, true);
                 }
+            } else {
+                showDiagError('Escribe un dominio válido, por ejemplo tuempresa.com');
             }
         })();
 
