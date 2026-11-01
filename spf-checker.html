@@ -564,13 +564,19 @@
     <script>
         function decodeDnsString(str) {
             if (!str || typeof str !== 'string') return '';
-            return str
-                .replace(/\\(\d{3})/g, function (_, ddd) {
+            return str.replace(/\\(?:(\d{3})|(\\|")|(.))/g, function (match, ddd, escaped, other) {
+                if (ddd) {
                     const code = parseInt(ddd, 10);
-                    return code >= 0 && code <= 255 ? String.fromCharCode(code) : _;
-                })
-                .replace(/\\"/g, '"')
-                .replace(/\\\\/g, '\\');
+                    return code >= 0 && code <= 255 ? String.fromCharCode(code) : match;
+                }
+                if (escaped) {
+                    return escaped;
+                }
+                if (other) {
+                    return other;
+                }
+                return match;
+            });
         }
 
         function extractSpfTxtRecords(dnsData) {
@@ -640,8 +646,7 @@
 
             const dohUrls = [
                 { url: 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(name) + '&type=' + type, headers: { Accept: 'application/dns-json' } },
-                { url: 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type, headers: {} },
-                { url: 'https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type, headers: {} }
+                { url: 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type, headers: {} }
             ];
 
             const attempts = dohUrls.map(function (d) {
@@ -653,10 +658,14 @@
                     return await Promise.any(attempts);
                 } catch (aggErr) {
                     if (signal && signal.aborted) throw new DOMException('Aborted', 'AbortError');
-                    const errs = (aggErr && aggErr.errors) ? aggErr.errors : [aggErr];
-                    const sf = errs.find(function (e) { return e && e.dnsData; });
-                    if (sf) return sf.dnsData;
-                    throw aggErr;
+                    try {
+                        return await queryOne('https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type, {});
+                    } catch (fallbackErr) {
+                        const errs = (aggErr && aggErr.errors) ? aggErr.errors : [aggErr];
+                        const sf = errs.find(function (e) { return e && e.dnsData; });
+                        if (sf) return sf.dnsData;
+                        throw aggErr;
+                    }
                 }
             }
 
@@ -669,9 +678,13 @@
                         errors.push(err);
                         rejected++;
                         if (rejected === attempts.length) {
-                            const sf = errors.find(function (e) { return e && e.dnsData; });
-                            if (sf) return resolve(sf.dnsData);
-                            reject(errors[0]);
+                            queryOne('https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type, {})
+                                .then(resolve)
+                                .catch(function () {
+                                    const sf = errors.find(function (e) { return e && e.dnsData; });
+                                    if (sf) return resolve(sf.dnsData);
+                                    reject(errors[0]);
+                                });
                         }
                     });
                 });
@@ -770,14 +783,34 @@
             return { valid: true };
         }
 
-        function hasInvalidMacro(str) {
-            const matches = str.match(/%\{([^}]*)\}/g);
-            if (!matches) return false;
-            for (let i = 0; i < matches.length; i++) {
-                const inner = matches[i].slice(2, -1);
-                if (!inner) return true;
-                const first = inner[0].toLowerCase();
-                if (!'slodiphcrtv'.includes(first)) return true;
+        function hasInvalidMacro(str, isExp) {
+            if (!str || typeof str !== 'string') return false;
+            if (!str.includes('%')) return false;
+            let i = 0;
+            while (i < str.length) {
+                if (str[i] === '%') {
+                    if (i + 1 >= str.length) return true;
+                    const next = str[i + 1];
+                    if (next === '%' || next === '_' || next === '-') {
+                        i += 2;
+                        continue;
+                    }
+                    if (next === '{') {
+                        const closeIdx = str.indexOf('}', i + 2);
+                        if (closeIdx === -1) return true;
+                        const inner = str.substring(i + 2, closeIdx);
+                        if (!inner) return true;
+                        const macroLetter = inner[0].toLowerCase();
+                        const validLetters = isExp ? 'slodiphcrtv' : 'slodiphv';
+                        if (!validLetters.includes(macroLetter)) return true;
+                        const rest = inner.substring(1);
+                        if (rest && !/^\d*r?[.\-+,\/_=]*$/i.test(rest)) return true;
+                        i = closeIdx + 1;
+                        continue;
+                    }
+                    return true;
+                }
+                i++;
             }
             return false;
         }
@@ -785,7 +818,7 @@
         async function handleDiagnostico(event, isAuto) {
             event.preventDefault();
             const dominio = document.getElementById('dominioInput').value.trim().toLowerCase().replace(/^https?:\/\//, '').replace(/\/.*$/, '').replace(/:\d+$/, '').replace(/^www\./, '').replace(/\.$/, '');
-            if (!dominio) return;
+            if (!dominio || !/^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\.[a-z]{2,}$/.test(dominio)) return;
 
             const btn = document.getElementById('diagBtn');
             const resultsDiv = document.getElementById('diagResults');
@@ -819,14 +852,14 @@
                             mechanisms: []
                         });
                         setResult('spf', {
-                            status: 'unknown',
-                            label: 'No verificable',
+                            status: 'warn',
+                            label: 'No pudimos terminar el conteo',
                             text: 'Se superó el tiempo límite global de 5 segundos al consultar el DNS.'
                         });
                         document.getElementById('diagDomain').textContent = dominio;
                         const scoreEl = document.getElementById('diagScore');
-                        scoreEl.textContent = 'No verificable';
-                        scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-white/5 border border-white/10 text-slate-300';
+                        scoreEl.textContent = 'No pudimos terminar el conteo';
+                        scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
                         resultsDiv.classList.remove('hidden');
                         if (typeof window.trackCheckerSubmit === 'function') window.trackCheckerSubmit('spf');
                         if (typeof window.trackCheckerOutcome === 'function') window.trackCheckerOutcome('spf', 'error');
@@ -904,10 +937,29 @@
                             setResult('spf', spfResult);
                             scoreEl.textContent = 'Permerror';
                             scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400';
+                        } else if (counterResult.incomplete) {
+                            spfResult = {
+                                status: 'warn',
+                                label: 'No pudimos terminar el conteo',
+                                text: (counterResult.warnings && counterResult.warnings.length > 0)
+                                    ? counterResult.warnings[0]
+                                    : 'No pudimos terminar el conteo de consultas DNS debido a un error o límite de tiempo.'
+                            };
+                            setResult('spf', spfResult);
+                            scoreEl.textContent = 'No pudimos terminar el conteo';
+                            scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
                         }
                         renderSpfCounter(dominio, counterResult);
                     }
                 } else {
+                    spfResult = {
+                        status: 'warn',
+                        label: 'No pudimos terminar el conteo',
+                        text: 'No pudimos consultar los registros DNS del dominio.'
+                    };
+                    setResult('spf', spfResult);
+                    scoreEl.textContent = 'No pudimos terminar el conteo';
+                    scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-amber-500/20 text-amber-400';
                     renderSpfCounter(dominio, {
                         domain: dominio,
                         incomplete: true,
@@ -1141,7 +1193,7 @@
                         continue;
                     }
 
-                    if (hasInvalidMacro(cleanTerm)) {
+                    if (hasInvalidMacro(cleanTerm, item.isExp)) {
                         hasUnknownMechanism = true;
                         warnings.push('Macro no válida en "' + rawTerm + '" (permerror según RFC 7208 §7).');
                         mechanisms.push({
@@ -1671,41 +1723,8 @@
                 return;
             }
 
-            if (res.incomplete) {
-                if (res.lookupCount > 10) {
-                    summary.textContent = 'Tu SPF usa al menos ' + res.lookupCount + ' de 10 consultas DNS (supera el límite; SPF devuelve permerror). Conteo parcial interrumpido.';
-                    badge.textContent = 'Supera el límite; SPF devuelve permerror';
-                    badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-red-500/20 text-red-400';
-                    countEl.textContent = 'Al menos ' + res.lookupCount + ' de 10 consultas DNS';
-                    if (res.warnings && res.warnings.length > 0) {
-                        warningEl.textContent = res.warnings.join(' · ');
-                        warningEl.classList.remove('hidden');
-                    } else {
-                        warningEl.classList.add('hidden');
-                    }
-                    if (res.root && res.root.mechanisms) {
-                        renderMechanismsTree(res.root.mechanisms, listEl);
-                    }
-                    return;
-                }
-
-                const countPart = (typeof res.lookupCount === 'number') ? res.lookupCount : 0;
-                summary.textContent = 'Tu SPF usa al menos ' + countPart + ' de 10 consultas DNS. Conteo parcial interrumpido.';
-                badge.textContent = 'No pudimos terminar el conteo';
-                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-white/5 border border-white/10 text-slate-300';
-                warningEl.textContent = (res.warnings && res.warnings.length)
-                    ? res.warnings.join(' · ')
-                    : 'Se alcanzó el límite de seguridad de consultas en el navegador o un servidor DNS no respondió a tiempo.';
-                warningEl.classList.remove('hidden');
-                countEl.textContent = 'Al menos ' + countPart + ' de 10 consultas DNS';
-                if (res.root && res.root.mechanisms) {
-                    renderMechanismsTree(res.root.mechanisms, listEl);
-                }
-                return;
-            }
-
-            const total = res.lookupCount;
-            countEl.textContent = total + ' de 10 consultas DNS';
+            const total = (typeof res.lookupCount === 'number') ? res.lookupCount : 0;
+            countEl.textContent = (res.incomplete ? 'Al menos ' : '') + total + ' de 10 consultas DNS';
 
             if (res.hasLoop) {
                 summary.textContent = 'Tu SPF usa ' + total + ' de 10 consultas DNS, pero contiene un lazo de include (permerror según RFC 7208).';
@@ -1728,9 +1747,23 @@
                 badge.textContent = 'Múltiples registros en include (permerror)';
                 badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-red-500/20 text-red-400';
             } else if (total > 10) {
-                summary.textContent = 'Tu SPF usa ' + total + ' de 10 consultas DNS (supera el límite; SPF devuelve permerror).';
+                summary.textContent = res.incomplete
+                    ? 'Tu SPF usa al menos ' + total + ' de 10 consultas DNS (supera el límite; SPF devuelve permerror). Conteo parcial interrumpido.'
+                    : 'Tu SPF usa ' + total + ' de 10 consultas DNS (supera el límite; SPF devuelve permerror).';
                 badge.textContent = 'Supera el límite; SPF devuelve permerror';
                 badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-red-500/20 text-red-400';
+            } else if (res.incomplete) {
+                summary.textContent = 'Tu SPF usa al menos ' + total + ' de 10 consultas DNS. Conteo parcial interrumpido.';
+                badge.textContent = 'No pudimos terminar el conteo';
+                badge.className = 'px-3 py-1 rounded-full text-xs font-bold self-start bg-amber-500/20 text-amber-400';
+                warningEl.textContent = (res.warnings && res.warnings.length)
+                    ? res.warnings.join(' · ')
+                    : 'Se alcanzó el límite de seguridad de consultas en el navegador o un servidor DNS no respondió a tiempo.';
+                warningEl.classList.remove('hidden');
+                if (res.root && res.root.mechanisms) {
+                    renderMechanismsTree(res.root.mechanisms, listEl);
+                }
+                return;
             } else if (res.voidLookups > 2) {
                 summary.textContent = 'Tu SPF usa ' + total + ' de 10 consultas DNS. La RFC recomienda limitar las consultas sin resultado a 2; algunos receptores devuelven permerror al superarlo.';
                 badge.textContent = 'Requiere atención';

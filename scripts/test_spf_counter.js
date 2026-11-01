@@ -343,34 +343,34 @@ const MOCK_DNS = {
         TXT: { response: txtAnswer('test-empty-include.fake', 'v=spf1 include: -all') }
     },
 
-    // 17. Fragmentación real de proveedores (conteo exacto)
+    // 17. Fragmentación real de proveedores (conteo exacto con dominios .fake)
     'test-real-chunked-microsoft.fake': {
         TXT: {
             response: txtAnswer(
                 'test-real-chunked-microsoft.fake',
-                'v=spf1 include:_spf-a.microsoft.com include:_spf-b.microsoft.com include:_spf-ssg-a.msft.net include:_spf1-meo.microsoft.com -all'
+                'v=spf1 include:_spf-a.microsoft.fake include:_spf-b.microsoft.fake include:_spf-ssg-a.msft.fake include:_spf1-meo.microsoft.fake -all'
             )
         }
     },
-    '_spf-a.microsoft.com': {
-        TXT: { response: txtAnswer('_spf-a.microsoft.com', 'v=spf1 ip4:216.99.5.67 ip4:216.99.5.68 include:spf.protection.outlook.com ~all') }
+    '_spf-a.microsoft.fake': {
+        TXT: { response: txtAnswer('_spf-a.microsoft.fake', 'v=spf1 ip4:216.99.5.67 ip4:216.99.5.68 include:spf.protection.outlook.fake ~all') }
     },
-    'spf.protection.outlook.com': {
-        TXT: { response: txtAnswer('spf.protection.outlook.com', 'v=spf1 ip4:40.92.0.0/15 ~all') }
+    'spf.protection.outlook.fake': {
+        TXT: { response: txtAnswer('spf.protection.outlook.fake', 'v=spf1 ip4:40.92.0.0/15 ~all') }
     },
-    '_spf-b.microsoft.com': {
-        TXT: { response: txtAnswer('_spf-b.microsoft.com', 'v=spf1 ip4:207.46.22.35 ~all') }
+    '_spf-b.microsoft.fake': {
+        TXT: { response: txtAnswer('_spf-b.microsoft.fake', 'v=spf1 ip4:207.46.22.35 ~all') }
     },
-    '_spf-ssg-a.msft.net': {
-        TXT: { response: txtAnswer('_spf-ssg-a.msft.net', 'v=spf1 ip4:104.44.112.128/25 ~all') }
+    '_spf-ssg-a.msft.fake': {
+        TXT: { response: txtAnswer('_spf-ssg-a.msft.fake', 'v=spf1 ip4:104.44.112.128/25 ~all') }
     },
-    '_spf1-meo.microsoft.com': {
+    '_spf1-meo.microsoft.fake': {
         TXT: {
             response: {
                 Status: 0,
                 Answer: [
                     {
-                        name: '_spf1-meo.microsoft.com.',
+                        name: '_spf1-meo.microsoft.fake.',
                         type: 16,
                         data: '"v=spf1 ip4:52.235.253.128 ip4:20." "69.8.108/30 ~all"'
                     }
@@ -383,26 +383,26 @@ const MOCK_DNS = {
         TXT: {
             response: txtAnswer(
                 'test-real-chunked-amazon.fake',
-                'v=spf1 include:spf1.amazon.com include:spf2.amazon.com include:amazonses.com -all'
+                'v=spf1 include:spf1.amazon.fake include:spf2.amazon.fake include:amazonses.fake -all'
             )
         }
     },
-    'spf1.amazon.com': {
-        TXT: { response: txtAnswer('spf1.amazon.com', 'v=spf1 ip4:207.171.160.0/19 -all') }
+    'spf1.amazon.fake': {
+        TXT: { response: txtAnswer('spf1.amazon.fake', 'v=spf1 ip4:207.171.160.0/19 -all') }
     },
-    'spf2.amazon.com': {
-        TXT: { response: txtAnswer('spf2.amazon.com', 'v=spf1 ip4:176.32.105.0/24 include:spf3.amazon.com -all') }
+    'spf2.amazon.fake': {
+        TXT: { response: txtAnswer('spf2.amazon.fake', 'v=spf1 ip4:176.32.105.0/24 include:spf3.amazon.fake -all') }
     },
-    'spf3.amazon.com': {
-        TXT: { response: txtAnswer('spf3.amazon.com', 'v=spf1 ip4:52.95.48.152/29 -all') }
+    'spf3.amazon.fake': {
+        TXT: { response: txtAnswer('spf3.amazon.fake', 'v=spf1 ip4:52.95.48.152/29 -all') }
     },
-    'amazonses.com': {
+    'amazonses.fake': {
         TXT: {
             response: {
                 Status: 0,
                 Answer: [
                     {
-                        name: 'amazonses.com.',
+                        name: 'amazonses.fake.',
                         type: 16,
                         data: '"v=spf1 ip4:199.255.192.0/22 ip4:24.110.64.0/18 " "ip4:98.77.0.0/16 -all"'
                     }
@@ -412,36 +412,36 @@ const MOCK_DNS = {
     },
 
     'test-real-chunked-hubspot.fake': {
-        TXT: { response: txtAnswer('test-real-chunked-hubspot.fake', 'v=spf1 redirect=_hspf.hubspot.com') }
+        TXT: { response: txtAnswer('test-real-chunked-hubspot.fake', 'v=spf1 redirect=_hspf.hubspot.fake') }
     },
-    '_hspf.hubspot.com': {
+    '_hspf.hubspot.fake': {
         TXT: {
             response: {
                 Status: 0,
                 Answer: [
                     {
-                        name: '_hspf.hubspot.com.',
+                        name: '_hspf.hubspot.fake.',
                         type: 16,
-                        data: '"v=spf1 include:_hspf1.hubspot.com ip4:54.174.53.128/30 ip4" ":185.250.236.0/22 -all"'
+                        data: '"v=spf1 include:_hspf1.hubspot.fake ip4:54.174.53.128/30 ip4" ":185.250.236.0/22 -all"'
                     }
                 ]
             }
         }
     },
-    '_hspf1.hubspot.com': {
-        TXT: { response: txtAnswer('_hspf1.hubspot.com', 'v=spf1 ip4:192.254.112.0/20 -all') }
+    '_hspf1.hubspot.fake': {
+        TXT: { response: txtAnswer('_hspf1.hubspot.fake', 'v=spf1 ip4:192.254.112.0/20 -all') }
     },
 
     'test-real-chunked-zoho.fake': {
-        TXT: { response: txtAnswer('test-real-chunked-zoho.fake', 'v=spf1 include:spf.zoho.com include:zcsend.net -all') }
+        TXT: { response: txtAnswer('test-real-chunked-zoho.fake', 'v=spf1 include:spf.zoho.fake include:zcsend.fake -all') }
     },
-    'spf.zoho.com': {
+    'spf.zoho.fake': {
         TXT: {
             response: {
                 Status: 0,
                 Answer: [
                     {
-                        name: 'spf.zoho.com.',
+                        name: 'spf.zoho.fake.',
                         type: 16,
                         data: '"v=spf1 ip4:136.143.188.0/24 ip4:169.148.12" "9.0/24 ip4:" "199.67.90.0/24 -all"'
                     }
@@ -449,13 +449,13 @@ const MOCK_DNS = {
             }
         }
     },
-    'zcsend.net': {
+    'zcsend.fake': {
         TXT: {
             response: {
                 Status: 0,
                 Answer: [
                     {
-                        name: 'zcsend.net.',
+                        name: 'zcsend.fake.',
                         type: 16,
                         data: '"v=spf1 ip4:135.84.81.0/24 ip6:2607:13" "c0:0004::/116 ~all"'
                     }
@@ -472,14 +472,31 @@ const MOCK_DNS = {
                     {
                         name: 'test-chunked-literal-google.fake.',
                         type: 16,
-                        data: '"v=spf1 include:_spf.goo" "gle.com -all"'
+                        data: '"v=spf1 include:_spf.goo" "gle.fake -all"'
                     }
                 ]
             }
         }
     },
-    '_spf.google.com': {
-        TXT: { response: txtAnswer('_spf.google.com', 'v=spf1 ip4:35.190.247.0/24 -all') }
+    '_spf.google.fake': {
+        TXT: { response: txtAnswer('_spf.google.fake', 'v=spf1 ip4:35.190.247.0/24 -all') }
+    },
+
+    // 17b. Casos de timeout y macros extendidos
+    'test-timeout-permerror.fake': {
+        TXT: { response: txtAnswer('test-timeout-permerror.fake', 'v=spf1 ip4:999.999.999.999 include:slow-delay.fake -all') }
+    },
+    'test-macro-unclosed.fake': {
+        TXT: { response: txtAnswer('test-macro-unclosed.fake', 'v=spf1 include:%{d.fake -all') }
+    },
+    'test-macro-stray-percent.fake': {
+        TXT: { response: txtAnswer('test-macro-stray-percent.fake', 'v=spf1 include:sub1.test-nested.fake%x -all') }
+    },
+    'test-macro-crt-directive.fake': {
+        TXT: { response: txtAnswer('test-macro-crt-directive.fake', 'v=spf1 include:%{c}.fake -all') }
+    },
+    'test-macro-crt-exp.fake': {
+        TXT: { response: txtAnswer('test-macro-crt-exp.fake', 'v=spf1 include:sub1.test-nested.fake exp=exp.%{c}.fake -all') }
     },
 
     // 18. Casos menores Sección B
@@ -838,12 +855,42 @@ async function runSuite() {
             category: 'Decodificación de \\DDD en extractSpfTxtRecords',
             expectedLookups: 0,
             expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-timeout-permerror.fake',
+            category: 'Conteo incompleto con permerror previo (sintaxis inválida + timeout)',
+            expectedLookups: 1,
+            expectedBadge: 'Sintaxis inválida (permerror)'
+        },
+        {
+            domain: 'test-macro-unclosed.fake',
+            category: 'Macro no cerrada (%{d)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)'
+        },
+        {
+            domain: 'test-macro-stray-percent.fake',
+            category: 'Carácter % suelto (%x)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)'
+        },
+        {
+            domain: 'test-macro-crt-directive.fake',
+            category: 'Macro c/r/t en directiva include (inválido según RFC 7208 §7.3)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)'
+        },
+        {
+            domain: 'test-macro-crt-exp.fake',
+            category: 'Macro c/r/t en modificador exp (válido según RFC 7208 §7.3)',
+            expectedLookups: 2,
+            expectedBadge: 'Dentro del límite'
         }
     ];
 
     // 2. Pruebas de humo con dominios reales (sin conteo exacto fijo pero exigiendo resultados concretos)
     const smokeCases = [
-        { domain: 'google.com', category: 'Humo real: Google Workspace', requireConcrete: true, expectedBadge: 'Dentro del límite' },
+        { domain: 'google.com', category: 'Humo real: Google Workspace', requireConcrete: true },
         { domain: 'microsoft.com', category: 'Humo real: Microsoft 365', requireConcrete: true, allowedBadges: ['Dentro del límite', 'Cerca del límite'] },
         { domain: 'amazon.com', category: 'Humo real: Amazon', requireConcrete: true },
         { domain: 'hubspot.com', category: 'Humo real: HubSpot', requireConcrete: true },
@@ -860,8 +907,33 @@ async function runSuite() {
     const results = [];
     const consoleErrors = [];
     const realDnsSummary = [];
+    const blockedRequests = [];
+    const leakedRequests = [];
 
-    async function createCleanPage() {
+    function isForbiddenUrl(url) {
+        if (!url || typeof url !== 'string') return false;
+        const u = url.toLowerCase();
+        return u.includes('panel.inboxseguro.com') ||
+               u.includes('diagnosis-notify') ||
+               u.includes('diagnosis-ticket') ||
+               u.includes('session-status') ||
+               u.includes('/api/notify') ||
+               u.includes('/api/ticket') ||
+               u.includes('inboxseguro-dns-proxy.alfredo-9d8.workers.dev') ||
+               u.includes('google-analytics.com') ||
+               u.includes('googletagmanager.com') ||
+               u.includes('clarity.ms') ||
+               u.includes('clarity.microsoft.com');
+    }
+
+    function assertNoLeakedRequests(list) {
+        const checkList = list || leakedRequests;
+        if (checkList.length > 0) {
+            throw new Error('FALLO DE SEGURIDAD: Peticiones no bloqueadas salieron a la red hacia endpoints prohibidos: ' + checkList.join(', '));
+        }
+    }
+
+    async function createCleanPage(options = { useMocks: true }) {
         const page = await browser.newPage();
         await page.addInitScript(() => {
             try {
@@ -869,47 +941,55 @@ async function runSuite() {
             } catch (e) {}
         });
 
-        // Bloqueo estricto de notificaciones, tickets y analítica en Playwright (page.route)
-        await page.route(url => {
-            const u = typeof url === 'string' ? url : url.url();
-            return u.includes('diagnosis-notify') ||
-                   u.includes('diagnosis-ticket') ||
-                   u.includes('/api/notify') ||
-                   u.includes('/api/ticket') ||
-                   u.includes('panel.inboxseguro.com');
-        }, async (route) => {
-            return route.abort();
+        // Registrar cualquier petición que termine en la red hacia endpoints prohibidos
+        page.on('requestfinished', req => {
+            const u = req.url();
+            if (isForbiddenUrl(u)) {
+                leakedRequests.push(u);
+            }
         });
 
-        // Intercepción de DoH / DNS Proxy para mock determinista
+        // Handler unificado '**' para garantizar que el bloqueo se ejecute antes de cualquier continue()
         await page.route('**', async (route) => {
             const reqUrl = route.request().url();
-            if (reqUrl.includes('/api/dns') ||
-                reqUrl.includes('cloudflare-dns.com/dns-query') ||
-                reqUrl.includes('dns.google/resolve') ||
-                reqUrl.includes('dns.alidns.com/resolve')) {
 
-                try {
-                    const parsed = new URL(reqUrl);
-                    const name = (parsed.searchParams.get('name') || '').toLowerCase().replace(/\.$/, '');
-                    const type = (parsed.searchParams.get('type') || '').toUpperCase();
-
-                    if (MOCK_DNS[name] && MOCK_DNS[name][type] !== undefined) {
-                        const entry = MOCK_DNS[name][type];
-                        if (entry.delay) {
-                            await new Promise(r => setTimeout(r, entry.delay));
-                        }
-                        if (entry.abort) {
-                            return route.abort();
-                        }
-                        return route.fulfill({
-                            status: 200,
-                            contentType: 'application/json',
-                            body: JSON.stringify(entry.response)
-                        });
-                    }
-                } catch (e) {}
+            // 1. Bloqueo estricto de notificaciones, panel, worker y analítica
+            if (isForbiddenUrl(reqUrl)) {
+                blockedRequests.push({ url: reqUrl, time: Date.now() });
+                return route.abort('blockedbyclient');
             }
+
+            // 2. Mocks deterministas DNS (solo activos si options.useMocks es true)
+            if (options && options.useMocks) {
+                if (reqUrl.includes('/api/dns') ||
+                    reqUrl.includes('cloudflare-dns.com/dns-query') ||
+                    reqUrl.includes('dns.google/resolve') ||
+                    reqUrl.includes('dns.alidns.com/resolve')) {
+
+                    try {
+                        const parsed = new URL(reqUrl);
+                        const name = (parsed.searchParams.get('name') || '').toLowerCase().replace(/\.$/, '');
+                        const type = (parsed.searchParams.get('type') || '').toUpperCase();
+
+                        if (MOCK_DNS[name] && MOCK_DNS[name][type] !== undefined) {
+                            const entry = MOCK_DNS[name][type];
+                            if (entry.delay) {
+                                await new Promise(r => setTimeout(r, entry.delay));
+                            }
+                            if (entry.abort) {
+                                return route.abort();
+                            }
+                            return route.fulfill({
+                                status: 200,
+                                contentType: 'application/json',
+                                body: JSON.stringify(entry.response)
+                            });
+                        }
+                    } catch (e) {}
+                }
+            }
+
+            // 3. Continuar peticiones locales y DoH real (DNS nunca se bloquea)
             return route.continue();
         });
 
@@ -919,6 +999,7 @@ async function runSuite() {
                 if (text.includes('inboxseguro-dns-proxy') ||
                     text.includes('panel.inboxseguro.com') ||
                     text.includes('ERR_FAILED') ||
+                    text.includes('ERR_BLOCKED_BY_CLIENT') ||
                     text.includes('CORS') ||
                     text.includes('status of 404') ||
                     text.includes('status of 401') ||
@@ -939,7 +1020,7 @@ async function runSuite() {
     // Autorun con ?d=google.com y ?domain=google.com (sin notificaciones)
     console.log('\nVerificando autorun con ?d=google.com y ?domain=google.com (no deben disparar notificaciones ni tickets)...');
     for (const q of ['?d=google.com', '?domain=google.com']) {
-        const page = await createCleanPage();
+        const page = await createCleanPage({ useMocks: false });
         let notified = false;
         page.on('request', req => {
             const url = req.url();
@@ -1052,11 +1133,140 @@ async function runSuite() {
         }
     }
 
+    // Pruebas unitarias de decodeDnsString y hasInvalidMacro
+    console.log('\n--- PRUEBAS UNITARIAS: decodeDnsString y hasInvalidMacro (RFC 1035 / RFC 7208 §7) ---');
+    {
+        const page = await createCleanPage({ useMocks: false });
+        await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
+
+        // decodeDnsString: arregla \\032
+        const decodeCases = [
+            { input: '\\\\032', expected: '\\032', desc: 'doble barra antes de 032' },
+            { input: '\\032', expected: ' ', desc: 'octeto decimal 032 decodificado como espacio' },
+            { input: '\\"', expected: '"', desc: 'comilla escapada' },
+            { input: '\\\\', expected: '\\', desc: 'barra invertida escapada' },
+            { input: 'simple', expected: 'simple', desc: 'texto simple sin escapes' }
+        ];
+        let decodeErrors = 0;
+        for (const dc of decodeCases) {
+            const actual = await page.evaluate(val => decodeDnsString(val), dc.input);
+            if (actual !== dc.expected) {
+                decodeErrors++;
+                console.error(`FALLO: decodeDnsString("${dc.input}") => "${actual}" !== "${dc.expected}" (${dc.desc})`);
+            }
+        }
+        if (decodeErrors === 0) {
+            console.log('OK: decodeDnsString decodifica \\032 a espacio y preserva \\\\032 correctamente.');
+        }
+        results.push({
+            domain: 'unit:decodeDnsString',
+            expected: 'OK',
+            actual: decodeErrors === 0 ? 'OK' : 'FALLO',
+            diff: decodeErrors,
+            status: decodeErrors === 0 ? 'OK' : 'FALLO'
+        });
+
+        // hasInvalidMacro: letras válidas s l o d i p h c r t v; c/r/t solo en exp; %{d sin cerrar y %x suelto son inválidos
+        const macroCases = [
+            // Letras válidas en directivas normales (isExp = false)
+            { str: 'include:%{s}.fake', isExp: false, expectedInvalid: false, desc: 'macro s en directiva' },
+            { str: 'include:%{l}.fake', isExp: false, expectedInvalid: false, desc: 'macro l en directiva' },
+            { str: 'include:%{o}.fake', isExp: false, expectedInvalid: false, desc: 'macro o en directiva' },
+            { str: 'include:%{d}.fake', isExp: false, expectedInvalid: false, desc: 'macro d en directiva' },
+            { str: 'include:%{i}.fake', isExp: false, expectedInvalid: false, desc: 'macro i en directiva' },
+            { str: 'include:%{p}.fake', isExp: false, expectedInvalid: false, desc: 'macro p en directiva' },
+            { str: 'include:%{h}.fake', isExp: false, expectedInvalid: false, desc: 'macro h en directiva' },
+            { str: 'include:%{v}.fake', isExp: false, expectedInvalid: false, desc: 'macro v en directiva' },
+            // c, r, t inválidas en directivas normales
+            { str: 'include:%{c}.fake', isExp: false, expectedInvalid: true, desc: 'macro c fuera de exp' },
+            { str: 'include:%{r}.fake', isExp: false, expectedInvalid: true, desc: 'macro r fuera de exp' },
+            { str: 'include:%{t}.fake', isExp: false, expectedInvalid: true, desc: 'macro t fuera de exp' },
+            // c, r, t válidas en exp (isExp = true)
+            { str: 'exp=%{c}.fake', isExp: true, expectedInvalid: false, desc: 'macro c en exp' },
+            { str: 'exp=%{r}.fake', isExp: true, expectedInvalid: false, desc: 'macro r en exp' },
+            { str: 'exp=%{t}.fake', isExp: true, expectedInvalid: false, desc: 'macro t en exp' },
+            // %{d sin cerrar
+            { str: 'include:%{d.fake', isExp: false, expectedInvalid: true, desc: '%{d sin cerrar' },
+            // %x suelto
+            { str: 'include:sub.fake%x', isExp: false, expectedInvalid: true, desc: '%x suelto' },
+            // % al final
+            { str: 'include:sub.fake%', isExp: false, expectedInvalid: true, desc: '% al final' },
+            // %% escape válido
+            { str: 'include:sub%%.fake', isExp: false, expectedInvalid: false, desc: '%% escape' },
+            // %_ escape válido
+            { str: 'include:sub%_.fake', isExp: false, expectedInvalid: false, desc: '%_ escape' },
+            // %- escape válido
+            { str: 'include:sub%-.fake', isExp: false, expectedInvalid: false, desc: '%- escape' },
+            // Letra desconocida %{z}
+            { str: 'include:%{z}.fake', isExp: false, expectedInvalid: true, desc: '%{z} inválida' },
+            // Macro vacía %{}
+            { str: 'include:%{}.fake', isExp: false, expectedInvalid: true, desc: '%{} vacía' }
+        ];
+
+        let macroErrors = 0;
+        for (const mc of macroCases) {
+            const actualInvalid = await page.evaluate(({ s, exp }) => hasInvalidMacro(s, exp), { s: mc.str, exp: mc.isExp });
+            if (actualInvalid !== mc.expectedInvalid) {
+                macroErrors++;
+                console.error(`FALLO: hasInvalidMacro("${mc.str}", ${mc.isExp}) [${mc.desc}] => ${actualInvalid} !== ${mc.expectedInvalid}`);
+            }
+        }
+        if (macroErrors === 0) {
+            console.log('OK: hasInvalidMacro valida exhaustivamente letras válidas, c/r/t solo en exp, %{d sin cerrar y %x suelto.');
+        }
+        results.push({
+            domain: 'unit:hasInvalidMacro',
+            expected: 'OK',
+            actual: macroErrors === 0 ? 'OK' : 'FALLO',
+            diff: macroErrors,
+            status: macroErrors === 0 ? 'OK' : 'FALLO'
+        });
+
+        await page.close();
+    }
+
+    // Prueba negativa de seguridad: demostrar que el monitor a nivel de contexto falla la suite ante peticiones prohibidas
+    console.log('\n--- PRUEBA NEGATIVA DE SEGURIDAD (BLOQUEO DE NOTIFICACIONES Y PANEL) ---');
+    {
+        const page = await createCleanPage({ useMocks: false });
+        const countBefore = blockedRequests.length;
+        await page.evaluate(() => {
+            fetch('https://panel.inboxseguro.com/api/public/diagnosis-notify', { method: 'POST', body: '{}' }).catch(() => {});
+        });
+        await page.waitForTimeout(100);
+        const countAfter = blockedRequests.length;
+        const wasAborted = countAfter > countBefore;
+
+        if (!wasAborted) {
+            console.error('FALLO: Petición a panel.inboxseguro.com no fue interceptada por el bloqueador.');
+            results.push({ domain: 'security:block-interception', expected: 'Bloqueada', actual: 'No bloqueada', diff: 1, status: 'FALLO' });
+        } else {
+            console.log(`OK: Petición prohibida disparada a propósito interceptada y abortada localmente (total bloqueadas acumuladas: ${blockedRequests.length}).`);
+            results.push({ domain: 'security:block-interception', expected: 'Bloqueada', actual: 'Bloqueada', diff: 0, status: 'OK' });
+        }
+
+        // Demostrar que el verificador a nivel de contexto falla la suite si una petición prohibida sale a la red
+        let suiteFailedAsExpected = false;
+        try {
+            assertNoLeakedRequests(['https://panel.inboxseguro.com/api/public/diagnosis-notify']);
+        } catch (err) {
+            suiteFailedAsExpected = true;
+            console.log(`OK: Prueba negativa superada: la suite falla inmediatamente con excepción si una petición prohibida sale a la red ("${err.message}").`);
+        }
+        if (!suiteFailedAsExpected) {
+            console.error('FALLO: El monitor de seguridad no arrojó excepción ante una petición que salió a la red.');
+            results.push({ domain: 'security:negative-test-failure', expected: 'Suite Falla', actual: 'Pasa', diff: 1, status: 'FALLO' });
+        } else {
+            results.push({ domain: 'security:negative-test-failure', expected: 'Suite Falla', actual: 'Suite Falla', diff: 0, status: 'OK' });
+        }
+        await page.close();
+    }
+
     // Ejecución de casos deterministas con DNS simulado
     console.log('\n--- PRUEBAS DETERMINISTAS CON DNS SIMULADO ---');
     for (const tc of deterministicCases) {
         console.log(`\nProbando [Mock]: ${tc.domain} (${tc.category})...`);
-        const page = await createCleanPage();
+        const page = await createCleanPage({ useMocks: true });
         await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
         await page.fill('#dominioInput', tc.domain);
         await page.click('#diagBtn');
@@ -1154,6 +1364,19 @@ async function runSuite() {
                     failed = true;
                     failureReason += `spfCounterBadge incoherente: esperaba Sin registro gris, obtuvo "${counterBadge.text}". `;
                 }
+            } else if (badgeText === 'No pudimos terminar el conteo') {
+                if (diagScore.text !== 'No pudimos terminar el conteo' || !diagScore.class.includes('text-amber-400')) {
+                    failed = true;
+                    failureReason += `diagScore incoherente en incompleto: esperaba "No pudimos terminar el conteo" ámbar, obtuvo "${diagScore.text}" (${diagScore.class}). `;
+                }
+                if (badgeSpf.text !== 'No pudimos terminar el conteo' || !badgeSpf.class.includes('text-amber-400')) {
+                    failed = true;
+                    failureReason += `badge-spf incoherente en incompleto: esperaba "No pudimos terminar el conteo" ámbar, obtuvo "${badgeSpf.text}" (${badgeSpf.class}). `;
+                }
+                if (!counterBadge.class.includes('text-amber-400')) {
+                    failed = true;
+                    failureReason += `spfCounterBadge incoherente en incompleto: esperaba ámbar (${counterBadge.class}). `;
+                }
             }
 
             results.push({
@@ -1181,29 +1404,31 @@ async function runSuite() {
         await page.close();
     }
 
-    // Ejecución de pruebas de humo reales
+    // Ejecución de pruebas de humo reales (con DNS real sin mocks)
     console.log('\n--- PRUEBAS DE HUMO CON DOMINIOS REALES (SIN CONTEO EXACTO) ---');
     for (const tc of smokeCases) {
         console.log(`\nProbando [Humo]: ${tc.domain} (${tc.category})...`);
-        const page = await createCleanPage();
+        const page = await createCleanPage({ useMocks: false });
         await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
         await page.fill('#dominioInput', tc.domain);
         await page.click('#diagBtn');
 
         if (tc.isInvalidInput) {
+            await page.waitForTimeout(600);
             const resultsHidden = await page.$eval('#diagResults', el => el.classList.contains('hidden'));
-            const ok = resultsHidden === true;
+            const loadingHidden = await page.$eval('#diagLoading', el => el.classList.contains('hidden'));
+            const ok = resultsHidden === true && loadingHidden === true;
             results.push({
                 domain: tc.domain,
                 expected: 'Detenido por validación (diagResults oculto)',
-                actual: ok ? 'Detenido por validación (diagResults oculto)' : 'Mostró resultados a pesar de entrada inválida',
-                diff: ok ? 0 : 'diagResults visible tras entrada inválida',
+                actual: ok ? 'Detenido por validación (diagResults oculto)' : 'Mostró resultados o loading a pesar de entrada inválida',
+                diff: ok ? 0 : 'diagResults o loading visible tras entrada inválida',
                 status: ok ? 'OK' : 'FALLO'
             });
             if (!ok) {
                 console.error('  -> FALLO: Se mostraron resultados o se ejecutó envío con entrada sintácticamente inválida.');
             } else {
-                console.log('  -> Validación nativa correcta: no se ejecutó envío.');
+                console.log('  -> Validación nativa correcta: no se ejecutó envío ni análisis.');
             }
             await page.close();
             continue;
@@ -1339,7 +1564,17 @@ async function runSuite() {
         console.log('\nOK: Cero errores de consola durante las pruebas.');
     }
 
-    const hasFailures = results.some(r => r.status === 'FALLO');
+    // Comprobación de seguridad a nivel de contexto
+    let securityError = null;
+    try {
+        assertNoLeakedRequests(leakedRequests);
+        console.log(`\nOK: Cero peticiones salieron a la red hacia endpoints prohibidos (${blockedRequests.length} peticiones fueron interceptadas y abortadas localmente con éxito).`);
+    } catch (err) {
+        securityError = err.message;
+        console.error('\n' + err.message);
+    }
+
+    const hasFailures = results.some(r => r.status === 'FALLO') || securityError !== null;
     if (hasFailures) {
         console.error('\nHay pruebas que fallaron.');
         process.exit(1);
