@@ -562,6 +562,17 @@
     <script src="/notify.js?v=3"></script>
     <script src="/tool-lead.js?v=2"></script>
     <script>
+        function decodeDnsString(str) {
+            if (!str || typeof str !== 'string') return '';
+            return str
+                .replace(/\\(\d{3})/g, function (_, ddd) {
+                    const code = parseInt(ddd, 10);
+                    return code >= 0 && code <= 255 ? String.fromCharCode(code) : _;
+                })
+                .replace(/\\"/g, '"')
+                .replace(/\\\\/g, '\\');
+        }
+
         function extractSpfTxtRecords(dnsData) {
             if (!dnsData || !dnsData.Answer || !Array.isArray(dnsData.Answer)) return [];
             const txtAnswers = dnsData.Answer.filter(function (a) { return a && a.type === 16; });
@@ -577,14 +588,14 @@
                 let match;
                 const chunks = [];
                 while ((match = regex.exec(raw)) !== null) {
-                    chunks.push(match[1].replace(/\\"/g, '"').replace(/\\\\/g, '\\'));
+                    chunks.push(decodeDnsString(match[1]));
                 }
 
                 let concatenated;
                 if (chunks.length > 0) {
                     concatenated = chunks.join('');
                 } else {
-                    concatenated = raw.replace(/^["'\s]+|["'\s]+$/g, '');
+                    concatenated = decodeDnsString(raw.replace(/^["'\s]+|["'\s]+$/g, ''));
                 }
 
                 records.push(concatenated.trim());
@@ -676,13 +687,13 @@
             if (octets.length !== 4) return false;
             for (let i = 0; i < 4; i++) {
                 const o = octets[i];
-                if (!/^\d{1,3}$/.test(o)) return false;
+                if (!/^(0|[1-9]\d{0,2})$/.test(o)) return false;
                 const num = parseInt(o, 10);
                 if (num < 0 || num > 255) return false;
             }
             if (parts.length === 2) {
                 const cidr = parts[1];
-                if (!/^\d{1,2}$/.test(cidr)) return false;
+                if (!/^(0|[1-9]\d?)$/.test(cidr)) return false;
                 const prefix = parseInt(cidr, 10);
                 if (prefix < 0 || prefix > 32) return false;
             }
@@ -693,26 +704,82 @@
             if (!val || typeof val !== 'string') return false;
             const parts = val.split('/');
             if (parts.length > 2) return false;
-            const ip = parts[0];
+            let ip = parts[0];
             if (!ip) return false;
             if (parts.length === 2) {
                 const cidr = parts[1];
-                if (!/^\d{1,3}$/.test(cidr)) return false;
+                if (!/^(0|[1-9]\d{0,2})$/.test(cidr)) return false;
                 const prefix = parseInt(cidr, 10);
                 if (prefix < 0 || prefix > 128) return false;
             }
-            if (ip.indexOf(':::') !== -1) return false;
-            const doubleColonCount = (ip.match(/::/g) || []).length;
-            if (doubleColonCount > 1) return false;
-            const pieces = ip.split(':');
-            if (pieces.length < 3 || pieces.length > 8) return false;
-            for (let i = 0; i < pieces.length; i++) {
-                const p = pieces[i];
-                if (p === '') continue;
-                if (!/^[0-9a-fA-F]{1,4}$/.test(p)) return false;
+
+            if (ip.includes(':::')) return false;
+            if (ip.startsWith(':') && !ip.startsWith('::')) return false;
+            if (ip.endsWith(':') && !ip.endsWith('::')) return false;
+
+            const doubleColons = ip.match(/::/g);
+            if (doubleColons && doubleColons.length > 1) return false;
+            const hasDoubleColon = !!doubleColons;
+
+            const lastColon = ip.lastIndexOf(':');
+            if (lastColon === -1) return false;
+            const lastSegment = ip.substring(lastColon + 1);
+            if (lastSegment.includes('.')) {
+                const octets = lastSegment.split('.');
+                if (octets.length !== 4) return false;
+                for (let i = 0; i < 4; i++) {
+                    const o = octets[i];
+                    if (!/^(0|[1-9]\d{0,2})$/.test(o)) return false;
+                    const num = parseInt(o, 10);
+                    if (num < 0 || num > 255) return false;
+                }
+                ip = ip.substring(0, lastColon + 1) + '0:0';
             }
-            if (doubleColonCount === 0 && pieces.length !== 8) return false;
-            return true;
+
+            if (ip === '::') return true;
+
+            const pieces = ip.split(':');
+            if (hasDoubleColon) {
+                const nonEmpty = pieces.filter(function (p) { return p !== ''; });
+                if (nonEmpty.length > 7) return false;
+                for (let i = 0; i < nonEmpty.length; i++) {
+                    if (!/^[0-9a-fA-F]{1,4}$/.test(nonEmpty[i])) return false;
+                }
+                return true;
+            } else {
+                if (pieces.length !== 8) return false;
+                for (let i = 0; i < pieces.length; i++) {
+                    if (!/^[0-9a-fA-F]{1,4}$/.test(pieces[i])) return false;
+                }
+                return true;
+            }
+        }
+
+        function parseAndValidateDualCidr(str) {
+            if (!str) return { valid: true };
+            const m = str.match(/^(\/(0|[1-9]\d*))?(\/\/(0|[1-9]\d*))?$/);
+            if (!m || str === '' || (!m[1] && !m[3])) return { valid: false };
+            if (m[1]) {
+                const ip4 = parseInt(m[2], 10);
+                if (ip4 < 0 || ip4 > 32) return { valid: false };
+            }
+            if (m[3]) {
+                const ip6 = parseInt(m[4], 10);
+                if (ip6 < 0 || ip6 > 128) return { valid: false };
+            }
+            return { valid: true };
+        }
+
+        function hasInvalidMacro(str) {
+            const matches = str.match(/%\{([^}]*)\}/g);
+            if (!matches) return false;
+            for (let i = 0; i < matches.length; i++) {
+                const inner = matches[i].slice(2, -1);
+                if (!inner) return true;
+                const first = inner[0].toLowerCase();
+                if (!'slodiphcrtv'.includes(first)) return true;
+            }
+            return false;
         }
 
         async function handleDiagnostico(event, isAuto) {
@@ -792,6 +859,7 @@
                     warn: ['Requiere atención', 'bg-amber-500/20 text-amber-400'],
                     fail: ['Permerror', 'bg-red-500/20 text-red-400'],
                     error: ['Permerror', 'bg-red-500/20 text-red-400'],
+                    none: ['No detectado', 'bg-white/5 border border-white/10 text-slate-300'],
                     unknown: ['No verificable', 'bg-white/5 border border-white/10 text-slate-300']
                 };
                 const scoreStyle = scoreStyles[spfResult.status] || ['No detectado', 'bg-white/5 border border-white/10 text-slate-300'];
@@ -818,6 +886,25 @@
                         });
                     } else {
                         const counterResult = await countSpfLookups(dominio, spfData, abortController.signal);
+                        const isPermerror = counterResult.hasLoop ||
+                                            counterResult.hasIncludeNoSpf ||
+                                            counterResult.hasMxOverflow ||
+                                            counterResult.hasUnknownMechanism ||
+                                            counterResult.hasIncludedMultipleRecords ||
+                                            (counterResult.lookupCount > 10);
+
+                        if (isPermerror) {
+                            spfResult = {
+                                status: 'fail',
+                                label: 'Permerror',
+                                text: (counterResult.warnings && counterResult.warnings.length > 0)
+                                    ? counterResult.warnings[0]
+                                    : 'La evaluación SPF devuelve permerror según la RFC 7208.'
+                            };
+                            setResult('spf', spfResult);
+                            scoreEl.textContent = 'Permerror';
+                            scoreEl.className = 'px-3 py-1 rounded-full text-xs font-bold bg-red-500/20 text-red-400';
+                        }
                         renderSpfCounter(dominio, counterResult);
                     }
                 } else {
@@ -984,16 +1071,21 @@
                 }
 
                 const record = records[0];
-                const terms = record.split(/\s+/).slice(1);
+                if (/\t/.test(record)) {
+                    hasUnknownMechanism = true;
+                    warnings.push('El registro SPF contiene caracteres tabulador; la RFC 7208 §3.1 exige espacios SP (permerror).');
+                }
+                const terms = record.split(/ +/).slice(1);
                 const mechanisms = [];
 
                 const hasAll = terms.some(function (t) {
                     return /^[+\-~?]?all$/i.test(t);
                 });
 
-                // Separar términos en mecanismos y redirect (RFC 7208 §6.1: redirect se evalúa al final)
+                // Separar términos en mecanismos, redirect y exp (RFC 7208 §6.1, §6.2)
                 const nonRedirectTerms = [];
                 const redirectTerms = [];
+                const expTerms = [];
 
                 for (let i = 0; i < terms.length; i++) {
                     const rawTerm = terms[i];
@@ -1013,6 +1105,9 @@
                     const lower = cleanTerm.toLowerCase();
                     if (lower.startsWith('redirect=')) {
                         redirectTerms.push({ rawTerm: rawTerm, cleanTerm: cleanTerm, lower: lower });
+                    } else if (lower.startsWith('exp=')) {
+                        expTerms.push({ rawTerm: rawTerm, cleanTerm: cleanTerm, lower: lower });
+                        nonRedirectTerms.push({ rawTerm: rawTerm, cleanTerm: cleanTerm, lower: lower, isExp: true });
                     } else {
                         nonRedirectTerms.push({ rawTerm: rawTerm, cleanTerm: cleanTerm, lower: lower });
                     }
@@ -1021,6 +1116,10 @@
                 if (redirectTerms.length > 1) {
                     hasUnknownMechanism = true;
                     warnings.push('Se especificó más de un modificador redirect (permerror según RFC 7208 §6).');
+                }
+                if (expTerms.length > 1) {
+                    hasUnknownMechanism = true;
+                    warnings.push('Se especificó más de un modificador exp en el mismo registro (permerror según RFC 7208 §6.2).');
                 }
 
                 // 1. Evaluar mecanismos no-redirect en orden
@@ -1038,6 +1137,33 @@
                             lookups: 0,
                             permerror: true,
                             note: 'modificador con calificador no permitido (permerror según RFC 7208 §4.6.1)'
+                        });
+                        continue;
+                    }
+
+                    if (hasInvalidMacro(cleanTerm)) {
+                        hasUnknownMechanism = true;
+                        warnings.push('Macro no válida en "' + rawTerm + '" (permerror según RFC 7208 §7).');
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: 'unknown',
+                            lookups: 0,
+                            permerror: true,
+                            note: 'macro no válida (permerror según RFC 7208 §7)'
+                        });
+                        continue;
+                    }
+
+                    if (item.isExp) {
+                        const isDup = expTerms.length > 1;
+                        mechanisms.push({
+                            raw: rawTerm,
+                            clean: cleanTerm,
+                            type: 'exp',
+                            lookups: 0,
+                            permerror: isDup,
+                            note: isDup ? 'múltiples modificadores exp en el mismo registro (permerror según RFC 7208 §6.2)' : undefined
                         });
                         continue;
                     }
@@ -1084,6 +1210,48 @@
                             note: 'sintaxis inválida en include (permerror)'
                         });
                     } else if (lower === 'a' || lower.startsWith('a:') || lower.startsWith('a/')) {
+                        let aTarget = targetDomain;
+                        let aCidr = '';
+                        let aSyntaxError = false;
+
+                        if (lower === 'a') {
+                            aTarget = targetDomain;
+                        } else if (lower === 'a:' || (lower.startsWith('a:') && cleanTerm.substring(2).trim() === '') || lower.startsWith('a:/')) {
+                            aSyntaxError = true;
+                        } else if (lower.startsWith('a:')) {
+                            const rest = cleanTerm.substring(2);
+                            const slashIdx = rest.indexOf('/');
+                            if (slashIdx !== -1) {
+                                aTarget = rest.substring(0, slashIdx);
+                                aCidr = rest.substring(slashIdx);
+                            } else {
+                                aTarget = rest;
+                            }
+                            if (!aTarget) aSyntaxError = true;
+                        } else if (lower.startsWith('a/')) {
+                            aTarget = targetDomain;
+                            aCidr = cleanTerm.substring(1);
+                        }
+
+                        if (!aSyntaxError && aCidr) {
+                            const cidrCheck = parseAndValidateDualCidr(aCidr);
+                            if (!cidrCheck.valid) aSyntaxError = true;
+                        }
+
+                        if (aSyntaxError) {
+                            hasUnknownMechanism = true;
+                            warnings.push('Sintaxis inválida en mecanismo a "' + rawTerm + '" (permerror según RFC 7208 §5.3).');
+                            mechanisms.push({
+                                raw: rawTerm,
+                                clean: cleanTerm,
+                                type: 'unknown',
+                                lookups: 0,
+                                permerror: true,
+                                note: 'sintaxis inválida en mecanismo a (permerror)'
+                            });
+                            continue;
+                        }
+
                         const hasMacro = /%\{/.test(cleanTerm);
                         const mech = {
                             raw: rawTerm,
@@ -1096,7 +1264,6 @@
                             mech.note = 'no evaluable: usa macros';
                         } else if (queryCount < maxQueries && !checkTimeout()) {
                             queryCount++;
-                            const aTarget = lower.startsWith('a:') ? cleanTerm.substring(2).split('/')[0] : targetDomain;
                             try {
                                 const aData = await fetchWithDeadline(aTarget, 'A');
                                 let aVoid = false;
@@ -1163,6 +1330,48 @@
                         }
                         mechanisms.push(mech);
                     } else if (lower === 'mx' || lower.startsWith('mx:') || lower.startsWith('mx/')) {
+                        let mxTarget = targetDomain;
+                        let mxCidr = '';
+                        let mxSyntaxError = false;
+
+                        if (lower === 'mx') {
+                            mxTarget = targetDomain;
+                        } else if (lower === 'mx:' || (lower.startsWith('mx:') && cleanTerm.substring(3).trim() === '') || lower.startsWith('mx:/')) {
+                            mxSyntaxError = true;
+                        } else if (lower.startsWith('mx:')) {
+                            const rest = cleanTerm.substring(3);
+                            const slashIdx = rest.indexOf('/');
+                            if (slashIdx !== -1) {
+                                mxTarget = rest.substring(0, slashIdx);
+                                mxCidr = rest.substring(slashIdx);
+                            } else {
+                                mxTarget = rest;
+                            }
+                            if (!mxTarget) mxSyntaxError = true;
+                        } else if (lower.startsWith('mx/')) {
+                            mxTarget = targetDomain;
+                            mxCidr = cleanTerm.substring(2);
+                        }
+
+                        if (!mxSyntaxError && mxCidr) {
+                            const cidrCheck = parseAndValidateDualCidr(mxCidr);
+                            if (!cidrCheck.valid) mxSyntaxError = true;
+                        }
+
+                        if (mxSyntaxError) {
+                            hasUnknownMechanism = true;
+                            warnings.push('Sintaxis inválida en mecanismo mx "' + rawTerm + '" (permerror según RFC 7208 §5.4).');
+                            mechanisms.push({
+                                raw: rawTerm,
+                                clean: cleanTerm,
+                                type: 'unknown',
+                                lookups: 0,
+                                permerror: true,
+                                note: 'sintaxis inválida en mecanismo mx (permerror)'
+                            });
+                            continue;
+                        }
+
                         const hasMacro = /%\{/.test(cleanTerm);
                         const mech = {
                             raw: rawTerm,
@@ -1175,7 +1384,6 @@
                             mech.note = 'no evaluable: usa macros';
                         } else if (queryCount < maxQueries && !checkTimeout()) {
                             queryCount++;
-                            const mxTarget = lower.startsWith('mx:') ? cleanTerm.substring(3).split('/')[0] : targetDomain;
                             try {
                                 const mxData = await fetchWithDeadline(mxTarget, 'MX');
                                 if (mxData && mxData.Status === 2) {
@@ -1214,6 +1422,20 @@
                         }
                         mechanisms.push(mech);
                     } else if (lower.startsWith('exists:')) {
+                        const existsTarget = cleanTerm.substring(7).trim();
+                        if (!existsTarget) {
+                            hasUnknownMechanism = true;
+                            warnings.push('Sintaxis inválida en mecanismo exists "' + rawTerm + '" (permerror según RFC 7208 §5.7).');
+                            mechanisms.push({
+                                raw: rawTerm,
+                                clean: cleanTerm,
+                                type: 'unknown',
+                                lookups: 0,
+                                permerror: true,
+                                note: 'sintaxis inválida en mecanismo exists (permerror)'
+                            });
+                            continue;
+                        }
                         const hasMacro = /%\{/.test(cleanTerm);
                         const mech = {
                             raw: rawTerm,
@@ -1349,6 +1571,7 @@
                     const cleanTerm = item.cleanTerm;
                     const redTarget = cleanTerm.substring(9).trim();
                     const hasMacro = /%\{/.test(cleanTerm);
+                    const invalidMacro = hasInvalidMacro(cleanTerm);
                     const mech = {
                         raw: rawTerm,
                         clean: cleanTerm,
@@ -1356,7 +1579,13 @@
                         target: redTarget,
                         macro: hasMacro
                     };
-                    if (redirectTerms.length > 1) {
+                    if (invalidMacro) {
+                        hasUnknownMechanism = true;
+                        mech.lookups = 0;
+                        mech.permerror = true;
+                        mech.note = 'macro no válida (permerror según RFC 7208 §7)';
+                        warnings.push('Macro no válida en "' + rawTerm + '" (permerror según RFC 7208 §7).');
+                    } else if (redirectTerms.length > 1) {
                         mech.lookups = 0;
                         mech.permerror = true;
                         mech.note = 'múltiples modificadores redirect en el mismo registro (permerror según RFC 7208 §6)';
@@ -1598,7 +1827,7 @@
                         card.appendChild(multDiv);
                     } else if (m.child.mechanisms && m.child.mechanisms.length > 0) {
                         const subContainer = document.createElement('div');
-                        subContainer.className = 'ml-2 pl-2 border-l-2 border-slate-700 space-y-2 mt-2';
+                        subContainer.className = 'ml-2 pl-2 border-l-2 border-white/10 space-y-2 mt-2';
                         renderMechanismsTree(m.child.mechanisms, subContainer);
                         card.appendChild(subContainer);
                     }
@@ -1609,7 +1838,7 @@
         }
 
         function analyzeSpf(record) {
-            if (!record) return { status: 'fail', label: 'No detectado', text: 'No encontramos un registro SPF. El dominio no publica qué servidores están autorizados.' };
+            if (!record) return { status: 'none', label: 'No detectado', text: 'No encontramos un registro SPF. El dominio no publica qué servidores están autorizados.' };
             if (record.toLowerCase().includes('+all')) return { status: 'warn', label: 'Requiere atención', text: 'La política +all autoriza cualquier origen en SPF. Revisa todos tus remitentes antes de aplicar una política restrictiva.' };
             return { status: 'ok', label: 'Configurado', text: record };
         }
@@ -1628,6 +1857,11 @@
                 icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-amber-500/20';
                 badge.textContent = result.label;
                 badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-amber-500/20 text-amber-400';
+            } else if (result.status === 'fail' || result.status === 'error') {
+                icon.innerHTML = '<i class="fa-solid text-xs text-red-400 ' + 'fa-xmark"></i>';
+                icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-red-500/20';
+                badge.textContent = result.label;
+                badge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full flex-shrink-0 bg-red-500/20 text-red-400';
             } else if (result.status === 'unknown') {
                 icon.innerHTML = '<i class="fa-solid fa-question text-xs text-slate-300"></i>';
                 icon.className = 'w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 bg-white/5 border border-white/10';

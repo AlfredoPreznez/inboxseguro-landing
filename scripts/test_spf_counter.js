@@ -341,6 +341,191 @@ const MOCK_DNS = {
     // e) include: vacío es sintaxis inválida permerror (§5.2)
     'test-empty-include.fake': {
         TXT: { response: txtAnswer('test-empty-include.fake', 'v=spf1 include: -all') }
+    },
+
+    // 17. Fragmentación real de proveedores (conteo exacto)
+    'test-real-chunked-microsoft.fake': {
+        TXT: {
+            response: txtAnswer(
+                'test-real-chunked-microsoft.fake',
+                'v=spf1 include:_spf-a.microsoft.com include:_spf-b.microsoft.com include:_spf-ssg-a.msft.net include:_spf1-meo.microsoft.com -all'
+            )
+        }
+    },
+    '_spf-a.microsoft.com': {
+        TXT: { response: txtAnswer('_spf-a.microsoft.com', 'v=spf1 ip4:216.99.5.67 ip4:216.99.5.68 include:spf.protection.outlook.com ~all') }
+    },
+    'spf.protection.outlook.com': {
+        TXT: { response: txtAnswer('spf.protection.outlook.com', 'v=spf1 ip4:40.92.0.0/15 ~all') }
+    },
+    '_spf-b.microsoft.com': {
+        TXT: { response: txtAnswer('_spf-b.microsoft.com', 'v=spf1 ip4:207.46.22.35 ~all') }
+    },
+    '_spf-ssg-a.msft.net': {
+        TXT: { response: txtAnswer('_spf-ssg-a.msft.net', 'v=spf1 ip4:104.44.112.128/25 ~all') }
+    },
+    '_spf1-meo.microsoft.com': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: '_spf1-meo.microsoft.com.',
+                        type: 16,
+                        data: '"v=spf1 ip4:52.235.253.128 ip4:20." "69.8.108/30 ~all"'
+                    }
+                ]
+            }
+        }
+    },
+
+    'test-real-chunked-amazon.fake': {
+        TXT: {
+            response: txtAnswer(
+                'test-real-chunked-amazon.fake',
+                'v=spf1 include:spf1.amazon.com include:spf2.amazon.com include:amazonses.com -all'
+            )
+        }
+    },
+    'spf1.amazon.com': {
+        TXT: { response: txtAnswer('spf1.amazon.com', 'v=spf1 ip4:207.171.160.0/19 -all') }
+    },
+    'spf2.amazon.com': {
+        TXT: { response: txtAnswer('spf2.amazon.com', 'v=spf1 ip4:176.32.105.0/24 include:spf3.amazon.com -all') }
+    },
+    'spf3.amazon.com': {
+        TXT: { response: txtAnswer('spf3.amazon.com', 'v=spf1 ip4:52.95.48.152/29 -all') }
+    },
+    'amazonses.com': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'amazonses.com.',
+                        type: 16,
+                        data: '"v=spf1 ip4:199.255.192.0/22 ip4:24.110.64.0/18 " "ip4:98.77.0.0/16 -all"'
+                    }
+                ]
+            }
+        }
+    },
+
+    'test-real-chunked-hubspot.fake': {
+        TXT: { response: txtAnswer('test-real-chunked-hubspot.fake', 'v=spf1 redirect=_hspf.hubspot.com') }
+    },
+    '_hspf.hubspot.com': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: '_hspf.hubspot.com.',
+                        type: 16,
+                        data: '"v=spf1 include:_hspf1.hubspot.com ip4:54.174.53.128/30 ip4" ":185.250.236.0/22 -all"'
+                    }
+                ]
+            }
+        }
+    },
+    '_hspf1.hubspot.com': {
+        TXT: { response: txtAnswer('_hspf1.hubspot.com', 'v=spf1 ip4:192.254.112.0/20 -all') }
+    },
+
+    'test-real-chunked-zoho.fake': {
+        TXT: { response: txtAnswer('test-real-chunked-zoho.fake', 'v=spf1 include:spf.zoho.com include:zcsend.net -all') }
+    },
+    'spf.zoho.com': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'spf.zoho.com.',
+                        type: 16,
+                        data: '"v=spf1 ip4:136.143.188.0/24 ip4:169.148.12" "9.0/24 ip4:" "199.67.90.0/24 -all"'
+                    }
+                ]
+            }
+        }
+    },
+    'zcsend.net': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'zcsend.net.',
+                        type: 16,
+                        data: '"v=spf1 ip4:135.84.81.0/24 ip6:2607:13" "c0:0004::/116 ~all"'
+                    }
+                ]
+            }
+        }
+    },
+
+    'test-chunked-literal-google.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'test-chunked-literal-google.fake.',
+                        type: 16,
+                        data: '"v=spf1 include:_spf.goo" "gle.com -all"'
+                    }
+                ]
+            }
+        }
+    },
+    '_spf.google.com': {
+        TXT: { response: txtAnswer('_spf.google.com', 'v=spf1 ip4:35.190.247.0/24 -all') }
+    },
+
+    // 18. Casos menores Sección B
+    'test-ip4-leading-zero.fake': {
+        TXT: { response: txtAnswer('test-ip4-leading-zero.fake', 'v=spf1 ip4:192.168.001.1 -all') }
+    },
+    'test-ip4-cidr-leading-zero.fake': {
+        TXT: { response: txtAnswer('test-ip4-cidr-leading-zero.fake', 'v=spf1 ip4:192.168.1.1/08 -all') }
+    },
+    'test-a-cidr-invalid.fake': {
+        TXT: { response: txtAnswer('test-a-cidr-invalid.fake', 'v=spf1 a:h1.fake/33 -all') }
+    },
+    'test-mx-cidr-invalid.fake': {
+        TXT: { response: txtAnswer('test-mx-cidr-invalid.fake', 'v=spf1 mx/99 -all') }
+    },
+    'test-empty-a.fake': {
+        TXT: { response: txtAnswer('test-empty-a.fake', 'v=spf1 a: -all') }
+    },
+    'test-empty-mx.fake': {
+        TXT: { response: txtAnswer('test-empty-mx.fake', 'v=spf1 mx: -all') }
+    },
+    'test-empty-exists.fake': {
+        TXT: { response: txtAnswer('test-empty-exists.fake', 'v=spf1 exists: -all') }
+    },
+    'test-duplicate-exp.fake': {
+        TXT: { response: txtAnswer('test-duplicate-exp.fake', 'v=spf1 exp=sub1.test-nested.fake exp=sub2.test-nested.fake -all') }
+    },
+    'test-invalid-macro.fake': {
+        TXT: { response: txtAnswer('test-invalid-macro.fake', 'v=spf1 a:%{z}._spf.test-macros.fake -all') }
+    },
+    'test-tab-separator.fake': {
+        TXT: { response: txtAnswer('test-tab-separator.fake', 'v=spf1\tinclude:sub1.test-nested.fake\t-all') }
+    },
+    'test-ddd-decode.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'test-ddd-decode.fake.',
+                        type: 16,
+                        data: '"v=spf1\\032ip4:192.0.2.1\\032-all"'
+                    }
+                ]
+            }
+        }
     }
 };
 
@@ -543,6 +728,116 @@ async function runSuite() {
             expectedLookups: 0,
             expectedBadge: 'Sintaxis inválida (permerror)',
             expectedWarningText: 'Sintaxis inválida en include'
+        },
+
+        // Fragmentación real de proveedores con conteo exacto
+        {
+            domain: 'test-real-chunked-microsoft.fake',
+            category: 'Fragmentación real Microsoft (_spf1-meo corte en IP)',
+            expectedLookups: 5,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-real-chunked-amazon.fake',
+            category: 'Fragmentación real Amazon (amazonses corte en espacio)',
+            expectedLookups: 4,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-real-chunked-hubspot.fake',
+            category: 'Fragmentación real HubSpot (_hspf corte en mecanismo ip4)',
+            expectedLookups: 2,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-real-chunked-zoho.fake',
+            category: 'Fragmentación real Zoho (spf.zoho y zcsend corte en IP/IPv6)',
+            expectedLookups: 2,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-chunked-literal-google.fake',
+            category: 'Mock literal include:_spf.goo + gle.com',
+            expectedLookups: 1,
+            expectedBadge: 'Dentro del límite'
+        },
+
+        // Casos menores Sección B
+        {
+            domain: 'test-ip4-leading-zero.fake',
+            category: 'ip4 con ceros a la izquierda (192.168.001.1)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en ip4'
+        },
+        {
+            domain: 'test-ip4-cidr-leading-zero.fake',
+            category: 'ip4 CIDR con cero a la izquierda (/08)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en ip4'
+        },
+        {
+            domain: 'test-a-cidr-invalid.fake',
+            category: 'CIDR inválido en a (a:h1.fake/33)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en mecanismo a'
+        },
+        {
+            domain: 'test-mx-cidr-invalid.fake',
+            category: 'CIDR inválido en mx (mx/99)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en mecanismo mx'
+        },
+        {
+            domain: 'test-empty-a.fake',
+            category: 'Mecanismo a: vacío como permerror',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en mecanismo a'
+        },
+        {
+            domain: 'test-empty-mx.fake',
+            category: 'Mecanismo mx: vacío como permerror',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en mecanismo mx'
+        },
+        {
+            domain: 'test-empty-exists.fake',
+            category: 'Mecanismo exists: vacío como permerror',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Sintaxis inválida en mecanismo exists'
+        },
+        {
+            domain: 'test-duplicate-exp.fake',
+            category: 'Modificador exp= duplicado como permerror',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'más de un modificador exp'
+        },
+        {
+            domain: 'test-invalid-macro.fake',
+            category: 'Macro no válida (%{z}) como permerror',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Macro no válida'
+        },
+        {
+            domain: 'test-tab-separator.fake',
+            category: 'Rechazo de tabuladores como separador (RFC 7208 exige espacios)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'tabulador'
+        },
+        {
+            domain: 'test-ddd-decode.fake',
+            category: 'Decodificación de \\DDD en extractSpfTxtRecords',
+            expectedLookups: 0,
+            expectedBadge: 'Dentro del límite'
         }
     ];
 
@@ -564,6 +859,7 @@ async function runSuite() {
 
     const results = [];
     const consoleErrors = [];
+    const realDnsSummary = [];
 
     async function createCleanPage() {
         const page = await browser.newPage();
@@ -571,6 +867,18 @@ async function runSuite() {
             try {
                 localStorage.setItem('inboxseguro_cookie_consent', 'accepted');
             } catch (e) {}
+        });
+
+        // Bloqueo estricto de notificaciones, tickets y analítica en Playwright (page.route)
+        await page.route(url => {
+            const u = typeof url === 'string' ? url : url.url();
+            return u.includes('diagnosis-notify') ||
+                   u.includes('diagnosis-ticket') ||
+                   u.includes('/api/notify') ||
+                   u.includes('/api/ticket') ||
+                   u.includes('panel.inboxseguro.com');
+        }, async (route) => {
+            return route.abort();
         });
 
         // Intercepción de DoH / DNS Proxy para mock determinista
@@ -667,6 +975,83 @@ async function runSuite() {
         await page.close();
     }
 
+    // Pruebas unitarias de isValidIp6 e isValidIp4
+    console.log('\n--- PRUEBAS UNITARIAS: isValidIp6 e isValidIp4 (RFC 7208 / IPv6 / IPv4) ---');
+    {
+        const page = await createCleanPage();
+        await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
+
+        const ip6Positive = [
+            '::ffff:192.0.2.1',
+            '64:ff9b::192.0.2.33/128',
+            '1:2:3:4:5:6:7::',
+            '::2:3:4:5:6:7:8',
+            '::',
+            '::1',
+            '2001:db8::1',
+            '2001:db8:85a3:0:0:8a2e:370:7334',
+            '2001:db8:85a3::8a2e:370:7334/64',
+            '::ffff:0.0.0.0'
+        ];
+        const ip6Negative = [
+            ':::',
+            ':1::2',
+            '1::2:',
+            '::1::2',
+            '1:2:3:4:5:6:7:8:9',
+            '1:2:3:4:5:6:7:8::',
+            '12345::1',
+            '2001:db8::1/129',
+            '2001:db8::1/08',
+            '2001:db8::1/-1',
+            '::ffff:192.168.001.1',
+            '::ffff:192.168.1.256',
+            '64:ff9b::192.0.2.33/0128'
+        ];
+
+        let ipErrors = 0;
+        for (const ip of ip6Positive) {
+            const valid = await page.evaluate(val => isValidIp6(val), ip);
+            if (!valid) {
+                ipErrors++;
+                console.error(`FALLO: IPv6 positivo esperado válido: ${ip}`);
+                results.push({ domain: `ip6-valid:${ip}`, expected: 'true', actual: 'false', diff: 1, status: 'FALLO' });
+            }
+        }
+        for (const ip of ip6Negative) {
+            const valid = await page.evaluate(val => isValidIp6(val), ip);
+            if (valid) {
+                ipErrors++;
+                console.error(`FALLO: IPv6 negativo esperado inválido: ${ip}`);
+                results.push({ domain: `ip6-invalid:${ip}`, expected: 'false', actual: 'true', diff: 1, status: 'FALLO' });
+            }
+        }
+
+        const ip4Positive = ['192.168.1.1', '192.168.1.1/32', '0.0.0.0', '255.255.255.255/0'];
+        const ip4Negative = ['192.168.001.1', '192.168.1.1/08', '192.168.1.1/33', '192.168.1.256', '192.168.1'];
+        for (const ip of ip4Positive) {
+            const valid = await page.evaluate(val => isValidIp4(val), ip);
+            if (!valid) {
+                ipErrors++;
+                console.error(`FALLO: IPv4 positivo esperado válido: ${ip}`);
+                results.push({ domain: `ip4-valid:${ip}`, expected: 'true', actual: 'false', diff: 1, status: 'FALLO' });
+            }
+        }
+        for (const ip of ip4Negative) {
+            const valid = await page.evaluate(val => isValidIp4(val), ip);
+            if (valid) {
+                ipErrors++;
+                console.error(`FALLO: IPv4 negativo esperado inválido: ${ip}`);
+                results.push({ domain: `ip4-invalid:${ip}`, expected: 'false', actual: 'true', diff: 1, status: 'FALLO' });
+            }
+        }
+        await page.close();
+        if (ipErrors === 0) {
+            console.log('OK: Validaciones unitarias de IPv6 e IPv4 (positivas y negativas) coinciden al 100%.');
+            results.push({ domain: 'unit:isValidIp6-and-isValidIp4', expected: 'OK', actual: 'OK', diff: 0, status: 'OK' });
+        }
+    }
+
     // Ejecución de casos deterministas con DNS simulado
     console.log('\n--- PRUEBAS DETERMINISTAS CON DNS SIMULADO ---');
     for (const tc of deterministicCases) {
@@ -738,6 +1123,39 @@ async function runSuite() {
                 }
             }
 
+            // Comprobación de coherencia entre los 3 elementos (badge superior diagScore, fila badge-spf, contador spfCounterBadge)
+            const diagScore = await page.$eval('#diagScore', el => ({ text: el.textContent.trim(), class: el.className }));
+            const badgeSpf = await page.$eval('#badge-spf', el => ({ text: el.textContent.trim(), class: el.className }));
+            const counterBadge = await page.$eval('#spfCounterBadge', el => ({ text: el.textContent.trim(), class: el.className }));
+
+            if (badgeText.includes('permerror') || badgeText.includes('Supera el límite')) {
+                if (diagScore.text !== 'Permerror' || !diagScore.class.includes('text-red-400')) {
+                    failed = true;
+                    failureReason += `diagScore incoherente: esperaba Permerror rojo, obtuvo "${diagScore.text}" (${diagScore.class}). `;
+                }
+                if (badgeSpf.text !== 'Permerror' || !badgeSpf.class.includes('text-red-400')) {
+                    failed = true;
+                    failureReason += `badge-spf incoherente: esperaba Permerror rojo, obtuvo "${badgeSpf.text}" (${badgeSpf.class}). `;
+                }
+                if (!counterBadge.class.includes('text-red-400')) {
+                    failed = true;
+                    failureReason += `spfCounterBadge incoherente: esperaba rojo (${counterBadge.class}). `;
+                }
+            } else if (badgeText === 'Sin registro') {
+                if (diagScore.text !== 'No detectado' || !diagScore.class.includes('text-slate-300')) {
+                    failed = true;
+                    failureReason += `diagScore incoherente: esperaba No detectado gris, obtuvo "${diagScore.text}" (${diagScore.class}). `;
+                }
+                if (badgeSpf.text !== 'No detectado' || !badgeSpf.class.includes('text-slate-300')) {
+                    failed = true;
+                    failureReason += `badge-spf incoherente: esperaba No detectado gris, obtuvo "${badgeSpf.text}" (${badgeSpf.class}). `;
+                }
+                if (counterBadge.text !== 'Sin registro' || !counterBadge.class.includes('text-slate-300')) {
+                    failed = true;
+                    failureReason += `spfCounterBadge incoherente: esperaba Sin registro gris, obtuvo "${counterBadge.text}". `;
+                }
+            }
+
             results.push({
                 domain: tc.domain,
                 expected: tc.expectedLookups !== null ? `${tc.expectedLookups} [${tc.expectedBadge}]` : `[${tc.expectedBadge}]`,
@@ -774,14 +1192,19 @@ async function runSuite() {
 
         if (tc.isInvalidInput) {
             const resultsHidden = await page.$eval('#diagResults', el => el.classList.contains('hidden'));
+            const ok = resultsHidden === true;
             results.push({
                 domain: tc.domain,
-                expected: 'Detenido por validación',
-                actual: resultsHidden ? 'Detenido por validación' : 'Error',
-                diff: 0,
-                status: 'OK'
+                expected: 'Detenido por validación (diagResults oculto)',
+                actual: ok ? 'Detenido por validación (diagResults oculto)' : 'Mostró resultados a pesar de entrada inválida',
+                diff: ok ? 0 : 'diagResults visible tras entrada inválida',
+                status: ok ? 'OK' : 'FALLO'
             });
-            console.log('  -> Validación nativa correcta: no se ejecutó envío.');
+            if (!ok) {
+                console.error('  -> FALLO: Se mostraron resultados o se ejecutó envío con entrada sintácticamente inválida.');
+            } else {
+                console.log('  -> Validación nativa correcta: no se ejecutó envío.');
+            }
             await page.close();
             continue;
         }
@@ -796,6 +1219,8 @@ async function runSuite() {
             const badgeText = await page.$eval('#spfCounterBadge', el => el.textContent.trim());
             const summaryText = await page.$eval('#spfCounterSummary', el => el.textContent.trim());
             const countText = await page.$eval('#spfMechanismsCount', el => el.textContent.trim());
+            const diagScore = await page.$eval('#diagScore', el => ({ text: el.textContent.trim(), class: el.className }));
+            const badgeSpf = await page.$eval('#badge-spf', el => ({ text: el.textContent.trim(), class: el.className }));
 
             let failed = false;
             let failureReason = '';
@@ -807,6 +1232,21 @@ async function runSuite() {
             if (tc.allowedBadges && !tc.allowedBadges.includes(badgeText)) {
                 failed = true;
                 failureReason += `Badge "${badgeText}" no está en permitidos [${tc.allowedBadges.join(', ')}]. `;
+            }
+
+            if (tc.domain === 'test.com') {
+                if (diagScore.text !== 'No detectado' || !diagScore.class.includes('text-slate-300')) {
+                    failed = true;
+                    failureReason += `test.com diagScore incoherente: esperaba No detectado gris, obtuvo "${diagScore.text}" (${diagScore.class}). `;
+                }
+                if (badgeSpf.text !== 'No detectado' || !badgeSpf.class.includes('text-slate-300')) {
+                    failed = true;
+                    failureReason += `test.com badge-spf incoherente: esperaba No detectado gris, obtuvo "${badgeSpf.text}" (${badgeSpf.class}). `;
+                }
+                if (badgeText !== 'Sin registro') {
+                    failed = true;
+                    failureReason += `test.com spfCounterBadge incoherente: esperaba Sin registro gris, obtuvo "${badgeText}". `;
+                }
             }
 
             if (tc.requireConcrete) {
@@ -838,6 +1278,15 @@ async function runSuite() {
             });
 
             console.log(`  -> Smoke OK: Badge="${badgeText}" | Resumen="${summaryText}" | Conteo="${countText}"`);
+
+            if (['microsoft.com', 'amazon.com', 'hubspot.com', 'zoho.com', 'google.com', 'shopify.com', 'mailchimp.com', 'github.com', 'test.com'].includes(tc.domain)) {
+                realDnsSummary.push({
+                    domain: tc.domain,
+                    topBadge: diagScore.text,
+                    rowBadge: badgeSpf.text,
+                    counterBadge: `${badgeText} (${countText})`
+                });
+            }
 
             // Capturas de pantalla opcionales solo si ARTIFACT_DIR está configurado y existe
             if (ARTIFACT_DIR && fs.existsSync(ARTIFACT_DIR)) {
@@ -875,6 +1324,13 @@ async function runSuite() {
     console.log('|---|---|---|---|---|');
     for (const r of results) {
         console.log(`| ${r.domain} | ${r.expected} | ${r.actual} | ${r.diff} | ${r.status} |`);
+    }
+
+    console.log('\n================ TABLA DE VERIFICACIÓN DNS REAL (9 DOMINIOS) ================');
+    console.log('| Dominio | Badge Superior (diagScore) | Fila SPF (badge-spf) | Contador (spfCounterBadge) |');
+    console.log('|---|---|---|---|');
+    for (const row of realDnsSummary) {
+        console.log(`| ${row.domain} | ${row.topBadge} | ${row.rowBadge} | ${row.counterBadge} |`);
     }
 
     if (consoleErrors.length > 0) {
