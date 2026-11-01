@@ -614,6 +614,7 @@
 
         const DNS_QUERY_TIMEOUT_MS = 5000;
         let preferredDnsMode = null; // null | 'proxy' | 'doh'
+        let preferredDohResolver = null; // null | 'cloudflare' | 'google' | 'alidns'
 
         const DNS_TYPE_CODES = { A: 1, NS: 2, CNAME: 5, MX: 15, TXT: 16, AAAA: 28 };
 
@@ -701,6 +702,7 @@
                             preferredDnsMode = 'proxy';
                         } else if (resolverName) {
                             preferredDnsMode = 'doh';
+                            preferredDohResolver = resolverName;
                         }
                         return data;
                     }
@@ -718,7 +720,13 @@
                 }
                 const sf = list.find(function (e) { return e && e.dnsData; });
                 if (sf) return sf.dnsData;
-                return { Status: 3 };
+                return null;
+            }
+
+            function resolverUnavailableError(errs) {
+                const err = new Error('No hay resolvers DNS disponibles');
+                err.errors = errs || [];
+                return err;
             }
 
             async function raceForDnsData(queriesWithMeta) {
@@ -733,7 +741,9 @@
                     } catch (aggErr) {
                         if (signal && signal.aborted) throw new DOMException('Aborted', 'AbortError');
                         const errs = (aggErr && aggErr.errors) ? aggErr.errors : [aggErr];
-                        return pickBestEmptyFromErrors(errs);
+                        const empty = pickBestEmptyFromErrors(errs);
+                        if (empty) return empty;
+                        throw resolverUnavailableError(errs);
                     }
                 }
 
@@ -753,74 +763,115 @@
                             rejected++;
                             if (rejected === attempts.length && !settled) {
                                 settled = true;
-                                resolve(pickBestEmptyFromErrors(errors));
+                                const empty = pickBestEmptyFromErrors(errors);
+                                if (empty) resolve(empty);
+                                else reject(resolverUnavailableError(errors));
                             }
                         });
                     });
                 });
             }
 
-            const proxyUrl = 'https://inboxseguro-dns-proxy.alfredo-9d8.workers.dev/api/dns?name=' + encodeURIComponent(name) + '&type=' + type;
-            const primaryDoh = [
-                { url: 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(name) + '&type=' + type, headers: { Accept: 'application/dns-json' }, resolver: 'cloudflare' },
-                { url: 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type, headers: {}, resolver: 'google' }
-            ];
-            const alidnsConfig = {
-                url: 'https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type,
-                headers: {},
-                resolver: 'alidns'
-            };
+            function dohConfig(resolverName) {
+                if (resolverName === 'cloudflare') {
+                    return {
+                        url: 'https://cloudflare-dns.com/dns-query?name=' + encodeURIComponent(name) + '&type=' + type,
+                        headers: { Accept: 'application/dns-json' },
+                        resolver: 'cloudflare'
+                    };
+                }
+                if (resolverName === 'google') {
+                    return {
+                        url: 'https://dns.google/resolve?name=' + encodeURIComponent(name) + '&type=' + type,
+                        headers: {},
+                        resolver: 'google'
+                    };
+                }
+                return {
+                    url: 'https://dns.alidns.com/resolve?name=' + encodeURIComponent(name) + '&type=' + type,
+                    headers: {},
+                    resolver: 'alidns'
+                };
+            }
 
-            if (preferredDnsMode === 'doh') {
+            const proxyUrl = 'https://inboxseguro-dns-proxy.alfredo-9d8.workers.dev/api/dns?name=' + encodeURIComponent(name) + '&type=' + type;
+            const primaryDoh = [dohConfig('cloudflare'), dohConfig('google')];
+            const alidnsConfig = dohConfig('alidns');
+
+            function querySingle(url, headers, resolverName) {
+                return queryOne(url, headers, resolverName).promise;
+            }
+
+            async function fetchViaDoh() {
+                if (preferredDohResolver) {
+                    const preferred = dohConfig(preferredDohResolver);
+                    try {
+                        return await querySingle(preferred.url, preferred.headers, preferred.resolver);
+                    } catch (err) {
+                        if (signal && signal.aborted) throw err;
+                        preferredDohResolver = null;
+                    }
+                }
+
                 try {
                     return await raceForDnsData(primaryDoh.map(function (c) {
                         return { query: queryOne(c.url, c.headers, c.resolver), resolver: c.resolver };
                     }));
-                } catch (e) {
-                    if (signal && signal.aborted) throw e;
+                } catch (raceErr) {
+                    if (signal && signal.aborted) throw raceErr;
+                    const raceErrs = (raceErr && raceErr.errors) ? raceErr.errors : [raceErr];
+                    const empty = pickBestEmptyFromErrors(raceErrs);
+                    if (empty) return empty;
                 }
-                return raceForDnsData([{ query: queryOne(alidnsConfig.url, alidnsConfig.headers, alidnsConfig.resolver), resolver: alidnsConfig.resolver }]);
+
+                try {
+                    const fallback = await querySingle(alidnsConfig.url, alidnsConfig.headers, alidnsConfig.resolver);
+                    preferredDohResolver = 'alidns';
+                    return fallback;
+                } catch (err) {
+                    if (signal && signal.aborted) throw err;
+                    throw resolverUnavailableError([err]);
+                }
+            }
+
+            if (preferredDnsMode === 'doh') {
+                return fetchViaDoh();
             }
 
             if (preferredDnsMode === 'proxy') {
                 try {
-                    const proxyData = await raceForDnsData([{ query: queryOne(proxyUrl, {}, 'proxy'), resolver: 'proxy' }]);
-                    if (dnsResponseHasRecords(proxyData, type) || (proxyData && typeof proxyData.Status === 'number')) {
-                        return proxyData;
-                    }
-                } catch (e) {
-                    if (signal && signal.aborted) throw e;
+                    return await querySingle(proxyUrl, {}, 'proxy');
+                } catch (err) {
+                    if (signal && signal.aborted) throw err;
                     preferredDnsMode = null;
-                }
-            }
-
-            const parallelEntries = primaryDoh.map(function (c) {
-                return { query: queryOne(c.url, c.headers, c.resolver), resolver: c.resolver };
-            });
-            if (preferredDnsMode !== 'doh') {
-                parallelEntries.unshift({ query: queryOne(proxyUrl, {}, 'proxy'), resolver: 'proxy' });
-            }
-
-            try {
-                const data = await raceForDnsData(parallelEntries);
-                if (dnsResponseHasRecords(data, type)) {
+                    const data = await fetchViaDoh();
+                    preferredDnsMode = 'doh';
                     return data;
                 }
-                if (preferredDnsMode === null && data && typeof data.Status === 'number') {
-                    preferredDnsMode = 'doh';
-                }
-                return data;
-            } catch (e) {
-                if (signal && signal.aborted) throw e;
             }
 
             try {
-                const fallback = await raceForDnsData([{ query: queryOne(alidnsConfig.url, alidnsConfig.headers, alidnsConfig.resolver), resolver: alidnsConfig.resolver }]);
+                const proxyData = await querySingle(proxyUrl, {}, 'proxy');
+                if (dnsResponseHasRecords(proxyData, type)) {
+                    preferredDnsMode = 'proxy';
+                    return proxyData;
+                }
+                try {
+                    const dohData = await raceForDnsData(primaryDoh.map(function (c) {
+                        return { query: queryOne(c.url, c.headers, c.resolver), resolver: c.resolver };
+                    }));
+                    preferredDnsMode = 'doh';
+                    return dohData;
+                } catch (dohErr) {
+                    if (signal && signal.aborted) throw dohErr;
+                    preferredDnsMode = 'proxy';
+                    return proxyData;
+                }
+            } catch (proxyErr) {
+                if (signal && signal.aborted) throw proxyErr;
+                const data = await fetchViaDoh();
                 preferredDnsMode = 'doh';
-                return fallback;
-            } catch (e) {
-                if (signal && signal.aborted) throw e;
-                throw e;
+                return data;
             }
         }
 
@@ -1016,6 +1067,11 @@
                 error.textContent = message;
                 error.classList.remove('hidden');
             }
+            const input = document.getElementById('dominioInput');
+            if (input) {
+                input.setAttribute('aria-invalid', 'true');
+                input.setAttribute('aria-describedby', 'diagError');
+            }
             const results = document.getElementById('diagResults');
             if (results) results.classList.add('hidden');
             const loading = document.getElementById('diagLoading');
@@ -1025,6 +1081,11 @@
         function hideDiagError() {
             const error = document.getElementById('diagError');
             if (error) error.classList.add('hidden');
+            const input = document.getElementById('dominioInput');
+            if (input) {
+                input.removeAttribute('aria-invalid');
+                input.removeAttribute('aria-describedby');
+            }
         }
 
         function spfRecordHasPlusAll(record) {
