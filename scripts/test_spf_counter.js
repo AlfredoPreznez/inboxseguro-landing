@@ -663,6 +663,42 @@ const MOCK_DNS = {
             }
         }
     },
+    'test-nested-slow-proxy.fake': {
+        TXT: {
+            byResolver: {
+                proxy: {
+                    response: txtAnswer('test-nested-slow-proxy.fake', 'v=spf1 include:sub1.test-nested-slow-proxy.fake -all'),
+                    delay: 4000
+                },
+                cloudflare: { response: txtAnswer('test-nested-slow-proxy.fake', 'v=spf1 include:sub1.test-nested-slow-proxy.fake -all') },
+                google: { response: txtAnswer('test-nested-slow-proxy.fake', 'v=spf1 include:sub1.test-nested-slow-proxy.fake -all') }
+            }
+        }
+    },
+    'sub1.test-nested-slow-proxy.fake': {
+        TXT: {
+            byResolver: {
+                proxy: {
+                    response: txtAnswer('sub1.test-nested-slow-proxy.fake', 'v=spf1 include:sub2.test-nested-slow-proxy.fake -all'),
+                    delay: 4000
+                },
+                cloudflare: { response: txtAnswer('sub1.test-nested-slow-proxy.fake', 'v=spf1 include:sub2.test-nested-slow-proxy.fake -all') },
+                google: { response: txtAnswer('sub1.test-nested-slow-proxy.fake', 'v=spf1 include:sub2.test-nested-slow-proxy.fake -all') }
+            }
+        }
+    },
+    'sub2.test-nested-slow-proxy.fake': {
+        TXT: {
+            byResolver: {
+                proxy: {
+                    response: txtAnswer('sub2.test-nested-slow-proxy.fake', 'v=spf1 ip4:192.0.2.1 -all'),
+                    delay: 4000
+                },
+                cloudflare: { response: txtAnswer('sub2.test-nested-slow-proxy.fake', 'v=spf1 ip4:192.0.2.1 -all') },
+                google: { response: txtAnswer('sub2.test-nested-slow-proxy.fake', 'v=spf1 ip4:192.0.2.1 -all') }
+            }
+        }
+    },
     'test-all-resolvers-down.fake': {
         TXT: {
             byResolver: {
@@ -1098,15 +1134,23 @@ async function runSuite() {
         },
         {
             domain: 'test-nxdomain-race.fake',
-            category: 'NXDOMAIN rápido no debe ganar a SPF más lento en otro resolver',
+            category: 'NXDOMAIN del proxy se acepta sin consultar DoH (privacidad)',
             expectedLookups: 0,
-            expectedBadge: 'Dentro del límite'
+            expectedBadge: 'Sin registro'
         },
         {
             domain: 'test-proxy-slow-doh-wins.fake',
             category: 'Proxy lento (4s): DoH paralelo debe ganar antes del timeout global',
             expectedLookups: 0,
-            expectedBadge: 'Dentro del límite'
+            expectedBadge: 'Dentro del límite',
+            expectedTopScore: 'Correcto'
+        },
+        {
+            domain: 'test-nested-slow-proxy.fake',
+            category: 'Includes anidados con proxy lento (4s): DoH paralelo completa el conteo',
+            expectedLookups: 2,
+            expectedBadge: 'Dentro del límite',
+            expectedTopScore: 'Correcto'
         },
         {
             domain: 'test-all-resolvers-down.fake',
@@ -1176,11 +1220,17 @@ async function runSuite() {
     }
 
     function isMockDnsUrl(reqUrl) {
-        return reqUrl.includes('/api/dns') ||
-            reqUrl.includes('cloudflare-dns.com/dns-query') ||
+        try {
+            const parsed = new URL(reqUrl);
+            const host = parsed.hostname.toLowerCase();
+            if (host === 'inboxseguro-dns-proxy.alfredo-9d8.workers.dev' &&
+                parsed.pathname.toLowerCase().includes('/api/dns')) {
+                return true;
+            }
+        } catch (e) {}
+        return reqUrl.includes('cloudflare-dns.com/dns-query') ||
             reqUrl.includes('dns.google/resolve') ||
-            reqUrl.includes('dns.alidns.com/resolve') ||
-            reqUrl.includes('inboxseguro-dns-proxy.alfredo-9d8.workers.dev/api/dns');
+            reqUrl.includes('dns.alidns.com/resolve');
     }
 
     function mockDnsEntryForRequest(reqUrl) {
@@ -1271,6 +1321,9 @@ async function runSuite() {
                 if (entry) {
                     entry.failed = true;
                     entry.errorText = req.failure() ? req.failure().errorText : '';
+                    if (entry.errorText.includes('ERR_BLOCKED_BY_CLIENT')) {
+                        this.blockedCount++;
+                    }
                 }
             });
 
@@ -1286,6 +1339,13 @@ async function runSuite() {
             await this.context.route('**', async (route) => {
                 const req = route.request();
                 const reqUrl = req.url();
+
+                if (isForbiddenUrl(reqUrl)) {
+                    if (!this.allowPassThrough) {
+                        return route.abort('blockedbyclient');
+                    }
+                    return route.continue();
+                }
 
                 if (getMocksEnabled && getMocksEnabled() && isMockDnsUrl(reqUrl)) {
                     const entry = mockDnsEntryForRequest(reqUrl);
@@ -1307,15 +1367,6 @@ async function runSuite() {
 
                 if (isDnsWorkerUrl(reqUrl)) {
                     if (!this.allowPassThrough) {
-                        this.blockedCount++;
-                        return route.abort('blockedbyclient');
-                    }
-                    return route.continue();
-                }
-
-                if (isForbiddenUrl(reqUrl)) {
-                    if (!this.allowPassThrough) {
-                        this.blockedCount++;
                         return route.abort('blockedbyclient');
                     }
                     return route.continue();
@@ -1325,7 +1376,22 @@ async function runSuite() {
             });
         }
 
+        pruneDetachedPending() {
+            for (const [req, info] of this.forbiddenRequests.entries()) {
+                if (info.failed || info.finished) continue;
+                try {
+                    const p = req.frame().page();
+                    if (p.isClosed()) {
+                        this.forbiddenRequests.delete(req);
+                    }
+                } catch (e) {
+                    this.forbiddenRequests.delete(req);
+                }
+            }
+        }
+
         assertAllBlocked(options = {}) {
+            this.pruneDetachedPending();
             const minExpected = options.minExpected || 0;
             const badRequests = [];
             let total = 0;
@@ -1369,14 +1435,26 @@ async function runSuite() {
                 await new Promise(r => setTimeout(r, 25));
             }
         }
+
+        async awaitPageForbiddenBlocked(page, timeoutMs = 25000) {
+            const start = Date.now();
+            while (Date.now() - start < timeoutMs) {
+                let pendingOnPage = false;
+                for (const [req, info] of this.forbiddenRequests.entries()) {
+                    if (info.finished || info.failed) continue;
+                    try {
+                        if (req.frame().page() === page) pendingOnPage = true;
+                    } catch (e) {
+                        /* frame/page ya destruido */
+                    }
+                }
+                if (!pendingOnPage) return;
+                await new Promise(r => setTimeout(r, 50));
+            }
+        }
     }
 
     const mainContext = await browser.newContext();
-    await mainContext.addInitScript(() => {
-        try {
-            localStorage.setItem('inboxseguro_cookie_consent', 'essential');
-        } catch (e) {}
-    });
 
     let currentEnableMocks = true;
     const tracker = new SecurityRequestTracker(mainContext, {
@@ -1385,34 +1463,41 @@ async function runSuite() {
     });
     await tracker.setupRoute(() => currentEnableMocks);
 
-    // Evita fetch de sesión al panel (LIFO: se evalúa antes que el handler general)
-    await mainContext.route('**/session-cta.js', (route) => {
-        return route.fulfill({
-            status: 200,
-            contentType: 'application/javascript',
-            body: '/* session-cta desactivado en pruebas */'
-        });
-    });
-
     async function closeTrackedPage(page) {
         try {
-            await page.waitForLoadState('networkidle', { timeout: 4000 });
+            await page.waitForLoadState('load', { timeout: 8000 });
         } catch (e) {}
-        await tracker.awaitForbiddenSettled(10000);
+        try {
+            await page.waitForRequest(
+                (req) => req.url().includes('panel.inboxseguro.com/api/public/session-status'),
+                { timeout: 8000 }
+            );
+        } catch (e) {}
+        try {
+            await page.waitForLoadState('networkidle', { timeout: 6000 });
+        } catch (e) {}
+        await tracker.awaitPageForbiddenBlocked(page, 25000);
+        await tracker.awaitForbiddenSettled(5000);
         await page.close();
+        tracker.pruneDetachedPending();
         await tracker.awaitForbiddenSettled(3000);
     }
 
+    const DNS_ERROR_ALERT = 'No pudimos consultar los registros DNS. Verifica tu conexión e inténtalo de nuevo.';
+
     async function createCleanPage(options = { useMocks: true }) {
         currentEnableMocks = !!(options && options.useMocks);
+        const suppressResolverUnavailableConsole = !!(options && options.suppressResolverUnavailableConsole);
         const page = await mainContext.newPage();
 
         page.on('console', msg => {
             if (msg.type() === 'error') {
                 const text = msg.text();
+                if (suppressResolverUnavailableConsole && text.includes('No hay resolvers DNS disponibles')) {
+                    return;
+                }
                 if (text.includes('inboxseguro-dns-proxy') ||
                     text.includes('panel.inboxseguro.com') ||
-                    text.includes('No hay resolvers DNS disponibles') ||
                     text.includes('ERR_FAILED') ||
                     text.includes('ERR_BLOCKED_BY_CLIENT') ||
                     text.includes('CORS') ||
@@ -1867,8 +1952,16 @@ async function runSuite() {
     console.log('\n--- PRUEBAS DETERMINISTAS CON DNS SIMULADO ---');
     for (const tc of deterministicCases) {
         console.log(`\nProbando [Mock]: ${tc.domain} (${tc.category})...`);
-        const page = await createCleanPage({ useMocks: true });
-        page.on('dialog', dialog => dialog.accept());
+        const pageOptions = { useMocks: true };
+        if (tc.expectDnsErrorAlert) {
+            pageOptions.suppressResolverUnavailableConsole = true;
+        }
+        const page = await createCleanPage(pageOptions);
+        let dnsErrorAlertText = null;
+        page.on('dialog', dialog => {
+            dnsErrorAlertText = dialog.message();
+            dialog.accept();
+        });
         await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
         await page.fill('#dominioInput', tc.domain);
         await page.click('#diagBtn');
@@ -1877,12 +1970,15 @@ async function runSuite() {
             await page.waitForTimeout(800);
             const resultsHidden = await page.$eval('#diagResults', el => el.classList.contains('hidden'));
             const loadingHidden = await page.$eval('#diagLoading', el => el.classList.contains('hidden'));
-            const failed = !(resultsHidden && loadingHidden);
+            const alertOk = dnsErrorAlertText === DNS_ERROR_ALERT;
+            const failed = !(resultsHidden && loadingHidden) || !alertOk;
             results.push({
                 domain: tc.domain,
-                expected: 'Alerta DNS sin resultados falsos',
-                actual: failed ? 'Resultados visibles tras fallo DNS' : 'Alerta DNS, sin resultados',
-                diff: failed ? 'Mostró diagResults en lugar de error' : 0,
+                expected: `Alerta DNS: ${DNS_ERROR_ALERT}`,
+                actual: failed
+                    ? (alertOk ? 'Resultados visibles tras fallo DNS' : `Alerta "${dnsErrorAlertText || '(ninguna)'}"`)
+                    : 'Alerta DNS, sin resultados',
+                diff: failed ? (alertOk ? 'Mostró diagResults en lugar de error' : 'Texto de alerta incorrecto') : 0,
                 status: failed ? 'FALLO' : 'OK'
             });
             if (failed) {
@@ -2061,12 +2157,15 @@ async function runSuite() {
         }, { timeout: 15000 });
         const resolverStats = await page.evaluate(() => window.__spfDnsResolverStats || {});
         console.log(`Consultas por resolver tras test-nested.fake: proxy=${resolverStats.proxy || 0}, cloudflare=${resolverStats.cloudflare || 0}, google=${resolverStats.google || 0}, alidns=${resolverStats.alidns || 0}`);
-        const privacyOk = (resolverStats.alidns || 0) === 0;
+        const privacyOk = (resolverStats.alidns || 0) === 0 &&
+            (resolverStats.cloudflare || 0) === 0 &&
+            (resolverStats.google || 0) === 0 &&
+            (resolverStats.proxy || 0) >= 1;
         results.push({
             domain: 'privacy:resolver-stats',
-            expected: 'AliDNS=0 en búsqueda anidada',
+            expected: 'Proxy-only (AliDNS/CF/Google=0) en búsqueda anidada rápida',
             actual: JSON.stringify(resolverStats),
-            diff: privacyOk ? 0 : 'AliDNS recibió consultas cuando no debía ser primario',
+            diff: privacyOk ? 0 : 'Se consultó DoH cuando el proxy respondió a tiempo',
             status: privacyOk ? 'OK' : 'FALLO'
         });
         if (!privacyOk) {
@@ -2244,8 +2343,8 @@ async function runSuite() {
     let securityError = null;
     let counts = { totalForbidden: 0, totalBlocked: 0 };
     try {
-        await tracker.awaitForbiddenSettled(15000);
-        counts = tracker.assertAllBlocked();
+        await tracker.awaitForbiddenSettled(30000);
+        counts = tracker.assertAllBlocked({ minExpected: 1 });
         console.log(`\nOK: Seguridad confirmada. Total de peticiones prohibidas interceptadas: ${counts.totalForbidden}. Total abortadas localmente con ERR_BLOCKED_BY_CLIENT: ${counts.totalBlocked}. Cero peticiones salieron a la red.`);
     } catch (err) {
         securityError = err.message;
