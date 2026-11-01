@@ -543,6 +543,90 @@ const MOCK_DNS = {
                 ]
             }
         }
+    },
+    'test-space-initial.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'test-space-initial.fake.',
+                        type: 16,
+                        data: '" v=spf1 -all"'
+                    }
+                ]
+            }
+        }
+    },
+    'test-chunked-no-space.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'test-chunked-no-space.fake.',
+                        type: 16,
+                        data: '"v=spf1 include:sub2.test-" "nested.fake -all"'
+                    }
+                ]
+            }
+        }
+    },
+    'test-plus-all.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'test-plus-all.fake.',
+                        type: 16,
+                        data: '"v=spf1 +all"'
+                    }
+                ]
+            }
+        }
+    },
+    'test-include-macro.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'test-include-macro.fake.',
+                        type: 16,
+                        data: '"v=spf1 include:%{d}._spf.fake -all"'
+                    }
+                ]
+            }
+        }
+    },
+    'test-redirect-macro.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'test-redirect-macro.fake.',
+                        type: 16,
+                        data: '"v=spf1 redirect=%{d}._spf.fake"'
+                    }
+                ]
+            }
+        }
+    },
+    'test-macro-d0.fake': {
+        TXT: {
+            response: {
+                Status: 0,
+                Answer: [
+                    {
+                        name: 'test-macro-d0.fake.',
+                        type: 16,
+                        data: '"v=spf1 include:%{d0}._spf.fake -all"'
+                    }
+                ]
+            }
+        }
     }
 };
 
@@ -561,7 +645,12 @@ async function runSuite() {
 
     const browser = await chromium.launch({
         headless: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--host-resolver-rules=MAP panel.inboxseguro.com ~NOTFOUND, MAP www.inboxseguro.com ~NOTFOUND, MAP inboxseguro-dns-proxy.alfredo-9d8.workers.dev ~NOTFOUND, MAP www.googletagmanager.com ~NOTFOUND, MAP www.google-analytics.com ~NOTFOUND, MAP www.clarity.ms ~NOTFOUND'
+        ]
     });
 
     // 1. Casos deterministas con DNS simulado
@@ -620,9 +709,10 @@ async function runSuite() {
         },
         {
             domain: 'test-macros-include.fake',
-            category: 'Include y redirect con macros (no evaluables, suman 1 c/u)',
+            category: 'Include y redirect con macros (no evaluables, al menos N en ámbar)',
             expectedLookups: 2,
-            expectedBadge: 'Dentro del límite'
+            expectedBadge: 'No evaluable',
+            expectedSummaryText: 'al menos 2 de 10'
         },
         {
             domain: 'test-servfail.fake',
@@ -885,21 +975,70 @@ async function runSuite() {
             category: 'Macro c/r/t en modificador exp (válido según RFC 7208 §7.3)',
             expectedLookups: 2,
             expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-space-initial.fake',
+            category: 'SPF con espacio inicial no es SPF (RFC 7208 §4.5)',
+            expectedLookups: 0,
+            expectedBadge: 'Sin registro'
+        },
+        {
+            domain: 'test-chunked-no-space.fake',
+            category: 'Unión de fragmentos TXT sin espacio (RFC 7208 §3.3)',
+            expectedLookups: 1,
+            expectedBadge: 'Dentro del límite'
+        },
+        {
+            domain: 'test-plus-all.fake',
+            category: 'Política +all no debe mostrarse como verde Dentro del límite',
+            expectedLookups: 0,
+            expectedBadge: 'Requiere atención'
+        },
+        {
+            domain: 'test-include-macro.fake',
+            category: 'include con macros no evaluable (ámbar, al menos N)',
+            expectedLookups: 1,
+            expectedBadge: 'No evaluable',
+            expectedSummaryText: 'al menos 1 de 10'
+        },
+        {
+            domain: 'test-redirect-macro.fake',
+            category: 'redirect con macros no evaluable (ámbar, al menos N)',
+            expectedLookups: 1,
+            expectedBadge: 'No evaluable',
+            expectedSummaryText: 'al menos 1 de 10'
+        },
+        {
+            domain: 'test-macro-d0.fake',
+            category: 'Macro con dígito 0 (%{d0}) es permerror (RFC 7208 §7.3)',
+            expectedLookups: 0,
+            expectedBadge: 'Sintaxis inválida (permerror)',
+            expectedWarningText: 'Macro no válida'
         }
     ];
 
     // 2. Pruebas de humo con dominios reales (sin conteo exacto fijo pero exigiendo resultados concretos)
     const smokeCases = [
-        { domain: 'google.com', category: 'Humo real: Google Workspace', requireConcrete: true },
-        { domain: 'microsoft.com', category: 'Humo real: Microsoft 365', requireConcrete: true, allowedBadges: ['Dentro del límite', 'Cerca del límite'] },
-        { domain: 'amazon.com', category: 'Humo real: Amazon', requireConcrete: true },
-        { domain: 'hubspot.com', category: 'Humo real: HubSpot', requireConcrete: true },
-        { domain: 'zoho.com', category: 'Humo real: Zoho', requireConcrete: true },
-        { domain: 'shopify.com', category: 'Humo real: Shopify', requireConcrete: true },
-        { domain: 'mailchimp.com', category: 'Humo real: Mailchimp', requireConcrete: true },
-        { domain: 'github.com', category: 'Humo real: GitHub', requireConcrete: true },
-        { domain: 'test.com', category: 'Humo real: Dominio sin SPF', expectedBadge: 'Sin registro' },
-        { domain: 'badsecurityinc.be', category: 'Humo real: Política +all', requireConcrete: true },
+        { domain: 'microsoft.com', category: 'Humo real: Microsoft 365', requireConcrete: true, expectedLookups: 6, allowedBadges: ['Dentro del límite', 'Cerca del límite'] },
+        { domain: 'amazon.com', category: 'Humo real: Amazon', requireConcrete: true, expectedLookups: 4, allowedBadges: ['Dentro del límite'] },
+        { domain: 'hubspot.com', category: 'Humo real: HubSpot', requireConcrete: true, expectedLookups: 4, allowedBadges: ['Dentro del límite'] },
+        { domain: 'zoho.com', category: 'Humo real: Zoho', requireConcrete: true, expectedLookups: 4, allowedBadges: ['Dentro del límite'] },
+        { domain: 'google.com', category: 'Humo real: Google Workspace', requireConcrete: true, expectedLookups: 1, allowedBadges: ['Dentro del límite'] },
+        { domain: 'shopify.com', category: 'Humo real: Shopify', requireConcrete: true, expectedLookups: 4, allowedBadges: ['Dentro del límite'] },
+        { domain: 'mailchimp.com', category: 'Humo real: Mailchimp', requireConcrete: true, expectedLookups: 7, allowedBadges: ['Dentro del límite'] },
+        { domain: 'github.com', category: 'Humo real: GitHub', requireConcrete: true, expectedLookups: 10, allowedBadges: ['Cerca del límite'] },
+        { domain: 'salesforce.com', category: 'Humo real: Salesforce', requireConcrete: true, expectedLookups: 4, allowedBadges: ['Dentro del límite'] },
+        { domain: 'paypal.com', category: 'Humo real: PayPal', requireConcrete: true, expectedLookups: 9, allowedBadges: ['Cerca del límite'] },
+        { domain: 'outlook.com', category: 'Humo real: Outlook.com', requireConcrete: true, expectedLookups: 1, allowedBadges: ['Dentro del límite'] },
+        { domain: 'yahoo.com', category: 'Humo real: Yahoo', requireConcrete: true, expectedLookups: 3, allowedBadges: ['Dentro del límite'] },
+        { domain: 'sendgrid.net', category: 'Humo real: SendGrid', requireConcrete: true, expectedLookups: 1, allowedBadges: ['Dentro del límite'] },
+        { domain: 'zendesk.com', category: 'Humo real: Zendesk', requireConcrete: true, expectedLookups: 6, allowedBadges: ['Dentro del límite'] },
+        { domain: 'atlassian.com', category: 'Humo real: Atlassian', requireConcrete: true, expectedLookups: 6, allowedBadges: ['Dentro del límite'] },
+        { domain: 'stripe.com', category: 'Humo real: Stripe', requireConcrete: true, expectedLookups: 7, allowedBadges: ['Dentro del límite'] },
+        { domain: 'slack.com', category: 'Humo real: Slack', requireConcrete: true, expectedLookups: 3, allowedBadges: ['Dentro del límite'] },
+        { domain: 'intercom.com', category: 'Humo real: Intercom', requireConcrete: true, expectedLookups: 5, allowedBadges: ['Dentro del límite'] },
+        { domain: 'test.com', category: 'Humo real: Dominio sin SPF', expectedBadge: 'Sin registro', expectedLookups: 0 },
+        { domain: 'badsecurityinc.be', category: 'Humo real: Política +all', requireConcrete: true, allowedBadges: ['Requiere atención'] },
         { domain: 'nxdomain-inboxseguro-test-1234567.com', category: 'Humo real: NXDOMAIN', expectedBadge: 'Sin registro' },
         { domain: 'dominio invalido!!!', category: 'Humo real: Entrada sintácticamente inválida', isInvalidInput: true }
     ];
@@ -907,91 +1046,165 @@ async function runSuite() {
     const results = [];
     const consoleErrors = [];
     const realDnsSummary = [];
-    const blockedRequests = [];
-    const leakedRequests = [];
 
     function isForbiddenUrl(url) {
         if (!url || typeof url !== 'string') return false;
-        const u = url.toLowerCase();
-        return u.includes('panel.inboxseguro.com') ||
-               u.includes('diagnosis-notify') ||
-               u.includes('diagnosis-ticket') ||
-               u.includes('session-status') ||
-               u.includes('/api/notify') ||
-               u.includes('/api/ticket') ||
-               u.includes('inboxseguro-dns-proxy.alfredo-9d8.workers.dev') ||
-               u.includes('google-analytics.com') ||
-               u.includes('googletagmanager.com') ||
-               u.includes('clarity.ms') ||
-               u.includes('clarity.microsoft.com');
-    }
-
-    function assertNoLeakedRequests(list) {
-        const checkList = list || leakedRequests;
-        if (checkList.length > 0) {
-            throw new Error('FALLO DE SEGURIDAD: Peticiones no bloqueadas salieron a la red hacia endpoints prohibidos: ' + checkList.join(', '));
+        let parsed;
+        try {
+            parsed = new URL(url);
+        } catch (e) {
+            const u = url.toLowerCase();
+            return u.includes('panel.inboxseguro.com') ||
+                   u.includes('inboxseguro-dns-proxy.alfredo-9d8.workers.dev') ||
+                   u.includes('googletagmanager.com') ||
+                   u.includes('google-analytics.com') ||
+                   u.includes('clarity.ms') ||
+                   u.includes('clarity.microsoft.com') ||
+                   u.includes('diagnosis-notify') ||
+                   u.includes('diagnosis-ticket') ||
+                   u.includes('session-status') ||
+                   u.includes('/api/notify') ||
+                   u.includes('/api/ticket');
         }
+        const host = parsed.hostname.toLowerCase();
+        const pathname = parsed.pathname.toLowerCase();
+
+        // 1. Bloqueo estricto por host
+        if (host === 'panel.inboxseguro.com' || host.endsWith('.panel.inboxseguro.com') ||
+            host === 'inboxseguro-dns-proxy.alfredo-9d8.workers.dev' ||
+            host.includes('google-analytics.com') ||
+            host.includes('googletagmanager.com') ||
+            host.includes('clarity.ms') ||
+            host.includes('clarity.microsoft.com')) {
+            return true;
+        }
+
+        // 2. Bloqueo estricto por ruta (en www.inboxseguro.com o cualquier host)
+        const forbiddenPaths = [
+            'diagnosis-ticket',
+            'diagnosis-notify',
+            'session-status',
+            '/api/notify',
+            '/api/ticket'
+        ];
+        for (const p of forbiddenPaths) {
+            if (pathname.includes(p)) return true;
+        }
+
+        return false;
     }
 
-    async function createCleanPage(options = { useMocks: true }) {
-        const page = await browser.newPage();
-        await page.addInitScript(() => {
-            try {
-                localStorage.setItem('inboxseguro_cookie_consent', 'accepted');
-            } catch (e) {}
-        });
+    class SecurityRequestTracker {
+        constructor(context, { allowPassThrough = false } = {}) {
+            this.context = context;
+            this.allowPassThrough = allowPassThrough;
+            this.forbiddenRequests = new Map();
+            this.blockedCount = 0;
 
-        // Registrar cualquier petición que termine en la red hacia endpoints prohibidos
-        page.on('requestfinished', req => {
-            const u = req.url();
-            if (isForbiddenUrl(u)) {
-                leakedRequests.push(u);
-            }
-        });
+            context.on('request', req => {
+                const u = req.url();
+                if (isForbiddenUrl(u)) {
+                    this.forbiddenRequests.set(req, { url: u, failed: false, errorText: '', finished: false });
+                }
+            });
 
-        // Handler unificado '**' para garantizar que el bloqueo se ejecute antes de cualquier continue()
-        await page.route('**', async (route) => {
-            const reqUrl = route.request().url();
+            context.on('requestfailed', req => {
+                const entry = this.forbiddenRequests.get(req);
+                if (entry) {
+                    entry.failed = true;
+                    entry.errorText = req.failure() ? req.failure().errorText : '';
+                }
+            });
 
-            // 1. Bloqueo estricto de notificaciones, panel, worker y analítica
-            if (isForbiddenUrl(reqUrl)) {
-                blockedRequests.push({ url: reqUrl, time: Date.now() });
-                return route.abort('blockedbyclient');
-            }
+            context.on('requestfinished', req => {
+                const entry = this.forbiddenRequests.get(req);
+                if (entry) {
+                    entry.finished = true;
+                }
+            });
+        }
 
-            // 2. Mocks deterministas DNS (solo activos si options.useMocks es true)
-            if (options && options.useMocks) {
-                if (reqUrl.includes('/api/dns') ||
-                    reqUrl.includes('cloudflare-dns.com/dns-query') ||
-                    reqUrl.includes('dns.google/resolve') ||
-                    reqUrl.includes('dns.alidns.com/resolve')) {
+        async setupRoute(getMocksEnabled) {
+            await this.context.route('**', async (route) => {
+                const req = route.request();
+                const reqUrl = req.url();
 
-                    try {
-                        const parsed = new URL(reqUrl);
-                        const name = (parsed.searchParams.get('name') || '').toLowerCase().replace(/\.$/, '');
-                        const type = (parsed.searchParams.get('type') || '').toUpperCase();
+                if (isForbiddenUrl(reqUrl)) {
+                    if (!this.allowPassThrough) {
+                        this.blockedCount++;
+                        return route.abort('blockedbyclient');
+                    } else {
+                        return route.continue();
+                    }
+                }
 
-                        if (MOCK_DNS[name] && MOCK_DNS[name][type] !== undefined) {
-                            const entry = MOCK_DNS[name][type];
-                            if (entry.delay) {
-                                await new Promise(r => setTimeout(r, entry.delay));
+                if (getMocksEnabled && getMocksEnabled()) {
+                    if (reqUrl.includes('/api/dns') ||
+                        reqUrl.includes('cloudflare-dns.com/dns-query') ||
+                        reqUrl.includes('dns.google/resolve') ||
+                        reqUrl.includes('dns.alidns.com/resolve')) {
+                        try {
+                            const parsed = new URL(reqUrl);
+                            const name = (parsed.searchParams.get('name') || '').toLowerCase().replace(/\.$/, '');
+                            const type = (parsed.searchParams.get('type') || '').toUpperCase();
+
+                            if (MOCK_DNS[name] && MOCK_DNS[name][type] !== undefined) {
+                                const entry = MOCK_DNS[name][type];
+                                if (entry.delay) {
+                                    await new Promise(r => setTimeout(r, entry.delay));
+                                }
+                                if (entry.abort) {
+                                    return route.abort();
+                                }
+                                return route.fulfill({
+                                    status: 200,
+                                    contentType: 'application/json',
+                                    body: JSON.stringify(entry.response)
+                                });
                             }
-                            if (entry.abort) {
-                                return route.abort();
-                            }
-                            return route.fulfill({
-                                status: 200,
-                                contentType: 'application/json',
-                                body: JSON.stringify(entry.response)
-                            });
-                        }
-                    } catch (e) {}
+                        } catch (e) {}
+                    }
+                }
+
+                return route.continue();
+            });
+        }
+
+        assertAllBlocked() {
+            const badRequests = [];
+            let total = 0;
+            for (const [req, info] of this.forbiddenRequests.entries()) {
+                total++;
+                if (info.finished) {
+                    badRequests.push(`Petición prohibida terminó en la red con éxito (leaked): ${info.url}`);
+                } else if (!info.failed) {
+                    badRequests.push(`Petición prohibida quedó pendiente sin abortar: ${info.url}`);
+                } else if (!info.errorText || !info.errorText.includes('ERR_BLOCKED_BY_CLIENT')) {
+                    badRequests.push(`Petición prohibida no fue abortada con ERR_BLOCKED_BY_CLIENT (${info.errorText || 'sin errorText'}): ${info.url}`);
                 }
             }
 
-            // 3. Continuar peticiones locales y DoH real (DNS nunca se bloquea)
-            return route.continue();
-        });
+            if (badRequests.length > 0) {
+                throw new Error('FALLO DE SEGURIDAD: Peticiones no bloqueadas adecuadamente por el cliente:\n  ' + badRequests.join('\n  '));
+            }
+            return { totalForbidden: total, totalBlocked: this.blockedCount };
+        }
+    }
+
+    const mainContext = await browser.newContext();
+    await mainContext.addInitScript(() => {
+        try {
+            localStorage.setItem('inboxseguro_cookie_consent', 'accepted');
+        } catch (e) {}
+    });
+
+    let currentEnableMocks = true;
+    const tracker = new SecurityRequestTracker(mainContext, { allowPassThrough: false });
+    await tracker.setupRoute(() => currentEnableMocks);
+
+    async function createCleanPage(options = { useMocks: true }) {
+        currentEnableMocks = !!(options && options.useMocks);
+        const page = await mainContext.newPage();
 
         page.on('console', msg => {
             if (msg.type() === 'error') {
@@ -1133,19 +1346,139 @@ async function runSuite() {
         }
     }
 
+    // Pruebas unitarias y de interfaz: validateDomainInput (RFC 1035 / RFC 1123 / IDN)
+    console.log('\n--- PRUEBAS UNITARIAS: validateDomainInput ---');
+    {
+        const page = await createCleanPage({ useMocks: false });
+        await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
+
+        const domainNegative = [
+            'a..b.com',
+            'a.-b.com',
+            '-a.com',
+            'a-.com',
+            'ejemplo.com:8080',
+            'ejemplo com',
+            'ejemplo .com',
+            'ejemplo.com/path',
+            'http://ejemplo.com',
+            'a'.repeat(64) + '.com',
+            'a.' + 'b'.repeat(250) + '.com',
+            '.com',
+            'com',
+            'ejemplo.',
+            'ejemplo.c'
+        ];
+        const domainPositive = [
+            'google.com',
+            'sub.ejemplo.com',
+            'a.b.c.ejemplo.com',
+            'mi-empresa.com',
+            'sub-dominio.mi-empresa.co',
+            'sitio.photography',
+            'ejemplo.technology',
+            'ejemplo.xn--p1ai'
+        ];
+
+        let domainErrors = 0;
+        for (const d of domainNegative) {
+            const res = await page.evaluate(val => validateDomainInput(val), d);
+            if (res && res.valid) {
+                domainErrors++;
+                console.error(`FALLO: validateDomainInput debió rechazar: "${d}"`);
+                results.push({ domain: `domain-neg:${d}`, expected: 'false', actual: 'true', diff: 1, status: 'FALLO' });
+            }
+        }
+        for (const d of domainPositive) {
+            const res = await page.evaluate(val => validateDomainInput(val), d);
+            if (!res || !res.valid) {
+                domainErrors++;
+                console.error(`FALLO: validateDomainInput debió aceptar: "${d}"`);
+                results.push({ domain: `domain-pos:${d}`, expected: 'true', actual: 'false', diff: 1, status: 'FALLO' });
+            }
+        }
+        if (domainErrors === 0) {
+            console.log('OK: validateDomainInput rechaza y acepta todos los casos según RFC 1035/1123/IDN.');
+            results.push({ domain: 'unit:validateDomainInput', expected: 'OK', actual: 'OK', diff: 0, status: 'OK' });
+        }
+        await page.close();
+    }
+
+    console.log('\n--- PRUEBAS DE INTERFAZ: Validación de dominio (formulario manual y autorun) ---');
+    {
+        const page = await createCleanPage({ useMocks: false });
+        await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
+
+        // Prueba manual con dominio inválido (mensaje claro en español, sin loading ni DNS)
+        const badDomains = ['a..b.com', '-a.com', 'a-.com', 'a.-b.com', 'ejemplo.com:8080', 'ejemplo com', 'ejemplo.com/path'];
+        let uiDomainErrors = 0;
+        for (const badDomain of badDomains) {
+            await page.fill('#dominioInput', badDomain);
+            await page.click('#diagBtn');
+            await page.waitForTimeout(100);
+
+            const errVisible = await page.$eval('#diagError', el => !el.classList.contains('hidden'));
+            const errText = await page.$eval('#diagError', el => el.textContent.trim());
+            const loadingHidden = await page.$eval('#diagLoading', el => el.classList.contains('hidden'));
+            const resultsHidden = await page.$eval('#diagResults', el => el.classList.contains('hidden'));
+
+            if (!errVisible || !errText.includes('Escribe un dominio válido, por ejemplo tuempresa.com') || !loadingHidden || !resultsHidden) {
+                uiDomainErrors++;
+                console.error(`FALLO: UI no mostró mensaje de error correcto para entrada manual "${badDomain}".`);
+                results.push({ domain: `ui-invalid:${badDomain}`, expected: 'Error visible sin loading', actual: errText, diff: 1, status: 'FALLO' });
+            }
+        }
+
+        // Prueba autorun con dominio inválido (no debe ejecutar ni mostrar loading)
+        for (const q of ['?d=a..b.com', '?domain=ejemplo.com:8080']) {
+            await page.goto(`${baseUrl}/spf-checker.html${q}`, { waitUntil: 'domcontentloaded' });
+            await page.waitForTimeout(300);
+
+            const loadingHidden = await page.$eval('#diagLoading', el => el.classList.contains('hidden'));
+            const resultsHidden = await page.$eval('#diagResults', el => el.classList.contains('hidden'));
+
+            if (!loadingHidden || !resultsHidden) {
+                uiDomainErrors++;
+                console.error(`FALLO: Autorun con dominio inválido "${q}" inició análisis.`);
+                results.push({ domain: `autorun-invalid:${q}`, expected: 'Sin ejecución', actual: 'Ejecutó', diff: 1, status: 'FALLO' });
+            }
+        }
+
+        if (uiDomainErrors === 0) {
+            console.log('OK: Validación de interfaz manual y autorun rechaza entradas inválidas mostrando mensaje de error sin loading ni consultas.');
+            results.push({ domain: 'ui:domain-validation', expected: 'OK', actual: 'OK', diff: 0, status: 'OK' });
+        }
+        await page.close();
+    }
+
     // Pruebas unitarias de decodeDnsString y hasInvalidMacro
     console.log('\n--- PRUEBAS UNITARIAS: decodeDnsString y hasInvalidMacro (RFC 1035 / RFC 7208 §7) ---');
     {
         const page = await createCleanPage({ useMocks: false });
         await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
 
-        // decodeDnsString: arregla \\032
+        // decodeDnsString: decodificación exhaustiva según RFC 1035 §5.1 (20 casos)
         const decodeCases = [
-            { input: '\\\\032', expected: '\\032', desc: 'doble barra antes de 032' },
             { input: '\\032', expected: ' ', desc: 'octeto decimal 032 decodificado como espacio' },
+            { input: '\\\\032', expected: '\\032', desc: 'doble barra antes de 032' },
             { input: '\\"', expected: '"', desc: 'comilla escapada' },
             { input: '\\\\', expected: '\\', desc: 'barra invertida escapada' },
-            { input: 'simple', expected: 'simple', desc: 'texto simple sin escapes' }
+            { input: '\\\\\\"', expected: '\\"', desc: 'barra y comilla escapadas' },
+            { input: '\\\\\\\\032', expected: '\\\\032', desc: 'cuatro barras antes de 032' },
+            { input: '\\256', expected: '\\256', desc: 'octeto decimal 256 fuera de rango byte (preservado)' },
+            { input: '\\999', expected: '\\999', desc: 'octeto decimal 999 fuera de rango byte (preservado)' },
+            { input: 'abc\\', expected: 'abc\\', desc: 'secuencia incompleta barra al final' },
+            { input: '\\', expected: '\\', desc: 'secuencia incompleta barra solitaria' },
+            { input: '\\064', expected: '@', desc: 'octeto decimal 064 decodificado como @' },
+            { input: '\\065', expected: 'A', desc: 'octeto decimal 065 decodificado como A' },
+            { input: '\\097', expected: 'a', desc: 'octeto decimal 097 decodificado como a' },
+            { input: '\\000', expected: '\x00', desc: 'octeto decimal 000 decodificado como byte nulo' },
+            { input: '\\255', expected: '\xff', desc: 'octeto decimal 255 decodificado como byte 255' },
+            { input: '\\12a', expected: '12a', desc: 'secuencia incompleta de 2 dígitos seguida de letra' },
+            { input: '\\1', expected: '1', desc: 'secuencia incompleta de 1 dígito' },
+            { input: '\\:', expected: ':', desc: 'dos puntos escapados' },
+            { input: '\\ ', expected: ' ', desc: 'espacio escapado' },
+            { input: 'simple text', expected: 'simple text', desc: 'texto simple sin escapes' }
         ];
         let decodeErrors = 0;
         for (const dc of decodeCases) {
@@ -1156,7 +1489,7 @@ async function runSuite() {
             }
         }
         if (decodeErrors === 0) {
-            console.log('OK: decodeDnsString decodifica \\032 a espacio y preserva \\\\032 correctamente.');
+            console.log('OK: decodeDnsString valida 20 casos exhaustivos (\\032, \\\\032, \\", \\\\, \\\\\\", \\\\\\\\032, \\256, secuencias incompletas).');
         }
         results.push({
             domain: 'unit:decodeDnsString',
@@ -1166,8 +1499,16 @@ async function runSuite() {
             status: decodeErrors === 0 ? 'OK' : 'FALLO'
         });
 
-        // hasInvalidMacro: letras válidas s l o d i p h c r t v; c/r/t solo en exp; %{d sin cerrar y %x suelto son inválidos
+        // hasInvalidMacro: validación exhaustiva según RFC 7208 §7.3 (55 casos)
         const macroCases = [
+            // Escapes válidos
+            { str: '%%', isExp: false, expectedInvalid: false, desc: 'escape %%' },
+            { str: '%_', isExp: false, expectedInvalid: false, desc: 'escape %_' },
+            { str: '%-', isExp: false, expectedInvalid: false, desc: 'escape %-' },
+            { str: 'include:sub%%.fake', isExp: false, expectedInvalid: false, desc: '%% en directiva' },
+            { str: 'include:sub%_.fake', isExp: false, expectedInvalid: false, desc: '%_ en directiva' },
+            { str: 'include:sub%-.fake', isExp: false, expectedInvalid: false, desc: '%- en directiva' },
+
             // Letras válidas en directivas normales (isExp = false)
             { str: 'include:%{s}.fake', isExp: false, expectedInvalid: false, desc: 'macro s en directiva' },
             { str: 'include:%{l}.fake', isExp: false, expectedInvalid: false, desc: 'macro l en directiva' },
@@ -1177,30 +1518,67 @@ async function runSuite() {
             { str: 'include:%{p}.fake', isExp: false, expectedInvalid: false, desc: 'macro p en directiva' },
             { str: 'include:%{h}.fake', isExp: false, expectedInvalid: false, desc: 'macro h en directiva' },
             { str: 'include:%{v}.fake', isExp: false, expectedInvalid: false, desc: 'macro v en directiva' },
-            // c, r, t inválidas en directivas normales
-            { str: 'include:%{c}.fake', isExp: false, expectedInvalid: true, desc: 'macro c fuera de exp' },
-            { str: 'include:%{r}.fake', isExp: false, expectedInvalid: true, desc: 'macro r fuera de exp' },
-            { str: 'include:%{t}.fake', isExp: false, expectedInvalid: true, desc: 'macro t fuera de exp' },
+
+            // Transformadores y delimitadores válidos
+            { str: '%{d}', isExp: false, expectedInvalid: false, desc: 'macro %{d}' },
+            { str: '%{d2}', isExp: false, expectedInvalid: false, desc: 'macro %{d2}' },
+            { str: '%{d2r}', isExp: false, expectedInvalid: false, desc: 'macro %{d2r}' },
+            { str: '%{l-}', isExp: false, expectedInvalid: false, desc: 'macro %{l-}' },
+            { str: '%{ir}.%{v}._spf.%{d2}', isExp: false, expectedInvalid: false, desc: 'macro compleja %{ir}.%{v}._spf.%{d2}' },
+            { str: '%{D}', isExp: false, expectedInvalid: false, desc: 'macro mayúscula %{D}' },
+            { str: '%{d1r}', isExp: false, expectedInvalid: false, desc: 'macro %{d1r}' },
+            { str: '%{d99}', isExp: false, expectedInvalid: false, desc: 'macro %{d99}' },
+            { str: '%{s+.-}', isExp: false, expectedInvalid: false, desc: 'delimitadores múltiples %{s+.-}' },
+            { str: '%{o1r}', isExp: false, expectedInvalid: false, desc: 'macro %{o1r}' },
+            { str: '%{i//}', isExp: false, expectedInvalid: false, desc: 'delimitador barra %{i//}' },
+            { str: 'prefix_%{d}_suffix', isExp: false, expectedInvalid: false, desc: 'macro embebida' },
+
             // c, r, t válidas en exp (isExp = true)
             { str: 'exp=%{c}.fake', isExp: true, expectedInvalid: false, desc: 'macro c en exp' },
             { str: 'exp=%{r}.fake', isExp: true, expectedInvalid: false, desc: 'macro r en exp' },
             { str: 'exp=%{t}.fake', isExp: true, expectedInvalid: false, desc: 'macro t en exp' },
-            // %{d sin cerrar
-            { str: 'include:%{d.fake', isExp: false, expectedInvalid: true, desc: '%{d sin cerrar' },
-            // %x suelto
-            { str: 'include:sub.fake%x', isExp: false, expectedInvalid: true, desc: '%x suelto' },
-            // % al final
+            { str: '%{c}', isExp: true, expectedInvalid: false, desc: '%{c} en exp' },
+            { str: '%{r}', isExp: true, expectedInvalid: false, desc: '%{r} en exp' },
+            { str: '%{t}', isExp: true, expectedInvalid: false, desc: '%{t} en exp' },
+
+            // Casos inválidos: c, r, t fuera de exp
+            { str: 'include:%{c}.fake', isExp: false, expectedInvalid: true, desc: 'macro c fuera de exp' },
+            { str: 'include:%{r}.fake', isExp: false, expectedInvalid: true, desc: 'macro r fuera de exp' },
+            { str: 'include:%{t}.fake', isExp: false, expectedInvalid: true, desc: 'macro t fuera de exp' },
+            { str: '%{c}', isExp: false, expectedInvalid: true, desc: '%{c} fuera de exp' },
+            { str: '%{r}', isExp: false, expectedInvalid: true, desc: '%{r} fuera de exp' },
+            { str: '%{t}', isExp: false, expectedInvalid: true, desc: '%{t} fuera de exp' },
+
+            // Llaves sin abrir o cerrar
+            { str: '%{d', isExp: false, expectedInvalid: true, desc: 'llave sin cerrar %{d' },
+            { str: 'include:%{d.fake', isExp: false, expectedInvalid: true, desc: '%{d sin cerrar en directiva' },
+            { str: '%d}', isExp: false, expectedInvalid: true, desc: 'llave sin abrir %d}' },
+            { str: 'include:sub%}.fake', isExp: false, expectedInvalid: true, desc: 'llave de cierre huérfana %}' },
+
+            // Caracteres % inválidos o sueltos
+            { str: '%x', isExp: false, expectedInvalid: true, desc: '%x suelto' },
+            { str: '%a', isExp: false, expectedInvalid: true, desc: '%a desconocido' },
+            { str: '%', isExp: false, expectedInvalid: true, desc: '% solitario' },
             { str: 'include:sub.fake%', isExp: false, expectedInvalid: true, desc: '% al final' },
-            // %% escape válido
-            { str: 'include:sub%%.fake', isExp: false, expectedInvalid: false, desc: '%% escape' },
-            // %_ escape válido
-            { str: 'include:sub%_.fake', isExp: false, expectedInvalid: false, desc: '%_ escape' },
-            // %- escape válido
-            { str: 'include:sub%-.fake', isExp: false, expectedInvalid: false, desc: '%- escape' },
-            // Letra desconocida %{z}
-            { str: 'include:%{z}.fake', isExp: false, expectedInvalid: true, desc: '%{z} inválida' },
-            // Macro vacía %{}
-            { str: 'include:%{}.fake', isExp: false, expectedInvalid: true, desc: '%{} vacía' }
+            { str: 'include:sub.fake%x', isExp: false, expectedInvalid: true, desc: '%x en include' },
+
+            // Macros vacías o letras desconocidas
+            { str: '%{}', isExp: false, expectedInvalid: true, desc: '%{} vacío' },
+            { str: 'include:%{}.fake', isExp: false, expectedInvalid: true, desc: '%{} en directiva' },
+            { str: '%{z}', isExp: false, expectedInvalid: true, desc: 'letra desconocida %{z}' },
+            { str: '%{w}', isExp: false, expectedInvalid: true, desc: 'letra desconocida %{w}' },
+
+            // Dígito 0 en transformador (RFC 7208 §7.3)
+            { str: '%{d0}', isExp: false, expectedInvalid: true, desc: 'dígito de transformación 0 %{d0}' },
+            { str: '%{d0r}', isExp: false, expectedInvalid: true, desc: 'dígito 0 con r %{d0r}' },
+            { str: '%{d01}', isExp: false, expectedInvalid: true, desc: 'dígito con cero inicial %{d01}' },
+            { str: 'include:%{s0}.fake', isExp: false, expectedInvalid: true, desc: 'macro s con dígito 0' },
+
+            // Transformadores y delimitadores con sintaxis inválida
+            { str: '%{d 2}', isExp: false, expectedInvalid: true, desc: 'espacio en transformador %{d 2}' },
+            { str: '%{d?}', isExp: false, expectedInvalid: true, desc: 'delimitador no permitido ?' },
+            { str: '%{d2rr}', isExp: false, expectedInvalid: true, desc: 'doble r en transformador' },
+            { str: '%1', isExp: false, expectedInvalid: true, desc: '% seguido de dígito sin llaves' }
         ];
 
         let macroErrors = 0;
@@ -1212,7 +1590,7 @@ async function runSuite() {
             }
         }
         if (macroErrors === 0) {
-            console.log('OK: hasInvalidMacro valida exhaustivamente letras válidas, c/r/t solo en exp, %{d sin cerrar y %x suelto.');
+            console.log('OK: hasInvalidMacro valida 55 casos exhaustivos (%%, %_, %-, %{d}, %{d2}, %{d2r}, %{l-}, %{ir}.%{v}._spf.%{d2}, %{D}, %{d0}, etc.).');
         }
         results.push({
             domain: 'unit:hasInvalidMacro',
@@ -1225,41 +1603,44 @@ async function runSuite() {
         await page.close();
     }
 
-    // Prueba negativa de seguridad: demostrar que el monitor a nivel de contexto falla la suite ante peticiones prohibidas
-    console.log('\n--- PRUEBA NEGATIVA DE SEGURIDAD (BLOQUEO DE NOTIFICACIONES Y PANEL) ---');
+    // Test negativo real: en un contexto aparte, desactiva de verdad el abort, dispara una petición prohibida y comprueba que el monitor la detecta y la suite falla
+    console.log('\n--- TEST NEGATIVO REAL DE SEGURIDAD (desactivando abort para probar detección) ---');
     {
-        const page = await createCleanPage({ useMocks: false });
-        const countBefore = blockedRequests.length;
-        await page.evaluate(() => {
-            fetch('https://panel.inboxseguro.com/api/public/diagnosis-notify', { method: 'POST', body: '{}' }).catch(() => {});
-        });
-        await page.waitForTimeout(100);
-        const countAfter = blockedRequests.length;
-        const wasAborted = countAfter > countBefore;
+        const negContext = await browser.newContext();
+        const negTracker = new SecurityRequestTracker(negContext, { allowPassThrough: true });
+        await negTracker.setupRoute(() => false);
+        const negPage = await negContext.newPage();
 
-        if (!wasAborted) {
-            console.error('FALLO: Petición a panel.inboxseguro.com no fue interceptada por el bloqueador.');
-            results.push({ domain: 'security:block-interception', expected: 'Bloqueada', actual: 'No bloqueada', diff: 1, status: 'FALLO' });
-        } else {
-            console.log(`OK: Petición prohibida disparada a propósito interceptada y abortada localmente (total bloqueadas acumuladas: ${blockedRequests.length}).`);
-            results.push({ domain: 'security:block-interception', expected: 'Bloqueada', actual: 'Bloqueada', diff: 0, status: 'OK' });
-        }
-
-        // Demostrar que el verificador a nivel de contexto falla la suite si una petición prohibida sale a la red
-        let suiteFailedAsExpected = false;
         try {
-            assertNoLeakedRequests(['https://panel.inboxseguro.com/api/public/diagnosis-notify']);
+            await negPage.evaluate(() => {
+                return fetch('https://panel.inboxseguro.com/api/public/diagnosis-notify', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ probe: 'security_negative_test' })
+                }).catch(() => {});
+            });
+        } catch (e) {}
+
+        await negPage.waitForTimeout(150);
+
+        let negSuiteFailed = false;
+        let negErrorMsg = '';
+        try {
+            negTracker.assertAllBlocked();
         } catch (err) {
-            suiteFailedAsExpected = true;
-            console.log(`OK: Prueba negativa superada: la suite falla inmediatamente con excepción si una petición prohibida sale a la red ("${err.message}").`);
+            negSuiteFailed = true;
+            negErrorMsg = err.message;
         }
-        if (!suiteFailedAsExpected) {
-            console.error('FALLO: El monitor de seguridad no arrojó excepción ante una petición que salió a la red.');
-            results.push({ domain: 'security:negative-test-failure', expected: 'Suite Falla', actual: 'Pasa', diff: 1, status: 'FALLO' });
+
+        await negContext.close();
+
+        if (!negSuiteFailed) {
+            console.error('FALLO: El monitor de seguridad NO detectó la petición no abortada en el test negativo.');
+            results.push({ domain: 'security:real-negative-test', expected: 'Suite Falla', actual: 'Suite Pasó', diff: 1, status: 'FALLO' });
         } else {
-            results.push({ domain: 'security:negative-test-failure', expected: 'Suite Falla', actual: 'Suite Falla', diff: 0, status: 'OK' });
+            console.log(`OK: Test negativo real superado: cuando se desactiva el abort, el monitor detecta la petición no bloqueada por el cliente y falla la suite ("${negErrorMsg.split('\n')[0]}").`);
+            results.push({ domain: 'security:real-negative-test', expected: 'Suite Falla', actual: 'Suite Falla', diff: 0, status: 'OK' });
         }
-        await page.close();
     }
 
     // Ejecución de casos deterministas con DNS simulado
@@ -1504,7 +1885,13 @@ async function runSuite() {
 
             console.log(`  -> Smoke OK: Badge="${badgeText}" | Resumen="${summaryText}" | Conteo="${countText}"`);
 
-            if (['microsoft.com', 'amazon.com', 'hubspot.com', 'zoho.com', 'google.com', 'shopify.com', 'mailchimp.com', 'github.com', 'test.com'].includes(tc.domain)) {
+            const target19 = [
+                'microsoft.com', 'amazon.com', 'hubspot.com', 'zoho.com', 'google.com',
+                'shopify.com', 'mailchimp.com', 'github.com', 'salesforce.com', 'paypal.com',
+                'outlook.com', 'yahoo.com', 'sendgrid.net', 'zendesk.com', 'atlassian.com',
+                'stripe.com', 'slack.com', 'intercom.com', 'test.com'
+            ];
+            if (target19.includes(tc.domain)) {
                 realDnsSummary.push({
                     domain: tc.domain,
                     topBadge: diagScore.text,
@@ -1551,7 +1938,7 @@ async function runSuite() {
         console.log(`| ${r.domain} | ${r.expected} | ${r.actual} | ${r.diff} | ${r.status} |`);
     }
 
-    console.log('\n================ TABLA DE VERIFICACIÓN DNS REAL (9 DOMINIOS) ================');
+    console.log('\n================ TABLA DE VERIFICACIÓN DNS REAL (19 DOMINIOS) ================');
     console.log('| Dominio | Badge Superior (diagScore) | Fila SPF (badge-spf) | Contador (spfCounterBadge) |');
     console.log('|---|---|---|---|');
     for (const row of realDnsSummary) {
@@ -1566,9 +1953,10 @@ async function runSuite() {
 
     // Comprobación de seguridad a nivel de contexto
     let securityError = null;
+    let counts = { totalForbidden: 0, totalBlocked: 0 };
     try {
-        assertNoLeakedRequests(leakedRequests);
-        console.log(`\nOK: Cero peticiones salieron a la red hacia endpoints prohibidos (${blockedRequests.length} peticiones fueron interceptadas y abortadas localmente con éxito).`);
+        counts = tracker.assertAllBlocked();
+        console.log(`\nOK: Seguridad confirmada. Total de peticiones prohibidas interceptadas: ${counts.totalForbidden}. Total abortadas localmente con ERR_BLOCKED_BY_CLIENT: ${counts.totalBlocked}. Cero peticiones salieron a la red.`);
     } catch (err) {
         securityError = err.message;
         console.error('\n' + err.message);
