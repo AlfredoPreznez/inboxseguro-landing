@@ -5,7 +5,7 @@ description: "Aprende a verificar el SPF de tu dominio: dónde ver el registro, 
 excerpt: "Cómo comprobar tu registro SPF, leer su resultado y corregir los errores más comunes cuidando de no cortar correos legítimos."
 category: Autenticación
 date: 2026-10-26
-updated: 2026-10-26
+updated: 2026-11-02
 tags: [spf, autenticacion, entregabilidad, dns, dmarc]
 keyword_objetivo: verificar spf
 featured: false
