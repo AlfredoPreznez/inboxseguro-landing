@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPF check online: verifica tu registro | InboxSeguro</title>
+    <title>Contador consultas SPF: límite 10 DNS | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
-    <meta name="description" content="Consulta el registro SPF de tu dominio y calcula cuántas consultas DNS gasta. Solo verificación DNS; no lo modifica. Herramienta gratuita.">
+    <meta name="description" content="Verificador SPF: cuenta cuántas consultas DNS usa tu registro frente al límite de 10 (RFC 7208). Solo lectura del TXT publicado; no lo modifica ni lo corrige.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/spf-checker">
     <meta name="robots" content="index, follow">
@@ -16,12 +16,12 @@
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_419">
     <meta property="og:url" content="https://www.inboxseguro.com/spf-checker">
-    <meta property="og:title" content="SPF check online: verifica tu registro | InboxSeguro">
-    <meta property="og:description" content="Consulta el registro SPF de tu dominio y calcula cuántas consultas DNS gasta. Solo verificación DNS; no lo modifica. Herramienta gratuita.">
+    <meta property="og:title" content="Contador consultas SPF: límite 10 DNS | InboxSeguro">
+    <meta property="og:description" content="Verificador SPF: cuenta cuántas consultas DNS usa tu registro frente al límite de 10 (RFC 7208). Solo lectura del TXT publicado; no lo modifica ni lo corrige.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SPF check online: verifica tu registro | InboxSeguro">
-    <meta name="twitter:description" content="Consulta el registro SPF de tu dominio y calcula cuántas consultas DNS gasta. Solo verificación DNS; no lo modifica. Herramienta gratuita.">
+    <meta name="twitter:title" content="Contador consultas SPF: límite 10 DNS | InboxSeguro">
+    <meta name="twitter:description" content="Verificador SPF: cuenta cuántas consultas DNS usa tu registro frente al límite de 10 (RFC 7208). Solo lectura del TXT publicado; no lo modifica ni lo corrige.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
@@ -64,6 +64,38 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "La herramienta lee el registro SPF que publica el dominio y suma cada mecanismo que realiza consultas DNS adicionales (include, a, mx, ptr, exists y redirect) según la RFC 7208, sección 4.6.4. Si el total supera 10 consultas, SPF devuelve permerror."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuántas consultas DNS tiene mi SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ingresa tu dominio y el verificador lee el registro TXT SPF publicado en DNS. Muestra cuántas consultas consume frente al máximo de 10, incluyendo los include anidados que resuelve al contar. Si superas 10, la herramienta lo señala; no modifica tu registro."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuál es el límite de 10 consultas DNS en SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "La RFC 7208, sección 4.6.4, permite como máximo 10 consultas DNS al evaluar un registro SPF. Si se supera ese límite, el resultado es permerror y los receptores no pueden validar SPF correctamente."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué mecanismos SPF cuentan como consulta DNS y cuáles no?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cuentan como consulta DNS: include, a, mx, ptr, exists y redirect. No cuentan: ip4, ip6 y all. El contador de esta página sigue esa regla al sumar las consultas del registro publicado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Este verificador modifica o corrige mi registro SPF?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Solo consulta el DNS público y muestra el registro SPF tal como está publicado, con el conteo de consultas. No edita tu zona DNS, no aplana includes ni propone un registro nuevo."
       }
     }
   ]
@@ -255,11 +287,11 @@
 
             <div
                 class="inline-block px-4 py-1.5 rounded-full bg-blue-500/10 text-blue-300 font-bold text-xs uppercase tracking-wider mb-6 border border-blue-400/20">
-                SPF Checker gratuito</div>
+                Verificador SPF · contador de consultas</div>
 
-            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">Verifica el registro SPF de tu dominio</h1>
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-4">¿Cuántas consultas DNS usa tu registro SPF?</h1>
             <p class="text-lg text-slate-400 mb-10 max-w-xl mx-auto">
-                Lee el registro SPF publicado y calcula cuántas consultas DNS gasta. Solo consulta DNS; no lo modifica.
+                Contador frente al límite de 10 consultas DNS (RFC 7208). Lee el TXT publicado, suma include, a, mx, ptr, exists y redirect, y avisa si lo superas. Solo lectura; no modifica tu DNS.
             </p>
 
             <div class="bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 p-6 md:p-8 shadow-2xl mb-12">
@@ -371,7 +403,7 @@
                         Si tu empresa carece de un registro SPF configurado o tiene errores en su sintaxis, queda expuesta a graves vulnerabilidades de seguridad y reputación:
                     </p>
                     <ul class="list-disc pl-5 space-y-3 text-slate-600 text-sm leading-relaxed mb-4">
-                        <li><strong>Prevención de Spoofing y Phishing:</strong> Al restringir las IP autorizadas, dificultas drásticamente que cibercriminales falsifiquen tu dominio para engañar a tus clientes con facturas falsas o correos maliciosos (estafas de suplantación de identidad).</li>
+                        <li><strong>Prevención de suplantación y phishing:</strong> Al limitar qué servidores pueden enviar con tu dominio, reduces el riesgo de que terceros falsifiquen tu nombre en correos fraudulentos.</li>
                         <li><strong>Mejora la Entregabilidad de Correo (Email Deliverability):</strong> Los correos enviados desde servidores declarados en tu SPF evitan ser retenidos por los filtros anti-spam, aumentando la probabilidad de llegar a la bandeja de entrada principal.</li>
                         <li><strong>Prevención de Spam:</strong> Ayuda a mantener una excelente reputación del dominio (domain reputation) ante los principales ISPs mundiales.</li>
                         <li><strong>Cumplimiento Obligatorio con Google y Yahoo:</strong> Google y Yahoo exigen autenticación reforzada a los remitentes masivos y recomiendan SPF o DKIM para todos los remitentes. Una configuración incompleta puede aumentar rechazos o clasificación como spam.</li>
@@ -461,6 +493,30 @@
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Cómo calcula esta herramienta las consultas DNS del registro SPF?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
                                 La herramienta lee el registro SPF que publica el dominio y suma cada mecanismo que realiza consultas DNS adicionales (include, a, mx, ptr, exists y redirect) según la RFC 7208, sección 4.6.4. Si el total supera 10 consultas, SPF devuelve permerror.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Cuántas consultas DNS tiene mi SPF?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                Ingresa tu dominio y el verificador lee el registro TXT SPF publicado en DNS. Muestra cuántas consultas consume frente al máximo de 10, incluyendo los include anidados que resuelve al contar. Si superas 10, la herramienta lo señala; no modifica tu registro.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Cuál es el límite de 10 consultas DNS en SPF?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                La RFC 7208, sección 4.6.4, permite como máximo 10 consultas DNS al evaluar un registro SPF. Si se supera ese límite, el resultado es permerror y los receptores no pueden validar SPF correctamente.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Qué mecanismos SPF cuentan como consulta DNS y cuáles no?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                Cuentan como consulta DNS: include, a, mx, ptr, exists y redirect. No cuentan: ip4, ip6 y all. El contador de esta página sigue esa regla al sumar las consultas del registro publicado.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">¿Este verificador modifica o corrige mi registro SPF?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                No. Solo consulta el DNS público y muestra el registro SPF tal como está publicado, con el conteo de consultas. No edita tu zona DNS, no aplana includes ni propone un registro nuevo.
                             </p>
                         </div>
                     </div>

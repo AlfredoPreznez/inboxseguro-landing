@@ -46,7 +46,7 @@ Cuando un servidor recibe un correo, consulta esa lista y comprueba si el servid
 
 ## Paso 1: busca tu registro SPF
 
-Para comprobar el registro SPF (en inglés, "check SPF") puedes usar el [verificador SPF](/spf-checker), que lee el registro publicado en tu dominio y te señala si falta. Si prefieres la línea de comandos, consulta los registros TXT de tu dominio:
+Para comprobar el registro SPF (en inglés, "check SPF") puedes usar el [verificador SPF con contador de consultas DNS](/spf-checker), que lee el registro publicado en tu dominio, te señala si falta y muestra cuántas de las 10 consultas permitidas consume. Si prefieres la línea de comandos, consulta los registros TXT de tu dominio:
 
 ```
 dig TXT ejemplo.cl +short
@@ -80,7 +80,7 @@ Google pide que el registro incluya a todos los servidores que envían correo pa
 
 Como punto de partida, el [verificador de remitentes](/quien-puede-enviar-correos) muestra qué servicios podrían estar autorizados según el DNS público de tu dominio. Luego completa la lista con cada área: correo corporativo, CRM, newsletters, facturación y mesa de ayuda.
 
-Cada `include:` consume consultas al DNS, y el RFC 7208 pone un límite de 10 por evaluación. Si tu registro tiene muchos servicios, revisa [cómo no pasar el límite de 10 consultas](/blog/spf-limite-10-consultas-dns/).
+Cada `include:` consume consultas al DNS, y el RFC 7208 pone un límite de 10 por evaluación. Para ver el total en tu dominio hoy, usa el [contador de consultas DNS del verificador SPF](/spf-checker). Si tu registro tiene muchos servicios, revisa [cómo no pasar el límite de 10 consultas](/blog/spf-limite-10-consultas-dns/).
 
 ## Paso 4: revisa cómo termina: ~all o -all
 

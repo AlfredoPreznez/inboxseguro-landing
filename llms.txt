@@ -24,7 +24,7 @@ Empresas B2B, de e-commerce y SaaS en LATAM que envían correo con su dominio de
 Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gratis: prueba de 14 días sin tarjeta; planes en /precios.
 
 - [Verificar lista negra](https://www.inboxseguro.com/verificar-lista-negra): consulta Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer con IP o dominio.
-- [SPF Checker](https://www.inboxseguro.com/spf-checker): verifica el registro SPF publicado (solo lectura; no lo modifica).
+- [SPF Checker](https://www.inboxseguro.com/spf-checker): verifica el registro SPF publicado y cuenta las consultas DNS frente al límite de 10 (RFC 7208); solo lectura, no lo modifica.
 - [DMARC Checker](https://www.inboxseguro.com/dmarc-checker): verifica si el dominio publica none, quarantine o reject.
 - [DKIM Checker](https://www.inboxseguro.com/dkim-checker): verifica un selector DKIM o busca selectores habituales en DNS.
 - [MX Lookup](https://www.inboxseguro.com/mx-lookup): consulta hostname y prioridad de los registros MX públicos. El MX indica dónde se recibe el correo, no quién lo envía.
