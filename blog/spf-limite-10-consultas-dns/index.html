@@ -32,7 +32,7 @@
   "headline": "SPF: cómo no pasar el límite de 10 consultas",
   "description": "Cómo autorizar tus servicios de correo en SPF sin superar el límite de 10 consultas DNS de la RFC 7208, y qué pasa si lo superas. Guía práctica para…",
   "datePublished": "2026-10-13",
-  "dateModified": "2026-10-13",
+  "dateModified": "2026-11-02",
   "author": {
     "@type": "Organization",
     "name": "InboxSeguro"
@@ -296,11 +296,14 @@
             <span class="blog-chip blog-chip--on-dark">SPF</span>
             <h1 class="blog-article-h1">SPF: cómo no pasar el límite de 10 consultas</h1>
             <p class="blog-meta blog-meta--on-dark">
-                <time datetime="2026-10-13" data-updated="2026-10-13">
+                <time datetime="2026-10-13" data-updated="2026-11-02">
                     13 de octubre de 2026
                 </time>
                 <span aria-hidden="true">·</span>
-                <span>3 min de lectura</span>
+                <span>4 min de lectura</span>
+                
+                <span aria-hidden="true">·</span>
+                <span>Actualizado <time datetime="2026-11-02">2 de noviembre de 2026</time></span>
                 
             </p>
             
@@ -384,7 +387,8 @@
                     <p><strong>Respuesta corta:</strong> SPF permite como máximo 10 consultas DNS al evaluar tu registro; cada include, y los include anidados de cada proveedor, suman. Si se supera el límite, SPF da error para todos tus correos, que pueden ir a spam o ser rechazados. Para no pasarte, quita herramientas que ya no usan, usa IP fijas solo para servidores propios, envía campañas masivas desde un subdominio y apóyate en DKIM.</p>
                 </div>
                 
-                <p>Cada vez que tu empresa contrata una herramienta que envía correos (un CRM, una newsletter, la facturación), alguien la agrega a tu registro SPF. Funciona hasta que un día deja de funcionar. Si el registro se llena demasiado, falla para todos tus correos, no solo para el último servicio. El resultado: correos que no llegan o que terminan en spam.</p>
+                <p>El <a href="/spf-checker">verificador SPF</a> ahora muestra cuántas de las <strong>10 consultas DNS</strong> permitidas consume el registro SPF publicado de tu dominio (RFC 7208, sección 4.6.4). Es solo lectura: no modifica tu DNS ni corrige el registro.</p>
+<p>Cada vez que tu empresa contrata una herramienta que envía correos (un CRM, una newsletter, la facturación), alguien la agrega a tu registro SPF. Funciona hasta que un día deja de funcionar. Si el registro se llena demasiado, falla para todos tus correos, no solo para el último servicio. El resultado: correos que no llegan o que terminan en spam.</p>
 <h2  id="que-es-spf-en-una-frase">Qué es SPF, en una frase</h2>
 <p><strong>SPF</strong> es la lista, publicada en tu dominio, de los servidores que tienen permiso para enviar correos con tu nombre.</p>
 <p>Revisa la tuya con el <a href="/spf-checker">verificador SPF</a>.</p>

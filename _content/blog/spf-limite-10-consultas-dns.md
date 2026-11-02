@@ -3,7 +3,7 @@ title: "SPF: cómo no pasar el límite de 10 consultas"
 slug: spf-limite-10-consultas-dns
 description: "Cómo autorizar tus servicios de correo en SPF sin superar el límite de 10 consultas DNS de la RFC 7208, y qué pasa si lo superas. Guía práctica para empresas."
 date: 2026-10-13
-updated: 2026-10-13
+updated: 2026-11-02
 tags: [spf, dns, entregabilidad, autenticacion, empresas]
 keyword_objetivo: límite de 10 consultas DNS SPF
 resumen: "SPF permite como máximo 10 consultas DNS al evaluar tu registro; cada include, y los include anidados de cada proveedor, suman. Si se supera el límite, SPF da error para todos tus correos, que pueden ir a spam o ser rechazados. Para no pasarte, quita herramientas que ya no usan, usa IP fijas solo para servidores propios, envía campañas masivas desde un subdominio y apóyate en DKIM."
@@ -20,6 +20,8 @@ faq:
     a: "Para pasar DMARC basta con SPF o DKIM. Si una herramienta firma con DKIM usando tu dominio, depende menos de tu lista SPF."
 draft: false
 ---
+
+El [verificador SPF](/spf-checker) ahora muestra cuántas de las **10 consultas DNS** permitidas consume el registro SPF publicado de tu dominio (RFC 7208, sección 4.6.4). Es solo lectura: no modifica tu DNS ni corrige el registro.
 
 Cada vez que tu empresa contrata una herramienta que envía correos (un CRM, una newsletter, la facturación), alguien la agrega a tu registro SPF. Funciona hasta que un día deja de funcionar. Si el registro se llena demasiado, falla para todos tus correos, no solo para el último servicio. El resultado: correos que no llegan o que terminan en spam.
 

@@ -32,7 +32,7 @@
   "headline": "Cómo verificar el registro SPF de tu dominio",
   "description": "Aprende a verificar el SPF de tu dominio: dónde ver el registro, cómo leer ~all y -all, qué significa cada resultado y cómo corregir errores comunes.",
   "datePublished": "2026-10-26",
-  "dateModified": "2026-10-26",
+  "dateModified": "2026-11-02",
   "author": {
     "@type": "Organization",
     "name": "InboxSeguro"
@@ -288,11 +288,14 @@
             <span class="blog-chip blog-chip--on-dark">Autenticación</span>
             <h1 class="blog-article-h1">Cómo verificar el registro SPF de tu dominio</h1>
             <p class="blog-meta blog-meta--on-dark">
-                <time datetime="2026-10-26" data-updated="2026-10-26">
+                <time datetime="2026-10-26" data-updated="2026-11-02">
                     26 de octubre de 2026
                 </time>
                 <span aria-hidden="true">·</span>
-                <span>7 min de lectura</span>
+                <span>8 min de lectura</span>
+                
+                <span aria-hidden="true">·</span>
+                <span>Actualizado <time datetime="2026-11-02">2 de noviembre de 2026</time></span>
                 
             </p>
             
@@ -377,7 +380,7 @@
 <p><strong>SPF</strong> (Sender Policy Framework) es la lista, publicada en tu dominio, de los servidores que tienen permiso para enviar correos en su nombre. Se publica en el <strong>DNS</strong>, el sistema que guarda la información pública de tu dominio, como un registro de tipo <strong>TXT</strong> (un registro de texto). Así lo define el <a href="https://www.rfc-editor.org/rfc/rfc7208">RFC 7208</a>.</p>
 <p>Cuando un servidor recibe un correo, consulta esa lista y comprueba si el servidor que lo envió está autorizado. Según Microsoft, SPF revisa el dominio de la dirección técnica de envío, llamada <strong>MAIL FROM</strong> o remitente de sobre, que no siempre es la misma que ve el destinatario en el campo &ldquo;De&rdquo;.</p>
 <h2  id="paso-1-busca-tu-registro-spf">Paso 1: busca tu registro SPF</h2>
-<p>Para comprobar el registro SPF (en inglés, &ldquo;check SPF&rdquo;) puedes usar el <a href="/spf-checker">verificador SPF</a>, que lee el registro publicado en tu dominio y te señala si falta. Si prefieres la línea de comandos, consulta los registros TXT de tu dominio:</p>
+<p>Para comprobar el registro SPF (en inglés, &ldquo;check SPF&rdquo;) puedes usar el <a href="/spf-checker">verificador SPF con contador de consultas DNS</a>, que lee el registro publicado en tu dominio, te señala si falta y muestra cuántas de las 10 consultas permitidas consume. Si prefieres la línea de comandos, consulta los registros TXT de tu dominio:</p>
 <pre><code>dig TXT ejemplo.cl +short
 </code></pre>
 <p>Un registro SPF correcto se ve así:</p>
@@ -399,7 +402,7 @@
 <h2  id="paso-3-revisa-que-esten-todos-los-que-envian-correo">Paso 3: revisa que estén todos los que envían correo</h2>
 <p>Google pide que el registro incluya a todos los servidores que envían correo para tu dominio. Su lista de ejemplos incluye servidores web, servidores de correo propios, formularios de contacto y cualquier proveedor externo que envíe en tu nombre. Si agregas un remitente nuevo y no actualizas el registro, Google advierte que sus mensajes podrían marcarse como spam.</p>
 <p>Como punto de partida, el <a href="/quien-puede-enviar-correos">verificador de remitentes</a> muestra qué servicios podrían estar autorizados según el DNS público de tu dominio. Luego completa la lista con cada área: correo corporativo, CRM, newsletters, facturación y mesa de ayuda.</p>
-<p>Cada <code>include:</code> consume consultas al DNS, y el RFC 7208 pone un límite de 10 por evaluación. Si tu registro tiene muchos servicios, revisa <a href="/blog/spf-limite-10-consultas-dns/">cómo no pasar el límite de 10 consultas</a>.</p>
+<p>Cada <code>include:</code> consume consultas al DNS, y el RFC 7208 pone un límite de 10 por evaluación. Para ver el total en tu dominio hoy, usa el <a href="/spf-checker">contador de consultas DNS del verificador SPF</a>. Si tu registro tiene muchos servicios, revisa <a href="/blog/spf-limite-10-consultas-dns/">cómo no pasar el límite de 10 consultas</a>.</p>
 <h2  id="paso-4-revisa-como-termina-all-o-all">Paso 4: revisa cómo termina: ~all o -all</h2>
 <p>El final del registro es donde Google y Microsoft dan recomendaciones distintas.</p>
 <ul>

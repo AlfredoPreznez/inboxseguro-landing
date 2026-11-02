@@ -31,7 +31,7 @@ Empresas B2B, de e-commerce y SaaS en LATAM que envían correo con su dominio de
 Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gratis: prueba de 14 días sin tarjeta; planes en /precios.
 
 - [Verificar lista negra](https://www.inboxseguro.com/verificar-lista-negra): consulta Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer con IP o dominio.
-- [SPF Checker](https://www.inboxseguro.com/spf-checker): verifica el registro SPF publicado (solo lectura; no lo modifica).
+- [SPF Checker](https://www.inboxseguro.com/spf-checker): verifica el registro SPF publicado y cuenta las consultas DNS frente al límite de 10 (RFC 7208); solo lectura, no lo modifica.
 - [DMARC Checker](https://www.inboxseguro.com/dmarc-checker): verifica si el dominio publica none, quarantine o reject.
 - [DKIM Checker](https://www.inboxseguro.com/dkim-checker): verifica un selector DKIM o busca selectores habituales en DNS.
 - [MX Lookup](https://www.inboxseguro.com/mx-lookup): consulta hostname y prioridad de los registros MX públicos. El MX indica dónde se recibe el correo, no quién lo envía.
@@ -703,7 +703,7 @@ Cuando un servidor recibe un correo, consulta esa lista y comprueba si el servid
 
 ## Paso 1: busca tu registro SPF
 
-Para comprobar el registro SPF (en inglés, "check SPF") puedes usar el [verificador SPF](/spf-checker), que lee el registro publicado en tu dominio y te señala si falta. Si prefieres la línea de comandos, consulta los registros TXT de tu dominio:
+Para comprobar el registro SPF (en inglés, "check SPF") puedes usar el [verificador SPF con contador de consultas DNS](/spf-checker), que lee el registro publicado en tu dominio, te señala si falta y muestra cuántas de las 10 consultas permitidas consume. Si prefieres la línea de comandos, consulta los registros TXT de tu dominio:
 
 ```
 dig TXT ejemplo.cl +short
@@ -737,7 +737,7 @@ Google pide que el registro incluya a todos los servidores que envían correo pa
 
 Como punto de partida, el [verificador de remitentes](/quien-puede-enviar-correos) muestra qué servicios podrían estar autorizados según el DNS público de tu dominio. Luego completa la lista con cada área: correo corporativo, CRM, newsletters, facturación y mesa de ayuda.
 
-Cada `include:` consume consultas al DNS, y el RFC 7208 pone un límite de 10 por evaluación. Si tu registro tiene muchos servicios, revisa [cómo no pasar el límite de 10 consultas](/blog/spf-limite-10-consultas-dns/).
+Cada `include:` consume consultas al DNS, y el RFC 7208 pone un límite de 10 por evaluación. Para ver el total en tu dominio hoy, usa el [contador de consultas DNS del verificador SPF](/spf-checker). Si tu registro tiene muchos servicios, revisa [cómo no pasar el límite de 10 consultas](/blog/spf-limite-10-consultas-dns/).
 
 ## Paso 4: revisa cómo termina: ~all o -all
 
@@ -1036,6 +1036,8 @@ InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite a
 
 ### SPF: cómo no pasar el límite de 10 consultas
 - URL Canónica: https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/
+
+El [verificador SPF](/spf-checker) ahora muestra cuántas de las **10 consultas DNS** permitidas consume el registro SPF publicado de tu dominio (RFC 7208, sección 4.6.4). Es solo lectura: no modifica tu DNS ni corrige el registro.
 
 Cada vez que tu empresa contrata una herramienta que envía correos (un CRM, una newsletter, la facturación), alguien la agrega a tu registro SPF. Funciona hasta que un día deja de funcionar. Si el registro se llena demasiado, falla para todos tus correos, no solo para el último servicio. El resultado: correos que no llegan o que terminan en spam.
 
