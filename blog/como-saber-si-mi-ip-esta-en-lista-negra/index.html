@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cómo saber si mi IP está en lista negra | InboxSeguro</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Cómo encontrar la IP pública desde la que sale tu correo, consultarla en listas negras y qué hacer si aparece listada, sin adivinar.">
+    <link rel="canonical" href="https://www.inboxseguro.com/blog/como-saber-si-mi-ip-esta-en-lista-negra/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/blog/como-saber-si-mi-ip-esta-en-lista-negra/">
+    <meta property="og:title" content="Cómo saber si mi IP está en lista negra | InboxSeguro">
+    <meta property="og:description" content="Cómo encontrar la IP pública desde la que sale tu correo, consultarla en listas negras y qué hacer si aparece listada, sin adivinar.">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/como-saber-si-mi-ip-esta-en-lista-negra.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Cómo saber si mi IP está en lista negra | InboxSeguro">
+    <meta name="twitter:description" content="Cómo encontrar la IP pública desde la que sale tu correo, consultarla en listas negras y qué hacer si aparece listada, sin adivinar.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/como-saber-si-mi-ip-esta-en-lista-negra.png">
+    <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/styles.css?v=1.0.8">
+    <link rel="stylesheet" href="/blog.css?v=1.2.3">
+    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Cómo saber si mi IP está en lista negra",
+  "description": "Cómo encontrar la IP pública desde la que sale tu correo, consultarla en listas negras y qué hacer si aparece listada, sin adivinar.",
+  "datePublished": "2026-11-03",
+  "dateModified": "2026-11-03",
+  "author": {
+    "@type": "Organization",
+    "name": "InboxSeguro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InboxSeguro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.inboxseguro.com/logo.png"
+    }
+  },
+  "image": [
+    "https://www.inboxseguro.com/blog/covers/como-saber-si-mi-ip-esta-en-lista-negra.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.inboxseguro.com/blog/como-saber-si-mi-ip-esta-en-lista-negra/"
+  },
+  "url": "https://www.inboxseguro.com/blog/como-saber-si-mi-ip-esta-en-lista-negra/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.inboxseguro.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://www.inboxseguro.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Cómo saber si mi IP está en lista negra",
+      "item": "https://www.inboxseguro.com/blog/como-saber-si-mi-ip-esta-en-lista-negra/"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Mi IP de la oficina puede estar en lista negra si uso un proveedor de correo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Puede, pero normalmente no es la que importa para tus correos: los destinatarios ven la IP del servidor de tu proveedor, que es el que entrega el mensaje. La IP de la oficina importa si tienes un servidor de correo propio o si un equipo de tu red está comprometido, porque algunas listas tienen sublistas de equipos comprometidos por malware."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tarda Microsoft en quitar una IP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Si usas el portal sender.office.com, Microsoft indica que los resultados varían y que puede tardar hasta 24 horas o más. Si el error es 5.7.511, debes escribir a delist@microsoft.com y Microsoft indica que te contactará dentro de 48 horas con los siguientes pasos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Estar en una lista negra siempre bloquea mis correos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No siempre. Según la RFC 5782, algunos servidores rechazan la conexión si la IP está listada, y otros usan el resultado como un factor más de un puntaje. En ese caso tus correos pueden llegar, pero a la carpeta de spam."
+      }
+    }
+  ]
+}
+</script>
+
+
+</head>
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors whitespace-nowrap">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas gratis -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas gratis</span>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Chequeo de seguridad</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Verificador de remitentes</span>
+                                    </a>
+                                    <a href="/verificar-lista-negra" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador de listas negras</span>
+                                    </a>
+                                    <a href="/inboxscore" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>InboxScore</span>
+                                    </a>
+                                    <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Todas las herramientas</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Aprender -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Aprender</span>
+                                <div class="space-y-1">
+                                    <a href="/guias" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guías de configuración</span>
+                                    </a>
+                                    <a href="/glosario/" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Glosario DNS</span>
+                                    </a>
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC para empresas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min"
+                        target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
+                        onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                <!-- Recursos: Aprender (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Aprender</span>
+                    <a href="/guias" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guías de configuración</a>
+                    <a href="/glosario/" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Glosario DNS</a>
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guía DMARC para empresas</a>
+                </div>
+
+                <!-- Recursos: Herramientas gratis (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-brand-600 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas gratis</span>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad</a>
+                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Verificador de remitentes</a>
+                    <a href="/verificar-lista-negra" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador de listas negras</a>
+                    <a href="/inboxscore" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">InboxScore</a>
+                    <a href="/herramientas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" onclick="closeMobileMenu(); if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Cómo saber si mi IP está en lista negra
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">Entregabilidad</span>
+            <h1 class="blog-article-h1">Cómo saber si mi IP está en lista negra</h1>
+            <p class="blog-meta blog-meta--on-dark">
+                <time datetime="2026-11-03" data-updated="2026-11-03">
+                    3 de noviembre de 2026
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>8 min de lectura</span>
+                
+            </p>
+            
+            <div class="blog-listen" data-nosnippet>
+                <p class="blog-listen-label" id="blog-listen-label-como-saber-si-mi-ip-esta-en-lista-negra">
+                    Escuchar este artículo · 10:08
+                </p>
+                <audio
+                    class="blog-listen-audio"
+                    controls
+                    preload="none"
+                    controlslist="nodownload"
+                    aria-labelledby="blog-listen-label-como-saber-si-mi-ip-esta-en-lista-negra"
+                >
+                    <source src="/blog/como-saber-si-mi-ip-esta-en-lista-negra/audio.mp3" type="audio/mpeg">
+                    Tu navegador no admite audio HTML5.
+                </audio>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="blog-article-body blog-article-body--with-toc">
+        
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-ip-tienes-que-revisar">Qué IP tienes que revisar</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#la-del-servidor-que-se-conecta-al-destinatario">La del servidor que se conecta al destinatario</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#si-usas-un-proveedor-de-correo-la-ip-es-de-el">Si usas un proveedor de correo, la IP es de él</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#cuando-importa-la-ip-de-tu-oficina">Cuándo importa la IP de tu oficina</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-encontrar-la-ip-desde-la-que-salen-tus-correos">Cómo encontrar la IP desde la que salen tus correos</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#en-el-mensaje-de-rebote">En el mensaje de rebote</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#en-la-cabecera-completa-de-un-correo-enviado">En la cabecera completa de un correo enviado</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#si-tienes-varias-plataformas-de-envio">Si tienes varias plataformas de envío</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-consultar-si-la-ip-esta-en-lista-negra">Cómo consultar si la IP está en lista negra</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#que-pasa-por-dentro">Qué pasa por dentro</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#con-el-verificador-de-inboxseguro">Con el verificador de InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#para-gmail-postmaster-tools">Para Gmail: Postmaster Tools</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-significa-el-resultado">Qué significa el resultado</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#tu-ip-aparece-en-una-lista">Tu IP aparece en una lista</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#tu-ip-no-aparece-pero-los-correos-rebotan-o-llegan-a-spam">Tu IP no aparece, pero los correos rebotan o llegan a spam</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-hacer-si-tu-ip-esta-listada">Qué hacer si tu IP está listada</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#1-si-la-ip-es-compartida-de-tu-proveedor">1. Si la IP es compartida de tu proveedor</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#2-si-la-ip-es-tuya">2. Si la IP es tuya</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#3-si-te-bloqueo-microsoft-365">3. Si te bloqueó Microsoft 365</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#4-si-es-una-lista-externa">4. Si es una lista externa</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#monitorea-tus-ip-con-inboxseguro">Monitorea tus IP con InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </details>
+        
+
+        <div class="blog-article-main">
+            <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> Para saber si tu IP está en lista negra, primero identifica la IP pública del servidor que entrega tus correos: aparece en el mensaje de rebote o en la línea Received que agregó el servidor del destinatario. Luego consúltala en las listas negras. Si la IP es de tu proveedor, pídele a él que gestione la salida; si es tuya, corrige la causa antes de pedirla, porque si no la IP puede volver a bloquearse.</p>
+                </div>
+                
+                <p>Un cliente te avisa que no le llegó la factura. En tu bandeja encuentras un rebote, el aviso automático de que un correo no se pudo entregar, con una dirección IP entre corchetes. La duda es inmediata: ¿está mi IP en una <a href="/glosario/rbl/">lista negra</a>?</p>
+<p>La IP que importa es la del servidor que entrega tus correos al destinatario, que no siempre es la de tu oficina. Esta guía te explica cómo encontrarla, cómo consultarla y qué hacer según quién la administre. Si quieres entender qué es una lista negra y por qué una empresa cae en una, lee primero <a href="/blog/como-saber-si-mi-dominio-esta-en-lista-negra/">cómo saber si mi dominio está en lista negra</a>.</p>
+<blockquote>
+<p><strong>¿Tienes prisa?</strong> Ingresa tu IP (IPv4) o tu dominio en el <a href="/verificar-lista-negra">verificador de listas negras</a> y revisa si aparece en 6 listas negras públicas.</p>
+</blockquote>
+<h2  id="que-ip-tienes-que-revisar">Qué IP tienes que revisar</h2>
+<h3  id="la-del-servidor-que-se-conecta-al-destinatario">La del servidor que se conecta al destinatario</h3>
+<p>Una <strong>dirección IP</strong> es el número que identifica a un equipo en internet. Para entregar tu correo, un servidor se conecta al servidor del destinatario. Según la RFC 5321, el estándar del correo electrónico, el servidor que recibe registra la IP de origen tomada de esa conexión (sección 4.4). Esa es la IP pública que el destinatario ve y la que puede consultar en una lista negra.</p>
+<h3  id="si-usas-un-proveedor-de-correo-la-ip-es-de-el">Si usas un proveedor de correo, la IP es de él</h3>
+<p>Si tu empresa envía con un proveedor de correo o con una plataforma de envío, la IP que entrega tus mensajes es de ese proveedor y suele ser compartida con otros clientes. Google lo explica en sus directrices para remitentes: la actividad de todos los remitentes que usan una IP compartida afecta la reputación de todos ellos, y una reputación negativa puede afectar la entrega.</p>
+<h3  id="cuando-importa-la-ip-de-tu-oficina">Cuándo importa la IP de tu oficina</h3>
+<p>La IP pública de tu oficina importa si tienes un servidor de correo propio o si un equipo de tu red está comprometido. La RFC 5782, que describe cómo funcionan las listas negras, menciona como ejemplo listas que tienen sublistas para direcciones incluidas por política de envío y para equipos comprometidos por <em>malware</em> (sección 2.3).</p>
+<h2  id="como-encontrar-la-ip-desde-la-que-salen-tus-correos">Cómo encontrar la IP desde la que salen tus correos</h2>
+<h3  id="en-el-mensaje-de-rebote">En el mensaje de rebote</h3>
+<p>Muchas veces el propio rebote trae la IP:</p>
+<ul>
+<li><strong>Microsoft 365.</strong> Si estás en su lista de remitentes bloqueados, el rebote se ve así: <code>550 5.7.606-649 Access denied, banned sending IP [IP]</code>. La IP que aparece entre corchetes es la bloqueada.</li>
+<li><strong>Gmail.</strong> Google documenta el error <code>550 5.7.1</code> para mensajes rechazados porque la IP del servidor que envía está en una lista de IP suspendidas. Puede ocurrir si envías desde una IP compartida con mala reputación.</li>
+</ul>
+<blockquote>
+<p><strong>Advertencia:</strong> Google también usa <code>550 5.7.1</code> para errores de IPv6 relacionados con registros PTR y autenticación. Lee el texto completo del rebote antes de concluir que se trata de una lista negra.</p>
+</blockquote>
+<h3  id="en-la-cabecera-completa-de-un-correo-enviado">En la cabecera completa de un correo enviado</h3>
+<p>La <strong>cabecera</strong> es la parte oculta de un correo que registra por dónde pasó. Para verla, envía un correo desde tu cuenta de trabajo a una cuenta de Gmail y, según la ayuda de Google:</p>
+<ol>
+<li>Abre el correo en Gmail desde un navegador.</li>
+<li>Al lado de Responder, haz clic en <strong>Más</strong> y luego en <strong>Mostrar original</strong>.</li>
+<li>Haz clic en <strong>Copiar en el portapapeles</strong>.</li>
+</ol>
+<p>Si prefieres que una herramienta la ordene, Google ofrece <strong>Messageheader</strong>, de la Caja de herramientas de Google Admin: pegas la cabecera y haces clic en &ldquo;Analizar la cabecera anterior&rdquo;. En Outlook, abre el correo y ve a <strong>Archivo &gt; Propiedades</strong>: la cabecera aparece en el cuadro &ldquo;Encabezados de Internet&rdquo;.</p>
+<p>Dentro de la cabecera, busca las líneas que empiezan con <code>Received</code>. Según la RFC 5321 (sección 4.4), cada servidor que recibe el mensaje agrega su línea al inicio y no puede cambiar ni reordenar las anteriores. Además, esa línea debería indicar el nombre del servidor que se conectó y su IP. Por eso, la línea de más arriba la agregó el servidor del destinatario, y la IP que aparece en su parte <code>from</code> es la que entregó tu correo.</p>
+<p>Un ejemplo ficticio y simplificado:</p>
+<pre><code>Received: from mail.ejemplo.cl (mail.ejemplo.cl [203.0.113.25])
+        by mx.example.com; Mon, 3 Nov 2026 10:15:02 -0300
+Received: from [192.0.2.44]
+        by mail.ejemplo.cl; Mon, 3 Nov 2026 10:15:01 -0300
+</code></pre>
+<p>Aquí, <code>mx.example.com</code> es el servidor del destinatario, y anotó que recibió el correo desde <code>203.0.113.25</code>. Esa es la IP que debes consultar. La segunda línea muestra el paso anterior: el equipo <code>192.0.2.44</code> de la oficina entregó el mensaje al servidor de correo de la empresa.</p>
+<h3  id="si-tienes-varias-plataformas-de-envio">Si tienes varias plataformas de envío</h3>
+<p>Cada plataforma puede enviar desde IP distintas. Si tu empresa usa un CRM, un sistema de facturación y una herramienta de marketing, revisa la cabecera de un correo enviado por cada una. Para ver qué servicios podrían estar autorizados a enviar con tu dominio, usa <a href="/quien-puede-enviar-correos">quién puede enviar correos</a>.</p>
+<h2  id="como-consultar-si-la-ip-esta-en-lista-negra">Cómo consultar si la IP está en lista negra</h2>
+<h3  id="que-pasa-por-dentro">Qué pasa por dentro</h3>
+<p>Las listas negras se publican en el <strong>DNS</strong>, el sistema que guarda la información pública de los dominios. Según la RFC 5782 (sección 2.1), para consultar una IPv4 se invierte el orden de sus números y se agrega el nombre de la lista: si la lista es <code>bad.example.com</code> y la IP es <code>192.0.2.99</code>, se consulta <code>99.2.0.192.bad.example.com</code>. Con <strong>IPv6</strong>, el formato de direcciones más largo, se usan sus 32 dígitos hexadecimales invertidos más el nombre de la lista; la RFC pone como ejemplo la dirección <code>2001:db8:1:2:3:4:567:89ab</code> (sección 2.4).</p>
+<p>Si hay respuesta, la IP está listada; si no hay ningún registro, no lo está. La lista además debería publicar un texto con el motivo, que muchas veces incluye un enlace con más información (sección 2.1). El detalle está en el <a href="/blog/como-saber-si-mi-dominio-esta-en-lista-negra/">artículo sobre listas negras de dominio</a>.</p>
+<h3  id="con-el-verificador-de-inboxseguro">Con el verificador de InboxSeguro</h3>
+<p>En el <a href="/verificar-lista-negra">verificador de listas negras</a> ingresas una IPv4 o tu dominio, y la herramienta consulta en el momento 6 listas: Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer. Si escribes un dominio, revisa las IP de sus servidores MX y de su registro A, hasta 6.</p>
+<blockquote>
+<p><strong>Advertencia:</strong> los servidores MX indican dónde recibe correo tu dominio, no necesariamente desde dónde sale. Si envías con un proveedor, consulta también la IP que encontraste en el rebote o en la cabecera. Puedes ver tus MX con el <a href="/mx-lookup">MX Lookup</a>.</p>
+</blockquote>
+<h3  id="para-gmail-postmaster-tools">Para Gmail: Postmaster Tools</h3>
+<p>Si muchos de tus destinatarios usan Gmail, Google recomienda Postmaster Tools, que muestra la reputación de tu dominio y de tu IP, si tus mensajes están autenticados y por qué algunos no se entregan.</p>
+<h2  id="que-significa-el-resultado">Qué significa el resultado</h2>
+<h3  id="tu-ip-aparece-en-una-lista">Tu IP aparece en una lista</h3>
+<p>No siempre significa que tus correos se rechacen. La RFC 5782 (sección 6) describe dos usos: algunos servidores rechazan la conexión cuando encuentran la IP en una lista, y otros usan el resultado como un factor más de un puntaje. En ese segundo caso, tus correos pueden llegar, pero a la carpeta de spam.</p>
+<h3  id="tu-ip-no-aparece-pero-los-correos-rebotan-o-llegan-a-spam">Tu IP no aparece, pero los correos rebotan o llegan a spam</h3>
+<p>Revisa la autenticación de tu dominio y el <strong>registro PTR</strong>, que asocia una IP con un nombre de servidor. Google exige que la IP pública que envía tenga un PTR que apunte a un nombre de servidor, y que ese nombre apunte de vuelta a la misma IP. Revisa tu configuración con el <a href="/domain-checker">verificador de dominio</a> y lee <a href="/blog/mis-correos-llegan-a-spam/">por qué tus correos llegan a spam</a>.</p>
+<h2  id="que-hacer-si-tu-ip-esta-listada">Qué hacer si tu IP está listada</h2>
+<h3  id="1-si-la-ip-es-compartida-de-tu-proveedor">1. Si la IP es compartida de tu proveedor</h3>
+<p>Avísale a tu proveedor y pídele que gestione la salida, porque la IP es de él y la comparten otros clientes.</p>
+<h3  id="2-si-la-ip-es-tuya">2. Si la IP es tuya</h3>
+<p>Corrige la causa antes de pedir la salida. Revisa si hay una cuenta con la contraseña comprometida o un equipo de la red infectado que esté enviando correo.</p>
+<h3  id="3-si-te-bloqueo-microsoft-365">3. Si te bloqueó Microsoft 365</h3>
+<p>Si recibiste el error <code>550 5.7.606-649</code>, Microsoft ofrece un portal en <a href="https://sender.office.com">sender.office.com</a>:</p>
+<ol>
+<li>Ingresa la dirección que recibió el rebote y la IP que indica el error. Solo puedes poner un correo y una IP por visita.</li>
+<li>Abre el enlace de confirmación que llega a ese correo.</li>
+<li>En el portal, selecciona <strong>Delist IP</strong>.</li>
+</ol>
+<p>Según Microsoft, los resultados varían y la salida puede tardar hasta 24 horas o más. Si el error es <code>5.7.511</code>, el portal no sirve: escribe a delist@microsoft.com con el código completo del rebote y la IP. Microsoft indica que te contactará dentro de 48 horas.</p>
+<h3  id="4-si-es-una-lista-externa">4. Si es una lista externa</h3>
+<p>Cada lista tiene su propio procedimiento: la RFC 5782 no define reglas para entrar o salir de ellas (sección 1). Sigue el enlace que suele venir en el texto del listado.</p>
+<blockquote>
+<p><strong>Advertencia:</strong> si pides la salida sin corregir la causa, la IP puede volver a bloquearse. Microsoft lo dice expresamente: verifica que los mensajes no sean abusivos ni maliciosos, porque de lo contrario la IP podría bloquearse otra vez.</p>
+</blockquote>
+<h2  id="monitorea-tus-ip-con-inboxseguro">Monitorea tus IP con InboxSeguro</h2>
+<p>Para una revisión puntual, usa el <a href="/verificar-lista-negra">verificador de listas negras</a>, que muestra el estado de ese momento. El monitoreo de InboxSeguro revisa cada hora 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer) y te guía para pedir la remoción. Además, te muestra qué sistemas envían correo con tu dominio y te permite asignar un responsable a cada uno.</p>
+<h2  id="fuentes">Fuentes</h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc5782">RFC 5782: DNS Blacklists and Whitelists</a>, secciones 1, 2.1, 2.3, 2.4 y 6.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc5321#section-4.4">RFC 5321: Simple Mail Transfer Protocol</a>, sección 4.4 (pp. 57-58).</li>
+<li><a href="https://support.google.com/mail/answer/29436?hl=es">Google: Rastrear un correo mediante su cabecera completa</a>.</li>
+<li><a href="https://support.google.com/a/answer/81126?hl=es">Google: Directrices para remitentes de correos</a>.</li>
+<li><a href="https://learn.microsoft.com/en-us/defender-office-365/external-senders-use-the-delist-portal-to-unblock-yourself">Microsoft Learn: Use the delist portal to remove yourself from the blocked senders list and address 5.7.511 Access denied errors</a>.</li>
+<li><a href="https://www.inboxseguro.com/verificar-lista-negra">InboxSeguro: Verificador de listas negras</a>.</li>
+</ul>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿Mi IP de la oficina puede estar en lista negra si uso un proveedor de correo?</h3>
+                    <p>Puede, pero normalmente no es la que importa para tus correos: los destinatarios ven la IP del servidor de tu proveedor, que es el que entrega el mensaje. La IP de la oficina importa si tienes un servidor de correo propio o si un equipo de tu red está comprometido, porque algunas listas tienen sublistas de equipos comprometidos por malware.</p>
+                    
+                    <h3>¿Cuánto tarda Microsoft en quitar una IP?</h3>
+                    <p>Si usas el portal sender.office.com, Microsoft indica que los resultados varían y que puede tardar hasta 24 horas o más. Si el error es 5.7.511, debes escribir a delist@microsoft.com y Microsoft indica que te contactará dentro de 48 horas con los siguientes pasos.</p>
+                    
+                    <h3>¿Estar en una lista negra siempre bloquea mis correos?</h3>
+                    <p>No siempre. Según la RFC 5782, algunos servidores rechazan la conexión si la IP está listada, y otros usan el resultado como un factor más de un puntaje. En ese caso tus correos pueden llegar, pero a la carpeta de spam.</p>
+                    
+                </section>
+                
+            </div>
+
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary" href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener"
+                       data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+
+        
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-ip-tienes-que-revisar">Qué IP tienes que revisar</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#la-del-servidor-que-se-conecta-al-destinatario">La del servidor que se conecta al destinatario</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#si-usas-un-proveedor-de-correo-la-ip-es-de-el">Si usas un proveedor de correo, la IP es de él</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#cuando-importa-la-ip-de-tu-oficina">Cuándo importa la IP de tu oficina</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-encontrar-la-ip-desde-la-que-salen-tus-correos">Cómo encontrar la IP desde la que salen tus correos</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#en-el-mensaje-de-rebote">En el mensaje de rebote</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#en-la-cabecera-completa-de-un-correo-enviado">En la cabecera completa de un correo enviado</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#si-tienes-varias-plataformas-de-envio">Si tienes varias plataformas de envío</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-consultar-si-la-ip-esta-en-lista-negra">Cómo consultar si la IP está en lista negra</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#que-pasa-por-dentro">Qué pasa por dentro</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#con-el-verificador-de-inboxseguro">Con el verificador de InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#para-gmail-postmaster-tools">Para Gmail: Postmaster Tools</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-significa-el-resultado">Qué significa el resultado</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#tu-ip-aparece-en-una-lista">Tu IP aparece en una lista</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#tu-ip-no-aparece-pero-los-correos-rebotan-o-llegan-a-spam">Tu IP no aparece, pero los correos rebotan o llegan a spam</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-hacer-si-tu-ip-esta-listada">Qué hacer si tu IP está listada</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#1-si-la-ip-es-compartida-de-tu-proveedor">1. Si la IP es compartida de tu proveedor</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#2-si-la-ip-es-tuya">2. Si la IP es tuya</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#3-si-te-bloqueo-microsoft-365">3. Si te bloqueó Microsoft 365</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#4-si-es-una-lista-externa">4. Si es una lista externa</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#monitorea-tus-ip-con-inboxseguro">Monitorea tus IP con InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </nav>
+        
+    </div>
+</article>
+
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Soluciones</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/seguridad-correo-proveedores" class="hover:text-blue-400 transition-colors">Seguridad para proveedores</a></li>
+                            <li><a href="/informe-higiene-correo-corporativo" class="hover:text-blue-400 transition-colors">Informe de higiene</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Detener suplantación</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas gratis</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad</a></li>
+                            <li><a href="/verificar-lista-negra" class="hover:text-blue-400 transition-colors">Verificador de listas negras</a></li>
+                            <li><a href="/inboxscore" class="hover:text-blue-400 transition-colors">InboxScore</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/guias" class="hover:text-blue-400 transition-colors">Guías</a></li>
+                            <li><a href="/glosario/" class="hover:text-blue-400 transition-colors">Glosario</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>
