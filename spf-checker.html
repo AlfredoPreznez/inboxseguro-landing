@@ -864,11 +864,27 @@
                 return null;
             }
 
+            async function alidnsAfterPrimaryDohFails(dohErr) {
+                if (signal && signal.aborted) throw dohErr;
+                try {
+                    const fallback = await querySingle(alidnsConfig.url, alidnsConfig.headers, alidnsConfig.resolver);
+                    preferredDnsMode = 'doh';
+                    preferredDohResolver = 'alidns';
+                    return fallback;
+                } catch (alidnsErr) {
+                    if (signal && signal.aborted) throw alidnsErr;
+                    throw alidnsErr;
+                }
+            }
+
             async function raceProxyWithParallelDoh(proxyQuery) {
                 const dohQueries = primaryDoh.map(function (c) {
                     return { query: queryOne(c.url, c.headers, c.resolver), resolver: c.resolver };
                 });
                 const dohRace = raceForDnsData(dohQueries);
+                const alidnsWhenPrimaryDohFails = dohRace.catch(function (dohErr) {
+                    return alidnsAfterPrimaryDohFails(dohErr);
+                });
 
                 function proxyAttempt() {
                     return proxyQuery.promise.then(function (data) {
@@ -880,9 +896,11 @@
                     });
                 }
 
+                const parallelRacers = [proxyAttempt(), dohRace, alidnsWhenPrimaryDohFails];
+
                 if (typeof Promise.any === 'function') {
                     try {
-                        return await Promise.any([proxyAttempt(), dohRace]);
+                        return await Promise.any(parallelRacers);
                     } catch (aggErr) {
                         if (signal && signal.aborted) throw new DOMException('Aborted', 'AbortError');
                         const errs = (aggErr && aggErr.errors) ? aggErr.errors : [aggErr];
@@ -891,32 +909,13 @@
                             preferredDnsMode = 'proxy';
                             return empty;
                         }
-                        try {
-                            const fallback = await querySingle(alidnsConfig.url, alidnsConfig.headers, alidnsConfig.resolver);
-                            preferredDnsMode = 'doh';
-                            preferredDohResolver = 'alidns';
-                            return fallback;
-                        } catch (alidnsErr) {
-                            if (signal && signal.aborted) throw alidnsErr;
-                            throw resolverUnavailableError(errs.concat([alidnsErr]));
-                        }
+                        throw resolverUnavailableError(errs);
                     }
                 }
 
-                return Promise.race([
-                    proxyAttempt(),
-                    dohRace
-                ]).catch(async function (err) {
+                return Promise.race(parallelRacers).catch(function (err) {
                     if (signal && signal.aborted) throw new DOMException('Aborted', 'AbortError');
-                    try {
-                        const fallback = await querySingle(alidnsConfig.url, alidnsConfig.headers, alidnsConfig.resolver);
-                        preferredDnsMode = 'doh';
-                        preferredDohResolver = 'alidns';
-                        return fallback;
-                    } catch (alidnsErr) {
-                        if (signal && signal.aborted) throw alidnsErr;
-                        throw resolverUnavailableError([err, alidnsErr]);
-                    }
+                    throw resolverUnavailableError([err]);
                 });
             }
 
