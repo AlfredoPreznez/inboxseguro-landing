@@ -884,46 +884,28 @@ def build_sitemap(posts_published: list[Post]) -> None:
     previous = _previous_sitemap_lastmods()
     urls: list[tuple[str, str, str, str]] = []
     for path, file_name, freq, prio in SITEMAP_STATIC:
-        loc = f"{SITE}{path}"
-        prev = previous.get(loc, "")
-        git_lm = git_lastmod(ROOT / file_name)
-        # Mantener lastmod ya publicado en páginas estáticas; se actualiza al editar sitemap.
-        lastmod = prev if prev else git_lm
-        urls.append((loc, lastmod, freq, prio))
+        lastmod = git_lastmod(ROOT / file_name)
+        urls.append((f"{SITE}{path}", lastmod, freq, prio))
 
-    blog_index_lastmod = ""
+    blog_index_lastmod = git_lastmod(BLOG_OUT / "index.html", CONTENT_DIR)
+    for post in posts_published:
+        candidate = git_lastmod(post.source_path, BLOG_OUT / post.slug / "index.html")
+        if candidate > blog_index_lastmod:
+            blog_index_lastmod = candidate
+
+    urls.append((f"{SITE}/blog/", blog_index_lastmod, "weekly", "0.8"))
     for post in sorted(posts_published, key=lambda p: p.slug):
-        loc = post.public_url
-        prev = previous.get(loc, "")
-        git_lm = git_lastmod(post.source_path)
-        lastmod = git_lm
+        lastmod = git_lastmod(post.source_path, BLOG_OUT / post.slug / "index.html")
         if post.updated and post.updated > lastmod:
             lastmod = post.updated
-        if prev:
-            if post.updated and post.updated > prev:
-                lastmod = max(prev, lastmod)
-            else:
-                lastmod = prev
-        if lastmod > blog_index_lastmod:
-            blog_index_lastmod = lastmod
         urls.append((post.public_url, lastmod, "monthly", "0.7"))
 
-    blog_loc = f"{SITE}/blog/"
-    blog_prev = previous.get(blog_loc, "")
-    if blog_prev:
-        if blog_index_lastmod > blog_prev:
-            blog_index_lastmod = max(blog_prev, blog_index_lastmod)
-        else:
-            blog_index_lastmod = blog_prev
-    elif not blog_index_lastmod:
-        blog_index_lastmod = git_lastmod(BLOG_OUT / "index.html", CONTENT_DIR)
-
-    urls.insert(
-        len(SITEMAP_STATIC),
-        (blog_loc, blog_index_lastmod, "weekly", "0.8"),
-    )
-
     # Nota: categorías/paginación NO entran al sitemap hasta generarlas.
+
+    urls = [
+        (loc, max(lastmod, previous.get(loc, "")), freq, prio)
+        for loc, lastmod, freq, prio in urls
+    ]
 
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
