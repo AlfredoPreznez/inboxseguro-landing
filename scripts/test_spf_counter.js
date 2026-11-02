@@ -719,6 +719,16 @@ const MOCK_DNS = {
             }
         }
     },
+    'test-proxy-hung-alidns-wins.fake': {
+        TXT: {
+            byResolver: {
+                proxy: { hang: true },
+                cloudflare: { abort: true },
+                google: { abort: true },
+                alidns: { response: txtAnswer('test-proxy-hung-alidns-wins.fake', 'v=spf1 ip4:192.0.2.1 -all') }
+            }
+        }
+    },
     'test-bare-all.fake': {
         TXT: { response: txtAnswer('test-bare-all.fake', 'v=spf1 ip4:192.0.2.1 all') }
     },
@@ -756,6 +766,11 @@ for (let i = 1; i <= 12; i++) {
 
 async function runSuite() {
     console.log('--- INICIANDO SUITE DE PRUEBAS DEL CONTADOR SPF (RFC 7208) ---');
+    const onlyDomainsRaw = process.env.SPF_COUNTER_ONLY;
+    const onlyDomains = onlyDomainsRaw
+        ? new Set(onlyDomainsRaw.split(',').map(s => s.trim()).filter(Boolean))
+        : null;
+    const runAllSections = !onlyDomains;
     const { server, port } = await startServer();
     const baseUrl = `http://127.0.0.1:${port}`;
     console.log(`Servidor local listo en ${baseUrl}`);
@@ -1136,7 +1151,8 @@ async function runSuite() {
             domain: 'test-nxdomain-race.fake',
             category: 'NXDOMAIN del proxy se acepta sin consultar DoH (privacidad)',
             expectedLookups: 0,
-            expectedBadge: 'Sin registro'
+            expectedBadge: 'Sin registro',
+            assertZeroDohForDomain: true
         },
         {
             domain: 'test-proxy-slow-doh-wins.fake',
@@ -1160,6 +1176,13 @@ async function runSuite() {
         {
             domain: 'test-alidns-only.fake',
             category: 'Solo AliDNS responde con SPF (respaldo DoH)',
+            expectedLookups: 0,
+            expectedBadge: 'Dentro del límite',
+            expectedTopScore: 'Correcto'
+        },
+        {
+            domain: 'test-proxy-hung-alidns-wins.fake',
+            category: 'Proxy colgado + CF/Google caídos: AliDNS completa el conteo',
             expectedLookups: 0,
             expectedBadge: 'Dentro del límite',
             expectedTopScore: 'Correcto'
@@ -1210,6 +1233,13 @@ async function runSuite() {
         { domain: 'dominio invalido!!!', category: 'Humo real: Entrada sintácticamente inválida', isInvalidInput: true }
     ];
 
+    const deterministicCasesFiltered = onlyDomains
+        ? deterministicCases.filter(tc => onlyDomains.has(tc.domain))
+        : deterministicCases;
+    const smokeCasesFiltered = onlyDomains
+        ? smokeCases.filter(tc => onlyDomains.has(tc.domain))
+        : smokeCases;
+
     const results = [];
     const consoleErrors = [];
     const realDnsSummary = [];
@@ -1243,6 +1273,37 @@ async function runSuite() {
             }
         } catch (e) {}
         return null;
+    }
+
+    function mockDnsNameFromRequestUrl(reqUrl) {
+        try {
+            const parsed = new URL(reqUrl);
+            return (parsed.searchParams.get('name') || '').toLowerCase().replace(/\.$/, '');
+        } catch (e) {
+            return '';
+        }
+    }
+
+    function mockDnsHostKeyFromRequestUrl(reqUrl) {
+        if (reqUrl.includes('cloudflare-dns.com')) return 'cloudflare';
+        if (reqUrl.includes('dns.google')) return 'google';
+        if (reqUrl.includes('dns.alidns.com')) return 'alidns';
+        if (reqUrl.includes('inboxseguro-dns-proxy')) return 'proxy';
+        return null;
+    }
+
+    function createMockDnsRequestCounter(domain) {
+        const target = (domain || '').toLowerCase();
+        const counts = { cloudflare: 0, google: 0, alidns: 0, proxy: 0 };
+        return {
+            counts,
+            onRequest(reqUrl) {
+                if (!isMockDnsUrl(reqUrl)) return;
+                if (mockDnsNameFromRequestUrl(reqUrl) !== target) return;
+                const key = mockDnsHostKeyFromRequestUrl(reqUrl);
+                if (key) counts[key]++;
+            }
+        };
     }
 
     function isForbiddenUrl(url) {
@@ -1352,6 +1413,9 @@ async function runSuite() {
                     if (entry) {
                         if (entry.delay) {
                             await new Promise(r => setTimeout(r, entry.delay));
+                        }
+                        if (entry.hang) {
+                            return;
                         }
                         if (entry.abort) {
                             return route.abort();
@@ -1518,6 +1582,7 @@ async function runSuite() {
     }
 
     // Autorun con ?d=google.com y ?domain=google.com (sin notificaciones)
+    if (runAllSections) {
     console.log('\nVerificando autorun con ?d=google.com y ?domain=google.com (no deben disparar notificaciones ni tickets)...');
     for (const q of ['?d=google.com', '?domain=google.com']) {
         const page = await createCleanPage({ useMocks: false });
@@ -1947,10 +2012,11 @@ async function runSuite() {
             results.push({ domain: 'security:real-negative-test', expected: 'Suite Falla', actual: 'Suite Falla', diff: 0, status: 'OK' });
         }
     }
+    }
 
     // Ejecución de casos deterministas con DNS simulado
     console.log('\n--- PRUEBAS DETERMINISTAS CON DNS SIMULADO ---');
-    for (const tc of deterministicCases) {
+    for (const tc of deterministicCasesFiltered) {
         console.log(`\nProbando [Mock]: ${tc.domain} (${tc.category})...`);
         const pageOptions = { useMocks: true };
         if (tc.expectDnsErrorAlert) {
@@ -1958,6 +2024,10 @@ async function runSuite() {
         }
         const page = await createCleanPage(pageOptions);
         let dnsErrorAlertText = null;
+        const mockDnsCounter = tc.assertZeroDohForDomain ? createMockDnsRequestCounter(tc.domain) : null;
+        page.on('request', req => {
+            if (mockDnsCounter) mockDnsCounter.onRequest(req.url());
+        });
         page.on('dialog', dialog => {
             dnsErrorAlertText = dialog.message();
             dialog.accept();
@@ -2042,6 +2112,18 @@ async function runSuite() {
             if (tc.expectedSummaryText && !summaryText.includes(tc.expectedSummaryText)) {
                 failed = true;
                 failureReason += `Resumen no contiene "${tc.expectedSummaryText}". `;
+            }
+
+            if (tc.assertZeroDohForDomain && mockDnsCounter) {
+                const c = mockDnsCounter.counts;
+                if (c.cloudflare !== 0 || c.google !== 0 || c.alidns !== 0) {
+                    failed = true;
+                    failureReason += `DoH consultado con NXDOMAIN rápido del proxy (cloudflare=${c.cloudflare}, google=${c.google}, alidns=${c.alidns}). `;
+                }
+                if (c.proxy < 1) {
+                    failed = true;
+                    failureReason += `Se esperaba al menos 1 consulta al proxy, obtuvo ${c.proxy}. `;
+                }
             }
 
             if (summaryText.includes('Tu SPF usa al menos') && !countText.includes('Al menos')) {
@@ -2144,6 +2226,7 @@ async function runSuite() {
         await closeTrackedPage(page);
     }
 
+    if (runAllSections) {
     console.log('\n--- PRIVACIDAD: CONSULTAS POR RESOLVER (DNS simulado) ---');
     {
         const page = await createCleanPage({ useMocks: true });
@@ -2173,10 +2256,11 @@ async function runSuite() {
         }
         await closeTrackedPage(page);
     }
+    }
 
     // Ejecución de pruebas de humo reales (con DNS real sin mocks)
     console.log('\n--- PRUEBAS DE HUMO CON DOMINIOS REALES (SIN CONTEO EXACTO) ---');
-    for (const tc of smokeCases) {
+    for (const tc of smokeCasesFiltered) {
         console.log(`\nProbando [Humo]: ${tc.domain} (${tc.category})...`);
         const page = await createCleanPage({ useMocks: false });
         await page.goto(`${baseUrl}/spf-checker.html`, { waitUntil: 'domcontentloaded' });
