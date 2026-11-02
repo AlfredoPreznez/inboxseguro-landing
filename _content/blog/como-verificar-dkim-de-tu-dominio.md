@@ -5,7 +5,7 @@ description: "Aprende a comprobar si DKIM está bien configurado en tu dominio: 
 excerpt: "Aprende a comprobar si DKIM está bien configurado en tu dominio: selector, registro DNS y errores comunes."
 category: Autenticación
 date: 2026-10-14
-updated: 2026-10-14
+updated: 2026-11-02
 tags: [dkim, autenticacion, entregabilidad, dns, dmarc]
 keyword_objetivo: verificar dkim
 featured: false
@@ -95,4 +95,4 @@ Google [pide a todos los remitentes](https://support.google.com/a/answer/81126) 
 
 ## Cómo ayuda InboxSeguro
 
-InboxSeguro arma un inventario de los sistemas que envían correo con tu dominio a partir de los reportes DMARC, identificándolos por PTR, ASN y firma DKIM, y te permite asignar un responsable y un estado a cada uno. También muestra el estado de SPF, DKIM, DMARC, BIMI, MTA-STS y RUA, y te avisa cuando aparece un remitente nuevo. Si necesitas corregir un registro, la configuración DNS guiada con asistente de IA te acompaña paso a paso. Puedes ver los planes en [precios](/precios).
+InboxSeguro arma un inventario de los sistemas que envían correo con tu dominio a partir de los reportes DMARC, identificándolos por PTR, ASN y firma DKIM, y te permite asignar un responsable y un estado a cada uno. También muestra el estado de SPF, DKIM, DMARC, BIMI, MTA-STS y RUA, y te avisa cuando aparece un remitente nuevo. Si necesitas corregir un registro, la configuración DNS guiada con asistente de IA te acompaña paso a paso. Puedes ver [cómo funciona InboxSeguro](/como-funciona) y seguir comprobando selectores con el [verificador DKIM](/dkim-checker).
