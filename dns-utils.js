@@ -155,11 +155,41 @@
         return data;
     }
 
+    function decodeDnsTxtChunk(str) {
+        if (!str || typeof str !== 'string') return '';
+        return str.replace(/\\(?:(\d{3})|(\\|")|(.))/g, function (match, ddd, escaped, other) {
+            if (ddd) {
+                var code = parseInt(ddd, 10);
+                return code >= 0 && code <= 255 ? String.fromCharCode(code) : match;
+            }
+            if (escaped) {
+                return escaped;
+            }
+            if (other) {
+                return other;
+            }
+            return match;
+        });
+    }
+
     function extractTXT(data) {
         if (!data || !data.Answer) return [];
         return data.Answer
             .filter(function (a) { return a.type === 16; })
-            .map(function (a) { return a.data.replace(/^"|"$/g, '').replace(/"/g, ''); });
+            .map(function (a) {
+                var raw = a.data;
+                if (typeof raw !== 'string') return '';
+                var regex = /"((?:[^"\\]|\\.)*)"/g;
+                var match;
+                var chunks = [];
+                while ((match = regex.exec(raw)) !== null) {
+                    chunks.push(decodeDnsTxtChunk(match[1]));
+                }
+                if (chunks.length > 0) {
+                    return chunks.join('');
+                }
+                return decodeDnsTxtChunk(raw.replace(/^["']+|["']+$/g, ''));
+            });
     }
 
     async function checkDKIM(domain) {

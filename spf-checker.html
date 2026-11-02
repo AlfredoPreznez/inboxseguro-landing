@@ -95,7 +95,7 @@
       "name": "¿Este verificador modifica o corrige mi registro SPF?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "No. Solo consulta el DNS público y muestra el registro SPF tal como está publicado, con el conteo de consultas. No edita tu zona DNS, no aplana includes ni propone un registro nuevo."
+        "text": "No. Consulta los registros DNS publicados de tu dominio mediante resolutores DNS públicos (proxy o DoH desde tu navegador), muestra el registro SPF tal como está publicado y cuenta las consultas DNS (lookups) que implicaría evaluarlo frente al límite de 10 de la RFC 7208. No edita tu zona DNS."
       }
     }
   ]
@@ -516,7 +516,7 @@
                         <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Este verificador modifica o corrige mi registro SPF?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
-                                No. Solo consulta el DNS público y muestra el registro SPF tal como está publicado, con el conteo de consultas. No edita tu zona DNS, no aplana includes ni propone un registro nuevo.
+                                No. Consulta los registros DNS publicados de tu dominio mediante resolutores DNS públicos (proxy o DoH desde tu navegador), muestra el registro SPF tal como está publicado y cuenta las consultas DNS (lookups) que implicaría evaluarlo frente al límite de 10 de la RFC 7208. No edita tu zona DNS.
                             </p>
                         </div>
                     </div>
