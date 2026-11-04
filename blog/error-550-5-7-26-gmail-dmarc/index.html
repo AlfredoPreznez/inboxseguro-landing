@@ -3,24 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo…</title>
+    <title>Errores Gmail 5.7.26, 5.7.27, 5.7.25 y 4.7.28 | InboxSeguro</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-    <meta name="description" content="Error 550 5.7.26 de Gmail: qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y qué pasos seguir para resolverlo.">
+    <meta name="description" content="Qué significan los errores 550 5.7.26, 5.7.27, 5.7.25 y 4.7.28 de Gmail, cómo leer las cabeceras y qué revisar en SPF, DKIM y DMARC.">
     <link rel="canonical" href="https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/">
     <meta name="robots" content="index, follow">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/">
-    <meta property="og:title" content="Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo…">
-    <meta property="og:description" content="Error 550 5.7.26 de Gmail: qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y qué pasos seguir para resolverlo.">
+    <meta property="og:title" content="Errores Gmail 5.7.26, 5.7.27, 5.7.25 y 4.7.28 | InboxSeguro">
+    <meta property="og:description" content="Qué significan los errores 550 5.7.26, 5.7.27, 5.7.25 y 4.7.28 de Gmail, cómo leer las cabeceras y qué revisar en SPF, DKIM y DMARC.">
     <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/error-550-5-7-26-gmail-dmarc.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo…">
-    <meta name="twitter:description" content="Error 550 5.7.26 de Gmail: qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y qué pasos seguir para resolverlo.">
+    <meta name="twitter:title" content="Errores Gmail 5.7.26, 5.7.27, 5.7.25 y 4.7.28 | InboxSeguro">
+    <meta name="twitter:description" content="Qué significan los errores 550 5.7.26, 5.7.27, 5.7.25 y 4.7.28 de Gmail, cómo leer las cabeceras y qué revisar en SPF, DKIM y DMARC.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/error-550-5-7-26-gmail-dmarc.png">
     <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/fontawesome/icons.min.css?v=1.0.0">
@@ -31,8 +31,8 @@
 {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
-  "headline": "Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo",
-  "description": "Error 550 5.7.26 de Gmail: qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y qué pasos seguir para resolverlo.",
+  "headline": "Errores Gmail 5.7.26, 5.7.27, 5.7.25 y 4.7.28",
+  "description": "Qué significan los errores 550 5.7.26, 5.7.27, 5.7.25 y 4.7.28 de Gmail, cómo leer las cabeceras y qué revisar en SPF, DKIM y DMARC.",
   "datePublished": "2026-11-04",
   "dateModified": "2026-11-04",
   "author": {
@@ -77,7 +77,7 @@
     {
       "@type": "ListItem",
       "position": 3,
-      "name": "Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo",
+      "name": "Errores Gmail 5.7.26, 5.7.27, 5.7.25 y 4.7.28",
       "item": "https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/"
     }
   ]
@@ -111,6 +111,22 @@
       "acceptedAnswer": {
         "@type": "Answer",
         "text": "Puede detener el rechazo de la variante DMARC, pero no corrige la causa y deja tu dominio expuesto a suplantación. Además, Google documenta otras variantes del 5.7.26 que no dependen de DMARC. Lo correcto es autenticar el sistema que envía y mantener una política gradual."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué significa el 550 5.7.27 de Gmail?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Según Google, el mensaje se bloqueó porque no pasó la autenticación SPF. Gmail exige que los remitentes de distribución masiva autentiquen con SPF. Revisa tu registro SPF y la IP que envía."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué significa el 550 5.7.25 de Gmail?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Según Google, el mensaje se bloqueó porque la IP de envío no tiene registro PTR o la entrada DNS inversa no coincide con esa IP. Gmail exige PTR en las IP de envío para remitentes de alto volumen."
       }
     }
   ]
@@ -277,16 +293,16 @@
     <header class="blog-article-hero">
         <div class="blog-article-hero-inner">
             <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
-                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Errores Gmail 5.7.26, 5.7.27, 5.7.25 y 4.7.28
             </nav>
             <span class="blog-chip blog-chip--on-dark">DMARC</span>
-            <h1 class="blog-article-h1">Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo</h1>
+            <h1 class="blog-article-h1">Errores Gmail 5.7.26, 5.7.27, 5.7.25 y 4.7.28</h1>
             <p class="blog-meta blog-meta--on-dark">
                 <time datetime="2026-11-04" data-updated="2026-11-04">
                     4 de noviembre de 2026
                 </time>
                 <span aria-hidden="true">·</span>
-                <span>8 min de lectura</span>
+                <span>11 min de lectura</span>
                 
             </p>
             
@@ -317,6 +333,22 @@
                 
                 <li class="blog-toc-item">
                     <a href="#que-significa-el-error-550-5726-de-gmail">¿Qué significa el error 550 5.7.26 de Gmail?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#otros-codigos-smtp-de-gmail-5727-5725-y-4728">Otros códigos SMTP de Gmail: 5.7.27, 5.7.25 y 4.7.28</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#error-550-5727-spf">Error 550 5.7.27 (SPF)</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#error-550-5725-ptr-dns-inverso">Error 550 5.7.25 (PTR / DNS inverso)</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#error-421-4728-limite-de-frecuencia">Error 421 4.7.28 (límite de frecuencia)</a>
                 </li>
                 
                 <li class="blog-toc-item">
@@ -395,7 +427,35 @@
 <li><code>451 4.7.26</code>: no aceptado por la política DMARC, pero fallas temporales de DNS impidieron la autenticación.</li>
 <li><code>421 4.7.26</code>: envío limitado temporalmente porque el correo no está autenticado.</li>
 </ul>
-<p>Esta guía se centra en la variante DMARC, aunque los pasos de diagnóstico sirven para las tres.</p>
+<p>Esta guía se centra en la variante DMARC del 5.7.26, aunque los pasos de diagnóstico sirven para las tres. Más abajo explicamos también los códigos <strong>5.7.27</strong>, <strong>5.7.25</strong> y <strong>4.7.28</strong> que Google documenta en la misma referencia.</p>
+<h2  id="otros-codigos-smtp-de-gmail-5727-5725-y-4728">Otros códigos SMTP de Gmail: 5.7.27, 5.7.25 y 4.7.28</h2>
+<p>Google agrupa en <a href="https://support.google.com/a/answer/3726730?hl=es">Errores y códigos SMTP de Gmail</a> otros rechazos frecuentes. No todos son DMARC; conviene leer el código exacto del rebote antes de cambiar DNS.</p>
+<h3  id="error-550-5727-spf">Error 550 5.7.27 (SPF)</h3>
+<p>Según Google, <strong>550 5.7.27</strong> significa que el mensaje se bloqueó porque <strong>no pasó la autenticación SPF</strong>. Gmail exige que los remitentes de <strong>distribución masiva</strong> autentiquen con SPF e indica en el rebote si la comprobación SPF con la IP de envío no se aprobó.</p>
+<p>Qué revisar:</p>
+<ol>
+<li><strong>Registro SPF publicado</strong> con el <a href="/spf-checker">verificador SPF</a>: confirma que existe y que incluye la fuente que envía (el verificador lee el registro publicado y cuenta consultas DNS; no lo modifica).</li>
+<li><strong>IP real de envío</strong>: la IP del servidor SMTP debe estar autorizada en SPF; un <code>include</code> mal puesto o un envío desde otra IP provoca fallo.</li>
+<li><strong>Requisitos para remitentes masivos</strong>: Google remite a <a href="https://support.google.com/a/answer/81126?hl=es">Lineamientos para remitentes de correos electrónicos</a> y a la guía <a href="https://support.google.com/a/answer/33786?hl=es">Configura SPF</a>.</li>
+</ol>
+<h3  id="error-550-5725-ptr-dns-inverso">Error 550 5.7.25 (PTR / DNS inverso)</h3>
+<p><strong>550 5.7.25</strong> indica, según Google, que el mensaje se bloqueó porque la <strong>IP de envío no tiene registro PTR</strong> o la entrada de DNS inverso <strong>no referencia</strong> esa IP. Gmail exige PTR en las IP de envío para remitentes de alto volumen.</p>
+<p>Qué revisar:</p>
+<ol>
+<li><strong>PTR del proveedor</strong>: si envías desde un VPS o servidor propio, pide a tu proveedor un PTR coherente con el hostname que anuncia el servidor SMTP.</li>
+<li><strong>Coherencia forward/reverse</strong>: el nombre resuelto desde la IP debe coincidir con el que usa el servidor al conectarse a Gmail (Google detalla requisitos de IP en <a href="https://support.google.com/a/answer/81126?hl=es">Requisitos de direcciones IP de envío</a>).</li>
+<li><strong>Correo transaccional en SaaS</strong>: si envías desde Google Workspace, Microsoft 365 o un ESP, el PTR lo gestiona el proveedor; un 5.7.25 en ese escenario suele requerir soporte del proveedor, no un cambio en tu SPF.</li>
+</ol>
+<p>Este código <strong>no</strong> se diagnostica con el <a href="/dmarc-checker">verificador de DMARC</a>; el <a href="/domain-checker">Chequeo de seguridad del correo</a> tampoco valida PTR. El siguiente paso es revisar la IP que aparece en el rebote con tu proveedor de envío.</p>
+<h3  id="error-421-4728-limite-de-frecuencia">Error 421 4.7.28 (límite de frecuencia)</h3>
+<p>Google documenta <strong>421 4.7.28</strong> cuando detecta una <strong>frecuencia inusual</strong> de correos (desde tu cuenta o desde tu IP) y aplica un <strong>límite temporal</strong> para proteger a sus usuarios del spam. Es un código <strong>temporal</strong> (421), no un rechazo permanente como el 550.</p>
+<p>Qué revisar:</p>
+<ol>
+<li><strong>Volumen y patrones</strong>: campañas nuevas, listas frías o reintentos automáticos pueden disparar el límite.</li>
+<li><strong>Autenticación y listas</strong>: Google remite a los mismos <a href="https://support.google.com/a/answer/81126?hl=es">Lineamientos para remitentes</a>; correo no autenticado o con quejas de spam empeora la situación.</li>
+<li><strong>Esperar y reducir ritmo</strong>: al ser temporal, conviene pausar envíos masivos, corregir la causa y reintentar con volumen gradual.</li>
+</ol>
+<p>Google también documenta <strong>550 5.7.28</strong> por frecuencia inusual desde una IP (bloqueo más estricto). No lo mezclamos con 4.7.28: el prefijo <strong>421</strong> indica límite temporal; <strong>550</strong> indica rechazo.</p>
 <h2  id="por-que-ocurre-el-rechazo-por-politica-dmarc">¿Por qué ocurre el rechazo por política DMARC?</h2>
 <p>Ocurre cuando ni SPF ni DKIM pasan alineados con el dominio que aparece en el <code>From</code> y ese dominio publica una política DMARC que pide rechazar o poner en cuarentena lo que falla. Gmail aplica esa política. Un SPF o DKIM que pasa con otro dominio no basta.</p>
 <p>La <a href="https://www.rfc-editor.org/rfc/rfc7489">RFC 7489</a> define dos condiciones. La primera es la <strong>autenticación</strong>: SPF (<a href="https://www.rfc-editor.org/rfc/rfc7208">RFC 7208</a>) valida la IP contra el dominio del <code>MAIL FROM</code>, y DKIM (<a href="https://www.rfc-editor.org/rfc/rfc6376">RFC 6376</a>) valida una firma hecha por el dominio de la etiqueta <code>d=</code>.</p>
@@ -462,7 +522,9 @@
 <p>Para empezar, revisa tu registro con el <a href="/dmarc-checker">verificador de DMARC</a> y descubre qué servidores declara tu dominio con el <a href="/quien-puede-enviar-correos">diagnosticador de quién puede enviar correos</a>.</p>
 <h2  id="fuentes">Fuentes</h2>
 <ul>
-<li><a href="https://support.google.com/a/answer/3726730?hl=es">Google: Errores y códigos SMTP de Gmail</a>.</li>
+<li><a href="https://support.google.com/a/answer/3726730?hl=es">Google: Errores y códigos SMTP de Gmail</a> (5.7.26, 5.7.27, 5.7.25, 4.7.28 y variantes).</li>
+<li><a href="https://support.google.com/a/answer/81126?hl=es">Google: Lineamientos para remitentes de correo</a>.</li>
+<li><a href="https://support.google.com/a/answer/33786?hl=es">Google: Configura SPF</a>.</li>
 <li><a href="https://support.google.com/a/answer/10032473?hl=es">Google: Implementación recomendada de DMARC</a>.</li>
 <li><a href="https://support.google.com/mail/answer/29436?hl=es">Google: Rastrear un correo mediante su cabecera completa</a>.</li>
 <li><a href="https://www.rfc-editor.org/rfc/rfc7489">RFC 7489: DMARC</a>, secciones 3.1, 6, 6.3 y 6.7.</li>
@@ -485,6 +547,12 @@
                     
                     <h3>¿Bajar mi DMARC a p=none soluciona el error?</h3>
                     <p>Puede detener el rechazo de la variante DMARC, pero no corrige la causa y deja tu dominio expuesto a suplantación. Además, Google documenta otras variantes del 5.7.26 que no dependen de DMARC. Lo correcto es autenticar el sistema que envía y mantener una política gradual.</p>
+                    
+                    <h3>¿Qué significa el 550 5.7.27 de Gmail?</h3>
+                    <p>Según Google, el mensaje se bloqueó porque no pasó la autenticación SPF. Gmail exige que los remitentes de distribución masiva autentiquen con SPF. Revisa tu registro SPF y la IP que envía.</p>
+                    
+                    <h3>¿Qué significa el 550 5.7.25 de Gmail?</h3>
+                    <p>Según Google, el mensaje se bloqueó porque la IP de envío no tiene registro PTR o la entrada DNS inversa no coincide con esa IP. Gmail exige PTR en las IP de envío para remitentes de alto volumen.</p>
                     
                 </section>
                 
@@ -513,6 +581,22 @@
                 
                 <li class="blog-toc-item">
                     <a href="#que-significa-el-error-550-5726-de-gmail">¿Qué significa el error 550 5.7.26 de Gmail?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#otros-codigos-smtp-de-gmail-5727-5725-y-4728">Otros códigos SMTP de Gmail: 5.7.27, 5.7.25 y 4.7.28</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#error-550-5727-spf">Error 550 5.7.27 (SPF)</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#error-550-5725-ptr-dns-inverso">Error 550 5.7.25 (PTR / DNS inverso)</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#error-421-4728-limite-de-frecuencia">Error 421 4.7.28 (límite de frecuencia)</a>
                 </li>
                 
                 <li class="blog-toc-item">

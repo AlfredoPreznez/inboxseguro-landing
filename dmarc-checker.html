@@ -58,6 +58,14 @@
         "@type": "Answer",
         "text": "El proceso seguro recomendado consiste en: 1) Publicar p=none y analizar los reportes RUA durante varias semanas para identificar todos tus remitentes válidos. 2) Configurar SPF y DKIM para cada remitente legítimo. 3) Escalar gradualmente a p=quarantine con porcentajes parciales (ej: pct=25). 4) Finalmente, definir p=reject al 100%."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "Pasé DMARC a reject y dejaron de llegar correos: ¿qué reviso?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Confirma con el verificador que publicaste p=reject y si pct es menor a 100. Revisa reportes RUA para detectar sistemas que envían sin SPF o DKIM alineados. Corrige cada remitente legítimo antes de mantener reject; si necesitas margen, baja temporalmente a quarantine o none mientras alineas. InboxSeguro guía la ruta gradual y muestra analítica semanal desde los reportes DMARC."
+      }
     }
   ]
 }
@@ -387,6 +395,20 @@
                     </ul>
                 </div>
 
+                <div class="border-t border-slate-200 pt-6" id="dmarc-reject-correos-no-llegan">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-3">Pasé DMARC a reject y dejaron de llegar correos: qué revisar</h2>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Con <code class="text-indigo-300 font-mono">p=reject</code>, la <a href="https://www.rfc-editor.org/rfc/rfc7489" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">RFC 7489</a> indica a los receptores que rechacen o descarten mensajes que no superan DMARC (SPF o DKIM alineados con el dominio del <code>From</code>). Si un sistema legítimo envía sin alinear SPF/DKIM, parte de tu correo puede dejar de entregarse cuando subes la política.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">Antes de asumir un fallo del proveedor, revisa en este orden:</p>
+                    <ol class="list-decimal pl-5 space-y-2 text-slate-600 text-sm leading-relaxed mb-4">
+                        <li><strong>Confirma qué publicaste.</strong> Este verificador muestra la política actual (<code>p=none</code>, <code>quarantine</code> o <code>reject</code>) y la etiqueta <code>pct=</code> si existe. La RFC 7489 define <code>pct</code> (0–100, predeterminado 100) para aplicar la política solo a un porcentaje del tráfico; con <code>pct</code> menor a 100, no todo el correo que falla recibe la misma acción.</li>
+                        <li><strong>Identifica remitentes que fallan.</strong> Revisa reportes agregados (RUA): servicios de marketing, CRM, facturación o formularios que envían con tu dominio sin DKIM alineado o fuera del SPF suelen ser la causa.</li>
+                        <li><strong>Corrige autenticación antes de endurecer.</strong> Microsoft recomienda empezar con <code>p=none</code>, monitorear reportes y subir a <code>quarantine</code> o <code>reject</code> cuando los envíos legítimos estén alineados (<a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure" class="text-brand-600 hover:underline" target="_blank" rel="noopener noreferrer">configurar DMARC en Microsoft 365</a>).</li>
+                        <li><strong>Vuelve atrás de forma controlada si hace falta.</strong> Bajar temporalmente a <code>p=quarantine</code> o <code>p=none</code> mientras alineas un servicio reduce rebotes; no sustituye corregir SPF/DKIM.</li>
+                    </ol>
+                    <p class="text-slate-600 text-sm leading-relaxed mb-4">InboxSeguro guía una política DMARC gradual (<code>none</code> → <code>quarantine</code> → <code>reject</code>), muestra analítica semanal de envíos a partir de los reportes DMARC y recibe los RUA en el panel (no en el buzón del cliente). El <a href="/dmarc-para-empresas" class="text-brand-600 hover:underline">guía DMARC para empresas</a> describe la ruta organizativa.</p>
+                    <p class="text-slate-600 text-sm leading-relaxed">Este checker <strong>solo lee</strong> el registro TXT publicado; no lista qué servicios fallan ni baja la política por ti. Para SPF, DKIM y MX juntos, usa el <a href="/domain-checker" data-seo-event="cta_related_tool" class="text-brand-600 hover:underline">Chequeo de seguridad del correo</a>.</p>
+                </div>
+
                 <div class="border-t border-slate-200 pt-6">
                     <h2 class="text-2xl font-bold text-slate-900 mb-3">Errores Frecuentes al Configurar DMARC</h2>
                     <p class="text-slate-600 text-sm leading-relaxed mb-4">
@@ -444,6 +466,12 @@
                             <h3 class="text-slate-900 font-bold text-sm mb-2">¿Cómo paso de p=none a p=reject de manera segura?</h3>
                             <p class="text-slate-600 text-xs leading-relaxed">
                                 El proceso seguro recomendado consiste en: 1) Publicar <code class="text-indigo-300 font-mono">p=none</code> y analizar los reportes RUA durante varias semanas para identificar todos tus remitentes válidos. 2) Configurar SPF y DKIM para cada remitente legítimo. 3) Escalar gradualmente a <code class="text-indigo-300 font-mono">p=quarantine</code> con porcentajes parciales (ej: <code class="text-indigo-300 font-mono">pct=25</code>). 4) Finalmente, definir <code class="text-indigo-300 font-mono">p=reject</code> al 100%.
+                            </p>
+                        </div>
+                        <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl">
+                            <h3 class="text-slate-900 font-bold text-sm mb-2">Pasé DMARC a reject y dejaron de llegar correos: ¿qué reviso?</h3>
+                            <p class="text-slate-600 text-xs leading-relaxed">
+                                Confirma con este verificador que publicaste <code class="text-indigo-300 font-mono">p=reject</code> y si hay <code class="text-indigo-300 font-mono">pct</code> menor a 100. Revisa los reportes RUA para ver qué sistemas envían sin SPF/DKIM alineados. Corrige cada remitente legítimo antes de mantener reject; si necesitas tiempo, baja temporalmente a <code class="text-indigo-300 font-mono">quarantine</code> o <code class="text-indigo-300 font-mono">none</code> mientras alineas. InboxSeguro ayuda con la ruta gradual y analítica semanal desde los reportes DMARC.
                             </p>
                         </div>
                     </div>
