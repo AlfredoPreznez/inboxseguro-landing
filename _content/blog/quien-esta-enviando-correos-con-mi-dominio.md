@@ -90,7 +90,7 @@ Cada sistema necesita una decisión y un responsable: si es legítimo, alinéalo
 ### Si es legítimo: alinéalo
 
 - **DKIM con tu dominio.** Pide al proveedor que firme con tu dominio (`d=ejemplo.cl`). La [RFC 6376](https://www.rfc-editor.org/rfc/rfc6376) define la etiqueta `d=` como el dominio que firma (sección 3.5). Microsoft lo indica como la opción preferida para servicios externos ([Microsoft Learn](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot)).
-- **SPF.** Agrega el `include` o la IP que indique el proveedor, cuidando el límite de 10 consultas.
+- **SPF.** Agrega el `include` o la IP que indique el proveedor, cuidando [el límite de 10 consultas](/spf-checker).
 - **Subdominio.** Si ninguna opción es posible, Microsoft sugiere usar un subdominio para ese servicio con su propio registro DMARC.
 
 ### Si nadie lo reconoce: pregunta
@@ -103,7 +103,7 @@ Tú no puedes impedir que un tercero escriba tu dominio, pero con `p=quarantine`
 
 ## ¿Cómo paso a una política DMARC más estricta sin cortar correo legítimo?
 
-Avanza por etapas: empieza con `p=none` para recibir reportes, alinea todos los sistemas legítimos, pasa a `p=quarantine` y solo al final a `p=reject`. En cada etapa revisa los reportes; endurecer antes de tiempo puede hacer que tus propios correos lleguen a spam o sean rechazados.
+Avanza por etapas: empieza con `p=none` para recibir reportes, alinea todos los sistemas legítimos, pasa a `p=quarantine` y solo al final a `p=reject`. En cada etapa revisa los reportes; endurecer antes de tiempo puede hacer que tus propios correos lleguen a spam o [sean rechazados](/blog/error-550-5-7-26-gmail-dmarc/).
 
 La RFC 7489 contempla este avance con la etiqueta `pct`, que aplica la política solo a un porcentaje de los mensajes (sección 6.3). Google también recomienda introducir DMARC de forma gradual y revisar los reportes antes de endurecer la política ([Google: Implementación recomendada de DMARC](https://support.google.com/a/answer/10032473?hl=es)).
 

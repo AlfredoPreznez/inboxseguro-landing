@@ -55,7 +55,7 @@ Separa lo que ves en tres grupos:
 2. **Herramientas tuyas que fallan.** No es un ataque. Es un servicio legítimo mal configurado, y sus correos corren riesgo de no llegar. Hay que corregirlo antes de bloquear nada.
 3. **Fuentes que nadie reconoce y que fallan.** Es una señal de posible suplantación.
 
-El grupo 2 es el más difícil. Antes de hablar de ataque, pregunta en ventas, marketing, soporte y finanzas qué herramientas usan para enviar correos.
+El grupo 2 es el más difícil. Antes de hablar de ataque, pregunta en ventas, marketing, soporte y finanzas [qué herramientas usan para enviar correos](/blog/quien-esta-enviando-correos-con-mi-dominio/).
 
 ## Paso 4: cruza los avisos con los reportes
 

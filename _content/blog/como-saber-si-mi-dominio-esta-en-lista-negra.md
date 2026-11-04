@@ -34,7 +34,7 @@ Se llaman así porque se publican en el DNS, el mismo sistema que traduce nombre
 - **Listas negras de IP.** Son las más comunes: la RFC 5782 indica que la mayoría de las listas todavía usan direcciones IP (sección 2). Incluyen direcciones desde las que se envió spam u otro tráfico considerado abusivo.
 - **Listas de dominios.** Algunas listas incluyen nombres de dominio en lugar de IP. La RFC 5782 indica que son mucho menos comunes que las listas negras de IP (sección 3).
 
-Por eso, cuando alguien sospecha de una blacklist de dominio, conviene revisar también si la lista negra incluye la IP pública del servidor que envía sus correos.
+Por eso, cuando alguien sospecha de una blacklist de dominio, conviene revisar también si la lista negra incluye [la IP pública del servidor que envía sus correos](/blog/como-saber-si-mi-ip-esta-en-lista-negra/).
 
 ## Cómo consultan las listas los servidores de correo
 

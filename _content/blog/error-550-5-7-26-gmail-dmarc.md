@@ -101,7 +101,7 @@ Identifica el sistema que envió el correo rechazado, configúralo para que firm
 
 1. **Identifica el sistema.** Mira el rebote y la cabecera: ¿salió de tu casilla, del CRM, del facturador, de la tienda?
 2. **Configura DKIM con tu dominio.** Es la opción que Microsoft señala como preferida para servicios externos. El proveedor te dará registros DNS para publicar; la firma debe llevar `d=ejemplo.cl` o un subdominio alineado.
-3. **O alinea SPF.** Configura un `MAIL FROM` personalizado con tu dominio y agrega el `include` del proveedor a tu SPF, sin superar el límite de 10 consultas DNS de la RFC 7208 (sección 4.6.4).
+3. **O alinea SPF.** Configura un `MAIL FROM` personalizado con tu dominio y agrega el `include` del proveedor a [tu SPF](/spf-checker), sin superar el límite de 10 consultas DNS de la RFC 7208 (sección 4.6.4).
 4. **Considera un subdominio.** Si el servicio no permite ninguna de las dos opciones, Microsoft sugiere usar un subdominio para ese servicio, con su propio registro DMARC.
 5. **Prueba de nuevo.** Envía a Gmail y confirma `dmarc=pass` en "Mostrar original".
 
@@ -124,7 +124,7 @@ Según el [soporte de Microsoft para Outlook.com](https://support.microsoft.com/
 
 ## ¿Cómo ayuda InboxSeguro?
 
-El 5.7.26 suele aparecer cuando un sistema envía con tu dominio sin que nadie lo haya configurado. Cuando apuntas el `rua` de tu DMARC a InboxSeguro, los reportes llegan a su panel y la plataforma:
+El 5.7.26 suele aparecer cuando [un sistema envía con tu dominio sin que nadie lo haya configurado](/blog/quien-esta-enviando-correos-con-mi-dominio/). Cuando apuntas el `rua` de tu DMARC a InboxSeguro, los reportes llegan a su panel y la plataforma:
 
 - **Muestra qué sistemas envían correo con tu dominio**, a partir de los reportes DMARC, para encontrar el que no está alineado.
 - **Permite asignar un responsable** a cada sistema.

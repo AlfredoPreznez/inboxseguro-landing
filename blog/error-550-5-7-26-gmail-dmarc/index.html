@@ -432,7 +432,7 @@
 <ol>
 <li><strong>Identifica el sistema.</strong> Mira el rebote y la cabecera: ¿salió de tu casilla, del CRM, del facturador, de la tienda?</li>
 <li><strong>Configura DKIM con tu dominio.</strong> Es la opción que Microsoft señala como preferida para servicios externos. El proveedor te dará registros DNS para publicar; la firma debe llevar <code>d=ejemplo.cl</code> o un subdominio alineado.</li>
-<li><strong>O alinea SPF.</strong> Configura un <code>MAIL FROM</code> personalizado con tu dominio y agrega el <code>include</code> del proveedor a tu SPF, sin superar el límite de 10 consultas DNS de la RFC 7208 (sección 4.6.4).</li>
+<li><strong>O alinea SPF.</strong> Configura un <code>MAIL FROM</code> personalizado con tu dominio y agrega el <code>include</code> del proveedor a <a href="/spf-checker">tu SPF</a>, sin superar el límite de 10 consultas DNS de la RFC 7208 (sección 4.6.4).</li>
 <li><strong>Considera un subdominio.</strong> Si el servicio no permite ninguna de las dos opciones, Microsoft sugiere usar un subdominio para ese servicio, con su propio registro DMARC.</li>
 <li><strong>Prueba de nuevo.</strong> Envía a Gmail y confirma <code>dmarc=pass</code> en &ldquo;Mostrar original&rdquo;.</li>
 </ol>
@@ -452,7 +452,7 @@
 <li><strong><code>5.7.515</code></strong>: <em>Access denied, sending domain [dominio] does not meet the required authentication level.</em> Aplica a remitentes de alto volumen hacia los servicios de correo de consumo de Microsoft. Exige que SPF y DKIM pasen, un registro DMARC publicado y que al menos uno esté alineado con el <code>From</code>.</li>
 </ul>
 <h2  id="como-ayuda-inboxseguro">¿Cómo ayuda InboxSeguro?</h2>
-<p>El 5.7.26 suele aparecer cuando un sistema envía con tu dominio sin que nadie lo haya configurado. Cuando apuntas el <code>rua</code> de tu DMARC a InboxSeguro, los reportes llegan a su panel y la plataforma:</p>
+<p>El 5.7.26 suele aparecer cuando <a href="/blog/quien-esta-enviando-correos-con-mi-dominio/">un sistema envía con tu dominio sin que nadie lo haya configurado</a>. Cuando apuntas el <code>rua</code> de tu DMARC a InboxSeguro, los reportes llegan a su panel y la plataforma:</p>
 <ul>
 <li><strong>Muestra qué sistemas envían correo con tu dominio</strong>, a partir de los reportes DMARC, para encontrar el que no está alineado.</li>
 <li><strong>Permite asignar un responsable</strong> a cada sistema.</li>

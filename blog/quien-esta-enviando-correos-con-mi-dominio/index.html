@@ -446,7 +446,7 @@
 <h3  id="si-es-legitimo-alinealo">Si es legítimo: alinéalo</h3>
 <ul>
 <li><strong>DKIM con tu dominio.</strong> Pide al proveedor que firme con tu dominio (<code>d=ejemplo.cl</code>). La <a href="https://www.rfc-editor.org/rfc/rfc6376">RFC 6376</a> define la etiqueta <code>d=</code> como el dominio que firma (sección 3.5). Microsoft lo indica como la opción preferida para servicios externos (<a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot">Microsoft Learn</a>).</li>
-<li><strong>SPF.</strong> Agrega el <code>include</code> o la IP que indique el proveedor, cuidando el límite de 10 consultas.</li>
+<li><strong>SPF.</strong> Agrega el <code>include</code> o la IP que indique el proveedor, cuidando <a href="/spf-checker">el límite de 10 consultas</a>.</li>
 <li><strong>Subdominio.</strong> Si ninguna opción es posible, Microsoft sugiere usar un subdominio para ese servicio con su propio registro DMARC.</li>
 </ul>
 <h3  id="si-nadie-lo-reconoce-pregunta">Si nadie lo reconoce: pregunta</h3>
@@ -454,7 +454,7 @@
 <h3  id="si-es-suplantacion-deja-que-dmarc-actue">Si es suplantación: deja que DMARC actúe</h3>
 <p>Tú no puedes impedir que un tercero escriba tu dominio, pero con <code>p=quarantine</code> o <code>p=reject</code> pides a los receptores que traten esos correos como sospechosos o los rechacen. Para reconocer las señales, revisa <a href="/blog/como-saber-si-suplantan-tu-dominio/">cómo saber si suplantan tu dominio</a>.</p>
 <h2  id="como-paso-a-una-politica-dmarc-mas-estricta-sin-cortar-correo-legitimo">¿Cómo paso a una política DMARC más estricta sin cortar correo legítimo?</h2>
-<p>Avanza por etapas: empieza con <code>p=none</code> para recibir reportes, alinea todos los sistemas legítimos, pasa a <code>p=quarantine</code> y solo al final a <code>p=reject</code>. En cada etapa revisa los reportes; endurecer antes de tiempo puede hacer que tus propios correos lleguen a spam o sean rechazados.</p>
+<p>Avanza por etapas: empieza con <code>p=none</code> para recibir reportes, alinea todos los sistemas legítimos, pasa a <code>p=quarantine</code> y solo al final a <code>p=reject</code>. En cada etapa revisa los reportes; endurecer antes de tiempo puede hacer que tus propios correos lleguen a spam o <a href="/blog/error-550-5-7-26-gmail-dmarc/">sean rechazados</a>.</p>
 <p>La RFC 7489 contempla este avance con la etiqueta <code>pct</code>, que aplica la política solo a un porcentaje de los mensajes (sección 6.3). Google también recomienda introducir DMARC de forma gradual y revisar los reportes antes de endurecer la política (<a href="https://support.google.com/a/answer/10032473?hl=es">Google: Implementación recomendada de DMARC</a>).</p>
 <blockquote>
 <p><strong>Advertencia:</strong> <code>p=reject</code> pide rechazar todo lo que falle DMARC. Si un sistema legítimo aún no está alineado, sus correos se pueden perder. Si tus correos ya llegan a spam, revisa primero <a href="/blog/mis-correos-llegan-a-spam/">por qué mis correos llegan a spam</a>.</p>
