@@ -23,11 +23,11 @@ Empresas B2B, de e-commerce y SaaS en LATAM que envían correo con su dominio de
 
 Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gratis: prueba de 14 días sin tarjeta; planes en /precios.
 
-- [Verificar lista negra](https://www.inboxseguro.com/verificar-lista-negra): consulta Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer con IP o dominio.
+- [Verificar lista negra](https://www.inboxseguro.com/verificar-lista-negra): consulta seis listas con IP o dominio; incluye FAQ sobre qué es una RBL y cómo saber si estás listado.
 - [SPF Checker](https://www.inboxseguro.com/spf-checker): verifica el registro SPF publicado y cuenta las consultas DNS frente al límite de 10 (RFC 7208); solo lectura, no lo modifica.
-- [DMARC Checker](https://www.inboxseguro.com/dmarc-checker): verifica si el dominio publica none, quarantine o reject.
+- [DMARC Checker](https://www.inboxseguro.com/dmarc-checker): lee la política publicada (none, quarantine, reject) y guía si pasaste a reject y dejó de llegar correo legítimo.
 - [DKIM Checker](https://www.inboxseguro.com/dkim-checker): verifica un selector DKIM o busca selectores habituales en DNS.
-- [MX Lookup](https://www.inboxseguro.com/mx-lookup): consulta hostname y prioridad de los registros MX públicos. El MX indica dónde se recibe el correo, no quién lo envía.
+- [MX Lookup](https://www.inboxseguro.com/mx-lookup): consulta MX públicos (hostname y prioridad) para revisar recepción de correo; no diagnostica envío ni buzones.
 - [Domain Checker](https://www.inboxseguro.com/domain-checker): revisa en una consulta SPF, DKIM, DMARC y MX (foto DNS del momento).
 - [InboxScore](https://www.inboxseguro.com/inboxscore): puntaje 0–100 según SPF, DKIM, DMARC y listas negras, con desglose.
 - [Verificador de remitentes](https://www.inboxseguro.com/quien-puede-enviar-correos): estima qué servicios podrían estar autorizados a enviar con tu dominio.
@@ -40,7 +40,7 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 - [Cómo saber si alguien suplanta tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/): detectar envíos falsos con reportes DMARC y separar servicios legítimos.
 - [Cómo verificar DKIM de tu dominio](https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/): encontrar el selector, revisar el registro DNS y errores frecuentes.
 - [Cómo verificar el registro SPF de tu dominio](https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/): revisar que haya un solo registro, leer ~all y -all, comprobar el resultado en un correo real y errores frecuentes.
-- [Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo](https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/): qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y cómo resolverlo.
+- [Error 550 5.7.26, 5.7.27, 5.7.25 y 4.7.28 de Gmail](https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/): qué dice Google sobre rechazos por DMARC, SPF, PTR y límites de frecuencia, y cómo diagnosticar con cabeceras.
 - [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios que envían con tu dominio sin administración clara.
 - [Phishing con IA: qué frena DMARC y qué no](https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/): qué ataques con el dominio exacto frena DMARC y cuáles no.
 - [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y avance por etapas.
@@ -50,7 +50,7 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 ## Glosario y guías
 
 - [Glosario](https://www.inboxseguro.com/glosario/): definiciones de correo y DNS para empresas.
-- [RBL](https://www.inboxseguro.com/glosario/rbl/): qué es una lista negra de correo y por qué importa.
+- [RBL](https://www.inboxseguro.com/glosario/rbl/): qué es una RBL (lista negra de correo) y enlace al verificador gratuito.
 - [Registro MX](https://www.inboxseguro.com/glosario/registro-mx/): qué indica el MX y cómo verificarlo.
 - [BIMI](https://www.inboxseguro.com/glosario/bimi/): logo de marca en clientes compatibles y requisitos DMARC.
 - [MTA-STS](https://www.inboxseguro.com/glosario/mta-sts/): política para exigir SMTP sobre TLS verificado.

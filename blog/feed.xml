@@ -6,11 +6,11 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
-      <title>Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo</title>
+      <title>Errores Gmail 5.7.26, 5.7.27, 5.7.25 y 4.7.28</title>
       <link>https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/</guid>
       <pubDate>Wed, 04 Nov 2026 00:00:00 -0000</pubDate>
-      <description>Error 550 5.7.26 de Gmail: qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y qué pasos seguir para resolverlo.</description>
+      <description>Qué significan los errores 550 5.7.26, 5.7.27, 5.7.25 y 4.7.28 de Gmail, cómo leer las cabeceras y qué revisar en SPF, DKIM y DMARC.</description>
     </item>
     <item>
       <title>Quién está enviando correos con mi dominio: cómo saberlo</title>
