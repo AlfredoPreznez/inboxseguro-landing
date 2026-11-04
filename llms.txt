@@ -40,9 +40,11 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 - [Cómo saber si alguien suplanta tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/): detectar envíos falsos con reportes DMARC y separar servicios legítimos.
 - [Cómo verificar DKIM de tu dominio](https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/): encontrar el selector, revisar el registro DNS y errores frecuentes.
 - [Cómo verificar el registro SPF de tu dominio](https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/): revisar que haya un solo registro, leer ~all y -all, comprobar el resultado en un correo real y errores frecuentes.
+- [Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo](https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/): qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y cómo resolverlo.
 - [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios que envían con tu dominio sin administración clara.
 - [Phishing con IA: qué frena DMARC y qué no](https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/): qué ataques con el dominio exacto frena DMARC y cuáles no.
 - [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y avance por etapas.
+- [Quién está enviando correos con mi dominio: cómo saberlo](https://www.inboxseguro.com/blog/quien-esta-enviando-correos-con-mi-dominio/): qué muestra el SPF, qué revelan los reportes DMARC y qué hacer con cada sistema, legítimo o desconocido.
 - [SPF: cómo no pasar el límite de 10 consultas](https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/): autorizar servicios en SPF sin superar el límite de la RFC 7208.
 
 ## Glosario y guías

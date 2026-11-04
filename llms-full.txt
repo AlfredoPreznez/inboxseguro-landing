@@ -43,12 +43,15 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 ## Artículos del blog
 
 - [Cómo saber si mi dominio está en lista negra](https://www.inboxseguro.com/blog/como-saber-si-mi-dominio-esta-en-lista-negra/): cómo detectar listados, errores en Gmail y Microsoft 365, y pedir la salida.
+- [Cómo saber si mi IP está en lista negra](https://www.inboxseguro.com/blog/como-saber-si-mi-ip-esta-en-lista-negra/): encontrar la IP que entrega tus correos en el rebote o la cabecera, consultarla en listas negras y qué hacer según quién la administre.
 - [Cómo saber si alguien suplanta tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/): detectar envíos falsos con reportes DMARC y separar servicios legítimos.
 - [Cómo verificar DKIM de tu dominio](https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/): encontrar el selector, revisar el registro DNS y errores frecuentes.
 - [Cómo verificar el registro SPF de tu dominio](https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/): revisar que haya un solo registro, leer ~all y -all, comprobar el resultado en un correo real y errores frecuentes.
+- [Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo](https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/): qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y cómo resolverlo.
 - [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios que envían con tu dominio sin administración clara.
 - [Phishing con IA: qué frena DMARC y qué no](https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/): qué ataques con el dominio exacto frena DMARC y cuáles no.
 - [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y avance por etapas.
+- [Quién está enviando correos con mi dominio: cómo saberlo](https://www.inboxseguro.com/blog/quien-esta-enviando-correos-con-mi-dominio/): qué muestra el SPF, qué revelan los reportes DMARC y qué hacer con cada sistema, legítimo o desconocido.
 - [SPF: cómo no pasar el límite de 10 consultas](https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/): autorizar servicios en SPF sin superar el límite de la RFC 7208.
 
 ## Glosario y guías
@@ -931,6 +934,135 @@ InboxSeguro arma un inventario de los sistemas que envían correo con tu dominio
 - [Microsoft: Configuración de SPF para Microsoft 365](https://learn.microsoft.com/es-es/defender-office-365/email-authentication-spf-configure).
 - [Microsoft: Configuración de DMARC](https://learn.microsoft.com/es-es/defender-office-365/email-authentication-dmarc-configure).
 
+### Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo
+- URL Canónica: https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/
+
+Un cliente no recibió la cotización. En tu bandeja aparece un rebote de Gmail con un texto como este:
+
+```
+550 5.7.26 Unauthenticated email from ejemplo.cl is not accepted due to domain's DMARC policy.
+```
+
+Este error no es un bloqueo arbitrario de Gmail. Es Gmail aplicando la política DMARC que tu propio dominio publicó. Esta guía explica qué significa, cómo diagnosticarlo y cómo resolverlo sin dejar tu dominio expuesto. Si DMARC es nuevo para ti, empieza por [qué es DMARC y cómo activarlo](/blog/que-es-dmarc-como-activarlo/).
+
+> **¿Tienes prisa?** Revisa el registro DMARC de tu dominio con el [verificador de DMARC](/dmarc-checker).
+
+## ¿Qué significa el error 550 5.7.26 de Gmail?
+
+Significa que Gmail rechazó tu correo de forma definitiva porque no estaba autenticado. En su variante más común, el dominio del remitente publica una política DMARC y el mensaje no pasó esa comprobación. Google indica contactar al administrador del dominio si el correo era legítimo.
+
+La [referencia de errores SMTP de Gmail](https://support.google.com/a/answer/3726730?hl=es) documenta tres textos para `550 5.7.26`:
+
+| Variante | Qué dice Google |
+|---|---|
+| DMARC | *Unauthenticated email from domain-name is not accepted due to domain's DMARC policy.* El correo no autenticado no se acepta por la política DMARC del dominio. |
+| Sin autenticación | *This email has been blocked because the sender is unauthenticated.* Gmail exige que todos los remitentes se autentiquen con SPF o DKIM, y ninguno pasó. |
+| SPF con `-all` | El dominio del `MAIL FROM` tiene un SPF con fallo estricto (`-all`) y la IP que envió no pasa la comprobación. |
+
+Google también documenta dos códigos relacionados con el mismo número:
+
+- `451 4.7.26`: no aceptado por la política DMARC, pero fallas temporales de DNS impidieron la autenticación.
+- `421 4.7.26`: envío limitado temporalmente porque el correo no está autenticado.
+
+Esta guía se centra en la variante DMARC, aunque los pasos de diagnóstico sirven para las tres.
+
+## ¿Por qué ocurre el rechazo por política DMARC?
+
+Ocurre cuando ni SPF ni DKIM pasan alineados con el dominio que aparece en el `From` y ese dominio publica una política DMARC que pide rechazar o poner en cuarentena lo que falla. Gmail aplica esa política. Un SPF o DKIM que pasa con otro dominio no basta.
+
+La [RFC 7489](https://www.rfc-editor.org/rfc/rfc7489) define dos condiciones. La primera es la **autenticación**: SPF ([RFC 7208](https://www.rfc-editor.org/rfc/rfc7208)) valida la IP contra el dominio del `MAIL FROM`, y DKIM ([RFC 6376](https://www.rfc-editor.org/rfc/rfc6376)) valida una firma hecha por el dominio de la etiqueta `d=`.
+
+La segunda es la **alineación** (sección 3.1): el dominio que pasó SPF o DKIM debe coincidir con el dominio del `From`. En modo relajado, el predeterminado, basta con que compartan el dominio organizacional; en modo estricto deben ser idénticos (etiquetas `aspf` y `adkim`, sección 6.3).
+
+Si ninguno de los dos pasa alineado, el mensaje falla DMARC. La etiqueta `p` indica qué pide el dueño del dominio: `none`, `quarantine` o `reject` (sección 6.3). La RFC deja la decisión final al receptor (secciones 6 y 6.7), y en este caso Gmail rechaza el mensaje.
+
+## ¿Cómo diagnosticar el error con las cabeceras?
+
+Envía un correo de prueba desde el mismo sistema a una cuenta de Gmail, abre "Mostrar original" y busca la cabecera Authentication-Results. Ahí verás el resultado de SPF, DKIM y DMARC y qué dominio autenticó cada uno. Si ningún dominio coincide con el del From, encontraste la causa.
+
+Para ver la cabecera completa, Google indica en [su ayuda](https://support.google.com/mail/answer/29436?hl=es): abre el correo en Gmail desde un navegador, haz clic en **Más** junto a Responder y elige **Mostrar original**.
+
+La cabecera `Authentication-Results`, definida en la [RFC 8601](https://www.rfc-editor.org/rfc/rfc8601), se ve parecida a esto:
+
+```
+Authentication-Results: mx.google.com;
+  dkim=pass header.i=@plataforma.example.com;
+  spf=pass smtp.mailfrom=rebotes@plataforma.example.com;
+  dmarc=fail (p=REJECT) header.from=ejemplo.cl
+```
+
+Qué mirar:
+
+1. **`header.from`**: el dominio que DMARC evalúa.
+2. **`smtp.mailfrom`**: el dominio que evaluó SPF. ¿Coincide con el del `From`?
+3. **`header.i` o `header.d`**: el dominio que firmó con DKIM. ¿Coincide con el del `From`?
+4. **`dmarc=`**: el resultado final y la política publicada.
+
+En el ejemplo, SPF y DKIM **pasan**, pero con `plataforma.example.com`, no con `ejemplo.cl`. Por eso DMARC falla. Microsoft describe este caso: el dominio del `MAIL FROM` difiere del dominio del `From` y ni SPF ni DKIM se alinean con él ([Microsoft Learn](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot)).
+
+## ¿Cuáles son las causas frecuentes?
+
+Las causas documentadas son tres: un servicio externo que envía con tu dominio sin firmar DKIM con él ni estar en tu SPF, la falta de alineación entre el dominio del sobre y el del From, y el reenvío de correos, que rompe SPF y a veces DKIM.
+
+Microsoft enumera estas causas en su [guía para resolver problemas de autenticación](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot):
+
+- **Servicios externos sin configurar.** Herramientas que envían en nombre de tu dominio y no están en tu SPF o no firman DKIM con tu dominio.
+- **Falta de alineación.** El dominio del `MAIL FROM` es distinto del dominio del `From` y ninguno de los dos mecanismos queda alineado.
+- **Reenvío.** El reenvío rompe SPF y, si se modifica el cuerpo, DKIM también falla.
+
+La propia RFC 7489 advierte que los flujos de correo pueden ser complicados, por ejemplo por el reenvío, y que por eso el receptor puede apartarse de la política publicada (sección 6).
+
+## ¿Cómo resolver el error 550 5.7.26?
+
+Identifica el sistema que envió el correo rechazado, configúralo para que firme DKIM con tu dominio o para que use un MAIL FROM de tu dominio incluido en tu SPF, y verifica con una prueba que DMARC pase. Si tu política es estricta y faltan sistemas, ajústala de forma gradual mientras corriges.
+
+1. **Identifica el sistema.** Mira el rebote y la cabecera: ¿salió de tu casilla, del CRM, del facturador, de la tienda?
+2. **Configura DKIM con tu dominio.** Es la opción que Microsoft señala como preferida para servicios externos. El proveedor te dará registros DNS para publicar; la firma debe llevar `d=ejemplo.cl` o un subdominio alineado.
+3. **O alinea SPF.** Configura un `MAIL FROM` personalizado con tu dominio y agrega el `include` del proveedor a tu SPF, sin superar el límite de 10 consultas DNS de la RFC 7208 (sección 4.6.4).
+4. **Considera un subdominio.** Si el servicio no permite ninguna de las dos opciones, Microsoft sugiere usar un subdominio para ese servicio, con su propio registro DMARC.
+5. **Prueba de nuevo.** Envía a Gmail y confirma `dmarc=pass` en "Mostrar original".
+
+> **Advertencia:** bajar la política a `p=none` puede detener el rechazo de la variante DMARC, pero deja tu dominio expuesto a suplantación. Si lo haces, que sea temporal mientras corriges. Google recomienda implementar DMARC de forma gradual y revisar los reportes ([Google](https://support.google.com/a/answer/10032473?hl=es)).
+
+Si tus correos no rebotan pero llegan a spam, revisa [por qué mis correos llegan a spam](/blog/mis-correos-llegan-a-spam/).
+
+## ¿Qué códigos equivalentes usa Microsoft?
+
+Microsoft usa 5.7.509 cuando el dominio del From falla DMARC y su política es reject, 5.7.515 en Outlook.com cuando un remitente de alto volumen no cumple los requisitos de autenticación, y 5.7.23 cuando el rechazo se debe a una violación de SPF. Las causas y soluciones se parecen a las del 5.7.26.
+
+Según la [lista de NDR de Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/non-delivery-reports-in-exchange-online/non-delivery-reports-in-exchange-online):
+
+- **`5.7.509`**: *Access denied, sending domain [dominio] does not pass DMARC verification and has a DMARC policy of reject.* El dominio del `5322.From` no pasa DMARC.
+- **`5.7.23`**: el mensaje se rechazó por una violación de SPF; el sistema de destino valida con SPF y hay un problema en tu configuración.
+
+Según el [soporte de Microsoft para Outlook.com](https://support.microsoft.com/en-us/outlook/fix-ndr-error-550-5-7-515-in-outlook-com):
+
+- **`5.7.515`**: *Access denied, sending domain [dominio] does not meet the required authentication level.* Aplica a remitentes de alto volumen hacia los servicios de correo de consumo de Microsoft. Exige que SPF y DKIM pasen, un registro DMARC publicado y que al menos uno esté alineado con el `From`.
+
+## ¿Cómo ayuda InboxSeguro?
+
+El 5.7.26 suele aparecer cuando un sistema envía con tu dominio sin que nadie lo haya configurado. Cuando apuntas el `rua` de tu DMARC a InboxSeguro, los reportes llegan a su panel y la plataforma:
+
+- **Muestra qué sistemas envían correo con tu dominio**, a partir de los reportes DMARC, para encontrar el que no está alineado.
+- **Permite asignar un responsable** a cada sistema.
+- **Guía un DMARC gradual** (`none` → `quarantine` → `reject`) sin cortar correo legítimo.
+- **Detecta posibles intentos de suplantación** cuando SPF y DKIM fallan, tras descartar reenvío.
+
+Para empezar, revisa tu registro con el [verificador de DMARC](/dmarc-checker) y descubre qué servidores declara tu dominio con el [diagnosticador de quién puede enviar correos](/quien-puede-enviar-correos).
+
+## Fuentes
+
+- [Google: Errores y códigos SMTP de Gmail](https://support.google.com/a/answer/3726730?hl=es).
+- [Google: Implementación recomendada de DMARC](https://support.google.com/a/answer/10032473?hl=es).
+- [Google: Rastrear un correo mediante su cabecera completa](https://support.google.com/mail/answer/29436?hl=es).
+- [RFC 7489: DMARC](https://www.rfc-editor.org/rfc/rfc7489), secciones 3.1, 6, 6.3 y 6.7.
+- [RFC 7208: SPF](https://www.rfc-editor.org/rfc/rfc7208), sección 4.6.4.
+- [RFC 6376: DKIM Signatures](https://www.rfc-editor.org/rfc/rfc6376), sección 3.5.
+- [RFC 8601: Message Header Field for Indicating Message Authentication Status](https://www.rfc-editor.org/rfc/rfc8601).
+- [Microsoft Learn: Troubleshoot email authentication in Microsoft 365](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot).
+- [Microsoft Learn: Non-delivery reports in Exchange Online](https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/non-delivery-reports-in-exchange-online/non-delivery-reports-in-exchange-online).
+- [Microsoft Support: Fix NDR error 550 5.7.515 in Outlook.com](https://support.microsoft.com/en-us/outlook/fix-ndr-error-550-5-7-515-in-outlook-com).
+
 ### Mis correos llegan a spam: la causa oculta
 - URL Canónica: https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/
 
@@ -1161,6 +1293,122 @@ Si tus correos ya llegan a spam, revisa primero [por qué tus correos llegan a s
 ## Cómo ayuda InboxSeguro
 
 InboxSeguro te muestra qué sistemas envían correo con tu dominio, te permite asignar un responsable a cada uno y te guía para activar la protección contra suplantación sin cortar correos legítimos.
+
+### Quién está enviando correos con mi dominio: cómo saberlo
+- URL Canónica: https://www.inboxseguro.com/blog/quien-esta-enviando-correos-con-mi-dominio/
+
+Tu empresa envía correos desde muchos lugares: la casilla de cada persona, el CRM, el sistema de facturación, la tienda en línea, la herramienta de boletines. Un día alguien pregunta: ¿quién está enviando correos con nuestro dominio? ¿Son solo nuestros sistemas o también alguien que nos suplanta?
+
+Esta guía explica cómo responder esa pregunta con datos y no con suposiciones. Si sospechas un caso concreto de suplantación, lee también [cómo saber si suplantan tu dominio](/blog/como-saber-si-suplantan-tu-dominio/).
+
+> **¿Tienes prisa?** Revisa en segundos qué servidores declara tu dominio con el [diagnosticador de quién puede enviar correos](/quien-puede-enviar-correos).
+
+## ¿Por qué es difícil saber quién envía con mi dominio?
+
+Cualquier servidor puede escribir tu dominio en el remitente de un correo; el protocolo no lo impide. Por eso existen SPF, DKIM y DMARC: permiten que el receptor compruebe si el correo viene de una fuente autorizada. Saber quién envía exige mirar lo que reciben los demás, no solo tu configuración.
+
+El estándar del correo, la [RFC 5321](https://www.rfc-editor.org/rfc/rfc5321), no exige que el servidor que envía demuestre que es dueño del dominio del remitente. En una empresa típica, además, cada área contrata sus herramientas y no siempre avisa a quien administra el DNS. El resultado es un inventario incompleto: TI conoce algunos sistemas, pero no todos.
+
+## ¿Qué muestra el SPF publicado y qué no?
+
+El SPF muestra los servidores que tú declaraste como autorizados para enviar con tu dominio. No muestra quién envía en realidad: un servicio que no incluiste no aparece, y un suplantador tampoco. Es el punto de partida del inventario, no el inventario completo.
+
+Según la [RFC 7208](https://www.rfc-editor.org/rfc/rfc7208), el SPF es un registro TXT en el DNS que lista las IP y los mecanismos (`include`, `a`, `mx`, entre otros) autorizados para el dominio usado en el remitente del sobre, el `MAIL FROM`. Un ejemplo:
+
+```
+ejemplo.cl. TXT "v=spf1 include:_spf.google.com include:servicio.example.com -all"
+```
+
+Al leerlo, puedes deducir qué proveedores declaraste. Tres cosas a revisar:
+
+- **Si existe.** Sin SPF, el receptor no tiene lista de autorizados.
+- **El final.** `-all` pide fallar a lo no listado; `+all` autoriza a cualquier servidor, lo que anula el registro.
+- **Las consultas DNS.** La RFC 7208 limita a 10 los mecanismos y modificadores que generan consultas DNS (sección 4.6.4). Si se superan, el resultado es `permerror`. Más detalle en [el límite de 10 consultas DNS del SPF](/blog/spf-limite-10-consultas-dns/).
+
+El SPF además se evalúa sobre el dominio del `MAIL FROM`, que muchas plataformas reemplazan por uno propio. Por eso un servicio puede enviar con tu dominio en el `From` visible sin aparecer en tu SPF.
+
+## ¿Cómo muestran los reportes DMARC quién envía realmente?
+
+Los reportes agregados DMARC los envían los receptores que aplican DMARC a la dirección que indicas en la etiqueta `rua`. Resumen, por IP de origen, cuántos correos con tu dominio en el `From` recibieron y si pasaron SPF y DKIM. Así aparecen todos los que envían, declarados o no.
+
+La [RFC 7489](https://www.rfc-editor.org/rfc/rfc7489) define DMARC. Para recibir reportes basta con publicar un registro como este:
+
+```
+_dmarc.ejemplo.cl. TXT "v=DMARC1; p=none; rua=mailto:dmarc@ejemplo.cl"
+```
+
+- `p=none` pide no cambiar el trato de los correos que fallen; solo informar (sección 6.3).
+- `rua` indica dónde enviar los reportes agregados (sección 6.3).
+
+Según la sección 7.2 de la RFC, el reporte agregado es un archivo XML que, para un período, agrupa los mensajes por IP de origen e informa la política aplicada, el resultado DMARC y los resultados y dominios de SPF y DKIM. Si la dirección de `rua` está en otro dominio, ese dominio debe autorizarlo con un registro DNS (sección 7.1).
+
+Un correo pasa DMARC si SPF o DKIM pasan **y** el dominio autenticado está alineado con el dominio del `From` (sección 3.1). Microsoft lo resume así: un mensaje pasa DMARC si pasa una o ambas comprobaciones, y falla si fallan las dos ([Microsoft Learn](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure)).
+
+## ¿Cómo distinguir servicios legítimos de desconocidos?
+
+Agrupa las IP del reporte por la organización que las administra y por el dominio DKIM que firmó. Lo que reconoces y pasa alineado es legítimo y está bien configurado; lo que reconoces pero falla es legítimo y está mal configurado; lo que no reconoces hay que investigarlo antes de bloquearlo.
+
+Una forma práctica de clasificar cada fila:
+
+| Lo que ves en el reporte | Lo más probable | Qué revisar |
+|---|---|---|
+| SPF o DKIM pasan alineados | Sistema legítimo bien configurado | Nada urgente; asignar responsable |
+| Pasa SPF o DKIM, pero con otro dominio | Plataforma que envía con su propio dominio | Configurar DKIM o `MAIL FROM` con tu dominio |
+| Fallan ambos, IP de un proveedor que usas | Sistema legítimo sin configurar | Preguntar al área que lo contrató |
+| Fallan ambos, IP de un reenviador | Reenvío | Revisar DKIM; el reenvío rompe SPF |
+| Fallan ambos, IP desconocida | Posible suplantación | Investigar antes de endurecer la política |
+
+Sobre el reenvío, Microsoft documenta que los mensajes reenviados suelen fallar DMARC porque el reenvío rompe SPF, y que si además el cuerpo se modifica, DKIM también falla ([Microsoft Learn](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot)). No confundas ese caso con una suplantación.
+
+## ¿Qué hago con cada sistema que aparece?
+
+Cada sistema necesita una decisión y un responsable: si es legítimo, alinéalo con DKIM o SPF; si es legítimo pero nadie lo usa, dalo de baja; si no lo reconoce nadie, pregunta internamente y, descartado el reenvío, trátalo como posible suplantación que DMARC bloqueará.
+
+### Si es legítimo: alinéalo
+
+- **DKIM con tu dominio.** Pide al proveedor que firme con tu dominio (`d=ejemplo.cl`). La [RFC 6376](https://www.rfc-editor.org/rfc/rfc6376) define la etiqueta `d=` como el dominio que firma (sección 3.5). Microsoft lo indica como la opción preferida para servicios externos ([Microsoft Learn](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot)).
+- **SPF.** Agrega el `include` o la IP que indique el proveedor, cuidando el límite de 10 consultas.
+- **Subdominio.** Si ninguna opción es posible, Microsoft sugiere usar un subdominio para ese servicio con su propio registro DMARC.
+
+### Si nadie lo reconoce: pregunta
+
+Antes de bloquear, consulta a las áreas (ventas, finanzas, marketing, soporte). Muchas veces el "desconocido" es una herramienta contratada sin avisar a TI.
+
+### Si es suplantación: deja que DMARC actúe
+
+Tú no puedes impedir que un tercero escriba tu dominio, pero con `p=quarantine` o `p=reject` pides a los receptores que traten esos correos como sospechosos o los rechacen. Para reconocer las señales, revisa [cómo saber si suplantan tu dominio](/blog/como-saber-si-suplantan-tu-dominio/).
+
+## ¿Cómo paso a una política DMARC más estricta sin cortar correo legítimo?
+
+Avanza por etapas: empieza con `p=none` para recibir reportes, alinea todos los sistemas legítimos, pasa a `p=quarantine` y solo al final a `p=reject`. En cada etapa revisa los reportes; endurecer antes de tiempo puede hacer que tus propios correos lleguen a spam o sean rechazados.
+
+La RFC 7489 contempla este avance con la etiqueta `pct`, que aplica la política solo a un porcentaje de los mensajes (sección 6.3). Google también recomienda introducir DMARC de forma gradual y revisar los reportes antes de endurecer la política ([Google: Implementación recomendada de DMARC](https://support.google.com/a/answer/10032473?hl=es)).
+
+> **Advertencia:** `p=reject` pide rechazar todo lo que falle DMARC. Si un sistema legítimo aún no está alineado, sus correos se pueden perder. Si tus correos ya llegan a spam, revisa primero [por qué mis correos llegan a spam](/blog/mis-correos-llegan-a-spam/).
+
+Para el paso a paso completo, lee [qué es DMARC y cómo activarlo](/blog/que-es-dmarc-como-activarlo/).
+
+## ¿Cómo ayuda InboxSeguro?
+
+Los reportes agregados son archivos XML difíciles de leer a mano. Cuando apuntas tu `rua` a InboxSeguro, los reportes llegan a su panel y la plataforma:
+
+- **Muestra qué sistemas envían correo con tu dominio**, como un inventario construido desde los reportes DMARC.
+- **Permite asignar un responsable** a cada sistema.
+- **Detecta posibles intentos de suplantación** cuando SPF y DKIM fallan, tras descartar reenvío.
+- **Entrega analítica semanal** de envíos por sistema.
+- **Guía un DMARC gradual** (`none` → `quarantine` → `reject`) sin cortar correo legítimo.
+
+Como primer paso, el [diagnosticador gratuito de quién puede enviar correos](/quien-puede-enviar-correos) lee el SPF publicado de tu dominio, te avisa si falta o si usa `+all` y cuenta las consultas DNS contra el límite de 10.
+
+## Fuentes
+
+- [RFC 7489: Domain-based Message Authentication, Reporting, and Conformance (DMARC)](https://www.rfc-editor.org/rfc/rfc7489), secciones 3.1, 6.3, 7.1 y 7.2.
+- [RFC 7208: Sender Policy Framework (SPF)](https://www.rfc-editor.org/rfc/rfc7208), sección 4.6.4.
+- [RFC 6376: DomainKeys Identified Mail (DKIM) Signatures](https://www.rfc-editor.org/rfc/rfc6376), sección 3.5.
+- [RFC 5321: Simple Mail Transfer Protocol](https://www.rfc-editor.org/rfc/rfc5321).
+- [Microsoft Learn: Set up DMARC to validate the From address domain](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-dmarc-configure).
+- [Microsoft Learn: Troubleshoot email authentication in Microsoft 365](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot).
+- [Google: Implementación recomendada de DMARC](https://support.google.com/a/answer/10032473?hl=es).
 
 ### SPF: cómo no pasar el límite de 10 consultas
 - URL Canónica: https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/
