@@ -231,7 +231,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/blog/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -266,6 +266,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/</loc>
+    <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>monthly</changefreq>
@@ -280,6 +286,12 @@
   <url>
     <loc>https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/</loc>
     <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.inboxseguro.com/blog/quien-esta-enviando-correos-con-mi-dominio/</loc>
+    <lastmod>2026-11-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo…</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Error 550 5.7.26 de Gmail: qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y qué pasos seguir para resolverlo.">
+    <link rel="canonical" href="https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/">
+    <meta property="og:title" content="Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo…">
+    <meta property="og:description" content="Error 550 5.7.26 de Gmail: qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y qué pasos seguir para resolverlo.">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/error-550-5-7-26-gmail-dmarc.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo…">
+    <meta name="twitter:description" content="Error 550 5.7.26 de Gmail: qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y qué pasos seguir para resolverlo.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/error-550-5-7-26-gmail-dmarc.png">
+    <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/fontawesome/icons.min.css?v=1.0.0">
+    <link rel="stylesheet" href="/styles.css?v=1.0.8">
+    <link rel="stylesheet" href="/blog.css?v=1.2.3">
+    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo",
+  "description": "Error 550 5.7.26 de Gmail: qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y qué pasos seguir para resolverlo.",
+  "datePublished": "2026-11-04",
+  "dateModified": "2026-11-04",
+  "author": {
+    "@type": "Organization",
+    "name": "InboxSeguro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InboxSeguro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.inboxseguro.com/logo.png"
+    }
+  },
+  "image": [
+    "https://www.inboxseguro.com/blog/covers/error-550-5-7-26-gmail-dmarc.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/"
+  },
+  "url": "https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.inboxseguro.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://www.inboxseguro.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo",
+      "item": "https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿El error 550 5.7.26 es culpa de Gmail?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Gmail aplica la política que el dueño del dominio publicó en su registro DMARC. Según la RFC 7489, el receptor puede aplicar esa política a los mensajes que fallan. La solución está en la autenticación del dominio que aparece en el From."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué diferencia hay entre 550 5.7.26 y 451 4.7.26?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Según Google, 550 es un rechazo definitivo. El 451 4.7.26 indica que el correo no se aceptó por la política DMARC, pero que fallas temporales de DNS impidieron la autenticación. Y el 421 4.7.26 es una limitación temporal de envío por correo no autenticado."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Bajar mi DMARC a p=none soluciona el error?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Puede detener el rechazo de la variante DMARC, pero no corrige la causa y deja tu dominio expuesto a suplantación. Además, Google documenta otras variantes del 5.7.26 que no dependen de DMARC. Lo correcto es autenticar el sistema que envía y mantener una política gradual."
+      }
+    }
+  ]
+}
+</script>
+
+
+</head>
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors whitespace-nowrap">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas gratis -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas gratis</span>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Chequeo de seguridad</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Verificador de remitentes</span>
+                                    </a>
+                                    <a href="/verificar-lista-negra" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador de listas negras</span>
+                                    </a>
+                                    <a href="/inboxscore" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>InboxScore</span>
+                                    </a>
+                                    <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Todas las herramientas</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Aprender -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Aprender</span>
+                                <div class="space-y-1">
+                                    <a href="/guias" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guías de configuración</span>
+                                    </a>
+                                    <a href="/glosario/" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Glosario DNS</span>
+                                    </a>
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC para empresas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min"
+                        target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
+                        onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                <!-- Recursos: Aprender (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Aprender</span>
+                    <a href="/guias" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guías de configuración</a>
+                    <a href="/glosario/" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Glosario DNS</a>
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guía DMARC para empresas</a>
+                </div>
+
+                <!-- Recursos: Herramientas gratis (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-brand-600 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas gratis</span>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad</a>
+                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Verificador de remitentes</a>
+                    <a href="/verificar-lista-negra" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador de listas negras</a>
+                    <a href="/inboxscore" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">InboxScore</a>
+                    <a href="/herramientas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" onclick="closeMobileMenu(); if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">DMARC</span>
+            <h1 class="blog-article-h1">Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo</h1>
+            <p class="blog-meta blog-meta--on-dark">
+                <time datetime="2026-11-04" data-updated="2026-11-04">
+                    4 de noviembre de 2026
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>8 min de lectura</span>
+                
+            </p>
+            
+            <div class="blog-listen" data-nosnippet>
+                <p class="blog-listen-label" id="blog-listen-label-error-550-5-7-26-gmail-dmarc">
+                    Escuchar este artículo · 9:09
+                </p>
+                <audio
+                    class="blog-listen-audio"
+                    controls
+                    preload="none"
+                    controlslist="nodownload"
+                    aria-labelledby="blog-listen-label-error-550-5-7-26-gmail-dmarc"
+                >
+                    <source src="/blog/error-550-5-7-26-gmail-dmarc/audio.mp3" type="audio/mpeg">
+                    Tu navegador no admite audio HTML5.
+                </audio>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="blog-article-body blog-article-body--with-toc">
+        
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-significa-el-error-550-5726-de-gmail">¿Qué significa el error 550 5.7.26 de Gmail?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#por-que-ocurre-el-rechazo-por-politica-dmarc">¿Por qué ocurre el rechazo por política DMARC?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-diagnosticar-el-error-con-las-cabeceras">¿Cómo diagnosticar el error con las cabeceras?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#cuales-son-las-causas-frecuentes">¿Cuáles son las causas frecuentes?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-resolver-el-error-550-5726">¿Cómo resolver el error 550 5.7.26?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-codigos-equivalentes-usa-microsoft">¿Qué códigos equivalentes usa Microsoft?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">¿Cómo ayuda InboxSeguro?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </details>
+        
+
+        <div class="blog-article-main">
+            <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> El error 550 5.7.26 de Gmail significa que tu correo fue rechazado por falta de autenticación. En la variante de DMARC, el dominio del From tiene una política DMARC y el mensaje no pasó SPF ni DKIM alineados con ese dominio. Para resolverlo, identifica qué sistema envió el correo, configura DKIM con tu dominio o alinea SPF, y revisa la política DMARC antes de endurecerla.</p>
+                </div>
+                
+                <p>Un cliente no recibió la cotización. En tu bandeja aparece un rebote de Gmail con un texto como este:</p>
+<pre><code>550 5.7.26 Unauthenticated email from ejemplo.cl is not accepted due to domain's DMARC policy.
+</code></pre>
+<p>Este error no es un bloqueo arbitrario de Gmail. Es Gmail aplicando la política DMARC que tu propio dominio publicó. Esta guía explica qué significa, cómo diagnosticarlo y cómo resolverlo sin dejar tu dominio expuesto. Si DMARC es nuevo para ti, empieza por <a href="/blog/que-es-dmarc-como-activarlo/">qué es DMARC y cómo activarlo</a>.</p>
+<blockquote>
+<p><strong>¿Tienes prisa?</strong> Revisa el registro DMARC de tu dominio con el <a href="/dmarc-checker">verificador de DMARC</a>.</p>
+</blockquote>
+<h2  id="que-significa-el-error-550-5726-de-gmail">¿Qué significa el error 550 5.7.26 de Gmail?</h2>
+<p>Significa que Gmail rechazó tu correo de forma definitiva porque no estaba autenticado. En su variante más común, el dominio del remitente publica una política DMARC y el mensaje no pasó esa comprobación. Google indica contactar al administrador del dominio si el correo era legítimo.</p>
+<p>La <a href="https://support.google.com/a/answer/3726730?hl=es">referencia de errores SMTP de Gmail</a> documenta tres textos para <code>550 5.7.26</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Variante</th>
+<th>Qué dice Google</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DMARC</td>
+<td><em>Unauthenticated email from domain-name is not accepted due to domain&rsquo;s DMARC policy.</em> El correo no autenticado no se acepta por la política DMARC del dominio.</td>
+</tr>
+<tr>
+<td>Sin autenticación</td>
+<td><em>This email has been blocked because the sender is unauthenticated.</em> Gmail exige que todos los remitentes se autentiquen con SPF o DKIM, y ninguno pasó.</td>
+</tr>
+<tr>
+<td>SPF con <code>-all</code></td>
+<td>El dominio del <code>MAIL FROM</code> tiene un SPF con fallo estricto (<code>-all</code>) y la IP que envió no pasa la comprobación.</td>
+</tr>
+</tbody>
+</table>
+<p>Google también documenta dos códigos relacionados con el mismo número:</p>
+<ul>
+<li><code>451 4.7.26</code>: no aceptado por la política DMARC, pero fallas temporales de DNS impidieron la autenticación.</li>
+<li><code>421 4.7.26</code>: envío limitado temporalmente porque el correo no está autenticado.</li>
+</ul>
+<p>Esta guía se centra en la variante DMARC, aunque los pasos de diagnóstico sirven para las tres.</p>
+<h2  id="por-que-ocurre-el-rechazo-por-politica-dmarc">¿Por qué ocurre el rechazo por política DMARC?</h2>
+<p>Ocurre cuando ni SPF ni DKIM pasan alineados con el dominio que aparece en el <code>From</code> y ese dominio publica una política DMARC que pide rechazar o poner en cuarentena lo que falla. Gmail aplica esa política. Un SPF o DKIM que pasa con otro dominio no basta.</p>
+<p>La <a href="https://www.rfc-editor.org/rfc/rfc7489">RFC 7489</a> define dos condiciones. La primera es la <strong>autenticación</strong>: SPF (<a href="https://www.rfc-editor.org/rfc/rfc7208">RFC 7208</a>) valida la IP contra el dominio del <code>MAIL FROM</code>, y DKIM (<a href="https://www.rfc-editor.org/rfc/rfc6376">RFC 6376</a>) valida una firma hecha por el dominio de la etiqueta <code>d=</code>.</p>
+<p>La segunda es la <strong>alineación</strong> (sección 3.1): el dominio que pasó SPF o DKIM debe coincidir con el dominio del <code>From</code>. En modo relajado, el predeterminado, basta con que compartan el dominio organizacional; en modo estricto deben ser idénticos (etiquetas <code>aspf</code> y <code>adkim</code>, sección 6.3).</p>
+<p>Si ninguno de los dos pasa alineado, el mensaje falla DMARC. La etiqueta <code>p</code> indica qué pide el dueño del dominio: <code>none</code>, <code>quarantine</code> o <code>reject</code> (sección 6.3). La RFC deja la decisión final al receptor (secciones 6 y 6.7), y en este caso Gmail rechaza el mensaje.</p>
+<h2  id="como-diagnosticar-el-error-con-las-cabeceras">¿Cómo diagnosticar el error con las cabeceras?</h2>
+<p>Envía un correo de prueba desde el mismo sistema a una cuenta de Gmail, abre &ldquo;Mostrar original&rdquo; y busca la cabecera Authentication-Results. Ahí verás el resultado de SPF, DKIM y DMARC y qué dominio autenticó cada uno. Si ningún dominio coincide con el del From, encontraste la causa.</p>
+<p>Para ver la cabecera completa, Google indica en <a href="https://support.google.com/mail/answer/29436?hl=es">su ayuda</a>: abre el correo en Gmail desde un navegador, haz clic en <strong>Más</strong> junto a Responder y elige <strong>Mostrar original</strong>.</p>
+<p>La cabecera <code>Authentication-Results</code>, definida en la <a href="https://www.rfc-editor.org/rfc/rfc8601">RFC 8601</a>, se ve parecida a esto:</p>
+<pre><code>Authentication-Results: mx.google.com;
+  dkim=pass header.i=@plataforma.example.com;
+  spf=pass smtp.mailfrom=rebotes@plataforma.example.com;
+  dmarc=fail (p=REJECT) header.from=ejemplo.cl
+</code></pre>
+<p>Qué mirar:</p>
+<ol>
+<li><strong><code>header.from</code></strong>: el dominio que DMARC evalúa.</li>
+<li><strong><code>smtp.mailfrom</code></strong>: el dominio que evaluó SPF. ¿Coincide con el del <code>From</code>?</li>
+<li><strong><code>header.i</code> o <code>header.d</code></strong>: el dominio que firmó con DKIM. ¿Coincide con el del <code>From</code>?</li>
+<li><strong><code>dmarc=</code></strong>: el resultado final y la política publicada.</li>
+</ol>
+<p>En el ejemplo, SPF y DKIM <strong>pasan</strong>, pero con <code>plataforma.example.com</code>, no con <code>ejemplo.cl</code>. Por eso DMARC falla. Microsoft describe este caso: el dominio del <code>MAIL FROM</code> difiere del dominio del <code>From</code> y ni SPF ni DKIM se alinean con él (<a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot">Microsoft Learn</a>).</p>
+<h2  id="cuales-son-las-causas-frecuentes">¿Cuáles son las causas frecuentes?</h2>
+<p>Las causas documentadas son tres: un servicio externo que envía con tu dominio sin firmar DKIM con él ni estar en tu SPF, la falta de alineación entre el dominio del sobre y el del From, y el reenvío de correos, que rompe SPF y a veces DKIM.</p>
+<p>Microsoft enumera estas causas en su <a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot">guía para resolver problemas de autenticación</a>:</p>
+<ul>
+<li><strong>Servicios externos sin configurar.</strong> Herramientas que envían en nombre de tu dominio y no están en tu SPF o no firman DKIM con tu dominio.</li>
+<li><strong>Falta de alineación.</strong> El dominio del <code>MAIL FROM</code> es distinto del dominio del <code>From</code> y ninguno de los dos mecanismos queda alineado.</li>
+<li><strong>Reenvío.</strong> El reenvío rompe SPF y, si se modifica el cuerpo, DKIM también falla.</li>
+</ul>
+<p>La propia RFC 7489 advierte que los flujos de correo pueden ser complicados, por ejemplo por el reenvío, y que por eso el receptor puede apartarse de la política publicada (sección 6).</p>
+<h2  id="como-resolver-el-error-550-5726">¿Cómo resolver el error 550 5.7.26?</h2>
+<p>Identifica el sistema que envió el correo rechazado, configúralo para que firme DKIM con tu dominio o para que use un MAIL FROM de tu dominio incluido en tu SPF, y verifica con una prueba que DMARC pase. Si tu política es estricta y faltan sistemas, ajústala de forma gradual mientras corriges.</p>
+<ol>
+<li><strong>Identifica el sistema.</strong> Mira el rebote y la cabecera: ¿salió de tu casilla, del CRM, del facturador, de la tienda?</li>
+<li><strong>Configura DKIM con tu dominio.</strong> Es la opción que Microsoft señala como preferida para servicios externos. El proveedor te dará registros DNS para publicar; la firma debe llevar <code>d=ejemplo.cl</code> o un subdominio alineado.</li>
+<li><strong>O alinea SPF.</strong> Configura un <code>MAIL FROM</code> personalizado con tu dominio y agrega el <code>include</code> del proveedor a tu SPF, sin superar el límite de 10 consultas DNS de la RFC 7208 (sección 4.6.4).</li>
+<li><strong>Considera un subdominio.</strong> Si el servicio no permite ninguna de las dos opciones, Microsoft sugiere usar un subdominio para ese servicio, con su propio registro DMARC.</li>
+<li><strong>Prueba de nuevo.</strong> Envía a Gmail y confirma <code>dmarc=pass</code> en &ldquo;Mostrar original&rdquo;.</li>
+</ol>
+<blockquote>
+<p><strong>Advertencia:</strong> bajar la política a <code>p=none</code> puede detener el rechazo de la variante DMARC, pero deja tu dominio expuesto a suplantación. Si lo haces, que sea temporal mientras corriges. Google recomienda implementar DMARC de forma gradual y revisar los reportes (<a href="https://support.google.com/a/answer/10032473?hl=es">Google</a>).</p>
+</blockquote>
+<p>Si tus correos no rebotan pero llegan a spam, revisa <a href="/blog/mis-correos-llegan-a-spam/">por qué mis correos llegan a spam</a>.</p>
+<h2  id="que-codigos-equivalentes-usa-microsoft">¿Qué códigos equivalentes usa Microsoft?</h2>
+<p>Microsoft usa 5.7.509 cuando el dominio del From falla DMARC y su política es reject, 5.7.515 en Outlook.com cuando un remitente de alto volumen no cumple los requisitos de autenticación, y 5.7.23 cuando el rechazo se debe a una violación de SPF. Las causas y soluciones se parecen a las del 5.7.26.</p>
+<p>Según la <a href="https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/non-delivery-reports-in-exchange-online/non-delivery-reports-in-exchange-online">lista de NDR de Exchange Online</a>:</p>
+<ul>
+<li><strong><code>5.7.509</code></strong>: <em>Access denied, sending domain [dominio] does not pass DMARC verification and has a DMARC policy of reject.</em> El dominio del <code>5322.From</code> no pasa DMARC.</li>
+<li><strong><code>5.7.23</code></strong>: el mensaje se rechazó por una violación de SPF; el sistema de destino valida con SPF y hay un problema en tu configuración.</li>
+</ul>
+<p>Según el <a href="https://support.microsoft.com/en-us/outlook/fix-ndr-error-550-5-7-515-in-outlook-com">soporte de Microsoft para Outlook.com</a>:</p>
+<ul>
+<li><strong><code>5.7.515</code></strong>: <em>Access denied, sending domain [dominio] does not meet the required authentication level.</em> Aplica a remitentes de alto volumen hacia los servicios de correo de consumo de Microsoft. Exige que SPF y DKIM pasen, un registro DMARC publicado y que al menos uno esté alineado con el <code>From</code>.</li>
+</ul>
+<h2  id="como-ayuda-inboxseguro">¿Cómo ayuda InboxSeguro?</h2>
+<p>El 5.7.26 suele aparecer cuando un sistema envía con tu dominio sin que nadie lo haya configurado. Cuando apuntas el <code>rua</code> de tu DMARC a InboxSeguro, los reportes llegan a su panel y la plataforma:</p>
+<ul>
+<li><strong>Muestra qué sistemas envían correo con tu dominio</strong>, a partir de los reportes DMARC, para encontrar el que no está alineado.</li>
+<li><strong>Permite asignar un responsable</strong> a cada sistema.</li>
+<li><strong>Guía un DMARC gradual</strong> (<code>none</code> → <code>quarantine</code> → <code>reject</code>) sin cortar correo legítimo.</li>
+<li><strong>Detecta posibles intentos de suplantación</strong> cuando SPF y DKIM fallan, tras descartar reenvío.</li>
+</ul>
+<p>Para empezar, revisa tu registro con el <a href="/dmarc-checker">verificador de DMARC</a> y descubre qué servidores declara tu dominio con el <a href="/quien-puede-enviar-correos">diagnosticador de quién puede enviar correos</a>.</p>
+<h2  id="fuentes">Fuentes</h2>
+<ul>
+<li><a href="https://support.google.com/a/answer/3726730?hl=es">Google: Errores y códigos SMTP de Gmail</a>.</li>
+<li><a href="https://support.google.com/a/answer/10032473?hl=es">Google: Implementación recomendada de DMARC</a>.</li>
+<li><a href="https://support.google.com/mail/answer/29436?hl=es">Google: Rastrear un correo mediante su cabecera completa</a>.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc7489">RFC 7489: DMARC</a>, secciones 3.1, 6, 6.3 y 6.7.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc7208">RFC 7208: SPF</a>, sección 4.6.4.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc6376">RFC 6376: DKIM Signatures</a>, sección 3.5.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8601">RFC 8601: Message Header Field for Indicating Message Authentication Status</a>.</li>
+<li><a href="https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot">Microsoft Learn: Troubleshoot email authentication in Microsoft 365</a>.</li>
+<li><a href="https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/non-delivery-reports-in-exchange-online/non-delivery-reports-in-exchange-online">Microsoft Learn: Non-delivery reports in Exchange Online</a>.</li>
+<li><a href="https://support.microsoft.com/en-us/outlook/fix-ndr-error-550-5-7-515-in-outlook-com">Microsoft Support: Fix NDR error 550 5.7.515 in Outlook.com</a>.</li>
+</ul>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿El error 550 5.7.26 es culpa de Gmail?</h3>
+                    <p>No. Gmail aplica la política que el dueño del dominio publicó en su registro DMARC. Según la RFC 7489, el receptor puede aplicar esa política a los mensajes que fallan. La solución está en la autenticación del dominio que aparece en el From.</p>
+                    
+                    <h3>¿Qué diferencia hay entre 550 5.7.26 y 451 4.7.26?</h3>
+                    <p>Según Google, 550 es un rechazo definitivo. El 451 4.7.26 indica que el correo no se aceptó por la política DMARC, pero que fallas temporales de DNS impidieron la autenticación. Y el 421 4.7.26 es una limitación temporal de envío por correo no autenticado.</p>
+                    
+                    <h3>¿Bajar mi DMARC a p=none soluciona el error?</h3>
+                    <p>Puede detener el rechazo de la variante DMARC, pero no corrige la causa y deja tu dominio expuesto a suplantación. Además, Google documenta otras variantes del 5.7.26 que no dependen de DMARC. Lo correcto es autenticar el sistema que envía y mantener una política gradual.</p>
+                    
+                </section>
+                
+            </div>
+
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary" href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener"
+                       data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+
+        
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-significa-el-error-550-5726-de-gmail">¿Qué significa el error 550 5.7.26 de Gmail?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#por-que-ocurre-el-rechazo-por-politica-dmarc">¿Por qué ocurre el rechazo por política DMARC?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-diagnosticar-el-error-con-las-cabeceras">¿Cómo diagnosticar el error con las cabeceras?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#cuales-son-las-causas-frecuentes">¿Cuáles son las causas frecuentes?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-resolver-el-error-550-5726">¿Cómo resolver el error 550 5.7.26?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-codigos-equivalentes-usa-microsoft">¿Qué códigos equivalentes usa Microsoft?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">¿Cómo ayuda InboxSeguro?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </nav>
+        
+    </div>
+</article>
+
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Soluciones</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/seguridad-correo-proveedores" class="hover:text-blue-400 transition-colors">Seguridad para proveedores</a></li>
+                            <li><a href="/informe-higiene-correo-corporativo" class="hover:text-blue-400 transition-colors">Informe de higiene</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Detener suplantación</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas gratis</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad</a></li>
+                            <li><a href="/verificar-lista-negra" class="hover:text-blue-400 transition-colors">Verificador de listas negras</a></li>
+                            <li><a href="/inboxscore" class="hover:text-blue-400 transition-colors">InboxScore</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/guias" class="hover:text-blue-400 transition-colors">Guías</a></li>
+                            <li><a href="/glosario/" class="hover:text-blue-400 transition-colors">Glosario</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>
