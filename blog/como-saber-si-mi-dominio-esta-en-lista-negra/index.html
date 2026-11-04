@@ -364,7 +364,7 @@
 <li><strong>Listas negras de IP.</strong> Son las más comunes: la RFC 5782 indica que la mayoría de las listas todavía usan direcciones IP (sección 2). Incluyen direcciones desde las que se envió spam u otro tráfico considerado abusivo.</li>
 <li><strong>Listas de dominios.</strong> Algunas listas incluyen nombres de dominio en lugar de IP. La RFC 5782 indica que son mucho menos comunes que las listas negras de IP (sección 3).</li>
 </ul>
-<p>Por eso, cuando alguien sospecha de una blacklist de dominio, conviene revisar también si la lista negra incluye la IP pública del servidor que envía sus correos.</p>
+<p>Por eso, cuando alguien sospecha de una blacklist de dominio, conviene revisar también si la lista negra incluye <a href="/blog/como-saber-si-mi-ip-esta-en-lista-negra/">la IP pública del servidor que envía sus correos</a>.</p>
 <h2  id="como-consultan-las-listas-los-servidores-de-correo">Cómo consultan las listas los servidores de correo</h2>
 <p>Cuando tu servidor intenta entregar un correo, el servidor que lo recibe puede consultar una o varias listas negras. Según la RFC 5782 (sección 2.1), la consulta se arma invirtiendo los números de la IP y agregando el nombre de la lista. Si la lista se llama <code>bad.example.com</code> y la IP es <code>192.0.2.99</code>, el servidor pregunta por <code>99.2.0.192.bad.example.com</code>.</p>
 <ul>

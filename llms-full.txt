@@ -479,7 +479,7 @@ Se llaman así porque se publican en el DNS, el mismo sistema que traduce nombre
 - **Listas negras de IP.** Son las más comunes: la RFC 5782 indica que la mayoría de las listas todavía usan direcciones IP (sección 2). Incluyen direcciones desde las que se envió spam u otro tráfico considerado abusivo.
 - **Listas de dominios.** Algunas listas incluyen nombres de dominio en lugar de IP. La RFC 5782 indica que son mucho menos comunes que las listas negras de IP (sección 3).
 
-Por eso, cuando alguien sospecha de una blacklist de dominio, conviene revisar también si la lista negra incluye la IP pública del servidor que envía sus correos.
+Por eso, cuando alguien sospecha de una blacklist de dominio, conviene revisar también si la lista negra incluye [la IP pública del servidor que envía sus correos](/blog/como-saber-si-mi-ip-esta-en-lista-negra/).
 
 ## Cómo consultan las listas los servidores de correo
 
@@ -719,7 +719,7 @@ Separa lo que ves en tres grupos:
 2. **Herramientas tuyas que fallan.** No es un ataque. Es un servicio legítimo mal configurado, y sus correos corren riesgo de no llegar. Hay que corregirlo antes de bloquear nada.
 3. **Fuentes que nadie reconoce y que fallan.** Es una señal de posible suplantación.
 
-El grupo 2 es el más difícil. Antes de hablar de ataque, pregunta en ventas, marketing, soporte y finanzas qué herramientas usan para enviar correos.
+El grupo 2 es el más difícil. Antes de hablar de ataque, pregunta en ventas, marketing, soporte y finanzas [qué herramientas usan para enviar correos](/blog/quien-esta-enviando-correos-con-mi-dominio/).
 
 ## Paso 4: cruza los avisos con los reportes
 
@@ -1018,7 +1018,7 @@ Identifica el sistema que envió el correo rechazado, configúralo para que firm
 
 1. **Identifica el sistema.** Mira el rebote y la cabecera: ¿salió de tu casilla, del CRM, del facturador, de la tienda?
 2. **Configura DKIM con tu dominio.** Es la opción que Microsoft señala como preferida para servicios externos. El proveedor te dará registros DNS para publicar; la firma debe llevar `d=ejemplo.cl` o un subdominio alineado.
-3. **O alinea SPF.** Configura un `MAIL FROM` personalizado con tu dominio y agrega el `include` del proveedor a tu SPF, sin superar el límite de 10 consultas DNS de la RFC 7208 (sección 4.6.4).
+3. **O alinea SPF.** Configura un `MAIL FROM` personalizado con tu dominio y agrega el `include` del proveedor a [tu SPF](/spf-checker), sin superar el límite de 10 consultas DNS de la RFC 7208 (sección 4.6.4).
 4. **Considera un subdominio.** Si el servicio no permite ninguna de las dos opciones, Microsoft sugiere usar un subdominio para ese servicio, con su propio registro DMARC.
 5. **Prueba de nuevo.** Envía a Gmail y confirma `dmarc=pass` en "Mostrar original".
 
@@ -1041,7 +1041,7 @@ Según el [soporte de Microsoft para Outlook.com](https://support.microsoft.com/
 
 ## ¿Cómo ayuda InboxSeguro?
 
-El 5.7.26 suele aparecer cuando un sistema envía con tu dominio sin que nadie lo haya configurado. Cuando apuntas el `rua` de tu DMARC a InboxSeguro, los reportes llegan a su panel y la plataforma:
+El 5.7.26 suele aparecer cuando [un sistema envía con tu dominio sin que nadie lo haya configurado](/blog/quien-esta-enviando-correos-con-mi-dominio/). Cuando apuntas el `rua` de tu DMARC a InboxSeguro, los reportes llegan a su panel y la plataforma:
 
 - **Muestra qué sistemas envían correo con tu dominio**, a partir de los reportes DMARC, para encontrar el que no está alineado.
 - **Permite asignar un responsable** a cada sistema.
@@ -1218,7 +1218,7 @@ InboxSeguro te muestra qué sistemas envían correo con tu dominio y te permite 
 ### Qué es DMARC y cómo activarlo sin riesgos
 - URL Canónica: https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/
 
-Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, tus propias facturas pueden ir a spam o no llegar. Aquí te explicamos cómo funciona y cómo activarlo por etapas.
+Cualquiera puede enviar un correo que diga venir de tu empresa. DMARC es lo que le dice a Gmail, Outlook y otros qué hacer con esos correos falsos. Bien activado, protege a tus clientes y tu marca. Activado de golpe, tus propias facturas pueden ir a spam o [no llegar](/blog/error-550-5-7-26-gmail-dmarc/). Aquí te explicamos cómo funciona y cómo activarlo por etapas.
 
 ## Qué es DMARC, en una frase
 
@@ -1367,7 +1367,7 @@ Cada sistema necesita una decisión y un responsable: si es legítimo, alinéalo
 ### Si es legítimo: alinéalo
 
 - **DKIM con tu dominio.** Pide al proveedor que firme con tu dominio (`d=ejemplo.cl`). La [RFC 6376](https://www.rfc-editor.org/rfc/rfc6376) define la etiqueta `d=` como el dominio que firma (sección 3.5). Microsoft lo indica como la opción preferida para servicios externos ([Microsoft Learn](https://learn.microsoft.com/en-us/defender-office-365/email-authentication-troubleshoot)).
-- **SPF.** Agrega el `include` o la IP que indique el proveedor, cuidando el límite de 10 consultas.
+- **SPF.** Agrega el `include` o la IP que indique el proveedor, cuidando [el límite de 10 consultas](/spf-checker).
 - **Subdominio.** Si ninguna opción es posible, Microsoft sugiere usar un subdominio para ese servicio con su propio registro DMARC.
 
 ### Si nadie lo reconoce: pregunta
@@ -1380,7 +1380,7 @@ Tú no puedes impedir que un tercero escriba tu dominio, pero con `p=quarantine`
 
 ## ¿Cómo paso a una política DMARC más estricta sin cortar correo legítimo?
 
-Avanza por etapas: empieza con `p=none` para recibir reportes, alinea todos los sistemas legítimos, pasa a `p=quarantine` y solo al final a `p=reject`. En cada etapa revisa los reportes; endurecer antes de tiempo puede hacer que tus propios correos lleguen a spam o sean rechazados.
+Avanza por etapas: empieza con `p=none` para recibir reportes, alinea todos los sistemas legítimos, pasa a `p=quarantine` y solo al final a `p=reject`. En cada etapa revisa los reportes; endurecer antes de tiempo puede hacer que tus propios correos lleguen a spam o [sean rechazados](/blog/error-550-5-7-26-gmail-dmarc/).
 
 La RFC 7489 contempla este avance con la etiqueta `pct`, que aplica la política solo a un porcentaje de los mensajes (sección 6.3). Google también recomienda introducir DMARC de forma gradual y revisar los reportes antes de endurecer la política ([Google: Implementación recomendada de DMARC](https://support.google.com/a/answer/10032473?hl=es)).
 
