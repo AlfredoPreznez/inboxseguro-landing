@@ -24,7 +24,7 @@ Tu empresa envía correos desde muchos lugares: la casilla de cada persona, el C
 
 Esta guía explica cómo responder esa pregunta con datos y no con suposiciones. Si sospechas un caso concreto de suplantación, lee también [cómo saber si suplantan tu dominio](/blog/como-saber-si-suplantan-tu-dominio/).
 
-> **¿Tienes prisa?** Revisa en segundos qué servidores declara tu dominio con el [diagnosticador de quién puede enviar correos](https://www.inboxseguro.com/quien-puede-enviar-correos?utm_source=blog&utm_medium=article&utm_campaign=quien-envia-correos).
+> **¿Tienes prisa?** Revisa en segundos qué servidores declara tu dominio con el [diagnosticador de quién puede enviar correos](/quien-puede-enviar-correos).
 
 ## ¿Por qué es difícil saber quién envía con mi dominio?
 
@@ -121,7 +121,7 @@ Los reportes agregados son archivos XML difíciles de leer a mano. Cuando apunta
 - **Entrega analítica semanal** de envíos por sistema.
 - **Guía un DMARC gradual** (`none` → `quarantine` → `reject`) sin cortar correo legítimo.
 
-Como primer paso, el [diagnosticador gratuito de quién puede enviar correos](https://www.inboxseguro.com/quien-puede-enviar-correos?utm_source=blog&utm_medium=article&utm_campaign=quien-envia-correos) lee el SPF publicado de tu dominio, te avisa si falta o si usa `+all` y cuenta las consultas DNS contra el límite de 10.
+Como primer paso, el [diagnosticador gratuito de quién puede enviar correos](/quien-puede-enviar-correos) lee el SPF publicado de tu dominio, te avisa si falta o si usa `+all` y cuenta las consultas DNS contra el límite de 10.
 
 ## Fuentes
 

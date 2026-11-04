@@ -47,9 +47,11 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 - [Cómo saber si alguien suplanta tu dominio](https://www.inboxseguro.com/blog/como-saber-si-suplantan-tu-dominio/): detectar envíos falsos con reportes DMARC y separar servicios legítimos.
 - [Cómo verificar DKIM de tu dominio](https://www.inboxseguro.com/blog/como-verificar-dkim-de-tu-dominio/): encontrar el selector, revisar el registro DNS y errores frecuentes.
 - [Cómo verificar el registro SPF de tu dominio](https://www.inboxseguro.com/blog/como-verificar-spf-de-tu-dominio/): revisar que haya un solo registro, leer ~all y -all, comprobar el resultado en un correo real y errores frecuentes.
+- [Error 550 5.7.26 de Gmail: qué significa y cómo resolverlo](https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/): qué significa el rechazo por política DMARC, cómo leer las cabeceras para diagnosticarlo y cómo resolverlo.
 - [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios que envían con tu dominio sin administración clara.
 - [Phishing con IA: qué frena DMARC y qué no](https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/): qué ataques con el dominio exacto frena DMARC y cuáles no.
 - [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y avance por etapas.
+- [Quién está enviando correos con mi dominio: cómo saberlo](https://www.inboxseguro.com/blog/quien-esta-enviando-correos-con-mi-dominio/): qué muestra el SPF, qué revelan los reportes DMARC y qué hacer con cada sistema, legítimo o desconocido.
 - [SPF: cómo no pasar el límite de 10 consultas](https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/): autorizar servicios en SPF sin superar el límite de la RFC 7208.
 
 ## Glosario y guías
@@ -1299,7 +1301,7 @@ Tu empresa envía correos desde muchos lugares: la casilla de cada persona, el C
 
 Esta guía explica cómo responder esa pregunta con datos y no con suposiciones. Si sospechas un caso concreto de suplantación, lee también [cómo saber si suplantan tu dominio](/blog/como-saber-si-suplantan-tu-dominio/).
 
-> **¿Tienes prisa?** Revisa en segundos qué servidores declara tu dominio con el [diagnosticador de quién puede enviar correos](https://www.inboxseguro.com/quien-puede-enviar-correos?utm_source=blog&utm_medium=article&utm_campaign=quien-envia-correos).
+> **¿Tienes prisa?** Revisa en segundos qué servidores declara tu dominio con el [diagnosticador de quién puede enviar correos](/quien-puede-enviar-correos).
 
 ## ¿Por qué es difícil saber quién envía con mi dominio?
 
@@ -1396,7 +1398,7 @@ Los reportes agregados son archivos XML difíciles de leer a mano. Cuando apunta
 - **Entrega analítica semanal** de envíos por sistema.
 - **Guía un DMARC gradual** (`none` → `quarantine` → `reject`) sin cortar correo legítimo.
 
-Como primer paso, el [diagnosticador gratuito de quién puede enviar correos](https://www.inboxseguro.com/quien-puede-enviar-correos?utm_source=blog&utm_medium=article&utm_campaign=quien-envia-correos) lee el SPF publicado de tu dominio, te avisa si falta o si usa `+all` y cuenta las consultas DNS contra el límite de 10.
+Como primer paso, el [diagnosticador gratuito de quién puede enviar correos](/quien-puede-enviar-correos) lee el SPF publicado de tu dominio, te avisa si falta o si usa `+all` y cuenta las consultas DNS contra el límite de 10.
 
 ## Fuentes
 
