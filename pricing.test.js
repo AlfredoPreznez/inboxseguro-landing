@@ -38,12 +38,13 @@ assert.strictEqual(pricing.quote('business', 6).extra, 1);
 
 assert.strictEqual(pricing.quote('standard', 4).available, true);
 assert.strictEqual(pricing.quote('standard', 5).available, false);
-assert.strictEqual(pricing.quote('founding', 9).available, true);
-assert.strictEqual(pricing.quote('founding', 9).total, 25 + 8 * 5);
-assert.strictEqual(pricing.quote('founding', 10).available, false);
+assert.strictEqual(pricing.quote('founding', 10).available, true);
+assert.strictEqual(pricing.quote('founding', 10).total, 25 + 9 * 5);
+assert.strictEqual(pricing.quote('founding', 10).extra, 9);
+assert.strictEqual(pricing.quote('founding', 11).available, false);
 assert.strictEqual(pricing.PLANS.standard.maxDomains, 4);
-assert.strictEqual(pricing.PLANS.founding.maxDomains, 9);
-assert.strictEqual(pricing.PLANS.business.maxDomains, 45);
+assert.strictEqual(pricing.PLANS.founding.maxDomains, 10);
+assert.strictEqual(pricing.PLANS.business.maxDomains, 40);
 assert.strictEqual(pricing.PLANS.business.extraPrice, 7);
 
 const atFour = totals(4, false);
@@ -70,13 +71,13 @@ assert.strictEqual(pricing.clampDomains(0), 1);
 assert.strictEqual(pricing.clampDomains(-4), 1);
 assert.strictEqual(pricing.clampDomains('no'), 1);
 assert.strictEqual(pricing.clampDomains(1.9), 1);
-assert.strictEqual(pricing.clampDomains(900), 500);
+assert.strictEqual(pricing.clampDomains(900), 40);
 assert.strictEqual(pricing.quote('standard', 0).domains, 1);
 
 assert.strictEqual(pricing.registerUrl('standard'), 'https://panel.inboxseguro.com/register?plan=starter&domains=1');
 assert.strictEqual(pricing.registerUrl('founding', 3), 'https://panel.inboxseguro.com/register?plan=founding&domains=3');
 assert.strictEqual(pricing.registerUrl('business', 6), 'https://panel.inboxseguro.com/register?plan=business&domains=6');
-assert.strictEqual(pricing.registerUrl('business', 80), 'https://panel.inboxseguro.com/register?plan=business&domains=45');
+assert.strictEqual(pricing.registerUrl('business', 80), 'https://panel.inboxseguro.com/register?plan=business&domains=40');
 assert.strictEqual(pricing.PLANS.business.registerPlan, 'business');
 
 assert.strictEqual(pricing.chipText('standard', pricing.recommend(6, true)), 'Hasta 4 dominios');
@@ -84,7 +85,7 @@ assert.strictEqual(pricing.chipText('founding', pricing.recommend(6, true)), 'M�
 assert.strictEqual(pricing.chipText('business', pricing.recommend(5, false)), 'Más económico');
 assert.strictEqual(pricing.chipText('standard', pricing.recommend(4, false)), 'Más económico');
 assert.strictEqual(pricing.chipText('standard', pricing.recommend(4, true)), 'Más conveniente que Business');
-assert.strictEqual(pricing.chipText('founding', pricing.recommend(21, true)), 'Hasta 9 dominios');
+assert.strictEqual(pricing.chipText('founding', pricing.recommend(21, true)), 'Hasta 10 dominios');
 
 const lines = pricing.recommendationLines(pricing.recommend(6, true));
 assert.match(lines[0], /Fundador: US\$50\/mes/);
@@ -190,8 +191,8 @@ assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="standard"]')[0
 
 openUi.numberInput.value = '21';
 openUi.numberInput.listeners.input();
-assert.match(openUi.note.textContent, /hasta 9 dominios/);
-assert.strictEqual(openUi.root.querySelectorAll('[data-quote-chip="founding"]')[0].textContent, 'Hasta 9 dominios');
+assert.match(openUi.note.textContent, /10 dominios/);
+assert.strictEqual(openUi.root.querySelectorAll('[data-quote-chip="founding"]')[0].textContent, 'Hasta 10 dominios');
 assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="business"]')[0].classList.contains('is-picked'), true);
 
 const closedUi = mountHarness('closed');

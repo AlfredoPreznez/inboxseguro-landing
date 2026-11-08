@@ -14,7 +14,7 @@
   }
   root.InboxSeguroPricing = api;
 })(typeof globalThis !== 'undefined' ? globalThis : this, function () {
-  var MAX_DOMAINS = 500;
+  var MAX_DOMAINS = 40;
   var REGISTER_BASE = 'https://panel.inboxseguro.com/register';
 
   var PLANS = {
@@ -24,7 +24,7 @@
       base: 25,
       included: 1,
       extraPrice: 5,
-      maxDomains: 9,
+      maxDomains: 10,
       registerPlan: 'founding'
     },
     standard: {
@@ -42,7 +42,7 @@
       base: 79,
       included: 5,
       extraPrice: 7,
-      maxDomains: 45,
+      maxDomains: 40,
       registerPlan: 'business'
     }
   };
@@ -132,10 +132,10 @@
       return 'Máximo 4 dominios: 1 incluido y 3 adicionales. Para más, cambia de plan.';
     }
     if (!q.available && q.id === 'founding') {
-      return 'La tarifa preferencial cubre hasta 9 dominios, sin cambiar de plan. Por encima, se acuerda con el equipo.';
+      return 'La tarifa preferencial cubre hasta 10 dominios: 1 incluido y 9 adicionales. Por encima, se acuerda con el equipo.';
     }
     if (!q.available && q.id === 'business') {
-      return 'Hasta 45 dominios: 5 incluidos y 40 adicionales a US$7. Por encima, se acuerda con el equipo.';
+      return 'Hasta 40 dominios: 5 incluidos y 35 adicionales a US$7. Por encima, se acuerda con el equipo.';
     }
     if (q.extra === 0) return 'Sin dominios adicionales';
     var noun = q.extra === 1 ? 'dominio adicional' : 'dominios adicionales';
@@ -181,7 +181,7 @@
     if (!result.foundingOpen) {
       lines.push('El Plan Fundador no se puede contratar: las plazas están agotadas.');
     } else if (!q.founding.available) {
-      lines.push('Fundador mantiene US$5 por dominio adicional hasta 9 dominios, sin cambiar de plan. Por encima de 9 se acuerda con el equipo.');
+      lines.push('Fundador llega a 10 dominios: 1 incluido y 9 adicionales a US$5, sin cambiar de plan. Por encima se acuerda con el equipo.');
     }
     return lines;
   }
@@ -190,8 +190,8 @@
     var q = result.quotes[planId];
     if (!q.available) {
       if (planId === 'standard') return 'Hasta 4 dominios';
-      if (planId === 'founding') return 'Hasta 9 dominios';
-      if (planId === 'business') return 'Hasta 45 dominios';
+      if (planId === 'founding') return 'Hasta 10 dominios';
+      if (planId === 'business') return 'Hasta 40 dominios';
       return '';
     }
     if (result.best === planId) {
