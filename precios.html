@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Planes Esencial y Fundador | InboxSeguro</title>
+    <title>Precios de seguridad y monitoreo de correo | InboxSeguro</title>
 
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <meta name="description"
-        content="Diagnóstico inicial sin tarjeta. Conecta el dominio de tu empresa y comienza 14 días de monitoreo, inventario de envíos y gobernanza del correo.">
+        content="Protege tus dominios y controla quién envía correos en tu nombre. Planes Fundador, Estándar y Business en USD, desde un dominio hasta toda tu infraestructura.">
 
         <link rel="canonical" href="https://www.inboxseguro.com/precios">
     <meta name="robots" content="index, follow">
@@ -17,12 +17,12 @@
     <meta property="og:site_name" content="InboxSeguro">
     <meta property="og:locale" content="es_CL">
     <meta property="og:url" content="https://www.inboxseguro.com/precios">
-    <meta property="og:title" content="Precios vigilancia de envíos y seguridad del dominio | InboxSeguro">
-    <meta property="og:description" content="Diagnóstico inicial sin tarjeta. Tus 14 días de monitoreo comienzan al conectar el dominio.">
+    <meta property="og:title" content="Precios de seguridad y monitoreo de correo | InboxSeguro">
+    <meta property="og:description" content="Protege tus dominios. Controla quién envía correos en tu nombre. Planes en USD desde un dominio hasta toda tu infraestructura corporativa.">
     <meta property="og:image" content="https://www.inboxseguro.com/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Precios vigilancia de envíos y seguridad del dominio | InboxSeguro">
-    <meta name="twitter:description" content="Diagnóstico inicial sin tarjeta. Tus 14 días de monitoreo comienzan al conectar el dominio.">
+    <meta name="twitter:title" content="Precios de seguridad y monitoreo de correo | InboxSeguro">
+    <meta name="twitter:description" content="Protege tus dominios. Controla quién envía correos en tu nombre. Planes en USD desde un dominio hasta toda tu infraestructura corporativa.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/og-image.png">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,6 +30,71 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/fontawesome/icons.min.css?v=1.0.0">
     <link rel="stylesheet" href="/styles.css?v=1.0.8">
+    <style>
+        .pricing-grid,
+        .quote-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            align-items: stretch;
+        }
+        .pricing-grid > *,
+        .quote-grid > * {
+            min-width: 0;
+        }
+        @media (min-width: 960px) {
+            .pricing-grid,
+            .quote-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+        .pricing-card.is-picked,
+        .quote-card.is-picked {
+            box-shadow: 0 0 0 2px #2563eb, 0 18px 40px -24px rgba(37, 99, 235, 0.45);
+        }
+        .domain-range {
+            width: 100%;
+            accent-color: #2563eb;
+        }
+        .preset-btn[aria-pressed="true"] {
+            background: #0f172a;
+            color: #fff;
+            border-color: #0f172a;
+        }
+        .quote-card {
+            border: 1px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            background: #fff;
+        }
+        .domain-count-input {
+            width: 6.5rem;
+            text-align: center;
+            font-size: 2.25rem;
+            line-height: 1;
+            font-weight: 800;
+            color: #0f172a;
+            background: transparent;
+            border: 0;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        .domain-count-input:focus {
+            outline: none;
+            border-bottom-color: #2563eb;
+        }
+        .domain-count-input::-webkit-outer-spin-button,
+        .domain-count-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .domain-count-input {
+            -moz-appearance: textfield;
+            appearance: textfield;
+        }
+        .pricing-table {
+            min-width: 720px;
+        }
+    </style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -38,7 +103,30 @@
   "applicationCategory": "BusinessApplication",
   "operatingSystem": "Web",
   "url": "https://www.inboxseguro.com/precios",
-  "description": "Plataforma de control de envíos del dominio con inventario automático y alertas."
+  "description": "Plataforma de seguridad y monitoreo de correo corporativo. Protege tus dominios y controla quién envía correos en tu nombre.",
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "Plan Fundador",
+      "price": "25",
+      "priceCurrency": "USD",
+      "description": "US$25 al mes con 1 dominio incluido. Cada dominio adicional cuesta US$5 al mes, sobre la misma suscripción."
+    },
+    {
+      "@type": "Offer",
+      "name": "Plan Estándar",
+      "price": "39",
+      "priceCurrency": "USD",
+      "description": "US$39 al mes con 1 dominio incluido. Cada dominio adicional cuesta US$10 al mes, sobre la misma suscripción."
+    },
+    {
+      "@type": "Offer",
+      "name": "Plan Business",
+      "price": "79",
+      "priceCurrency": "USD",
+      "description": "US$79 al mes con 5 dominios incluidos. Cada dominio adicional cuesta US$8 al mes, sobre la misma suscripción."
+    }
+  ]
 }
 </script>
 </head>
@@ -199,375 +287,267 @@
     <!-- /chrome:nav -->
 
     <!-- Main Content Area -->
-    <main class="flex-grow">
+    <main class="flex-grow" id="pricing-app" data-founding-seats="open">
 
-        <!-- Hero Section/Header -->
         <section class="pt-28 pb-16 lg:pt-36 bg-slate-900 text-white relative overflow-hidden">
             <div class="absolute inset-0 bg-slate-900 pointer-events-none">
                 <div class="absolute top-0 right-0 -mr-20 -mt-20 w-[500px] h-[500px] bg-blue-600/20 rounded-full mix-blend-screen filter blur-[100px] animate-blob"></div>
             </div>
             <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
+                <p class="text-xs font-bold uppercase tracking-wider text-blue-300 mb-4">Seguridad y monitoreo de correo corporativo</p>
                 <h1 class="text-4xl md:text-5xl font-extrabold mb-6 leading-tight tracking-tight">
-                    Planes para controlar el correo de tu empresa
+                    Protege tus dominios. Controla quién envía correos en tu nombre.
                 </h1>
                 <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
-                    Revisa un diagnóstico inicial sin tarjeta. Al conectar tu dominio comienzan 14 días de monitoreo continuo, inventario de sistemas de envío y gobernanza.
+                    Desde un dominio hasta toda tu infraestructura corporativa. Elige el plan que se adapta a tu operación y escala cuando lo necesites.
                 </p>
+                <p class="text-sm text-slate-400 mt-6">Precios en USD, facturados mensualmente. Una suscripción por cliente: los dominios adicionales se suman al mismo plan.</p>
             </div>
         </section>
 
-        <!-- Precios Section -->
-        <section id="precios" class="py-20 bg-white relative scroll-mt-24">
-            <div class="max-w-7xl mx-auto px-4 relative z-10">
-                
-                <!-- Titulo y subtitulo -->
-                <div class="text-center mb-10">
-                    <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">Planes sencillos, precios transparentes</span>
-                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900 tracking-tight">Control y visibilidad de tu correo corporativo</h2>
-                    <p class="text-base md:text-lg text-slate-600 max-w-2xl mx-auto font-light">Esencial US$39/mes. Fundador US$25/mes. Configuración guiada en el panel.</p>
+        <section id="calculadora" class="py-16 bg-slate-50 border-b border-slate-200 scroll-mt-24">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Calcula el precio según tus dominios</h2>
+                    <p class="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">Elige cuántos dominios necesitas monitorear. El total incluye el plan y los dominios adicionales. No cambia de plan al crecer: solo cambia la cantidad.</p>
                 </div>
 
-                <!-- Grid de 2 Planes (Esencial vs Fundador) -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-14 items-stretch">
-                    
-                    <!-- Tarjeta Esencial -->
-                    <div class="bg-white rounded-3xl p-7 md:p-8 border border-slate-200 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
-                        <div>
-                            <div class="flex items-center justify-between mb-3">
-                                <h3 class="text-2xl font-bold text-slate-900">Esencial</h3>
-                                <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Plan estándar</span>
-                            </div>
-                            <p class="text-xs md:text-sm text-slate-500 mb-6 leading-relaxed">
-                                Monitoreo continuo y control de envíos para mantener la reputación y seguridad de tu dominio.
-                            </p>
+                <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 md:p-8">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <button type="button" data-domain-step="-1" aria-label="Quitar un dominio" class="w-12 h-12 shrink-0 rounded-xl border border-slate-300 bg-white text-xl font-bold text-slate-800 hover:bg-slate-50 cursor-pointer">−</button>
+                        <div class="text-center">
+                            <label for="domain-count" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Dominios a monitorear</label>
+                            <input id="domain-count" class="domain-count-input" type="number" min="1" max="500" value="1" inputmode="numeric" aria-describedby="pricing-recommendation">
+                        </div>
+                        <button type="button" data-domain-step="1" aria-label="Agregar un dominio" class="w-12 h-12 shrink-0 rounded-xl border border-slate-300 bg-white text-xl font-bold text-slate-800 hover:bg-slate-50 cursor-pointer">+</button>
+                    </div>
+                    <input id="domain-range" class="domain-range" type="range" min="1" max="40" value="1" aria-label="Cantidad de dominios">
+                    <div class="flex flex-wrap justify-center gap-2 mt-4">
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="1" aria-pressed="true">1</button>
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="3" aria-pressed="false">3</button>
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="5" aria-pressed="false">5</button>
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="10" aria-pressed="false">10</button>
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="20" aria-pressed="false">20</button>
+                    </div>
 
-                            <div class="mb-6 pb-6 border-b border-slate-100">
-                                <div class="flex items-baseline gap-1">
-                                    <span class="text-base font-bold text-slate-400">US$</span>
-                                    <span class="text-5xl font-extrabold text-slate-900 tracking-tight">39</span>
-                                    <span class="text-sm font-medium text-slate-500">/ mes</span>
-                                </div>
-                                <p class="text-xs text-slate-400 mt-1.5">facturado mensualmente · cancela cuando quieras</p>
-                            </div>
-
-                            <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">
-                                Agendar demo
-                            </a>
-                            <a href="https://panel.inboxseguro.com/register?plan=starter" aria-label="Probar 14 días gratis el plan Esencial" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-8">
-                                Probar 14 días gratis
-                            </a>
-
-                            <div class="space-y-3.5 text-xs md:text-sm text-slate-600">
-                                <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Comparativa de plan:</p>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-slate-50">
-                                    <span class="font-medium text-slate-700">Monitoreo continuo</span>
-                                    <i class="fa-solid fa-check text-emerald-500 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-slate-50">
-                                    <span class="font-medium text-slate-700">Inventario de fuentes</span>
-                                    <i class="fa-solid fa-check text-emerald-500 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-slate-50">
-                                    <span class="font-medium text-slate-700">Alertas y cambios</span>
-                                    <i class="fa-solid fa-check text-emerald-500 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-slate-50">
-                                    <span class="font-medium text-slate-700">Gestión DMARC</span>
-                                    <i class="fa-solid fa-check text-emerald-500 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-slate-50 text-slate-400">
-                                    <span>Precio preferencial</span>
-                                    <span class="font-semibold text-slate-300 text-base">—</span>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-slate-50 text-slate-400">
-                                    <span>Acceso anticipado a nuevas funciones</span>
-                                    <span class="font-semibold text-slate-300 text-base">—</span>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-slate-50 text-slate-400">
-                                    <span>Influencia en el roadmap</span>
-                                    <span class="font-semibold text-slate-300 text-base">—</span>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5">
-                                    <span class="font-medium text-slate-700">Contacto directo con el equipo</span>
-                                    <span class="text-xs font-semibold text-slate-600 bg-slate-100 px-2.5 py-0.5 rounded-full">Estándar</span>
-                                </div>
-                            </div>
+                    <div class="quote-grid mt-8">
+                        <div class="quote-card" data-plan-card="founding">
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-brand-700 mb-2">Fundador</p>
+                            <p class="text-3xl font-extrabold text-slate-900 tracking-tight">US$<span data-quote-amount="founding">25</span></p>
+                            <p class="text-xs text-slate-500 mt-1">/ mes · USD</p>
+                            <p class="text-sm text-slate-700 mt-3" data-quote-extra="founding">Sin dominios adicionales</p>
+                            <p class="hidden mt-3 text-xs font-bold text-brand-700" data-quote-chip="founding"></p>
+                        </div>
+                        <div class="quote-card" data-plan-card="standard">
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Estándar</p>
+                            <p class="text-3xl font-extrabold text-slate-900 tracking-tight">US$<span data-quote-amount="standard">39</span></p>
+                            <p class="text-xs text-slate-500 mt-1">/ mes · USD</p>
+                            <p class="text-sm text-slate-700 mt-3" data-quote-extra="standard">Sin dominios adicionales</p>
+                            <p class="hidden mt-3 text-xs font-bold text-slate-700" data-quote-chip="standard"></p>
+                        </div>
+                        <div class="quote-card" data-plan-card="business">
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-900 mb-2">Business</p>
+                            <p class="text-3xl font-extrabold text-slate-900 tracking-tight">US$<span data-quote-amount="business">79</span></p>
+                            <p class="text-xs text-slate-500 mt-1">/ mes · USD</p>
+                            <p class="text-sm text-slate-700 mt-3" data-quote-extra="business">Sin dominios adicionales</p>
+                            <p class="hidden mt-3 text-xs font-bold text-slate-900" data-quote-chip="business"></p>
                         </div>
                     </div>
 
-                    <!-- Tarjeta Fundador -->
-                    <div class="bg-gradient-to-b from-blue-50/40 via-white to-white rounded-3xl p-7 md:p-8 border-2 border-brand-600 shadow-xl hover:shadow-2xl transition-all flex flex-col justify-between relative">
-                        
-                        <!-- Badge superior -->
+                    <div class="mt-6 rounded-2xl bg-slate-50 border border-slate-200 p-4 md:p-5" aria-live="polite">
+                        <p id="pricing-recommendation" class="text-sm md:text-base font-semibold text-slate-900">Para 1 dominio, la opción más económica es Fundador: US$25/mes.</p>
+                        <p id="pricing-versus" class="text-sm text-slate-600 mt-1">Entre Estándar y Business, Estándar es más conveniente: US$39 frente a US$79.</p>
+                        <p id="pricing-founding-note" class="hidden text-sm text-slate-600 mt-1"></p>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4 leading-relaxed">El registro todavía no pide la cantidad de dominios ni abre el plan Business. Esta calculadora estima el precio mensual; no crea una suscripción por dominio.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="precios" class="py-20 bg-white relative scroll-mt-24">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="text-center mb-10">
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">Tres planes, la misma suscripción</span>
+                    <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900 tracking-tight">Escala por dominios, sin cambiar de plan</h2>
+                    <p class="text-base text-slate-600 max-w-2xl mx-auto">Para <span data-domain-count>1</span> <span data-domain-noun>dominio</span>, el total de cada plan es el que muestra la tarjeta. Los precios están expresados en USD.</p>
+                </div>
+
+                <div class="pricing-grid">
+
+                    <article class="pricing-card bg-gradient-to-b from-blue-50/40 via-white to-white rounded-3xl p-7 md:p-8 border-2 border-brand-600 shadow-xl flex flex-col" data-plan-card="founding">
                         <div class="flex items-center justify-between gap-2 mb-4">
                             <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-brand-600 text-white text-[10px] font-bold uppercase tracking-wider shadow-sm">
-                                <i class="fa-solid fa-crown text-amber-300 text-xs"></i> Plan Fundador
+                                <i class="fa-solid fa-crown text-amber-300 text-xs"></i> Solo 20 plazas disponibles
                             </span>
                         </div>
-
-                        <div>
-                            <div class="mb-3">
-                                <h3 class="text-2xl font-bold text-slate-900 flex items-center gap-2">
-                                    Fundador
-                                </h3>
+                        <h3 class="text-2xl font-bold text-slate-900">Fundador</h3>
+                        <p class="text-sm text-slate-500 mt-3 mb-6 leading-relaxed">Para quienes quieren formar parte de InboxSeguro desde sus primeros pasos. Obtén una tarifa preferencial permanente y participa directamente en la evolución del producto.</p>
+                        <div class="mb-6 pb-6 border-b border-blue-100">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-base font-bold text-brand-600">US$</span>
+                                <span class="text-5xl font-extrabold text-slate-900 tracking-tight">25</span>
+                                <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
-                            <p class="text-xs md:text-sm text-slate-500 mb-6 leading-relaxed">
-                                Para clientes tempranos que buscan tarifa preferencial permanente y línea directa con el equipo fundador.
-                            </p>
-
-                            <div class="mb-6 pb-6 border-b border-blue-100">
-                                <div class="flex items-baseline gap-1">
-                                    <span class="text-base font-bold text-brand-600">US$</span>
-                                    <span class="text-5xl font-extrabold text-slate-900 tracking-tight">25</span>
-                                    <span class="text-sm font-medium text-slate-500">/ mes</span>
-                                    <span class="ml-2 text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-md">
-                                        Ahorra US$14/mes
-                                    </span>
-                                </div>
-                                <p class="text-xs text-brand-700 font-semibold mt-1.5">
-                                    ✓ Mientras mantengas tu suscripción activa
-                                </p>
-                            </div>
-
-                            <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">
-                                Agendar demo
-                            </a>
-                            <a href="https://panel.inboxseguro.com/register?plan=founding" aria-label="Probar 14 días gratis el plan Fundador" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-8">
-                                Probar 14 días gratis
-                            </a>
-
-                            <div class="space-y-3.5 text-xs md:text-sm text-slate-700">
-                                <p class="text-[11px] font-bold uppercase tracking-wider text-brand-700 mb-2">Beneficios exclusivos fundador:</p>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-blue-50">
-                                    <span class="font-medium text-slate-800">Monitoreo continuo</span>
-                                    <i class="fa-solid fa-circle-check text-emerald-500 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-blue-50">
-                                    <span class="font-medium text-slate-800">Inventario de fuentes</span>
-                                    <i class="fa-solid fa-circle-check text-emerald-500 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-blue-50">
-                                    <span class="font-medium text-slate-800">Alertas y cambios</span>
-                                    <i class="fa-solid fa-circle-check text-emerald-500 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-blue-50">
-                                    <span class="font-medium text-slate-800">Gestión DMARC</span>
-                                    <i class="fa-solid fa-circle-check text-emerald-500 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-blue-50">
-                                    <span class="font-semibold text-brand-700">Precio preferencial</span>
-                                    <span class="text-xs font-semibold text-brand-800 bg-brand-100/70 px-2.5 py-0.5 rounded-full text-right">Mientras suscripción activa</span>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-blue-50">
-                                    <span class="font-semibold text-brand-700">Acceso anticipado a nuevas funciones</span>
-                                    <i class="fa-solid fa-circle-check text-brand-600 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5 border-b border-blue-50">
-                                    <span class="font-semibold text-brand-700">Influencia en el roadmap</span>
-                                    <i class="fa-solid fa-circle-check text-brand-600 text-base"></i>
-                                </div>
-                                
-                                <div class="flex items-center justify-between py-1.5">
-                                    <span class="font-medium text-slate-800">Contacto directo con el equipo</span>
-                                    <span class="text-xs font-bold text-white bg-brand-600 px-2.5 py-0.5 rounded-full shadow-xs">Prioritario</span>
-                                </div>
-                            </div>
+                            <p class="text-xs text-slate-500 mt-2">USD · 1 dominio incluido · adicional US$5/mes</p>
+                            <p class="text-sm font-semibold text-slate-900 mt-3">Para <span data-domain-count>1</span> <span data-domain-noun>dominio</span>: US$<span data-quote-amount="founding">25</span>/mes</p>
+                            <p class="text-xs text-slate-600 mt-1" data-quote-extra="founding">Sin dominios adicionales</p>
+                            <p class="hidden mt-2 text-xs font-bold text-brand-700" data-quote-chip="founding"></p>
                         </div>
-                    </div>
+                        <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">Agendar demo</a>
+                        <a href="https://panel.inboxseguro.com/register?plan=founding" data-founding-cta data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Fundador" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-3">Probar 14 días gratis</a>
+                        <p data-founding-closed class="hidden text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl px-4 py-3 text-center mb-3">Plazas agotadas. Este plan ya no se puede contratar.</p>
+                        <div class="space-y-3 text-sm text-slate-700 mb-6">
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-brand-700">Incluye</p>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>1 dominio incluido.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Monitoreo continuo.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Inventario de fuentes.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Alertas y detección de cambios.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Gestión DMARC.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Acceso anticipado a nuevas funcionalidades.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Influencia en el roadmap.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Contacto directo y prioritario con el equipo fundador.</span></div>
+                        </div>
+                        <div class="mt-auto rounded-2xl bg-blue-50 border border-blue-100 p-4 text-xs text-slate-700 leading-relaxed">
+                            <p class="font-bold text-brand-700 mb-2">Beneficio exclusivo</p>
+                            <p>Cada dominio adicional cuesta US$5/mes. Sin límite de dominios adicionales. La tarifa de US$25 y el precio preferencial se mantienen mientras la suscripción permanezca activa.</p>
+                        </div>
+                    </article>
 
+                    <article class="pricing-card bg-white rounded-3xl p-7 md:p-8 border border-slate-200 shadow-sm flex flex-col" data-plan-card="standard">
+                        <div class="mb-4">
+                            <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Plan estándar</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">Estándar</h3>
+                        <p class="text-sm text-slate-500 mt-3 mb-6 leading-relaxed">Monitoreo continuo y control de envíos para mantener la reputación y seguridad de tu dominio.</p>
+                        <div class="mb-6 pb-6 border-b border-slate-100">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-base font-bold text-slate-400">US$</span>
+                                <span class="text-5xl font-extrabold text-slate-900 tracking-tight">39</span>
+                                <span class="text-sm font-medium text-slate-500">/ mes</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">USD · 1 dominio incluido · adicional US$10/mes</p>
+                            <p class="text-sm font-semibold text-slate-900 mt-3">Para <span data-domain-count>1</span> <span data-domain-noun>dominio</span>: US$<span data-quote-amount="standard">39</span>/mes</p>
+                            <p class="text-xs text-slate-600 mt-1" data-quote-extra="standard">Sin dominios adicionales</p>
+                            <p class="hidden mt-2 text-xs font-bold text-slate-700" data-quote-chip="standard"></p>
+                        </div>
+                        <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">Agendar demo</a>
+                        <a href="https://panel.inboxseguro.com/register?plan=starter" data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Estándar" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-6">Probar 14 días gratis</a>
+                        <div class="space-y-3 text-sm text-slate-700 mb-6">
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Incluye</p>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>1 dominio incluido.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Monitoreo continuo.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Inventario de fuentes.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Alertas y detección de cambios.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Gestión DMARC.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Posibilidad de agregar dominios adicionales.</span></div>
+                        </div>
+                        <p class="mt-auto text-xs text-slate-500 leading-relaxed">Cada dominio adicional cuesta US$10/mes, sobre la misma suscripción.</p>
+                    </article>
+
+                    <article class="pricing-card bg-white rounded-3xl p-7 md:p-8 border-2 border-slate-900 shadow-lg flex flex-col" data-plan-card="business">
+                        <div class="mb-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full bg-slate-900 text-white text-[10px] font-bold uppercase tracking-wider">Ideal para empresas y equipos TI</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900">Business</h3>
+                        <p class="text-sm text-slate-500 mt-3 mb-6 leading-relaxed">Administra y protege múltiples dominios desde un solo lugar, con una visión centralizada de tu infraestructura de correo.</p>
+                        <div class="mb-6 pb-6 border-b border-slate-100">
+                            <div class="flex items-baseline gap-1">
+                                <span class="text-base font-bold text-slate-900">US$</span>
+                                <span class="text-5xl font-extrabold text-slate-900 tracking-tight">79</span>
+                                <span class="text-sm font-medium text-slate-500">/ mes</span>
+                            </div>
+                            <p class="text-xs text-slate-500 mt-2">USD · 5 dominios incluidos · adicional US$8/mes</p>
+                            <p class="text-sm font-semibold text-slate-900 mt-3">Para <span data-domain-count>1</span> <span data-domain-noun>dominio</span>: US$<span data-quote-amount="business">79</span>/mes</p>
+                            <p class="text-xs text-slate-600 mt-1" data-quote-extra="business">Sin dominios adicionales</p>
+                            <p class="hidden mt-2 text-xs font-bold text-slate-900" data-quote-chip="business"></p>
+                        </div>
+                        <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all shadow-lg mb-3">Agendar demo</a>
+                        <a href="/contacto" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-3">Hablar con el equipo</a>
+                        <p class="text-xs text-slate-500 mb-6 leading-relaxed">El panel todavía no tiene un alta de Business ni permite elegir dominios al registrarse. La demo activa el plan sobre la suscripción principal, sin simular un checkout que no existe.</p>
+                        <div class="space-y-3 text-sm text-slate-700 mb-6">
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Incluye</p>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>5 dominios incluidos.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Monitoreo continuo por dominio.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Inventario de fuentes.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Alertas y detección de cambios.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Gestión DMARC.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Gestión multidominio.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Vista centralizada de dominios.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Informes consolidados.</span></div>
+                        </div>
+                        <p class="mt-auto text-xs text-slate-500 leading-relaxed">Cada dominio adicional cuesta US$8/mes. Sin límite comercial de dominios adicionales, sujeto a las capacidades y condiciones operativas del servicio.</p>
+                    </article>
                 </div>
 
-                <!-- Tarjeta Unificada: Qué incluye la plataforma (aplica a ambos planes) -->
-                <div class="max-w-4xl mx-auto bg-white rounded-3xl border border-slate-200 shadow-sm p-7 md:p-9 mb-14">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
-                        <div>
-                            <h4 class="text-lg font-bold text-slate-900">Qué incluye la plataforma</h4>
-                            <p class="text-xs text-slate-500">Funcionalidades centrales incluidas por igual en Esencial y Fundador</p>
-                        </div>
-                        <span class="self-start sm:self-center inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 text-indigo-700 rounded-full text-xs font-bold">
-                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span>
-                            14 días al conectar · Sin tarjeta
-                        </span>
-                    </div>
-
-                    <!-- Lista de Características en 2 Columnas -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs md:text-sm text-slate-600 mb-8">
-                        <div class="space-y-3.5">
-                            <div class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-check text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                                <span class="font-medium text-slate-900">1 dominio activo por suscripción</span>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-check text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                                <span>Inventario automático de remitentes</span>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-check text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                                <span>Alertas automáticas de suplantación y anomalías</span>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-check text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                                <span class="font-medium text-slate-900">Configuración guiada de SPF, DKIM y política DMARC</span>
-                            </div>
-                        </div>
-                        <div class="space-y-3.5">
-                            <div class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-check text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                                <span class="font-medium text-slate-900">Historial completo de envíos</span>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-check text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                                <span>Monitoreo continuo de reputación</span>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-check text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                                <span>Reportes ejecutivos mensuales</span>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <i class="fa-solid fa-check text-emerald-500 mt-0.5 flex-shrink-0"></i>
-                                <span>Soporte técnico por email y chat</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="flex justify-center gap-6 text-xs text-slate-400 flex-wrap pt-4 border-t border-slate-100">
-                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Sin contratos forzosos</span>
-                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Cancela con un clic</span>
-                        <span class="flex items-center gap-1.5"><i class="fa-solid fa-check text-emerald-500"></i> Activación guiada en 5 minutos</span>
-                    </div>
+                <div class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-6 text-sm text-slate-600 leading-relaxed">
+                    <p class="font-semibold text-slate-900 mb-1">Cómo se contrata</p>
+                    <p>La prueba de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=founding">Fundador</a> y la de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=starter">Estándar</a> usan el registro que ya está activo. Business se coordina con el equipo: el panel todavía no tiene ese plan. Los dominios adicionales no abren otra suscripción.</p>
                 </div>
 
-                <!-- Banner Custom/Personalizado -->
-                <div class="border border-slate-200 rounded-2xl bg-slate-50 p-6 md:p-8 flex flex-col md:flex-row justify-between items-center gap-6 max-w-2xl mx-auto mb-16 shadow-sm">
-                    <div class="text-center md:text-left">
-                        <h4 class="text-base font-bold text-slate-900 mb-1">¿Necesitas más dominios o volumen?</h4>
-                        <p class="text-xs text-slate-600">Diseñado para organizaciones que requieren un mayor volumen, más dominios o integraciones personalizadas.</p>
-                    </div>
-                    <a href="/contacto" class="whitespace-nowrap px-6 py-3 bg-slate-900 hover:bg-slate-800 text-white font-semibold rounded-xl text-xs transition-colors shadow-sm">
-                        Contactar a Ventas
-                    </a>
-                </div>
-
-                <!-- Boton Comparar features -->
-                <div class="text-center">
-                    <a href="#comparativa" id="toggleTableBtn" onclick="event.preventDefault(); toggleComparisonTable()" aria-controls="comparativa" class="inline-flex items-center gap-2 px-6 py-3 border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-slate-800 font-bold rounded-xl text-xs transition-all shadow-sm cursor-pointer">
-                        <span>Comparar todas las características</span>
-                        <svg id="tableArrow" class="w-4 h-4 transition-transform duration-200 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </a>
-                </div>
-
-                <!-- Tabla Comparativa Colapsable -->
-                <div id="comparativa" class="hidden scroll-mt-24 overflow-x-auto max-w-2xl mx-auto mt-10 rounded-2xl border border-slate-200 shadow-lg bg-white">
-                    <table class="w-full min-w-[500px] border-collapse text-left text-xs md:text-sm text-slate-700">
+                <div id="comparativa" class="scroll-mt-24 overflow-x-auto mt-14 rounded-2xl border border-slate-200 shadow-sm bg-white">
+                    <table class="pricing-table w-full border-collapse text-left text-xs md:text-sm text-slate-700">
                         <thead>
                             <tr class="bg-slate-900 text-white">
-                                <th class="p-4 font-bold">Características</th>
-                                <th class="p-4 font-bold text-center w-[30%]">Diagnóstico Gratuito (Web)</th>
-                                <th class="p-4 font-bold text-center w-[30%]">Esencial (plataforma)</th>
+                                <th class="p-4 font-bold">Característica</th>
+                                <th class="p-4 font-bold text-center">Fundador</th>
+                                <th class="p-4 font-bold text-center">Estándar</th>
+                                <th class="p-4 font-bold text-center">Business</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-slate-100">
-                            
-                            <!-- Fila 1 -->
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Verificación SPF/DKIM/DMARC</td>
-                                <td class="p-4 text-center text-slate-500">Puntual y Manual</td>
-                                <td class="p-4 text-center font-semibold text-slate-900">Automático y Continuo</td>
+                            <tr>
+                                <td class="p-4 font-semibold text-slate-900">Precio base</td>
+                                <td class="p-4 text-center font-semibold">US$25/mes</td>
+                                <td class="p-4 text-center font-semibold">US$39/mes</td>
+                                <td class="p-4 text-center font-semibold">US$79/mes</td>
                             </tr>
-                            
-                            <!-- Fila de Seguridad DMARC -->
-                            <tr class="bg-slate-50/30 hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Guía para política DMARC (cuarentena/rechazo)</td>
-                                <td class="p-4 text-center text-slate-500">Solo diagnóstico (no publica DNS)</td>
-                                <td class="p-4 text-center font-semibold text-slate-900">Configuración guiada para publicar p=quarantine/reject</td>
+                            <tr class="bg-slate-50/30">
+                                <td class="p-4 font-semibold text-slate-900">Dominios incluidos</td>
+                                <td class="p-4 text-center">1</td>
+                                <td class="p-4 text-center">1</td>
+                                <td class="p-4 text-center">5</td>
                             </tr>
-                            
-                            <!-- Fila 2 -->
-                            <tr class="bg-slate-50/30 hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Dominios Activos Monitoreados</td>
-                                <td class="p-4 text-center text-slate-500">Manual (de a uno)</td>
-                                <td class="p-4 text-center font-semibold text-slate-900">1 dominio activo</td>
+                            <tr>
+                                <td class="p-4 font-semibold text-slate-900">Dominio adicional</td>
+                                <td class="p-4 text-center">US$5/mes</td>
+                                <td class="p-4 text-center">US$10/mes</td>
+                                <td class="p-4 text-center">US$8/mes</td>
                             </tr>
-
-                            <!-- Fila 3 -->
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Inventario de Envíos Automatizado</td>
-                                <td class="p-4 text-center text-red-500"><i class="fa-solid fa-xmark"></i></td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500 text-lg"></i></td>
+                            <tr class="bg-slate-50/30">
+                                <td class="p-4 font-semibold text-slate-900">Monitoreo, inventario, alertas y DMARC</td>
+                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
+                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
+                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
                             </tr>
-
-                            <!-- Fila 4 -->
-                            <tr class="bg-slate-50/30 hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Alertas de Suplantación</td>
-                                <td class="p-4 text-center text-red-500"><i class="fa-solid fa-xmark"></i></td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500 text-lg"></i></td>
+                            <tr>
+                                <td class="p-4 font-semibold text-slate-900">Acceso anticipado, roadmap y contacto prioritario</td>
+                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
+                                <td class="p-4 text-center text-slate-300">—</td>
+                                <td class="p-4 text-center text-slate-300">—</td>
                             </tr>
-
-                            <!-- Fila 5 -->
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Historial de Datos DMARC</td>
-                                <td class="p-4 text-center text-slate-500">No disponible</td>
-                                <td class="p-4 text-center font-semibold text-slate-900">Completo (historial continuo)</td>
+                            <tr class="bg-slate-50/30">
+                                <td class="p-4 font-semibold text-slate-900">Gestión multidominio, vista centralizada e informes consolidados</td>
+                                <td class="p-4 text-center text-slate-300">—</td>
+                                <td class="p-4 text-center text-slate-300">—</td>
+                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
                             </tr>
-
-                            <!-- Fila 6 -->
-                            <tr class="bg-slate-50/30 hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Monitoreo de Listas Negras (Blacklists)</td>
-                                <td class="p-4 text-center text-red-500"><i class="fa-solid fa-xmark"></i></td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500 text-lg"></i></td>
+                            <tr>
+                                <td class="p-4 font-semibold text-slate-900">Alta en el panel</td>
+                                <td class="p-4 text-center">Prueba de 14 días, si hay plaza</td>
+                                <td class="p-4 text-center">Prueba de 14 días</td>
+                                <td class="p-4 text-center">Con el equipo</td>
                             </tr>
-
-                            <!-- Fila 7 -->
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Reportes Ejecutivos Mensuales</td>
-                                <td class="p-4 text-center text-red-500"><i class="fa-solid fa-xmark"></i></td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500 text-lg"></i></td>
-                            </tr>
-
-                            <!-- Fila 8 -->
-                            <tr class="bg-slate-50/30 hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Prueba Gratuita</td>
-                                <td class="p-4 text-center text-slate-500">Herramienta web libre</td>
-                                <td class="p-4 text-center font-semibold text-slate-900">14 días sin tarjeta</td>
-                            </tr>
-
-                            <!-- Fila 9 -->
-                            <tr class="hover:bg-slate-50 transition-colors">
-                                <td class="p-4 font-semibold text-slate-900">Soporte Técnico</td>
-                                <td class="p-4 text-center text-red-500"><i class="fa-solid fa-xmark"></i></td>
-                                <td class="p-4 text-center font-semibold text-slate-900">Email y Chat</td>
-                            </tr>
-
                         </tbody>
                     </table>
                 </div>
-
             </div>
         </section>
 
-        <!-- CTA Section to check SPF/DKIM/DMARC -->
         <section class="py-20 bg-slate-50 border-t border-slate-200">
             <div class="max-w-4xl mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold text-slate-900 mb-4">¿Quieres verificar tu dominio antes de registrarte?</h2>
                 <p class="text-slate-600 mb-8 max-w-xl mx-auto">
-                    Ejecuta un diagnóstico DNS gratuito y conoce el nivel de seguridad de tus firmas corporativas SPF, DKIM y DMARC hoy mismo.
+                    Ejecuta un diagnóstico DNS gratuito y conoce el nivel de seguridad de SPF, DKIM y DMARC antes de elegir un plan.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">
@@ -693,25 +673,12 @@
         }
 
 
+    </script>
+    <script src="/pricing.js"></script>
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
-            if (window.location.hash === '#comparativa') toggleComparisonTable();
+            if (window.InboxSeguroPricing) InboxSeguroPricing.mount(document);
         });
-
-        function toggleComparisonTable() {
-            const wrapper = document.getElementById('comparativa');
-            const arrow = document.getElementById('tableArrow');
-            
-            if (wrapper.classList.contains('hidden')) {
-                wrapper.classList.remove('hidden');
-                arrow.classList.add('rotate-180');
-                setTimeout(() => {
-                    wrapper.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                }, 50);
-            } else {
-                wrapper.classList.add('hidden');
-                arrow.classList.remove('rotate-180');
-            }
-        }
     </script>
     <script src="/analytics-config.js"></script>
     <script src="/analytics-loader.js"></script>
