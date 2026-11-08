@@ -36,18 +36,30 @@ assert.strictEqual(pricing.quote('standard', 6).total, 39 + 5 * 10);
 assert.strictEqual(pricing.quote('business', 6).total, 79 + 1 * 8);
 assert.strictEqual(pricing.quote('business', 6).extra, 1);
 
+assert.strictEqual(pricing.quote('standard', 4).available, true);
+assert.strictEqual(pricing.quote('standard', 5).available, false);
+assert.strictEqual(pricing.quote('founding', 20).available, true);
+assert.strictEqual(pricing.quote('founding', 20).total, 25 + 19 * 5);
+assert.strictEqual(pricing.quote('founding', 21).available, false);
+assert.strictEqual(pricing.PLANS.standard.maxDomains, 4);
+assert.strictEqual(pricing.PLANS.founding.maxDomains, 20);
+
+const atFour = totals(4, false);
+assert.strictEqual(atFour.standard, 69);
+assert.strictEqual(atFour.business, 79);
+assert.strictEqual(atFour.between, 'standard');
+assert.strictEqual(atFour.best, 'standard');
+
 const atFive = totals(5, true);
-assert.strictEqual(atFive.standard, 79);
 assert.strictEqual(atFive.business, 79);
-assert.strictEqual(atFive.between, 'tie');
+assert.strictEqual(atFive.between, 'upgrade');
 assert.strictEqual(atFive.best, 'founding');
-assert.strictEqual(pricing.recommend(5, false).best, 'standard');
-assert.notStrictEqual(pricing.recommend(5, false).best, 'business');
+assert.strictEqual(pricing.recommend(5, false).best, 'business');
+assert.strictEqual(pricing.recommend(5, false).quotes.standard.available, false);
 
 const atSix = totals(6, false);
-assert.strictEqual(atSix.between, 'business');
+assert.strictEqual(atSix.between, 'upgrade');
 assert.strictEqual(atSix.best, 'business');
-assert.ok(atSix.business < atSix.standard);
 
 assert.strictEqual(pricing.recommend(2, false).best, 'standard');
 assert.strictEqual(pricing.recommend(2, false).between, 'standard');
@@ -64,14 +76,16 @@ assert.strictEqual(pricing.registerUrl('founding'), 'https://panel.inboxseguro.c
 assert.strictEqual(pricing.registerUrl('business'), null);
 assert.strictEqual(pricing.PLANS.business.registerPlan, null);
 
-assert.strictEqual(pricing.chipText('business', pricing.recommend(6, true)), 'Más conveniente que Estándar');
+assert.strictEqual(pricing.chipText('standard', pricing.recommend(6, true)), 'Hasta 4 dominios');
 assert.strictEqual(pricing.chipText('founding', pricing.recommend(6, true)), 'Más económico');
-assert.strictEqual(pricing.chipText('business', pricing.recommend(5, false)), '');
-assert.strictEqual(pricing.chipText('standard', pricing.recommend(5, false)), 'Mismo precio');
+assert.strictEqual(pricing.chipText('business', pricing.recommend(5, false)), 'Más económico');
+assert.strictEqual(pricing.chipText('standard', pricing.recommend(4, false)), 'Más económico');
+assert.strictEqual(pricing.chipText('standard', pricing.recommend(4, true)), 'Más conveniente que Business');
+assert.strictEqual(pricing.chipText('founding', pricing.recommend(21, true)), 'Hasta 20 dominios');
 
 const lines = pricing.recommendationLines(pricing.recommend(6, true));
 assert.match(lines[0], /Fundador: US\$50\/mes/);
-assert.match(lines[1], /Business es más conveniente: US\$87 frente a US\$89/);
+assert.match(lines[1], /Estándar admite hasta 4 dominios/);
 assert.strictEqual(lines.length, 2);
 
 const closed = pricing.recommendationLines(pricing.recommend(6, false));
@@ -163,17 +177,19 @@ assert.strictEqual(openUi.root.querySelectorAll('[data-quote-chip="founding"]')[
 openUi.numberInput.value = '6';
 openUi.numberInput.listeners.input();
 assert.match(openUi.rec.textContent, /Fundador: US\$50\/mes/);
-assert.match(openUi.versus.textContent, /Business es más conveniente: US\$87 frente a US\$89/);
+assert.match(openUi.versus.textContent, /Estándar admite hasta 4 dominios/);
 assert.strictEqual(openUi.root.querySelectorAll('[data-quote-amount="business"]')[0].textContent, '87');
+assert.strictEqual(openUi.root.querySelectorAll('[data-quote-amount="standard"]')[0].textContent, 'Hasta 4');
 assert.strictEqual(openUi.root.querySelectorAll('[data-quote-extra="business"]')[0].textContent, '1 dominio adicional · US$8/mes');
 assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="business"]')[0].classList.contains('is-picked'), false);
 assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="founding"]')[0].classList.contains('is-picked'), true);
+assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="standard"]')[0].classList.contains('is-capped'), true);
 
-openUi.numberInput.value = '5';
+openUi.numberInput.value = '21';
 openUi.numberInput.listeners.input();
-assert.match(openUi.versus.textContent, /no hay diferencia de precio/);
-assert.strictEqual(openUi.root.querySelectorAll('[data-quote-chip="business"]')[0].textContent, '');
-assert.strictEqual(openUi.root.querySelectorAll('[data-quote-chip="business"]')[0].classList.contains('hidden'), true);
+assert.match(openUi.note.textContent, /hasta 20 dominios/);
+assert.strictEqual(openUi.root.querySelectorAll('[data-quote-chip="founding"]')[0].textContent, 'Hasta 20 dominios');
+assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="business"]')[0].classList.contains('is-picked'), true);
 
 const closedUi = mountHarness('closed');
 assert.strictEqual(closedUi.foundingCta.classList.contains('hidden'), true);

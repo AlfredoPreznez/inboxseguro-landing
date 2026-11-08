@@ -23,6 +23,7 @@
       base: 25,
       included: 1,
       extraPrice: 5,
+      maxDomains: 20,
       registerPlan: 'founding'
     },
     standard: {
@@ -31,6 +32,7 @@
       base: 39,
       included: 1,
       extraPrice: 10,
+      maxDomains: 4,
       registerPlan: 'starter'
     },
     business: {
@@ -39,6 +41,7 @@
       base: 79,
       included: 5,
       extraPrice: 8,
+      maxDomains: null,
       registerPlan: null
     }
   };
@@ -56,16 +59,19 @@
     var count = clampDomains(domains);
     var extra = Math.max(0, count - plan.included);
     var extraCost = extra * plan.extraPrice;
+    var available = !plan.maxDomains || count <= plan.maxDomains;
     return {
       id: plan.id,
       name: plan.name,
       domains: count,
       included: plan.included,
+      maxDomains: plan.maxDomains || null,
       extra: extra,
       extraPrice: plan.extraPrice,
       extraCost: extraCost,
       base: plan.base,
-      total: plan.base + extraCost
+      total: plan.base + extraCost,
+      available: available
     };
   }
 
@@ -82,13 +88,21 @@
       business: quote('business', domains)
     };
     var between;
-    if (quotes.business.total < quotes.standard.total) between = 'business';
+    if (!quotes.standard.available) between = 'upgrade';
+    else if (quotes.business.total < quotes.standard.total) between = 'business';
     else if (quotes.standard.total < quotes.business.total) between = 'standard';
     else between = 'tie';
 
-    var best = 'standard';
-    if (between === 'business') best = 'business';
-    if (foundingOpen && quotes.founding.total < quotes[best].total) {
+    var options = [];
+    if (quotes.standard.available) options.push('standard');
+    if (quotes.business.available) options.push('business');
+    var best = options.length ? options[0] : null;
+    for (var i = 1; i < options.length; i++) {
+      var other = options[i];
+      if (quotes[other].total < quotes[best].total) best = other;
+      else if (quotes[other].total === quotes[best].total && best === 'business' && other === 'standard') best = 'standard';
+    }
+    if (foundingOpen && quotes.founding.available && (best === null || quotes.founding.total < quotes[best].total)) {
       best = 'founding';
     }
 
@@ -111,6 +125,12 @@
   }
 
   function extraLabel(q) {
+    if (!q.available && q.id === 'standard') {
+      return 'Máximo 4 dominios: 1 incluido y 3 adicionales. Para más, cambia de plan.';
+    }
+    if (!q.available && q.id === 'founding') {
+      return 'La tarifa preferencial cubre hasta 20 dominios, sin cambiar de plan. Por encima, se acuerda con el equipo.';
+    }
     if (q.extra === 0) return 'Sin dominios adicionales';
     var noun = q.extra === 1 ? 'dominio adicional' : 'dominios adicionales';
     return q.extra + ' ' + noun + ' · US$' + q.extraCost + '/mes';
@@ -125,13 +145,18 @@
         'Para ' + n + ' ' + domainNoun(n) + ', Estándar y Business cuestan lo mismo: US$' +
         q.standard.total + '/mes.'
       );
-    } else {
+    } else if (result.best) {
       lines.push(
         'Para ' + n + ' ' + domainNoun(n) + ', la opción más económica es ' +
         q[result.best].name + ': US$' + q[result.best].total + '/mes.'
       );
     }
-    if (result.between === 'tie') {
+    if (!q.standard.available) {
+      lines.push(
+        'Estándar admite hasta 4 dominios: 1 incluido y 3 adicionales. Con ' +
+        n + ' ' + domainNoun(n) + ' conviene cambiar de plan.'
+      );
+    } else if (result.between === 'tie') {
       lines.push(
         'Entre Estándar y Business no hay diferencia de precio (US$' + q.standard.total +
         '/mes). Business no conviene más solo por ser un plan superior.'
@@ -149,11 +174,19 @@
     }
     if (!result.foundingOpen) {
       lines.push('El Plan Fundador no se puede contratar: las plazas están agotadas.');
+    } else if (!q.founding.available) {
+      lines.push('Fundador mantiene US$5 por dominio adicional hasta 20 dominios, sin cambiar de plan. Por encima de 20 se acuerda con el equipo.');
     }
     return lines;
   }
 
   function chipText(planId, result) {
+    var q = result.quotes[planId];
+    if (!q.available) {
+      if (planId === 'standard') return 'Hasta 4 dominios';
+      if (planId === 'founding') return 'Hasta 20 dominios';
+      return '';
+    }
     if (result.best === planId) {
       if (result.between === 'tie' && planId !== 'founding') return 'Mismo precio';
       return 'Más económico';
@@ -187,7 +220,19 @@
         var id = ids[k];
         var q = result.quotes[id];
         var amounts = root.querySelectorAll('[data-quote-amount="' + id + '"]');
-        for (var a = 0; a < amounts.length; a++) amounts[a].textContent = String(q.total);
+        for (var a = 0; a < amounts.length; a++) {
+          amounts[a].textContent = q.available ? String(q.total) : ('Hasta ' + q.maxDomains);
+        }
+        var currencies = root.querySelectorAll('[data-quote-currency="' + id + '"]');
+        for (var u = 0; u < currencies.length; u++) {
+          if (q.available) currencies[u].classList.remove('hidden');
+          else currencies[u].classList.add('hidden');
+        }
+        var sentences = root.querySelectorAll('[data-quote-sentence="' + id + '"]');
+        var sentence = q.available
+          ? ('Para ' + q.domains + ' ' + domainNoun(q.domains) + ': US$' + q.total + '/mes')
+          : ('Hasta ' + q.maxDomains + ' ' + domainNoun(q.maxDomains) + ' en este plan');
+        for (var s = 0; s < sentences.length; s++) sentences[s].textContent = sentence;
         var extras = root.querySelectorAll('[data-quote-extra="' + id + '"]');
         for (var e = 0; e < extras.length; e++) extras[e].textContent = extraLabel(q);
         var chips = root.querySelectorAll('[data-quote-chip="' + id + '"]');
@@ -201,6 +246,8 @@
         for (var p = 0; p < cards.length; p++) {
           if (result.best === id) cards[p].classList.add('is-picked');
           else cards[p].classList.remove('is-picked');
+          if (q.available) cards[p].classList.remove('is-capped');
+          else cards[p].classList.add('is-capped');
         }
       }
 
