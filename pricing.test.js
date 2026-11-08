@@ -18,7 +18,7 @@ function totals(n, open) {
 assert.deepStrictEqual(totals(1, true), {
   founding: 25,
   standard: 39,
-  business: 79,
+  business: 76,
   foundingExtra: 0,
   standardExtra: 0,
   businessExtra: 0,
@@ -28,12 +28,12 @@ assert.deepStrictEqual(totals(1, true), {
 
 assert.strictEqual(pricing.quote('founding', 4).total, 25 + 3 * 5);
 assert.strictEqual(pricing.quote('standard', 4).total, 39 + 3 * 10);
-assert.strictEqual(pricing.quote('business', 4).total, 79);
+assert.strictEqual(pricing.quote('business', 4).total, 76);
 assert.strictEqual(pricing.quote('business', 4).extraCost, 0);
 
 assert.strictEqual(pricing.quote('founding', 6).total, 25 + 5 * 5);
 assert.strictEqual(pricing.quote('standard', 6).total, 39 + 5 * 10);
-assert.strictEqual(pricing.quote('business', 6).total, 79 + 1 * 7);
+assert.strictEqual(pricing.quote('business', 6).total, 76 + 1 * 7);
 assert.strictEqual(pricing.quote('business', 6).extra, 1);
 
 assert.strictEqual(pricing.quote('standard', 4).available, true);
@@ -49,12 +49,12 @@ assert.strictEqual(pricing.PLANS.business.extraPrice, 7);
 
 const atFour = totals(4, false);
 assert.strictEqual(atFour.standard, 69);
-assert.strictEqual(atFour.business, 79);
+assert.strictEqual(atFour.business, 76);
 assert.strictEqual(atFour.between, 'standard');
 assert.strictEqual(atFour.best, 'standard');
 
 const atFive = totals(5, true);
-assert.strictEqual(atFive.business, 79);
+assert.strictEqual(atFive.business, 76);
 assert.strictEqual(atFive.between, 'upgrade');
 assert.strictEqual(atFive.best, 'founding');
 assert.strictEqual(pricing.recommend(5, false).best, 'business');
@@ -93,7 +93,7 @@ assert.match(lines[1], /Estándar llega a 4 dominios/);
 assert.strictEqual(lines.length, 2);
 
 const closed = pricing.recommendationLines(pricing.recommend(6, false));
-assert.match(closed[0], /Business: US\$86\/mes/);
+assert.match(closed[0], /Business: US\$83\/mes/);
 assert.match(closed[2], /plazas están agotadas/);
 
 assert.strictEqual(pricing.extraLabel(pricing.quote('business', 7)), '2 dominios adicionales · US$14/mes');
@@ -182,12 +182,13 @@ openUi.numberInput.value = '6';
 openUi.numberInput.listeners.input();
 assert.match(openUi.rec.textContent, /Fundador: US\$50\/mes/);
 assert.match(openUi.versus.textContent, /Estándar llega a 4 dominios/);
-assert.strictEqual(openUi.root.querySelectorAll('[data-quote-amount="business"]')[0].textContent, '86');
+assert.strictEqual(openUi.root.querySelectorAll('[data-quote-amount="business"]')[0].textContent, '83');
 assert.strictEqual(openUi.root.querySelectorAll('[data-quote-amount="standard"]')[0].textContent, 'Hasta 4');
 assert.strictEqual(openUi.root.querySelectorAll('[data-quote-extra="business"]')[0].textContent, '1 dominio adicional · US$7/mes');
 assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="business"]')[0].classList.contains('is-picked'), false);
 assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="founding"]')[0].classList.contains('is-picked'), true);
 assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="standard"]')[0].classList.contains('is-capped'), true);
+assert.strictEqual(openUi.root.querySelectorAll('[data-plan-card="standard"]')[0].classList.contains('hidden'), true);
 
 openUi.numberInput.value = '21';
 openUi.numberInput.listeners.input();
@@ -200,7 +201,7 @@ assert.strictEqual(closedUi.foundingCta.classList.contains('hidden'), true);
 assert.strictEqual(closedUi.foundingClosed.classList.contains('hidden'), false);
 closedUi.numberInput.value = '6';
 closedUi.numberInput.listeners.input();
-assert.match(closedUi.rec.textContent, /Business: US\$86\/mes/);
+assert.match(closedUi.rec.textContent, /Business: US\$83\/mes/);
 assert.match(closedUi.note.textContent, /plazas están agotadas/);
 assert.strictEqual(closedUi.root.querySelectorAll('[data-plan-card="business"]')[0].classList.contains('is-picked'), true);
 

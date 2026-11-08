@@ -39,7 +39,7 @@
     business: {
       id: 'business',
       name: 'Business',
-      base: 79,
+      base: 76,
       included: 5,
       extraPrice: 7,
       maxDomains: 40,
@@ -256,9 +256,19 @@
         for (var p = 0; p < cards.length; p++) {
           if (result.best === id) cards[p].classList.add('is-picked');
           else cards[p].classList.remove('is-picked');
-          if (q.available) cards[p].classList.remove('is-capped');
-          else cards[p].classList.add('is-capped');
+          if (q.available) {
+            cards[p].classList.remove('is-capped');
+            cards[p].classList.remove('hidden');
+          } else {
+            cards[p].classList.add('is-capped');
+            cards[p].classList.add('hidden');
+          }
         }
+      }
+      var grids = root.querySelectorAll('.pricing-grid, .quote-grid');
+      for (var g = 0; g < grids.length; g++) {
+        var shown = grids[g].querySelectorAll('[data-plan-card]:not(.hidden)').length;
+        grids[g].setAttribute('data-shown', String(shown));
       }
 
       var lines = recommendationLines(result);

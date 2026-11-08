@@ -47,6 +47,15 @@
             .quote-grid {
                 grid-template-columns: repeat(3, minmax(0, 1fr));
             }
+            .pricing-grid[data-shown="2"],
+            .quote-grid[data-shown="2"] {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .pricing-grid[data-shown="1"],
+            .quote-grid[data-shown="1"] {
+                grid-template-columns: minmax(0, 32rem);
+                justify-content: center;
+            }
         }
         .pricing-card.is-picked,
         .quote-card.is-picked {
@@ -126,9 +135,9 @@
     {
       "@type": "Offer",
       "name": "Plan Business",
-      "price": "79",
+      "price": "76",
       "priceCurrency": "USD",
-      "description": "US$79 al mes con 5 dominios incluidos. Cada dominio adicional cuesta US$7 al mes, hasta 40 dominios en total, sobre la misma suscripción."
+      "description": "US$76 al mes con 5 dominios incluidos. Cada dominio adicional cuesta US$7 al mes, hasta 40 dominios en total."
     }
   ]
 }
@@ -151,7 +160,7 @@
     {
       "@type": "Question",
       "name": "¿Cuánto cuesta InboxSeguro al mes?",
-      "acceptedAnswer": {"@type": "Answer", "text": "Fundador parte en US$25, Estándar en US$39 y Business en US$79. Es una sola suscripción mensual por cliente."}
+      "acceptedAnswer": {"@type": "Answer", "text": "Fundador parte en US$25, Estándar en US$39 y Business en US$76. Cada cliente elige un plan."}
     },
     {
       "@type": "Question",
@@ -343,16 +352,77 @@
                     Precios de monitoreo y seguridad de correo por dominio
                 </h1>
                 <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
-                    Fundador desde US$25, Estándar desde US$39 y Business desde US$79 al mes. Una suscripción para SPF, DKIM y DMARC, y dominios adicionales sobre el mismo plan.
+                    Fundador desde US$25, Estándar desde US$39 y Business desde US$76 al mes. El precio sigue la cantidad de dominios del plan.
                 </p>
                 <p class="text-sm text-slate-400 mt-6">Los precios están en USD y se facturan cada mes. La prueba de 14 días abre el registro del plan.</p>
             </div>
         </section>
 
+        <section id="calculadora" class="py-16 bg-slate-50 border-b border-slate-200 scroll-mt-24">
+            <div class="max-w-5xl mx-auto px-4">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Calcula el precio según tus dominios</h2>
+                    <p class="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">Estándar llega a 4 dominios. Fundador llega a 10. Business llega a 40.</p>
+                </div>
+
+                <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 md:p-8">
+                    <div class="flex items-center justify-center gap-3 mb-4">
+                        <button type="button" data-domain-step="-1" aria-label="Quitar un dominio" class="w-12 h-12 shrink-0 rounded-xl border border-slate-300 bg-white text-xl font-bold text-slate-800 hover:bg-slate-50 cursor-pointer">−</button>
+                        <div class="text-center">
+                            <label for="domain-count" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Dominios a monitorear</label>
+                            <input id="domain-count" class="domain-count-input" type="number" min="1" max="40" value="1" inputmode="numeric" aria-describedby="pricing-recommendation">
+                        </div>
+                        <button type="button" data-domain-step="1" aria-label="Agregar un dominio" class="w-12 h-12 shrink-0 rounded-xl border border-slate-300 bg-white text-xl font-bold text-slate-800 hover:bg-slate-50 cursor-pointer">+</button>
+                    </div>
+                    <input id="domain-range" class="domain-range" type="range" min="1" max="40" value="1" aria-label="Cantidad de dominios">
+                    <div class="flex flex-wrap justify-center gap-2 mt-4">
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="1" aria-pressed="true">1</button>
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="3" aria-pressed="false">3</button>
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="5" aria-pressed="false">5</button>
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="10" aria-pressed="false">10</button>
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="20" aria-pressed="false">20</button>
+                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="40" aria-pressed="false">40</button>
+                    </div>
+
+                    <div class="quote-grid mt-8">
+                        <div class="quote-card" data-plan-card="founding">
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-brand-700 mb-2">Fundador</p>
+                            <p class="text-3xl font-extrabold text-slate-900 tracking-tight"><span data-quote-currency="founding">US$</span><span data-quote-amount="founding">25</span></p>
+                            <p class="text-xs text-slate-500 mt-1">/ mes · USD</p>
+                            <p class="text-sm text-slate-700 mt-3" data-quote-extra="founding">Sin dominios adicionales</p>
+                            <p class="hidden mt-3 text-xs font-bold text-brand-700" data-quote-chip="founding"></p>
+                        </div>
+                        <div class="quote-card" data-plan-card="standard">
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Estándar</p>
+                            <p class="text-3xl font-extrabold text-slate-900 tracking-tight"><span data-quote-currency="standard">US$</span><span data-quote-amount="standard">39</span></p>
+                            <p class="text-xs text-slate-500 mt-1">/ mes · USD</p>
+                            <p class="text-sm text-slate-700 mt-3" data-quote-extra="standard">Sin dominios adicionales</p>
+                            <p class="hidden mt-3 text-xs font-bold text-slate-700" data-quote-chip="standard"></p>
+                        </div>
+                        <div class="quote-card" data-plan-card="business">
+                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-900 mb-2">Business</p>
+                            <p class="text-3xl font-extrabold text-slate-900 tracking-tight"><span data-quote-currency="business">US$</span><span data-quote-amount="business">76</span></p>
+                            <p class="text-xs text-slate-500 mt-1">/ mes · USD</p>
+                            <p class="text-sm text-slate-700 mt-3" data-quote-extra="business">Sin dominios adicionales</p>
+                            <p class="hidden mt-3 text-xs font-bold text-slate-900" data-quote-chip="business"></p>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 rounded-2xl bg-slate-50 border border-slate-200 p-4 md:p-5" aria-live="polite">
+                        <p id="pricing-recommendation" class="text-sm md:text-base font-semibold text-slate-900">Para 1 dominio, la opción más económica es Fundador: US$25/mes.</p>
+                        <p id="pricing-versus" class="text-sm text-slate-600 mt-1">Entre Estándar y Business, Estándar es más conveniente: US$39 frente a US$76.</p>
+                        <p id="pricing-founding-note" class="hidden text-sm text-slate-600 mt-1"></p>
+                    </div>
+                    <p class="text-xs text-slate-500 mt-4 leading-relaxed">La cantidad elegida se envía al registro del plan. Esta calculadora estima el precio mensual.</p>
+                </div>
+            </div>
+        </section>
+
+
         <section id="precios" class="py-20 bg-white relative scroll-mt-24">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-10">
-                    <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">Tres planes, la misma suscripción</span>
+                    <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">El precio sigue tus dominios</span>
                     <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900 tracking-tight">Escala por dominios, con un límite claro en Estándar</h2>
                     <p class="text-base text-slate-600 max-w-2xl mx-auto">Para <span data-domain-count>1</span> <span data-domain-noun>dominio</span>, el total de cada plan es el que muestra la tarjeta. Los precios están expresados en USD.</p>
                 </div>
@@ -369,8 +439,8 @@
                         <p class="text-sm text-slate-500 mt-3 mb-6 leading-relaxed">Para quienes quieren formar parte de InboxSeguro desde sus primeros pasos. Obtén una tarifa preferencial permanente y participa directamente en la evolución del producto.</p>
                         <div class="mb-6 pb-6 border-b border-blue-100">
                             <div class="flex items-baseline gap-1">
-                                <span class="text-base font-bold text-brand-600">US$</span>
-                                <span class="text-5xl font-extrabold text-slate-900 tracking-tight">25</span>
+                                <span class="text-base font-bold text-brand-600" data-quote-currency="founding">US$</span>
+                                <span class="text-5xl font-extrabold text-slate-900 tracking-tight" data-quote-amount="founding">25</span>
                                 <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
                             <p class="text-xs text-slate-500 mt-2">USD · 1 incluido · adicional US$5/mes · máximo 10</p>
@@ -407,8 +477,8 @@
                         <p class="text-sm text-slate-500 mt-3 mb-6 leading-relaxed">Monitoreo continuo y control de envíos para mantener la reputación y seguridad de tu dominio.</p>
                         <div class="mb-6 pb-6 border-b border-slate-100">
                             <div class="flex items-baseline gap-1">
-                                <span class="text-base font-bold text-slate-400">US$</span>
-                                <span class="text-5xl font-extrabold text-slate-900 tracking-tight">39</span>
+                                <span class="text-base font-bold text-slate-400" data-quote-currency="standard">US$</span>
+                                <span class="text-5xl font-extrabold text-slate-900 tracking-tight" data-quote-amount="standard">39</span>
                                 <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
                             <p class="text-xs text-slate-500 mt-2">USD · 1 incluido · adicional US$10/mes · máximo 4</p>
@@ -438,12 +508,12 @@
                         <p class="text-sm text-slate-500 mt-3 mb-6 leading-relaxed">Administra y protege múltiples dominios desde un solo lugar, con una visión centralizada de tu infraestructura de correo.</p>
                         <div class="mb-6 pb-6 border-b border-slate-100">
                             <div class="flex items-baseline gap-1">
-                                <span class="text-base font-bold text-slate-900">US$</span>
-                                <span class="text-5xl font-extrabold text-slate-900 tracking-tight">79</span>
+                                <span class="text-base font-bold text-slate-900" data-quote-currency="business">US$</span>
+                                <span class="text-5xl font-extrabold text-slate-900 tracking-tight" data-quote-amount="business">76</span>
                                 <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
                             <p class="text-xs text-slate-500 mt-2">USD · 5 incluidos · adicional US$7/mes · máximo 40</p>
-                            <p class="text-sm font-semibold text-slate-900 mt-3" data-quote-sentence="business">Para 1 dominio: US$79/mes</p>
+                            <p class="text-sm font-semibold text-slate-900 mt-3" data-quote-sentence="business">Para 1 dominio: US$76/mes</p>
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="business">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-slate-900" data-quote-chip="business"></p>
                         </div>
@@ -467,7 +537,7 @@
 
                 <div class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-6 text-sm text-slate-600 leading-relaxed">
                     <p class="font-semibold text-slate-900 mb-1">Cómo se contrata</p>
-                    <p>La prueba de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=founding&domains=1">Fundador</a>, la de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=starter&domains=1">Estándar</a> y la de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=business&domains=1">Business</a> abren el registro del panel. La cantidad de la calculadora viaja en el enlace y queda en la misma suscripción.</p>
+                    <p>La prueba de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=founding&domains=1">Fundador</a>, la de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=starter&domains=1">Estándar</a> y la de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=business&domains=1">Business</a> abre el registro de ese plan. La cantidad de la calculadora viaja en el enlace.</p>
                 </div>
 
                 <div id="comparativa" class="scroll-mt-24 overflow-x-auto mt-14 rounded-2xl border border-slate-200 shadow-sm bg-white">
@@ -485,7 +555,7 @@
                                 <td class="p-4 font-semibold text-slate-900">Precio base</td>
                                 <td class="p-4 text-center font-semibold">US$25/mes</td>
                                 <td class="p-4 text-center font-semibold">US$39/mes</td>
-                                <td class="p-4 text-center font-semibold">US$79/mes</td>
+                                <td class="p-4 text-center font-semibold">US$76/mes</td>
                             </tr>
                             <tr class="bg-slate-50/30">
                                 <td class="p-4 font-semibold text-slate-900">Dominios incluidos</td>
@@ -535,73 +605,13 @@
             </div>
         </section>
 
-        <section id="calculadora" class="py-16 bg-slate-50 border-b border-slate-200 scroll-mt-24">
-            <div class="max-w-5xl mx-auto px-4">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Calcula el precio según tus dominios</h2>
-                    <p class="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">Estándar llega a 4 dominios. Fundador llega a 10. Business llega a 40.</p>
-                </div>
-
-                <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 md:p-8">
-                    <div class="flex items-center justify-center gap-3 mb-4">
-                        <button type="button" data-domain-step="-1" aria-label="Quitar un dominio" class="w-12 h-12 shrink-0 rounded-xl border border-slate-300 bg-white text-xl font-bold text-slate-800 hover:bg-slate-50 cursor-pointer">−</button>
-                        <div class="text-center">
-                            <label for="domain-count" class="block text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Dominios a monitorear</label>
-                            <input id="domain-count" class="domain-count-input" type="number" min="1" max="40" value="1" inputmode="numeric" aria-describedby="pricing-recommendation">
-                        </div>
-                        <button type="button" data-domain-step="1" aria-label="Agregar un dominio" class="w-12 h-12 shrink-0 rounded-xl border border-slate-300 bg-white text-xl font-bold text-slate-800 hover:bg-slate-50 cursor-pointer">+</button>
-                    </div>
-                    <input id="domain-range" class="domain-range" type="range" min="1" max="40" value="1" aria-label="Cantidad de dominios">
-                    <div class="flex flex-wrap justify-center gap-2 mt-4">
-                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="1" aria-pressed="true">1</button>
-                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="3" aria-pressed="false">3</button>
-                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="5" aria-pressed="false">5</button>
-                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="10" aria-pressed="false">10</button>
-                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="20" aria-pressed="false">20</button>
-                        <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="40" aria-pressed="false">40</button>
-                    </div>
-
-                    <div class="quote-grid mt-8">
-                        <div class="quote-card" data-plan-card="founding">
-                            <p class="text-[11px] font-bold uppercase tracking-wider text-brand-700 mb-2">Fundador</p>
-                            <p class="text-3xl font-extrabold text-slate-900 tracking-tight"><span data-quote-currency="founding">US$</span><span data-quote-amount="founding">25</span></p>
-                            <p class="text-xs text-slate-500 mt-1">/ mes · USD</p>
-                            <p class="text-sm text-slate-700 mt-3" data-quote-extra="founding">Sin dominios adicionales</p>
-                            <p class="hidden mt-3 text-xs font-bold text-brand-700" data-quote-chip="founding"></p>
-                        </div>
-                        <div class="quote-card" data-plan-card="standard">
-                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">Estándar</p>
-                            <p class="text-3xl font-extrabold text-slate-900 tracking-tight"><span data-quote-currency="standard">US$</span><span data-quote-amount="standard">39</span></p>
-                            <p class="text-xs text-slate-500 mt-1">/ mes · USD</p>
-                            <p class="text-sm text-slate-700 mt-3" data-quote-extra="standard">Sin dominios adicionales</p>
-                            <p class="hidden mt-3 text-xs font-bold text-slate-700" data-quote-chip="standard"></p>
-                        </div>
-                        <div class="quote-card" data-plan-card="business">
-                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-900 mb-2">Business</p>
-                            <p class="text-3xl font-extrabold text-slate-900 tracking-tight"><span data-quote-currency="business">US$</span><span data-quote-amount="business">79</span></p>
-                            <p class="text-xs text-slate-500 mt-1">/ mes · USD</p>
-                            <p class="text-sm text-slate-700 mt-3" data-quote-extra="business">Sin dominios adicionales</p>
-                            <p class="hidden mt-3 text-xs font-bold text-slate-900" data-quote-chip="business"></p>
-                        </div>
-                    </div>
-
-                    <div class="mt-6 rounded-2xl bg-slate-50 border border-slate-200 p-4 md:p-5" aria-live="polite">
-                        <p id="pricing-recommendation" class="text-sm md:text-base font-semibold text-slate-900">Para 1 dominio, la opción más económica es Fundador: US$25/mes.</p>
-                        <p id="pricing-versus" class="text-sm text-slate-600 mt-1">Entre Estándar y Business, Estándar es más conveniente: US$39 frente a US$79.</p>
-                        <p id="pricing-founding-note" class="hidden text-sm text-slate-600 mt-1"></p>
-                    </div>
-                    <p class="text-xs text-slate-500 mt-4 leading-relaxed">La cantidad elegida se envía al registro del panel y queda en la misma suscripción. Esta calculadora estima el precio mensual.</p>
-                </div>
-            </div>
-        </section>
-
         <section id="preguntas-precios" class="py-16 bg-white border-t border-slate-200">
             <div class="max-w-3xl mx-auto px-4">
                 <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-8">Preguntas sobre los precios</h2>
                 <div class="divide-y divide-slate-200 border-y border-slate-200">
                     <details class="group py-4">
                         <summary class="cursor-pointer font-semibold text-slate-900">¿Cuánto cuesta InboxSeguro al mes?</summary>
-                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">Fundador parte en US$25, Estándar en US$39 y Business en US$79. Es una sola suscripción mensual por cliente.</p>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">Fundador parte en US$25, Estándar en US$39 y Business en US$76. Cada cliente elige un plan.</p>
                     </details>
                     <details class="group py-4">
                         <summary class="cursor-pointer font-semibold text-slate-900">¿Cuántos dominios incluye cada plan?</summary>
@@ -623,7 +633,7 @@
             <div class="max-w-4xl mx-auto px-4 text-center">
                 <h2 class="text-3xl font-bold text-slate-900 mb-4">Empieza con la prueba de 14 días</h2>
                 <p class="text-slate-600 mb-8 max-w-xl mx-auto">
-                    El registro abre el plan y la cantidad de dominios que elegiste. El cobro mensual queda en esa misma suscripción.
+                    El registro abre el plan y la cantidad de dominios que elegiste.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
                     <a href="https://panel.inboxseguro.com/register?plan=starter&domains=1" data-seo-event="cta_register" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">
