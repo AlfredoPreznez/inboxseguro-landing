@@ -52,9 +52,9 @@
         .quote-card.is-picked {
             box-shadow: 0 0 0 2px #2563eb, 0 18px 40px -24px rgba(37, 99, 235, 0.45);
         }
-        .quote-card.is-capped,
-        .pricing-card.is-capped {
-            opacity: 0.72;
+        .quote-card.is-capped .text-3xl,
+        .pricing-card.is-capped [data-quote-sentence] {
+            color: #64748b;
         }
         .domain-range {
             width: 100%;
@@ -114,7 +114,7 @@
       "name": "Plan Fundador",
       "price": "25",
       "priceCurrency": "USD",
-      "description": "US$25 al mes con 1 dominio incluido y hasta 9 adicionales, 10 dominios en total, sin cambiar de plan."
+      "description": "US$25 al mes. Total máximo: 10 dominios. Cada adicional cuesta US$5."
     },
     {
       "@type": "Offer",
@@ -156,7 +156,7 @@
     {
       "@type": "Question",
       "name": "¿Cuántos dominios incluye cada plan?",
-      "acceptedAnswer": {"@type": "Answer", "text": "Fundador incluye 1 dominio y permite hasta 9 adicionales, 10 en total. Estándar incluye 1 y llega a 4. Business incluye 5 y llega a 40."}
+      "acceptedAnswer": {"@type": "Answer", "text": "Fundador llega a 10 dominios. Estándar llega a 4. Business llega a 40."}
     },
     {
       "@type": "Question",
@@ -373,7 +373,7 @@
                                 <span class="text-5xl font-extrabold text-slate-900 tracking-tight">25</span>
                                 <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-2">USD · 1 dominio incluido · 9 adicionales a US$5/mes · 10 en total</p>
+                            <p class="text-xs text-slate-500 mt-2">USD · 1 incluido · adicional US$5/mes · máximo 10</p>
                             <p class="text-sm font-semibold text-slate-900 mt-3" data-quote-sentence="founding">Para 1 dominio: US$25/mes</p>
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="founding">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-brand-700" data-quote-chip="founding"></p>
@@ -396,7 +396,7 @@
                         </div>
                         <div class="mt-auto rounded-2xl bg-blue-50 border border-blue-100 p-4 text-xs text-slate-700 leading-relaxed">
                             <p class="font-bold text-brand-700 mb-2">Beneficio exclusivo</p>
-                            <p>El máximo adicional es 9, porque con el dominio principal son 10. Cada adicional cuesta US$5/mes, sin cambiar de plan. La tarifa de US$25 se mantiene mientras la suscripción permanezca activa. Por encima de 10 dominios se acuerda con el equipo.</p>
+                            <p>Total máximo: 10 dominios. Cada adicional cuesta US$5/mes.</p>
                         </div>
                     </article>
 
@@ -412,7 +412,7 @@
                                 <span class="text-5xl font-extrabold text-slate-900 tracking-tight">39</span>
                                 <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-2">USD · 1 dominio incluido · hasta 3 adicionales a US$10/mes</p>
+                            <p class="text-xs text-slate-500 mt-2">USD · 1 incluido · adicional US$10/mes · máximo 4</p>
                             <p class="text-sm font-semibold text-slate-900 mt-3" data-quote-sentence="standard">Para 1 dominio: US$39/mes</p>
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="standard">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-slate-700" data-quote-chip="standard"></p>
@@ -429,7 +429,7 @@
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Gestión DMARC.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Hasta 3 dominios adicionales.</span></div>
                         </div>
-                        <p class="mt-auto text-xs text-slate-500 leading-relaxed">Máximo 4 dominios en total. Cada adicional cuesta US$10/mes, sobre la misma suscripción. A partir del quinto dominio, el paso siguiente es cambiar a Business.</p>
+                        <p class="mt-auto text-xs text-slate-500 leading-relaxed">Total máximo: 4 dominios. Cada adicional cuesta US$10/mes.</p>
                     </article>
 
                     <article class="pricing-card bg-white rounded-3xl p-7 md:p-8 border-2 border-slate-900 shadow-lg flex flex-col" data-plan-card="business">
@@ -444,7 +444,7 @@
                                 <span class="text-5xl font-extrabold text-slate-900 tracking-tight">79</span>
                                 <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-2">USD · 5 dominios incluidos · adicional US$7/mes · hasta 40</p>
+                            <p class="text-xs text-slate-500 mt-2">USD · 5 incluidos · adicional US$7/mes · máximo 40</p>
                             <p class="text-sm font-semibold text-slate-900 mt-3" data-quote-sentence="business">Para 1 dominio: US$79/mes</p>
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="business">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-slate-900" data-quote-chip="business"></p>
@@ -464,7 +464,7 @@
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Vista centralizada de dominios.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Informes consolidados.</span></div>
                         </div>
-                        <p class="mt-auto text-xs text-slate-500 leading-relaxed">Cada dominio adicional cuesta US$7/mes, hasta 40 dominios en total. Por encima de ese cupo se acuerda con el equipo.</p>
+                        <p class="mt-auto text-xs text-slate-500 leading-relaxed">Total máximo: 40 dominios. Cada adicional cuesta US$7/mes.</p>
                     </article>
                 </div>
 
@@ -498,9 +498,9 @@
                             </tr>
                             <tr>
                                 <td class="p-4 font-semibold text-slate-900">Dominio adicional</td>
-                                <td class="p-4 text-center">US$5/mes, hasta 9 adicionales (10 en total)</td>
-                                <td class="p-4 text-center">US$10/mes, hasta 3 adicionales</td>
-                                <td class="p-4 text-center">US$7/mes, hasta 40 dominios</td>
+                                <td class="p-4 text-center">US$5/mes, máximo 10</td>
+                                <td class="p-4 text-center">US$10/mes, máximo 4</td>
+                                <td class="p-4 text-center">US$7/mes, máximo 40</td>
                             </tr>
                             <tr class="bg-slate-50/30">
                                 <td class="p-4 font-semibold text-slate-900">Monitoreo, inventario, alertas y DMARC</td>
@@ -542,7 +542,7 @@
             <div class="max-w-5xl mx-auto px-4">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Calcula el precio según tus dominios</h2>
-                    <p class="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">Estándar llega hasta 4 dominios. Fundador llega a 10: 1 incluido y 9 adicionales. Desde el quinto dominio, a Estándar le conviene pasar a Business.</p>
+                    <p class="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">Estándar llega a 4 dominios. Fundador llega a 10. Business llega a 40.</p>
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 md:p-8">
@@ -608,7 +608,7 @@
                     </details>
                     <details class="group py-4">
                         <summary class="cursor-pointer font-semibold text-slate-900">¿Cuántos dominios incluye cada plan?</summary>
-                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">Fundador incluye 1 dominio y permite hasta 9 adicionales, 10 en total. Estándar incluye 1 y llega a 4. Business incluye 5 y llega a 40.</p>
+                        <p class="mt-2 text-sm text-slate-600 leading-relaxed">Fundador llega a 10 dominios. Estándar llega a 4. Business llega a 40.</p>
                     </details>
                     <details class="group py-4">
                         <summary class="cursor-pointer font-semibold text-slate-900">¿Puedo probar mi dominio antes de contratar?</summary>

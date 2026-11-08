@@ -129,13 +129,13 @@
 
   function extraLabel(q) {
     if (!q.available && q.id === 'standard') {
-      return 'Máximo 4 dominios: 1 incluido y 3 adicionales. Para más, cambia de plan.';
+      return 'Total máximo: 4 dominios.';
     }
     if (!q.available && q.id === 'founding') {
-      return 'La tarifa preferencial cubre hasta 10 dominios: 1 incluido y 9 adicionales. Por encima, se acuerda con el equipo.';
+      return 'Total máximo: 10 dominios.';
     }
     if (!q.available && q.id === 'business') {
-      return 'Hasta 40 dominios: 5 incluidos y 35 adicionales a US$7. Por encima, se acuerda con el equipo.';
+      return 'Total máximo: 40 dominios.';
     }
     if (q.extra === 0) return 'Sin dominios adicionales';
     var noun = q.extra === 1 ? 'dominio adicional' : 'dominios adicionales';
@@ -159,13 +159,11 @@
     }
     if (!q.standard.available) {
       lines.push(
-        'Estándar admite hasta 4 dominios: 1 incluido y 3 adicionales. Con ' +
-        n + ' ' + domainNoun(n) + ' conviene cambiar de plan.'
+        'Estándar llega a 4 dominios.'
       );
     } else if (result.between === 'tie') {
       lines.push(
-        'Entre Estándar y Business no hay diferencia de precio (US$' + q.standard.total +
-        '/mes). Business no conviene más solo por ser un plan superior.'
+        'Entre Estándar y Business el precio es el mismo: US$' + q.standard.total + '/mes.'
       );
     } else if (result.between === 'business') {
       lines.push(
@@ -181,7 +179,7 @@
     if (!result.foundingOpen) {
       lines.push('El Plan Fundador no se puede contratar: las plazas están agotadas.');
     } else if (!q.founding.available) {
-      lines.push('Fundador llega a 10 dominios: 1 incluido y 9 adicionales a US$5, sin cambiar de plan. Por encima se acuerda con el equipo.');
+      lines.push('Fundador llega a 10 dominios.');
     }
     return lines;
   }

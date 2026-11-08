@@ -89,7 +89,7 @@ assert.strictEqual(pricing.chipText('founding', pricing.recommend(21, true)), 'H
 
 const lines = pricing.recommendationLines(pricing.recommend(6, true));
 assert.match(lines[0], /Fundador: US\$50\/mes/);
-assert.match(lines[1], /Estándar admite hasta 4 dominios/);
+assert.match(lines[1], /Estándar llega a 4 dominios/);
 assert.strictEqual(lines.length, 2);
 
 const closed = pricing.recommendationLines(pricing.recommend(6, false));
@@ -181,7 +181,7 @@ assert.strictEqual(openUi.root.querySelectorAll('[data-quote-chip="founding"]')[
 openUi.numberInput.value = '6';
 openUi.numberInput.listeners.input();
 assert.match(openUi.rec.textContent, /Fundador: US\$50\/mes/);
-assert.match(openUi.versus.textContent, /Estándar admite hasta 4 dominios/);
+assert.match(openUi.versus.textContent, /Estándar llega a 4 dominios/);
 assert.strictEqual(openUi.root.querySelectorAll('[data-quote-amount="business"]')[0].textContent, '86');
 assert.strictEqual(openUi.root.querySelectorAll('[data-quote-amount="standard"]')[0].textContent, 'Hasta 4');
 assert.strictEqual(openUi.root.querySelectorAll('[data-quote-extra="business"]')[0].textContent, '1 dominio adicional · US$7/mes');
