@@ -256,8 +256,8 @@
                         target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
                         onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
                         class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors">Agendar demo</a>
-                    <a href="/domain-checker" data-seo-event="cta_domain_checker"
-                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Probar mi dominio</a>
+                    <a href="https://panel.inboxseguro.com/register?plan=starter&domains=1" data-seo-event="cta_register"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Probar 14 días</a>
                     <!-- Hamburger -->
                     <button id="menuBtn" onclick="toggleMobileMenu()"
                         class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
@@ -319,8 +319,8 @@
                 <div class="pt-2 border-t border-slate-100 space-y-1">
                     <a href="https://panel.inboxseguro.com/login"
                         class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
-                    <a href="/domain-checker" onclick="closeMobileMenu()" data-seo-event="cta_domain_checker"
-                        class="block px-4 py-3 text-sm font-semibold text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Probar mi dominio</a>
+                    <a href="https://panel.inboxseguro.com/register?plan=starter&domains=1" onclick="closeMobileMenu()" data-seo-event="cta_register"
+                        class="block px-4 py-3 text-sm font-semibold text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Probar 14 días</a>
                     <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" onclick="closeMobileMenu(); if (typeof gtag==='function') gtag('event','schedule_demo');"
                         class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 rounded-lg transition-colors">Agendar demo</a>
                 </div>
@@ -345,7 +345,7 @@
                 <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
                     Fundador desde US$25, Estándar desde US$39 y Business desde US$79 al mes. Una suscripción para SPF, DKIM y DMARC, y dominios adicionales sobre el mismo plan.
                 </p>
-                <p class="text-sm text-slate-400 mt-6">Puedes <a href="/domain-checker" class="text-white font-semibold underline underline-offset-2">probar tu dominio</a> antes de elegir plan. Los precios están en USD y se facturan cada mes.</p>
+                <p class="text-sm text-slate-400 mt-6">Los precios están en USD y se facturan cada mes. La prueba de 14 días abre el registro del plan.</p>
             </div>
         </section>
 
@@ -378,9 +378,8 @@
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="founding">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-brand-700" data-quote-chip="founding"></p>
                         </div>
-                        <a href="/domain-checker" data-seo-event="cta_domain_checker" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">Probar mi dominio</a>
-                        <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-3">Agendar demo</a>
-                        <a href="https://panel.inboxseguro.com/register?plan=founding&domains=1" data-register-plan="founding" data-founding-cta data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Fundador" class="block w-full py-2 text-center text-sm font-semibold text-brand-700 hover:underline mb-3">Probar 14 días gratis</a>
+                        <a href="https://panel.inboxseguro.com/register?plan=founding&domains=1" data-register-plan="founding" data-founding-cta data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Fundador" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">Probar 14 días gratis</a>
+                        <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-6">Agendar demo</a>
                         <p data-founding-closed class="hidden text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl px-4 py-3 text-center mb-3">Plazas agotadas. Este plan ya no se puede contratar.</p>
                         <div class="space-y-3 text-sm text-slate-700 mb-6">
                             <p class="text-[11px] font-bold uppercase tracking-wider text-brand-700">Incluye</p>
@@ -392,7 +391,7 @@
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Acceso anticipado a nuevas funcionalidades.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Influencia en el roadmap.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Contacto directo y prioritario con el equipo fundador.</span></div>
-                            <div class="flex items-start gap-2.5"><span class="mt-0.5 shrink-0 text-[10px] font-bold uppercase tracking-wide text-brand-700">Opcional</span><span>Gestión multidominio, si la necesitas. No incluye la vista centralizada ni los informes consolidados de Business.</span></div>
+                            <div class="flex items-start gap-2.5"><span class="mt-0.5 shrink-0 text-[10px] font-bold uppercase tracking-wide text-brand-700">Opcional</span><span>Puedes sumar dominios. La pantalla de todos juntos y los informes de Business no entran en este plan.</span></div>
                         </div>
                         <div class="mt-auto rounded-2xl bg-blue-50 border border-blue-100 p-4 text-xs text-slate-700 leading-relaxed">
                             <p class="font-bold text-brand-700 mb-2">Beneficio exclusivo</p>
@@ -417,9 +416,8 @@
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="standard">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-slate-700" data-quote-chip="standard"></p>
                         </div>
-                        <a href="/domain-checker" data-seo-event="cta_domain_checker" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">Probar mi dominio</a>
-                        <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-3">Agendar demo</a>
-                        <a href="https://panel.inboxseguro.com/register?plan=starter&domains=1" data-register-plan="standard" data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Estándar" class="block w-full py-2 text-center text-sm font-semibold text-brand-700 hover:underline mb-6">Probar 14 días gratis</a>
+                        <a href="https://panel.inboxseguro.com/register?plan=starter&domains=1" data-register-plan="standard" data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Estándar" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">Probar 14 días gratis</a>
+                        <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-6">Agendar demo</a>
                         <div class="space-y-3 text-sm text-slate-700 mb-6">
                             <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Incluye</p>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>1 dominio incluido.</span></div>
@@ -449,9 +447,8 @@
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="business">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-slate-900" data-quote-chip="business"></p>
                         </div>
-                        <a href="/domain-checker" data-seo-event="cta_domain_checker" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all shadow-lg mb-3">Probar mi dominio</a>
+                        <a href="https://panel.inboxseguro.com/register?plan=business&domains=1" data-register-plan="business" data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Business" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all shadow-lg mb-3">Probar 14 días gratis</a>
                         <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-3">Agendar demo</a>
-                        <a href="https://panel.inboxseguro.com/register?plan=business&domains=1" data-register-plan="business" data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Business" class="block w-full py-2 text-center text-sm font-semibold text-slate-900 hover:underline mb-2">Probar 14 días gratis</a>
                         <a href="/contacto" class="block w-full py-2 text-center text-sm font-semibold text-slate-600 hover:underline mb-6">Hablar con el equipo</a>
                         <div class="space-y-3 text-sm text-slate-700 mb-6">
                             <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Incluye</p>
@@ -624,13 +621,13 @@
 
         <section class="py-20 bg-slate-50 border-t border-slate-200">
             <div class="max-w-4xl mx-auto px-4 text-center">
-                <h2 class="text-3xl font-bold text-slate-900 mb-4">¿Quieres verificar tu dominio antes de registrarte?</h2>
+                <h2 class="text-3xl font-bold text-slate-900 mb-4">Empieza con la prueba de 14 días</h2>
                 <p class="text-slate-600 mb-8 max-w-xl mx-auto">
-                    Ejecuta un diagnóstico DNS gratuito y conoce el nivel de seguridad de SPF, DKIM y DMARC antes de elegir un plan.
+                    El registro abre el plan y la cantidad de dominios que elegiste. El cobro mensual queda en esa misma suscripción.
                 </p>
                 <div class="flex flex-col sm:flex-row justify-center gap-4">
-                    <a href="/domain-checker" data-seo-event="cta_domain_checker" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">
-                        Probar mi dominio
+                    <a href="https://panel.inboxseguro.com/register?plan=starter&domains=1" data-seo-event="cta_register" class="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow-lg shadow-blue-600/30 transition-all hover:-translate-y-0.5">
+                        Probar 14 días
                     </a>
                     <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="px-8 py-4 bg-white hover:bg-slate-100 text-slate-800 font-semibold rounded-xl border border-slate-300 transition-all hover:-translate-y-0.5">
                         Agendar demo
