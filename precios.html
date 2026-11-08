@@ -114,7 +114,7 @@
       "name": "Plan Fundador",
       "price": "25",
       "priceCurrency": "USD",
-      "description": "US$25 al mes con 1 dominio incluido. Cada dominio adicional cuesta US$5 al mes, hasta 20 dominios, sin cambiar de plan."
+      "description": "US$25 al mes con 1 dominio incluido. Cada dominio adicional cuesta US$5 al mes, hasta 9 dominios, sin cambiar de plan."
     },
     {
       "@type": "Offer",
@@ -128,7 +128,7 @@
       "name": "Plan Business",
       "price": "79",
       "priceCurrency": "USD",
-      "description": "US$79 al mes con 5 dominios incluidos. Cada dominio adicional cuesta US$8 al mes, sobre la misma suscripción."
+      "description": "US$79 al mes con 5 dominios incluidos. Cada dominio adicional cuesta US$7 al mes, hasta 45 dominios, sobre la misma suscripción."
     }
   ]
 }
@@ -313,7 +313,7 @@
             <div class="max-w-5xl mx-auto px-4">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Calcula el precio según tus dominios</h2>
-                    <p class="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">Estándar llega hasta 4 dominios. Fundador mantiene el precio preferencial hasta 20, sin cambiar de plan. Desde el quinto dominio, a Estándar le conviene pasar a Business.</p>
+                    <p class="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">Estándar llega hasta 4 dominios. Fundador mantiene el precio preferencial hasta 9, sin cambiar de plan. Desde el quinto dominio, a Estándar le conviene pasar a Business.</p>
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 md:p-8">
@@ -325,7 +325,7 @@
                         </div>
                         <button type="button" data-domain-step="1" aria-label="Agregar un dominio" class="w-12 h-12 shrink-0 rounded-xl border border-slate-300 bg-white text-xl font-bold text-slate-800 hover:bg-slate-50 cursor-pointer">+</button>
                     </div>
-                    <input id="domain-range" class="domain-range" type="range" min="1" max="40" value="1" aria-label="Cantidad de dominios">
+                    <input id="domain-range" class="domain-range" type="range" min="1" max="45" value="1" aria-label="Cantidad de dominios">
                     <div class="flex flex-wrap justify-center gap-2 mt-4">
                         <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="1" aria-pressed="true">1</button>
                         <button type="button" class="preset-btn px-3 py-1.5 rounded-full border border-slate-300 text-xs font-semibold text-slate-700 bg-white hover:bg-slate-50 cursor-pointer" data-domain-preset="3" aria-pressed="false">3</button>
@@ -392,13 +392,13 @@
                                 <span class="text-5xl font-extrabold text-slate-900 tracking-tight">25</span>
                                 <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-2">USD · 1 dominio incluido · adicional US$5/mes · hasta 20</p>
+                            <p class="text-xs text-slate-500 mt-2">USD · 1 dominio incluido · adicional US$5/mes · hasta 9</p>
                             <p class="text-sm font-semibold text-slate-900 mt-3" data-quote-sentence="founding">Para 1 dominio: US$25/mes</p>
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="founding">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-brand-700" data-quote-chip="founding"></p>
                         </div>
                         <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">Agendar demo</a>
-                        <a href="https://panel.inboxseguro.com/register?plan=founding" data-founding-cta data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Fundador" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-3">Probar 14 días gratis</a>
+                        <a href="https://panel.inboxseguro.com/register?plan=founding&domains=1" data-register-plan="founding" data-founding-cta data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Fundador" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-3">Probar 14 días gratis</a>
                         <p data-founding-closed class="hidden text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl px-4 py-3 text-center mb-3">Plazas agotadas. Este plan ya no se puede contratar.</p>
                         <div class="space-y-3 text-sm text-slate-700 mb-6">
                             <p class="text-[11px] font-bold uppercase tracking-wider text-brand-700">Incluye</p>
@@ -414,7 +414,7 @@
                         </div>
                         <div class="mt-auto rounded-2xl bg-blue-50 border border-blue-100 p-4 text-xs text-slate-700 leading-relaxed">
                             <p class="font-bold text-brand-700 mb-2">Beneficio exclusivo</p>
-                            <p>Cada dominio adicional cuesta US$5/mes, hasta 20 dominios, sin cambiar de plan. La tarifa de US$25 y el precio preferencial se mantienen mientras la suscripción permanezca activa. Por encima de 20 dominios se acuerda con el equipo, sin pasar a otro plan.</p>
+                            <p>Cada dominio adicional cuesta US$5/mes, hasta 9 dominios, sin cambiar de plan. La tarifa de US$25 y el precio preferencial se mantienen mientras la suscripción permanezca activa. Por encima de 9 dominios se acuerda con el equipo, sin pasar a otro plan.</p>
                         </div>
                     </article>
 
@@ -436,7 +436,7 @@
                             <p class="hidden mt-2 text-xs font-bold text-slate-700" data-quote-chip="standard"></p>
                         </div>
                         <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-brand-600 hover:bg-brand-700 text-white transition-all shadow-lg shadow-brand-600/25 hover:shadow-xl mb-3">Agendar demo</a>
-                        <a href="https://panel.inboxseguro.com/register?plan=starter" data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Estándar" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-6">Probar 14 días gratis</a>
+                        <a href="https://panel.inboxseguro.com/register?plan=starter&domains=1" data-register-plan="standard" data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Estándar" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-6">Probar 14 días gratis</a>
                         <div class="space-y-3 text-sm text-slate-700 mb-6">
                             <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Incluye</p>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>1 dominio incluido.</span></div>
@@ -461,14 +461,14 @@
                                 <span class="text-5xl font-extrabold text-slate-900 tracking-tight">79</span>
                                 <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
-                            <p class="text-xs text-slate-500 mt-2">USD · 5 dominios incluidos · adicional US$8/mes</p>
+                            <p class="text-xs text-slate-500 mt-2">USD · 5 dominios incluidos · adicional US$7/mes · hasta 45</p>
                             <p class="text-sm font-semibold text-slate-900 mt-3" data-quote-sentence="business">Para 1 dominio: US$79/mes</p>
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="business">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-slate-900" data-quote-chip="business"></p>
                         </div>
-                        <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all shadow-lg mb-3">Agendar demo</a>
-                        <a href="/contacto" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-3">Hablar con el equipo</a>
-                        <p class="text-xs text-slate-500 mb-6 leading-relaxed">Business ya está creado en Polar. El registro de la web todavía no asigna ese producto ni la cantidad de dominios, así que aquí la contratación sigue siendo la demo, sobre una sola suscripción.</p>
+                        <a href="https://panel.inboxseguro.com/register?plan=business&domains=1" data-register-plan="business" data-seo-event="cta_register" aria-label="Probar 14 días gratis el plan Business" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-bold bg-slate-900 hover:bg-slate-800 text-white transition-all shadow-lg mb-3">Probar 14 días gratis</a>
+                        <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-3">Agendar demo</a>
+                        <a href="/contacto" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-6">Hablar con el equipo</a>
                         <div class="space-y-3 text-sm text-slate-700 mb-6">
                             <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Incluye</p>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>5 dominios incluidos.</span></div>
@@ -480,13 +480,13 @@
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Vista centralizada de dominios.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Informes consolidados.</span></div>
                         </div>
-                        <p class="mt-auto text-xs text-slate-500 leading-relaxed">Cada dominio adicional cuesta US$8/mes. Sin límite comercial de dominios adicionales, sujeto a las capacidades y condiciones operativas del servicio.</p>
+                        <p class="mt-auto text-xs text-slate-500 leading-relaxed">Cada dominio adicional cuesta US$7/mes, hasta 45 dominios en total. Por encima de ese cupo se acuerda con el equipo.</p>
                     </article>
                 </div>
 
                 <div class="mt-10 rounded-2xl border border-slate-200 bg-slate-50 p-5 md:p-6 text-sm text-slate-600 leading-relaxed">
                     <p class="font-semibold text-slate-900 mb-1">Cómo se contrata</p>
-                    <p>La prueba de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=founding">Fundador</a> y la de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=starter">Estándar</a> usan el registro que ya está activo. Business se coordina con el equipo: el panel todavía no tiene ese plan. Los dominios adicionales no abren otra suscripción.</p>
+                    <p>La prueba de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=founding&domains=1">Fundador</a>, la de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=starter&domains=1">Estándar</a> y la de <a class="text-brand-700 font-semibold hover:underline" href="https://panel.inboxseguro.com/register?plan=business&domains=1">Business</a> abren el registro del panel. La cantidad elegida arriba viaja en el enlace y queda en la misma suscripción.</p>
                 </div>
 
                 <div id="comparativa" class="scroll-mt-24 overflow-x-auto mt-14 rounded-2xl border border-slate-200 shadow-sm bg-white">
@@ -514,9 +514,9 @@
                             </tr>
                             <tr>
                                 <td class="p-4 font-semibold text-slate-900">Dominio adicional</td>
-                                <td class="p-4 text-center">US$5/mes, hasta 20 dominios</td>
+                                <td class="p-4 text-center">US$5/mes, hasta 9 dominios</td>
                                 <td class="p-4 text-center">US$10/mes, hasta 3 adicionales</td>
-                                <td class="p-4 text-center">US$8/mes</td>
+                                <td class="p-4 text-center">US$7/mes, hasta 40 adicionales</td>
                             </tr>
                             <tr class="bg-slate-50/30">
                                 <td class="p-4 font-semibold text-slate-900">Monitoreo, inventario, alertas y DMARC</td>
@@ -546,7 +546,7 @@
                                 <td class="p-4 font-semibold text-slate-900">Alta en el panel</td>
                                 <td class="p-4 text-center">Prueba de 14 días, si hay plaza</td>
                                 <td class="p-4 text-center">Prueba de 14 días</td>
-                                <td class="p-4 text-center">Con el equipo</td>
+                                <td class="p-4 text-center">Prueba de 14 días</td>
                             </tr>
                         </tbody>
                     </table>

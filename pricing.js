@@ -4,7 +4,8 @@
  * ni otra suscripción. El alta del panel solo conoce estos identificadores:
  *   Estándar → plan=starter
  *   Fundador → plan=founding
- * Business no tiene identificador en el panel ni en esta web. No se inventa.
+ *   Business → plan=business
+ * La cantidad va en domains. El panel la usa como unidades del checkout.
  */
 (function (root, factory) {
   var api = factory();
@@ -23,7 +24,7 @@
       base: 25,
       included: 1,
       extraPrice: 5,
-      maxDomains: 20,
+      maxDomains: 9,
       registerPlan: 'founding'
     },
     standard: {
@@ -40,9 +41,9 @@
       name: 'Business',
       base: 79,
       included: 5,
-      extraPrice: 8,
-      maxDomains: null,
-      registerPlan: null
+      extraPrice: 7,
+      maxDomains: 45,
+      registerPlan: 'business'
     }
   };
 
@@ -114,10 +115,12 @@
     };
   }
 
-  function registerUrl(planId) {
+  function registerUrl(planId, domains) {
     var plan = PLANS[planId];
     if (!plan || !plan.registerPlan) return null;
-    return REGISTER_BASE + '?plan=' + plan.registerPlan;
+    var count = clampDomains(domains || 1);
+    if (plan.maxDomains && count > plan.maxDomains) count = plan.maxDomains;
+    return REGISTER_BASE + '?plan=' + plan.registerPlan + '&domains=' + count;
   }
 
   function domainNoun(n) {
@@ -129,7 +132,10 @@
       return 'Máximo 4 dominios: 1 incluido y 3 adicionales. Para más, cambia de plan.';
     }
     if (!q.available && q.id === 'founding') {
-      return 'La tarifa preferencial cubre hasta 20 dominios, sin cambiar de plan. Por encima, se acuerda con el equipo.';
+      return 'La tarifa preferencial cubre hasta 9 dominios, sin cambiar de plan. Por encima, se acuerda con el equipo.';
+    }
+    if (!q.available && q.id === 'business') {
+      return 'Hasta 45 dominios: 5 incluidos y 40 adicionales a US$7. Por encima, se acuerda con el equipo.';
     }
     if (q.extra === 0) return 'Sin dominios adicionales';
     var noun = q.extra === 1 ? 'dominio adicional' : 'dominios adicionales';
@@ -175,7 +181,7 @@
     if (!result.foundingOpen) {
       lines.push('El Plan Fundador no se puede contratar: las plazas están agotadas.');
     } else if (!q.founding.available) {
-      lines.push('Fundador mantiene US$5 por dominio adicional hasta 20 dominios, sin cambiar de plan. Por encima de 20 se acuerda con el equipo.');
+      lines.push('Fundador mantiene US$5 por dominio adicional hasta 9 dominios, sin cambiar de plan. Por encima de 9 se acuerda con el equipo.');
     }
     return lines;
   }
@@ -184,7 +190,8 @@
     var q = result.quotes[planId];
     if (!q.available) {
       if (planId === 'standard') return 'Hasta 4 dominios';
-      if (planId === 'founding') return 'Hasta 20 dominios';
+      if (planId === 'founding') return 'Hasta 9 dominios';
+      if (planId === 'business') return 'Hasta 45 dominios';
       return '';
     }
     if (result.best === planId) {
@@ -241,6 +248,11 @@
           chips[c].textContent = label;
           if (label) chips[c].classList.remove('hidden');
           else chips[c].classList.add('hidden');
+        }
+        var links = root.querySelectorAll('[data-register-plan="' + id + '"]');
+        var url = registerUrl(id, n);
+        for (var h = 0; h < links.length; h++) {
+          if (url && q.available) links[h].setAttribute('href', url);
         }
         var cards = root.querySelectorAll('[data-plan-card="' + id + '"]');
         for (var p = 0; p < cards.length; p++) {
