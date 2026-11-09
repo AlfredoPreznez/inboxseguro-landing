@@ -69,7 +69,7 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 ## Páginas de apoyo
 
 - [Plataforma](https://www.inboxseguro.com/plataforma): funciones de control de envíos e inventario.
-- [Precios](https://www.inboxseguro.com/precios): planes y prueba de 14 días.
+- [Precios](https://www.inboxseguro.com/precios): Fundador US$25/mes, Estándar US$39/mes y Business US$76/mes en USD por dominio y mes, con prueba de 14 días.
 - [Cómo funciona](https://www.inboxseguro.com/como-funciona): pasos para conectar el dominio y demostrar control.
 - [FAQ](https://www.inboxseguro.com/faq): preguntas sobre vigilancia de envíos, SPF, DKIM y DMARC.
 - [Control de envíos del dominio](https://www.inboxseguro.com/control-envios-dominio): guía para saber quién envía y autorizar servicios.

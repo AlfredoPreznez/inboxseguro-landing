@@ -127,6 +127,30 @@
     return n === 1 ? 'dominio' : 'dominios';
   }
 
+  function quoteSentence(q) {
+    if (!q.available) {
+      return 'Hasta ' + q.maxDomains + ' ' + domainNoun(q.maxDomains) + ' en este plan';
+    }
+    if (q.id === 'business' && q.domains <= q.included) {
+      return 'Incluye hasta ' + q.included + ' dominios por US$' + q.total + '/mes';
+    }
+    return 'Para ' + q.domains + ' ' + domainNoun(q.domains) + ': US$' + q.total + '/mes';
+  }
+
+  function cardsIntroText(n) {
+    if (n <= PLANS.business.included) {
+      return (
+        'Para ' + n + ' ' + domainNoun(n) + ', Fundador y Estándar muestran el total mensual de la tarjeta; ' +
+        'Business incluye hasta ' + PLANS.business.included + ' dominios por US$' + PLANS.business.base + '/mes. ' +
+        'Los precios están expresados en USD.'
+      );
+    }
+    return (
+      'Para ' + n + ' ' + domainNoun(n) + ', el total de cada plan es el que muestra la tarjeta. ' +
+      'Los precios están expresados en USD.'
+    );
+  }
+
   function extraLabel(q) {
     if (!q.available && q.id === 'standard') {
       return 'Total máximo: 4 dominios.';
@@ -234,9 +258,7 @@
           else currencies[u].classList.add('hidden');
         }
         var sentences = root.querySelectorAll('[data-quote-sentence="' + id + '"]');
-        var sentence = q.available
-          ? ('Para ' + q.domains + ' ' + domainNoun(q.domains) + ': US$' + q.total + '/mes')
-          : ('Hasta ' + q.maxDomains + ' ' + domainNoun(q.maxDomains) + ' en este plan');
+        var sentence = quoteSentence(q);
         for (var s = 0; s < sentences.length; s++) sentences[s].textContent = sentence;
         var extras = root.querySelectorAll('[data-quote-extra="' + id + '"]');
         for (var e = 0; e < extras.length; e++) extras[e].textContent = extraLabel(q);
@@ -270,6 +292,9 @@
         var shown = grids[g].querySelectorAll('[data-plan-card]:not(.hidden)').length;
         grids[g].setAttribute('data-shown', String(shown));
       }
+
+      var cardsIntroNodes = root.querySelectorAll('[data-pricing-cards-intro]');
+      if (cardsIntroNodes.length) cardsIntroNodes[0].textContent = cardsIntroText(n);
 
       var lines = recommendationLines(result);
       var rec = doc.getElementById('pricing-recommendation');
@@ -357,6 +382,8 @@
     recommend: recommend,
     registerUrl: registerUrl,
     extraLabel: extraLabel,
+    quoteSentence: quoteSentence,
+    cardsIntroText: cardsIntroText,
     recommendationLines: recommendationLines,
     chipText: chipText,
     mount: mount
