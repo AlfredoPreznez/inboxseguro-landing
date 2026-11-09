@@ -708,7 +708,13 @@ def get_audio_for_template(slug: str) -> dict | None:
     if not mp3_path.is_file():
         return None
     meta = AudioMeta.from_path(sha_path)
-    duration = meta.duration_sec if meta else 0
+    measured = measure_mp3_duration_sec(mp3_path)
+    if measured is not None:
+        duration = measured
+    elif meta:
+        duration = meta.duration_sec
+    else:
+        duration = 0
     return {
         "url": f"/blog/{slug}/audio.mp3",
         "duration_sec": duration,
