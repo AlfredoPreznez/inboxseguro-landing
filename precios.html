@@ -123,6 +123,19 @@
       "name": "Plan Fundador",
       "price": "25",
       "priceCurrency": "USD",
+      "url": "https://panel.inboxseguro.com/register?plan=founding&domains=1",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "25",
+        "priceCurrency": "USD",
+        "billingDuration": "P1M",
+        "unitText": "MONTH",
+        "referenceQuantity": {
+          "@type": "QuantitativeValue",
+          "value": "1",
+          "unitCode": "MON"
+        }
+      },
       "description": "US$25 al mes. Total máximo: 10 dominios. Cada adicional cuesta US$5."
     },
     {
@@ -130,6 +143,19 @@
       "name": "Plan Estándar",
       "price": "39",
       "priceCurrency": "USD",
+      "url": "https://panel.inboxseguro.com/register?plan=starter&domains=1",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "39",
+        "priceCurrency": "USD",
+        "billingDuration": "P1M",
+        "unitText": "MONTH",
+        "referenceQuantity": {
+          "@type": "QuantitativeValue",
+          "value": "1",
+          "unitCode": "MON"
+        }
+      },
       "description": "US$39 al mes con 1 dominio incluido y hasta 3 adicionales a US$10. A partir del quinto dominio conviene cambiar de plan."
     },
     {
@@ -137,6 +163,19 @@
       "name": "Plan Business",
       "price": "76",
       "priceCurrency": "USD",
+      "url": "https://panel.inboxseguro.com/register?plan=business&domains=1",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "76",
+        "priceCurrency": "USD",
+        "billingDuration": "P1M",
+        "unitText": "MONTH",
+        "referenceQuantity": {
+          "@type": "QuantitativeValue",
+          "value": "1",
+          "unitCode": "MON"
+        }
+      },
       "description": "US$76 al mes con 5 dominios incluidos. Cada dominio adicional cuesta US$7 al mes, hasta 40 dominios en total."
     }
   ]
@@ -352,9 +391,13 @@
                     Precios de monitoreo y seguridad de correo por dominio
                 </h1>
                 <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto font-light">
-                    Fundador desde US$25, Estándar desde US$39 y Business desde US$76 al mes. El precio sigue la cantidad de dominios del plan.
+                    Fundador desde US$25, Estándar desde US$39 y Business desde US$76 al mes. El precio sigue la cantidad de dominios del plan. Conoce la <a href="/plataforma" class="text-blue-300 hover:text-white font-semibold underline">plataforma</a> antes de elegir.
                 </p>
+                <p class="text-sm text-slate-400 max-w-3xl mx-auto mt-4 leading-relaxed">InboxSeguro cobra por dominio y por mes en USD: Fundador US$25/mes (1 dominio incluido, US$5 por dominio adicional, hasta 10, plazas limitadas), Estándar US$39/mes (1 dominio incluido, US$10 por adicional, hasta 4), Business US$76/mes (5 dominios incluidos, US$7 por adicional, hasta 40); prueba de 14 días.</p>
                 <p class="text-sm text-slate-400 mt-6">Los precios están en USD y se facturan cada mes. La prueba de 14 días abre el registro del plan.</p>
+                <p class="mt-6">
+                    <a href="/domain-checker" data-seo-event="cta_tool_from_pricing" class="inline-flex items-center justify-center px-6 py-3 rounded-xl text-sm font-semibold bg-brand-600 hover:bg-brand-700 text-white transition-colors shadow-lg">Revisa tu dominio gratis antes de elegir</a>
+                </p>
             </div>
         </section>
 
@@ -362,7 +405,7 @@
             <div class="max-w-5xl mx-auto px-4">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Calcula el precio según tus dominios</h2>
-                    <p class="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">Estándar llega a 4 dominios. Fundador llega a 10. Business llega a 40.</p>
+                    <p class="text-sm md:text-base text-slate-600 max-w-2xl mx-auto">Estándar llega a 4 dominios. Fundador llega a 10. Business llega a 40. Si aún no tienes claro el alta, revisa <a href="/como-funciona" class="text-brand-700 font-semibold hover:underline">cómo funciona</a> InboxSeguro.</p>
                 </div>
 
                 <div class="bg-white border border-slate-200 rounded-3xl shadow-sm p-6 md:p-8">
@@ -424,7 +467,7 @@
                 <div class="text-center mb-10">
                     <span class="inline-block px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 font-bold text-xs uppercase tracking-wider mb-4">El precio sigue tus dominios</span>
                     <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-slate-900 tracking-tight">Escala por dominios, con un límite claro en Estándar</h2>
-                    <p class="text-base text-slate-600 max-w-2xl mx-auto">Para <span data-domain-count>1</span> <span data-domain-noun>dominio</span>, el total de cada plan es el que muestra la tarjeta. Los precios están expresados en USD.</p>
+                    <p class="text-base text-slate-600 max-w-2xl mx-auto" data-pricing-cards-intro>Para 1 dominio, Fundador y Estándar muestran el total mensual de la tarjeta; Business incluye hasta 5 dominios por US$76/mes. Los precios están expresados en USD.</p>
                 </div>
 
                 <div class="pricing-grid">
@@ -453,7 +496,7 @@
                         <p data-founding-closed class="hidden text-sm font-semibold text-slate-700 bg-slate-100 rounded-xl px-4 py-3 text-center mb-3">Plazas agotadas. Este plan ya no se puede contratar.</p>
                         <div class="space-y-3 text-sm text-slate-700 mb-6">
                             <p class="text-[11px] font-bold uppercase tracking-wider text-brand-700">Incluye</p>
-                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>1 dominio incluido.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Incluye 1 dominio.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Monitoreo continuo.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Inventario de fuentes.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Alertas y detección de cambios.</span></div>
@@ -474,7 +517,7 @@
                             <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600">Plan estándar</span>
                         </div>
                         <h3 class="text-2xl font-bold text-slate-900">Estándar</h3>
-                        <p class="text-sm text-slate-500 mt-3 mb-6 leading-relaxed">Monitoreo continuo y control de envíos para mantener la reputación y seguridad de tu dominio.</p>
+                        <p class="text-sm text-slate-500 mt-3 mb-6 leading-relaxed">Monitoreo continuo y control de envíos para mantener la reputación y seguridad de tu dominio, alineado con la <a href="/dmarc-para-empresas" class="text-brand-700 font-semibold hover:underline">guía DMARC para empresas</a>.</p>
                         <div class="mb-6 pb-6 border-b border-slate-100">
                             <div class="flex items-baseline gap-1">
                                 <span class="text-base font-bold text-slate-400" data-quote-currency="standard">US$</span>
@@ -490,7 +533,7 @@
                         <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');" class="block w-full py-3.5 px-4 rounded-xl text-center text-sm font-semibold bg-white hover:bg-slate-50 text-slate-800 border border-slate-300 transition-all mb-6">Agendar demo</a>
                         <div class="space-y-3 text-sm text-slate-700 mb-6">
                             <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Incluye</p>
-                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>1 dominio incluido.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Incluye 1 dominio.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Monitoreo continuo.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Inventario de fuentes.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Alertas y detección de cambios.</span></div>
@@ -513,7 +556,7 @@
                                 <span class="text-sm font-medium text-slate-500">/ mes</span>
                             </div>
                             <p class="text-xs text-slate-500 mt-2">USD · 5 incluidos · adicional US$7/mes · máximo 40</p>
-                            <p class="text-sm font-semibold text-slate-900 mt-3" data-quote-sentence="business">Para 1 dominio: US$76/mes</p>
+                            <p class="text-sm font-semibold text-slate-900 mt-3" data-quote-sentence="business">Incluye hasta 5 dominios por US$76/mes</p>
                             <p class="text-xs text-slate-600 mt-1" data-quote-extra="business">Sin dominios adicionales</p>
                             <p class="hidden mt-2 text-xs font-bold text-slate-900" data-quote-chip="business"></p>
                         </div>
@@ -522,7 +565,7 @@
                         <a href="/contacto" class="block w-full py-2 text-center text-sm font-semibold text-slate-600 hover:underline mb-6">Hablar con el equipo</a>
                         <div class="space-y-3 text-sm text-slate-700 mb-6">
                             <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Incluye</p>
-                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>5 dominios incluidos.</span></div>
+                            <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Incluye 5 dominios.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Monitoreo continuo por dominio.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Inventario de fuentes.</span></div>
                             <div class="flex items-start gap-2.5"><i class="fa-solid fa-check text-emerald-500 mt-0.5 shrink-0"></i><span>Alertas y detección de cambios.</span></div>
@@ -571,27 +614,27 @@
                             </tr>
                             <tr class="bg-slate-50/30">
                                 <td class="p-4 font-semibold text-slate-900">Monitoreo, inventario, alertas y DMARC</td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
+                                <td class="p-4 text-center"><span class="inline-flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-emerald-500" aria-hidden="true"></i><span>Incluido</span></span></td>
+                                <td class="p-4 text-center"><span class="inline-flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-emerald-500" aria-hidden="true"></i><span>Incluido</span></span></td>
+                                <td class="p-4 text-center"><span class="inline-flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-emerald-500" aria-hidden="true"></i><span>Incluido</span></span></td>
                             </tr>
                             <tr>
                                 <td class="p-4 font-semibold text-slate-900">Acceso anticipado, roadmap y contacto prioritario</td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
-                                <td class="p-4 text-center text-slate-300">—</td>
-                                <td class="p-4 text-center text-slate-300">—</td>
+                                <td class="p-4 text-center"><span class="inline-flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-emerald-500" aria-hidden="true"></i><span>Incluido</span></span></td>
+                                <td class="p-4 text-center text-slate-500">No incluido</td>
+                                <td class="p-4 text-center text-slate-500">No incluido</td>
                             </tr>
                             <tr class="bg-slate-50/30">
                                 <td class="p-4 font-semibold text-slate-900">Resumen de dominios</td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
-                                <td class="p-4 text-center text-slate-300">—</td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
+                                <td class="p-4 text-center"><span class="inline-flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-emerald-500" aria-hidden="true"></i><span>Incluido</span></span></td>
+                                <td class="p-4 text-center text-slate-500">No incluido</td>
+                                <td class="p-4 text-center"><span class="inline-flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-emerald-500" aria-hidden="true"></i><span>Incluido</span></span></td>
                             </tr>
                             <tr>
                                 <td class="p-4 font-semibold text-slate-900">Informes consolidados</td>
-                                <td class="p-4 text-center text-slate-300">—</td>
-                                <td class="p-4 text-center text-slate-300">—</td>
-                                <td class="p-4 text-center"><i class="fa-solid fa-check text-emerald-500"></i></td>
+                                <td class="p-4 text-center text-slate-500">No incluido</td>
+                                <td class="p-4 text-center text-slate-500">No incluido</td>
+                                <td class="p-4 text-center"><span class="inline-flex items-center justify-center gap-1.5"><i class="fa-solid fa-check text-emerald-500" aria-hidden="true"></i><span>Incluido</span></span></td>
                             </tr>
                             <tr>
                                 <td class="p-4 font-semibold text-slate-900">Alta en el panel</td>
