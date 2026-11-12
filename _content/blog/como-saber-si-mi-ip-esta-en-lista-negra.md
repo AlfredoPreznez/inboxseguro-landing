@@ -5,7 +5,7 @@ description: "Cómo encontrar la IP pública desde la que sale tu correo, consul
 excerpt: "Qué IP revisar, cómo encontrarla en el rebote o en la cabecera de un correo, cómo consultarla y qué hacer según quién la administre."
 category: Entregabilidad
 date: 2026-11-03
-updated: 2026-11-03
+updated: 2026-11-12
 tags: [listas-negras, blacklist, ip, dnsbl, entregabilidad, empresas]
 keyword_objetivo: cómo saber si mi IP está en lista negra
 featured: false
@@ -105,7 +105,7 @@ En el [verificador de listas negras](/verificar-lista-negra) ingresas una IPv4 o
 
 ### Para Gmail: Postmaster Tools
 
-Si muchos de tus destinatarios usan Gmail, Google recomienda Postmaster Tools, que muestra la reputación de tu dominio y de tu IP, si tus mensajes están autenticados y por qué algunos no se entregan.
+Si muchos de tus destinatarios usan Gmail, Google recomienda Postmaster Tools para revisar la autenticación de tus mensajes, la tasa de spam, los errores de entrega y el estado de cumplimiento. Los paneles Reputación del dominio y Reputación de las IPs se retirarán y no están en la versión 2; Google pospuso la discontinuación de la interfaz antigua y aún no publicó una fecha.
 
 ## Qué significa el resultado
 

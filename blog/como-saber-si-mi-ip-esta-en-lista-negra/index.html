@@ -20,7 +20,7 @@
     <meta name="twitter:description" content="Cómo encontrar la IP pública desde la que sale tu correo, consultarla en listas negras y qué hacer si aparece listada, sin adivinar.">
     <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/como-saber-si-mi-ip-esta-en-lista-negra.png">
     <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/fontawesome/icons.min.css?v=1.0.0">
@@ -34,7 +34,7 @@
   "headline": "Cómo saber si mi IP está en lista negra",
   "description": "Cómo encontrar la IP pública desde la que sale tu correo, consultarla en listas negras y qué hacer si aparece listada, sin adivinar.",
   "datePublished": "2026-11-03",
-  "dateModified": "2026-11-03",
+  "dateModified": "2026-11-12",
   "author": {
     "@type": "Organization",
     "name": "InboxSeguro"
@@ -282,11 +282,14 @@
             <span class="blog-chip blog-chip--on-dark">Entregabilidad</span>
             <h1 class="blog-article-h1">Cómo saber si mi IP está en lista negra</h1>
             <p class="blog-meta blog-meta--on-dark">
-                <time datetime="2026-11-03" data-updated="2026-11-03">
+                <time datetime="2026-11-03" data-updated="2026-11-12">
                     3 de noviembre de 2026
                 </time>
                 <span aria-hidden="true">·</span>
-                <span>8 min de lectura</span>
+                <span>9 min de lectura</span>
+                
+                <span aria-hidden="true">·</span>
+                <span>Actualizado <time datetime="2026-11-12">12 de noviembre de 2026</time></span>
                 
             </p>
             
@@ -464,7 +467,7 @@ Received: from [192.0.2.44]
 <p><strong>Advertencia:</strong> los servidores MX indican dónde recibe correo tu dominio, no necesariamente desde dónde sale. Si envías con un proveedor, consulta también la IP que encontraste en el rebote o en la cabecera. Puedes ver tus MX con el <a href="/mx-lookup">MX Lookup</a>.</p>
 </blockquote>
 <h3  id="para-gmail-postmaster-tools">Para Gmail: Postmaster Tools</h3>
-<p>Si muchos de tus destinatarios usan Gmail, Google recomienda Postmaster Tools, que muestra la reputación de tu dominio y de tu IP, si tus mensajes están autenticados y por qué algunos no se entregan.</p>
+<p>Si muchos de tus destinatarios usan Gmail, Google recomienda Postmaster Tools para revisar la autenticación de tus mensajes, la tasa de spam, los errores de entrega y el estado de cumplimiento. Los paneles Reputación del dominio y Reputación de las IPs se retirarán y no están en la versión 2; Google pospuso la discontinuación de la interfaz antigua y aún no publicó una fecha.</p>
 <h2  id="que-significa-el-resultado">Qué significa el resultado</h2>
 <h3  id="tu-ip-aparece-en-una-lista">Tu IP aparece en una lista</h3>
 <p>No siempre significa que tus correos se rechacen. La RFC 5782 (sección 6) describe dos usos: algunos servidores rechazan la conexión cuando encuentran la IP en una lista, y otros usan el resultado como un factor más de un puntaje. En ese segundo caso, tus correos pueden llegar, pero a la carpeta de spam.</p>

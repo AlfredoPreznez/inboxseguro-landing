@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reputación de dominio de correo: qué revisar | InboxSeguro</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Qué es la reputación de dominio de correo, qué cambió en Google Postmaster Tools y qué señales revisar hoy en Gmail, Outlook y listas negras.">
+    <link rel="canonical" href="https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/">
+    <meta property="og:title" content="Reputación de dominio de correo: qué revisar | InboxSeguro">
+    <meta property="og:description" content="Qué es la reputación de dominio de correo, qué cambió en Google Postmaster Tools y qué señales revisar hoy en Gmail, Outlook y listas negras.">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/reputacion-de-dominio-de-correo.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Reputación de dominio de correo: qué revisar | InboxSeguro">
+    <meta name="twitter:description" content="Qué es la reputación de dominio de correo, qué cambió en Google Postmaster Tools y qué señales revisar hoy en Gmail, Outlook y listas negras.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/reputacion-de-dominio-de-correo.png">
+    <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/fontawesome/icons.min.css?v=1.0.0">
+    <link rel="stylesheet" href="/styles.css?v=1.0.8">
+    <link rel="stylesheet" href="/blog.css?v=1.2.3">
+    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Reputación de dominio de correo: qué revisar",
+  "description": "Qué es la reputación de dominio de correo, qué cambió en Google Postmaster Tools y qué señales revisar hoy en Gmail, Outlook y listas negras.",
+  "datePublished": "2026-11-12",
+  "dateModified": "2026-11-12",
+  "author": {
+    "@type": "Organization",
+    "name": "InboxSeguro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InboxSeguro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.inboxseguro.com/logo.png"
+    }
+  },
+  "image": [
+    "https://www.inboxseguro.com/blog/covers/reputacion-de-dominio-de-correo.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/"
+  },
+  "url": "https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.inboxseguro.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://www.inboxseguro.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Reputación de dominio de correo: qué revisar",
+      "item": "https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Google eliminó ya el panel de reputación de Postmaster Tools?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Google anunció que los paneles Reputación del dominio y Reputación de las IPs se retirarán y que no están en la versión 2 de Postmaster Tools. También indicó que pospuso la discontinuación de la interfaz antigua y que compartirá más información sobre los plazos."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué tasa de spam recomienda Google?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Las directrices de Google piden mantener la tasa de spam que muestra Postmaster Tools por debajo del 0,30 %. Como buena práctica, recomiendan mantenerla por debajo del 0,10 % y evitar que llegue al 0,30 % o lo supere."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo reviso mi reputación en Outlook?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Microsoft ofrece SNDS (Smart Network Data Services), que entrega datos sobre las IP desde las que envías a Outlook.com. Tienes que iniciar sesión con una cuenta Microsoft y pedir acceso a las IP de las que eres responsable."
+      }
+    }
+  ]
+}
+</script>
+
+
+</head>
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors whitespace-nowrap">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas gratis -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas gratis</span>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Chequeo de seguridad</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Verificador de remitentes</span>
+                                    </a>
+                                    <a href="/verificar-lista-negra" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador de listas negras</span>
+                                    </a>
+                                    <a href="/inboxscore" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>InboxScore</span>
+                                    </a>
+                                    <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Todas las herramientas</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Aprender -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Aprender</span>
+                                <div class="space-y-1">
+                                    <a href="/guias" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guías de configuración</span>
+                                    </a>
+                                    <a href="/glosario/" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Glosario DNS</span>
+                                    </a>
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC para empresas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min"
+                        target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
+                        onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                <!-- Recursos: Aprender (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Aprender</span>
+                    <a href="/guias" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guías de configuración</a>
+                    <a href="/glosario/" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Glosario DNS</a>
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guía DMARC para empresas</a>
+                </div>
+
+                <!-- Recursos: Herramientas gratis (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-brand-600 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas gratis</span>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad</a>
+                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Verificador de remitentes</a>
+                    <a href="/verificar-lista-negra" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador de listas negras</a>
+                    <a href="/inboxscore" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">InboxScore</a>
+                    <a href="/herramientas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" onclick="closeMobileMenu(); if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Reputación de dominio de correo: qué revisar
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">Entregabilidad</span>
+            <h1 class="blog-article-h1">Reputación de dominio de correo: qué revisar</h1>
+            <p class="blog-meta blog-meta--on-dark">
+                <time datetime="2026-11-12" data-updated="2026-11-12">
+                    12 de noviembre de 2026
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>8 min de lectura</span>
+                
+            </p>
+            
+            <div class="blog-listen" data-nosnippet>
+                <p class="blog-listen-label" id="blog-listen-label-reputacion-de-dominio-de-correo">
+                    Escuchar este artículo · 10:29
+                </p>
+                <audio
+                    class="blog-listen-audio"
+                    controls
+                    preload="none"
+                    controlslist="nodownload"
+                    aria-labelledby="blog-listen-label-reputacion-de-dominio-de-correo"
+                >
+                    <source src="/blog/reputacion-de-dominio-de-correo/audio.mp3" type="audio/mpeg">
+                    Tu navegador no admite audio HTML5.
+                </audio>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="blog-article-body blog-article-body--with-toc">
+        
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-es-la-reputacion-de-un-dominio-de-correo">Qué es la reputación de un dominio de correo</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#una-valoracion-segun-tu-forma-de-enviar">Una valoración según tu forma de enviar</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#que-la-afecta">Qué la afecta</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-cambio-en-google-postmaster-tools">Qué cambió en Google Postmaster Tools</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#los-paneles-de-reputacion-se-retiraran">Los paneles de reputación se retirarán</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#la-interfaz-antigua-sigue-por-ahora">La interfaz antigua sigue, por ahora</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#el-nuevo-panel-estado-de-cumplimiento">El nuevo panel Estado de cumplimiento</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-mirar-hoy-en-lugar-del-semaforo-de-reputacion">Qué mirar hoy en lugar del semáforo de reputación</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#tasa-de-spam">Tasa de spam</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#autenticacion-spf-dkim-y-dmarc">Autenticación SPF, DKIM y DMARC</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#errores-de-entrega">Errores de entrega</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#cumplimiento-de-las-pautas">Cumplimiento de las pautas</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#microsoft-snds-para-revisar-tus-ip">Microsoft: SNDS para revisar tus IP</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#las-listas-negras-otra-senal">Las listas negras, otra señal</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-hacer-si-tu-reputacion-es-mala">Qué hacer si tu reputación es mala</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#1-autentica-tu-dominio">1. Autentica tu dominio</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#2-revisa-quien-envia-con-tu-dominio">2. Revisa quién envía con tu dominio</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#3-avanza-con-dmarc-de-forma-gradual">3. Avanza con DMARC de forma gradual</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#4-cuida-como-envias">4. Cuida cómo envías</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </details>
+        
+
+        <div class="blog-article-main">
+            <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> La reputación de dominio de correo es la valoración que hacen Gmail, Outlook y otros receptores según cómo envías. Google anunció que los paneles Reputación del dominio y Reputación de las IPs de Postmaster Tools se retirarán, aunque pospuso la discontinuación de la interfaz antigua. Hoy conviene revisar el panel Estado de cumplimiento, la tasa de spam, la autenticación SPF, DKIM y DMARC, los errores de entrega, SNDS de Microsoft y las listas negras.</p>
+                </div>
+                
+                <p>Un cliente te escribe que tus cotizaciones le están llegando a spam. Revisas la configuración y todo parece en orden. Una posible causa es la <strong>reputación de dominio de correo</strong>: la valoración que hacen Gmail, Outlook y otros receptores según cómo envía correo tu empresa.</p>
+<p>Muchas empresas la revisaban en el panel de reputación de Google Postmaster Tools, que Google anunció que retirará. Aquí verás qué cambió y qué revisar hoy.</p>
+<blockquote>
+<p><strong>¿Tienes prisa?</strong> Revisa si tu dominio o tu IP aparece en 6 listas negras públicas con el <a href="/verificar-lista-negra">verificador de listas negras</a>.</p>
+</blockquote>
+<h2  id="que-es-la-reputacion-de-un-dominio-de-correo">Qué es la reputación de un dominio de correo</h2>
+<h3  id="una-valoracion-segun-tu-forma-de-enviar">Una valoración según tu forma de enviar</h3>
+<p>Google la define en la ayuda de Postmaster Tools: la reputación es una valoración de la calidad de los dominios y las direcciones IP que envían correo, y depende del comportamiento de envío. Una <strong>dirección IP</strong> es el número que identifica al servidor que entrega tus correos.</p>
+<p>Según Google, los proveedores de internet y de correo monitorean la reputación de los remitentes. Los mensajes de remitentes con buena reputación tienen más probabilidades de llegar a la bandeja de entrada de Gmail en lugar de a spam.</p>
+<h3  id="que-la-afecta">Qué la afecta</h3>
+<p>Las directrices de Google para remitentes mencionan varios factores:</p>
+<ul>
+<li><strong>Denuncias de spam.</strong> Si los destinatarios marcan tus correos como spam con frecuencia, con el tiempo eso puede perjudicar la reputación de tu dominio.</li>
+<li><strong>IP compartidas.</strong> Si tu proveedor de correo usa una IP compartida, la actividad de todos los que la usan afecta la reputación de todos.</li>
+<li><strong>Picos de volumen.</strong> Duplicar de golpe lo que envías, sin historial de grandes volúmenes, puede provocar límites de envío o bajas de reputación.</li>
+<li><strong>Pruebas desde tu dominio.</strong> Enviar pruebas de phishing desde tu dominio puede afectar su reputación.</li>
+</ul>
+<h2  id="que-cambio-en-google-postmaster-tools">Qué cambió en Google Postmaster Tools</h2>
+<p><strong>Postmaster Tools</strong> es la herramienta de Google que muestra datos sobre los correos que envías a cuentas personales de Gmail.</p>
+<h3  id="los-paneles-de-reputacion-se-retiraran">Los paneles de reputación se retirarán</h3>
+<p>En su página sobre la discontinuación de la interfaz antigua, Google explica que todos los paneles de la versión antigua están disponibles en la versión 2 de Postmaster Tools, lanzada en 2024, salvo <strong>Reputación del dominio</strong> y <strong>Reputación de las IPs</strong>, que se retirarán. Según Google, esos datos son difíciles de usar para actuar, tardan en reflejar los cambios y pueden inducir a error, porque la reputación es solo uno de muchos factores que afectan la entrega.</p>
+<h3  id="la-interfaz-antigua-sigue-por-ahora">La interfaz antigua sigue, por ahora</h3>
+<p>Google indica textualmente: &ldquo;Gracias a los comentarios de los remitentes, vamos a posponer la discontinuación de la interfaz web antigua de Postmaster Tools&rdquo;. También recomienda pasarse a la versión 2, porque la versión antigua acabará retirándose, y dice que pronto dará más información sobre los plazos. Google no ha publicado una fecha.</p>
+<h3  id="el-nuevo-panel-estado-de-cumplimiento">El nuevo panel Estado de cumplimiento</h3>
+<p>La versión 2 incluye el panel <strong>Estado de cumplimiento</strong> (Compliance status), que muestra si tus correos cumplen las directrices de Google para remitentes. Cada requisito aparece con uno de tres estados:</p>
+<ul>
+<li><strong>Conforme</strong> (Compliant): no hace falta hacer nada.</li>
+<li><strong>Necesita mejorar</strong> (Needs work): hay que corregir algo; la columna Estado describe qué hacer. Tras corregirlo, el cambio puede tardar hasta 7 días en verse en el panel.</li>
+<li><strong>No se han encontrado datos</strong> (No data found): la ayuda de Google no define este estado con claridad. Indica que debería haber suficientes correos para evaluar el cumplimiento de ese requisito, y que el cumplimiento se calcula con los correos recibidos que cumplen ciertos criterios.</li>
+</ul>
+<p>Ten en cuenta estos límites, según la ayuda de Google:</p>
+<ul>
+<li>Los datos corresponden solo a correos enviados a cuentas personales de Gmail.</li>
+<li>No son en tiempo real: normalmente se actualizan en 24 horas, pero pueden tardar más.</li>
+<li>El panel muestra el estado del dominio principal, no de los subdominios. Si agregas <code>correo.ejemplo.cl</code>, verás el estado de todo <code>ejemplo.cl</code>.</li>
+<li>En los requisitos de DNS, el estado refleja la configuración que Google vio al recibir tus correos, no necesariamente la actual.</li>
+</ul>
+<h2  id="que-mirar-hoy-en-lugar-del-semaforo-de-reputacion">Qué mirar hoy en lugar del semáforo de reputación</h2>
+<h3  id="tasa-de-spam">Tasa de spam</h3>
+<p>Es el porcentaje de mensajes entregados a la bandeja de entrada que los destinatarios marcan como spam en Gmail. Las directrices de Google piden a todos los remitentes mantener la tasa de spam que muestra Postmaster Tools por debajo del 0,30 %. Como buena práctica, Google recomienda mantenerla por debajo del 0,10 % y evitar que llegue al 0,30 % o lo supere.</p>
+<p>Ojo: según Google, una tasa muy baja puede significar que Gmail ya envía muchos de tus correos a spam, y por eso menos destinatarios los ven en su bandeja y los denuncian.</p>
+<h3  id="autenticacion-spf-dkim-y-dmarc">Autenticación SPF, DKIM y DMARC</h3>
+<p>Son tres registros que publicas en el <strong>DNS</strong>, el sistema que guarda la información pública de tu dominio:</p>
+<ul>
+<li><strong>SPF</strong> indica qué servidores pueden enviar correo con tu dominio.</li>
+<li><strong>DKIM</strong> agrega una firma digital que demuestra que el mensaje no se alteró.</li>
+<li><strong>DMARC</strong> le dice al receptor qué hacer si un correo con tu dominio no pasa esas revisiones.</li>
+</ul>
+<p>Google pide SPF o DKIM a todos los remitentes. A quienes envían más de 5.000 mensajes al día a cuentas de Gmail les pide SPF, DKIM y DMARC (este último puede estar en <code>p=none</code>), y que el dominio del remitente visible coincida con el de SPF o DKIM. En Postmaster Tools, el panel <strong>Autenticación</strong> muestra qué porcentaje de tus correos pasa SPF, DKIM y DMARC. Puedes revisar tu configuración con el <a href="/domain-checker">verificador de dominio</a> y el <a href="/dmarc-checker">verificador DMARC</a>.</p>
+<h3  id="errores-de-entrega">Errores de entrega</h3>
+<p>El panel <strong>Errores de entrega</strong> muestra el porcentaje de mensajes autenticados (SPF o DKIM) que Gmail rechazó o que fallaron temporalmente, frente al total de autenticados, y el motivo. Si ves rechazos, lee el rebote completo. Por ejemplo, el <a href="/blog/error-550-5-7-26-gmail-dmarc/">error 550 5.7.26 de Gmail</a> tiene su propia guía.</p>
+<h3  id="cumplimiento-de-las-pautas">Cumplimiento de las pautas</h3>
+<p>El panel Estado de cumplimiento también revisa los registros DNS, el formato de los mensajes, el cifrado de la conexión y, para quienes envían en gran volumen, la baja con un clic. Si algún requisito aparece en &ldquo;Necesita mejorar&rdquo;, ese es el primer punto para corregir.</p>
+<h2  id="microsoft-snds-para-revisar-tus-ip">Microsoft: SNDS para revisar tus IP</h2>
+<p>Para Outlook.com, Microsoft ofrece <strong>SNDS</strong> (Smart Network Data Services). Su página oficial dice que la entrega a Outlook.com depende de tu reputación y que SNDS te da datos para entenderla y mejorarla.</p>
+<p>Lo que indica esa página:</p>
+<ul>
+<li>Entrega datos sobre <strong>IP individuales</strong>, no sobre dominios.</li>
+<li>Para usarlo, inicias sesión con una cuenta Microsoft y pides acceso a las IP de las que eres responsable.</li>
+<li>Incluye un programa que te avisa cuando los usuarios marcan tus mensajes como correo no deseado.</li>
+<li>Ayuda a detectar servidores comprometidos y malware.</li>
+</ul>
+<p>Microsoft agrega que la reputación siempre es responsabilidad del remitente.</p>
+<h2  id="las-listas-negras-otra-senal">Las listas negras, otra señal</h2>
+<p>Una <strong>lista negra</strong> (DNSBL o <a href="/glosario/rbl/">RBL</a>) es una lista pública de IP o dominios asociados a spam u otros abusos. La RFC 5782 describe cómo funcionan: se consultan a través del DNS y existen listas de IP (sección 2) y de dominios (sección 3).</p>
+<p>Según la misma RFC (sección 6), algunos servidores rechazan la conexión si encuentran la IP en una lista, y otros usan el resultado como un factor más de un puntaje. Google también lo advierte: los correos enviados desde IP incluidas en listas de bloqueo tienen más probabilidades de marcarse como spam.</p>
+<p>Consulta tu dominio o tu IP en el <a href="/verificar-lista-negra">verificador de listas negras</a> y, si aparece, sigue la guía de <a href="/blog/como-saber-si-mi-dominio-esta-en-lista-negra/">lista negra de dominio</a> o la de <a href="/blog/como-saber-si-mi-ip-esta-en-lista-negra/">lista negra de IP</a>.</p>
+<h2  id="que-hacer-si-tu-reputacion-es-mala">Qué hacer si tu reputación es mala</h2>
+<h3  id="1-autentica-tu-dominio">1. Autentica tu dominio</h3>
+<p>Revisa que SPF y DKIM estén bien configurados y que exista un registro DMARC. Si tus correos llegan a spam, lee también <a href="/blog/mis-correos-llegan-a-spam/">por qué tus correos llegan a spam</a>.</p>
+<h3  id="2-revisa-quien-envia-con-tu-dominio">2. Revisa quién envía con tu dominio</h3>
+<p>Además de tu correo corporativo, pueden enviar con tu dominio el CRM, el sistema de facturación o la herramienta de marketing. Las directrices de Google dicen que tu registro SPF debe incluir a todos los que envían correo con tu dominio. Te explicamos cómo encontrarlos en <a href="/blog/quien-esta-enviando-correos-con-mi-dominio/">quién está enviando correos con mi dominio</a>.</p>
+<h3  id="3-avanza-con-dmarc-de-forma-gradual">3. Avanza con DMARC de forma gradual</h3>
+<p>La RFC 9989, que reemplazó a la RFC 7489 como estándar de DMARC, recomienda empezar con <code>p=none</code>, que solo monitorea, y usar los informes para encontrar servidores o servicios olvidados (secciones 5.1.4 y 5.1.5). Los flujos de correo legítimos que no pasen deben corregirse antes de pasar a <code>p=quarantine</code> (enviar a spam) o <code>p=reject</code> (rechazar), según la sección 5.1.6. La sección 5.1.7 advierte que esto puede tomar muchos meses.</p>
+<blockquote>
+<p><strong>Advertencia:</strong> si pasas a <code>p=quarantine</code> o <code>p=reject</code> antes de autenticar todos tus sistemas, puedes cortar correos legítimos, como facturas o avisos a clientes. Avanza paso a paso.</p>
+</blockquote>
+<h3  id="4-cuida-como-envias">4. Cuida cómo envías</h3>
+<p>Envía solo a quienes quieren recibir tus mensajes y evita los picos bruscos de volumen. Según Google, las mejoras en la tasa de spam tardan en reflejarse.</p>
+<h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
+<p>InboxSeguro no mide tu reputación en Google ni en Microsoft; para eso están Postmaster Tools y SNDS. Lo que hace es ayudarte con las causas que puedes controlar:</p>
+<ul>
+<li>Te muestra qué sistemas envían correo con tu dominio y te permite asignar un responsable a cada uno.</li>
+<li>Te guía para avanzar con DMARC de <code>p=none</code> a <code>quarantine</code> y <code>reject</code> sin cortar correos legítimos.</li>
+<li>Detecta posibles suplantaciones de tu dominio.</li>
+<li>Muestra el estado DNS de SPF, DKIM, DMARC, BIMI, MTA-STS y RUA.</li>
+<li>Monitorea cada hora 6 listas negras y te guía para pedir la remoción.</li>
+</ul>
+<h2  id="fuentes">Fuentes</h2>
+<ul>
+<li><a href="https://support.google.com/mail/answer/16594218?hl=es">Google: Información sobre la discontinuación de la interfaz antigua de Postmaster Tools</a>.</li>
+<li><a href="https://support.google.com/mail/answer/14668346?hl=es">Google: Paneles de control de Postmaster Tools</a>, secciones Estado de cumplimiento, Tasa de spam, Autenticación, Errores de entrega y Reputación.</li>
+<li><a href="https://support.google.com/mail/answer/81126?hl=es">Google: Directrices para remitentes de correo</a>.</li>
+<li><a href="https://developers.google.com/workspace/gmail/postmaster/guides/migration-v2">Google for Developers: Migrate to Postmaster Tools API v2</a>.</li>
+<li><a href="https://sendersupport.olc.protection.outlook.com/snds/">Microsoft: Outlook.com Smart Network Data Services (SNDS)</a>.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc5782">RFC 5782: DNS Blacklists and Whitelists</a>, secciones 2, 3 y 6.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc9989">RFC 9989: DMARC</a>, secciones 5.1.4 a 5.1.7. Reemplaza a la <a href="https://www.rfc-editor.org/rfc/rfc7489">RFC 7489</a>.</li>
+</ul>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿Google eliminó ya el panel de reputación de Postmaster Tools?</h3>
+                    <p>Google anunció que los paneles Reputación del dominio y Reputación de las IPs se retirarán y que no están en la versión 2 de Postmaster Tools. También indicó que pospuso la discontinuación de la interfaz antigua y que compartirá más información sobre los plazos.</p>
+                    
+                    <h3>¿Qué tasa de spam recomienda Google?</h3>
+                    <p>Las directrices de Google piden mantener la tasa de spam que muestra Postmaster Tools por debajo del 0,30 %. Como buena práctica, recomiendan mantenerla por debajo del 0,10 % y evitar que llegue al 0,30 % o lo supere.</p>
+                    
+                    <h3>¿Cómo reviso mi reputación en Outlook?</h3>
+                    <p>Microsoft ofrece SNDS (Smart Network Data Services), que entrega datos sobre las IP desde las que envías a Outlook.com. Tienes que iniciar sesión con una cuenta Microsoft y pedir acceso a las IP de las que eres responsable.</p>
+                    
+                </section>
+                
+            </div>
+
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary" href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener"
+                       data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+
+        
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-es-la-reputacion-de-un-dominio-de-correo">Qué es la reputación de un dominio de correo</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#una-valoracion-segun-tu-forma-de-enviar">Una valoración según tu forma de enviar</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#que-la-afecta">Qué la afecta</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-cambio-en-google-postmaster-tools">Qué cambió en Google Postmaster Tools</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#los-paneles-de-reputacion-se-retiraran">Los paneles de reputación se retirarán</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#la-interfaz-antigua-sigue-por-ahora">La interfaz antigua sigue, por ahora</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#el-nuevo-panel-estado-de-cumplimiento">El nuevo panel Estado de cumplimiento</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-mirar-hoy-en-lugar-del-semaforo-de-reputacion">Qué mirar hoy en lugar del semáforo de reputación</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#tasa-de-spam">Tasa de spam</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#autenticacion-spf-dkim-y-dmarc">Autenticación SPF, DKIM y DMARC</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#errores-de-entrega">Errores de entrega</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#cumplimiento-de-las-pautas">Cumplimiento de las pautas</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#microsoft-snds-para-revisar-tus-ip">Microsoft: SNDS para revisar tus IP</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#las-listas-negras-otra-senal">Las listas negras, otra señal</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-hacer-si-tu-reputacion-es-mala">Qué hacer si tu reputación es mala</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#1-autentica-tu-dominio">1. Autentica tu dominio</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#2-revisa-quien-envia-con-tu-dominio">2. Revisa quién envía con tu dominio</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#3-avanza-con-dmarc-de-forma-gradual">3. Avanza con DMARC de forma gradual</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#4-cuida-como-envias">4. Cuida cómo envías</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </nav>
+        
+    </div>
+</article>
+
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Soluciones</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/seguridad-correo-proveedores" class="hover:text-blue-400 transition-colors">Seguridad para proveedores</a></li>
+                            <li><a href="/informe-higiene-correo-corporativo" class="hover:text-blue-400 transition-colors">Informe de higiene</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Detener suplantación</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas gratis</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad</a></li>
+                            <li><a href="/verificar-lista-negra" class="hover:text-blue-400 transition-colors">Verificador de listas negras</a></li>
+                            <li><a href="/inboxscore" class="hover:text-blue-400 transition-colors">InboxScore</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/guias" class="hover:text-blue-400 transition-colors">Guías</a></li>
+                            <li><a href="/glosario/" class="hover:text-blue-400 transition-colors">Glosario</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>
