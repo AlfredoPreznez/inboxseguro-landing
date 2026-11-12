@@ -1517,10 +1517,10 @@ Ojo: según Google, una tasa muy baja puede significar que Gmail ya envía mucho
 Son tres registros que publicas en el **DNS**, el sistema que guarda la información pública de tu dominio:
 
 - **SPF** indica qué servidores pueden enviar correo con tu dominio.
-- **DKIM** agrega una firma digital que demuestra que el mensaje no se alteró.
-- **DMARC** le dice al receptor qué hacer si un correo con tu dominio no pasa esas revisiones.
+- **DKIM** añade una firma digital que permite verificar que las partes firmadas del mensaje no fueron modificadas y que la firma corresponde al dominio indicado.
+- **DMARC** permite al propietario de un dominio indicar a los servidores receptores cómo tratar los mensajes que no superan las comprobaciones de autenticación. Para aprobar DMARC, el dominio autenticado mediante SPF o DKIM debe estar alineado con el dominio visible en el campo From (remitente). Según la política publicada, el receptor puede no tomar medidas, enviar el mensaje a spam o rechazarlo.
 
-Google pide SPF o DKIM a todos los remitentes. A quienes envían más de 5.000 mensajes al día a cuentas de Gmail les pide SPF, DKIM y DMARC (este último puede estar en `p=none`), y que el dominio del remitente visible coincida con el de SPF o DKIM. En Postmaster Tools, el panel **Autenticación** muestra qué porcentaje de tus correos pasa SPF, DKIM y DMARC. Puedes revisar tu configuración con el [verificador de dominio](/domain-checker) y el [verificador DMARC](/dmarc-checker).
+Google exige que todos los remitentes autentiquen sus correos mediante SPF o DKIM. Para quienes envían más de 5.000 mensajes diarios a cuentas personales de Gmail, también exige DMARC. Además, recomienda implementar SPF, DKIM y DMARC conjuntamente para mejorar la autenticación y protección del dominio. En Postmaster Tools, el panel **Autenticación** muestra qué porcentaje de tus correos pasa SPF, DKIM y DMARC. Puedes revisar tu configuración con el [verificador de dominio](/domain-checker) y el [verificador DMARC](/dmarc-checker).
 
 ### Errores de entrega
 
