@@ -286,7 +286,7 @@
                     12 de noviembre de 2026
                 </time>
                 <span aria-hidden="true">·</span>
-                <span>8 min de lectura</span>
+                <span>9 min de lectura</span>
                 
             </p>
             
@@ -455,10 +455,10 @@
 <p>Son tres registros que publicas en el <strong>DNS</strong>, el sistema que guarda la información pública de tu dominio:</p>
 <ul>
 <li><strong>SPF</strong> indica qué servidores pueden enviar correo con tu dominio.</li>
-<li><strong>DKIM</strong> agrega una firma digital que demuestra que el mensaje no se alteró.</li>
-<li><strong>DMARC</strong> le dice al receptor qué hacer si un correo con tu dominio no pasa esas revisiones.</li>
+<li><strong>DKIM</strong> añade una firma digital que permite verificar que las partes firmadas del mensaje no fueron modificadas y que la firma corresponde al dominio indicado.</li>
+<li><strong>DMARC</strong> permite al propietario de un dominio indicar a los servidores receptores cómo tratar los mensajes que no superan las comprobaciones de autenticación. Para aprobar DMARC, el dominio autenticado mediante SPF o DKIM debe estar alineado con el dominio visible en el campo From (remitente). Según la política publicada, el receptor puede no tomar medidas, enviar el mensaje a spam o rechazarlo.</li>
 </ul>
-<p>Google pide SPF o DKIM a todos los remitentes. A quienes envían más de 5.000 mensajes al día a cuentas de Gmail les pide SPF, DKIM y DMARC (este último puede estar en <code>p=none</code>), y que el dominio del remitente visible coincida con el de SPF o DKIM. En Postmaster Tools, el panel <strong>Autenticación</strong> muestra qué porcentaje de tus correos pasa SPF, DKIM y DMARC. Puedes revisar tu configuración con el <a href="/domain-checker">verificador de dominio</a> y el <a href="/dmarc-checker">verificador DMARC</a>.</p>
+<p>Google exige que todos los remitentes autentiquen sus correos mediante SPF o DKIM. Para quienes envían más de 5.000 mensajes diarios a cuentas personales de Gmail, también exige DMARC. Además, recomienda implementar SPF, DKIM y DMARC conjuntamente para mejorar la autenticación y protección del dominio. En Postmaster Tools, el panel <strong>Autenticación</strong> muestra qué porcentaje de tus correos pasa SPF, DKIM y DMARC. Puedes revisar tu configuración con el <a href="/domain-checker">verificador de dominio</a> y el <a href="/dmarc-checker">verificador DMARC</a>.</p>
 <h3  id="errores-de-entrega">Errores de entrega</h3>
 <p>El panel <strong>Errores de entrega</strong> muestra el porcentaje de mensajes autenticados (SPF o DKIM) que Gmail rechazó o que fallaron temporalmente, frente al total de autenticados, y el motivo. Si ves rechazos, lee el rebote completo. Por ejemplo, el <a href="/blog/error-550-5-7-26-gmail-dmarc/">error 550 5.7.26 de Gmail</a> tiene su propia guía.</p>
 <h3  id="cumplimiento-de-las-pautas">Cumplimiento de las pautas</h3>
