@@ -45,6 +45,7 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 - [Phishing con IA: qué frena DMARC y qué no](https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/): qué ataques con el dominio exacto frena DMARC y cuáles no.
 - [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y avance por etapas.
 - [Quién está enviando correos con mi dominio: cómo saberlo](https://www.inboxseguro.com/blog/quien-esta-enviando-correos-con-mi-dominio/): qué muestra el SPF, qué revelan los reportes DMARC y qué hacer con cada sistema, legítimo o desconocido.
+- [Reputación de dominio de correo: qué revisar](https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/): qué es la reputación de dominio, qué cambió en Google Postmaster Tools y qué señales revisar en Gmail, Outlook y listas negras.
 - [SPF: cómo no pasar el límite de 10 consultas](https://www.inboxseguro.com/blog/spf-limite-10-consultas-dns/): autorizar servicios en SPF sin superar el límite de la RFC 7208.
 
 ## Glosario y guías

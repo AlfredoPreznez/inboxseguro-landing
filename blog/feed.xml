@@ -6,6 +6,13 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
+      <title>Reputación de dominio de correo: qué revisar</title>
+      <link>https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/</guid>
+      <pubDate>Thu, 12 Nov 2026 00:00:00 -0000</pubDate>
+      <description>Qué es la reputación de dominio de correo, qué cambió en Google Postmaster Tools y qué señales revisar hoy en Gmail, Outlook y listas negras.</description>
+    </item>
+    <item>
       <title>Errores Gmail 5.7.26, 5.7.27, 5.7.25 y 4.7.28</title>
       <link>https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/</guid>

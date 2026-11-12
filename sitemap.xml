@@ -231,7 +231,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/blog/</loc>
-    <lastmod>2026-11-04</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -243,7 +243,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/blog/como-saber-si-mi-ip-esta-en-lista-negra/</loc>
-    <lastmod>2026-11-03</lastmod>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -292,6 +292,12 @@
   <url>
     <loc>https://www.inboxseguro.com/blog/quien-esta-enviando-correos-con-mi-dominio/</loc>
     <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/</loc>
+    <lastmod>2026-11-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
