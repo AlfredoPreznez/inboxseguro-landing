@@ -43,6 +43,7 @@ Las herramientas de verificación son gratis. La plataforma InboxSeguro no es gr
 - [Error 550 5.7.26, 5.7.27, 5.7.25 y 4.7.28 de Gmail](https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/): qué dice Google sobre rechazos por DMARC, SPF, PTR y límites de frecuencia, y cómo diagnosticar con cabeceras.
 - [Mis correos llegan a spam: la causa oculta](https://www.inboxseguro.com/blog/mis-correos-llegan-a-spam/): servicios que envían con tu dominio sin administración clara.
 - [Phishing con IA: qué frena DMARC y qué no](https://www.inboxseguro.com/blog/phishing-con-ia-dmarc/): qué ataques con el dominio exacto frena DMARC y cuáles no.
+- [Qué es BIMI y cómo mostrar tu logo en Gmail](https://www.inboxseguro.com/blog/que-es-bimi-logo-en-gmail/): qué es BIMI y qué necesita tu empresa para mostrar su logo en Gmail: certificado VMC o CMC, DMARC en quarantine o reject, logo SVG y registro TXT.
 - [Qué es DMARC y cómo activarlo sin riesgos](https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/): políticas none, quarantine y reject, y avance por etapas.
 - [Quién está enviando correos con mi dominio: cómo saberlo](https://www.inboxseguro.com/blog/quien-esta-enviando-correos-con-mi-dominio/): qué muestra el SPF, qué revelan los reportes DMARC y qué hacer con cada sistema, legítimo o desconocido.
 - [Reputación de dominio de correo: qué revisar](https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/): qué es la reputación de dominio, qué cambió en Google Postmaster Tools y qué señales revisar en Gmail, Outlook y listas negras.

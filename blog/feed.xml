@@ -6,6 +6,13 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
+      <title>Qué es BIMI y cómo mostrar tu logo en Gmail</title>
+      <link>https://www.inboxseguro.com/blog/que-es-bimi-logo-en-gmail/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/que-es-bimi-logo-en-gmail/</guid>
+      <pubDate>Mon, 16 Nov 2026 00:00:00 -0000</pubDate>
+      <description>Qué es BIMI y qué necesita tu empresa para mostrar su logo en Gmail: certificado VMC o CMC, DMARC en quarantine o reject, logo SVG y registro TXT.</description>
+    </item>
+    <item>
       <title>Reputación de dominio de correo: qué revisar</title>
       <link>https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/reputacion-de-dominio-de-correo/</guid>
