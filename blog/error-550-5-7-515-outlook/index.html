@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error 550 5.7.515 de Outlook: causa y solución | InboxSeguro</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Qué significa el error 550 5.7.515 de Outlook.com, qué exige Microsoft (SPF, DKIM y DMARC alineado) y cómo corregir el rechazo.">
+    <link rel="canonical" href="https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/">
+    <meta property="og:title" content="Error 550 5.7.515 de Outlook: causa y solución | InboxSeguro">
+    <meta property="og:description" content="Qué significa el error 550 5.7.515 de Outlook.com, qué exige Microsoft (SPF, DKIM y DMARC alineado) y cómo corregir el rechazo.">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/error-550-5-7-515-outlook.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Error 550 5.7.515 de Outlook: causa y solución | InboxSeguro">
+    <meta name="twitter:description" content="Qué significa el error 550 5.7.515 de Outlook.com, qué exige Microsoft (SPF, DKIM y DMARC alineado) y cómo corregir el rechazo.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/error-550-5-7-515-outlook.png">
+    <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/fontawesome/icons.min.css?v=1.0.0">
+    <link rel="stylesheet" href="/styles.css?v=1.0.8">
+    <link rel="stylesheet" href="/blog.css?v=1.2.3">
+    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Error 550 5.7.515 de Outlook: causa y solución",
+  "description": "Qué significa el error 550 5.7.515 de Outlook.com, qué exige Microsoft (SPF, DKIM y DMARC alineado) y cómo corregir el rechazo.",
+  "datePublished": "2026-11-19",
+  "dateModified": "2026-11-19",
+  "author": {
+    "@type": "Organization",
+    "name": "InboxSeguro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InboxSeguro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.inboxseguro.com/logo.png"
+    }
+  },
+  "image": [
+    "https://www.inboxseguro.com/blog/covers/error-550-5-7-515-outlook.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/"
+  },
+  "url": "https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.inboxseguro.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://www.inboxseguro.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Error 550 5.7.515 de Outlook: causa y solución",
+      "item": "https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿El error 550 5.7.515 afecta a correos enviados a empresas que usan Microsoft 365?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "El anuncio de Microsoft indica que estos requisitos aplican a Outlook.com, su servicio de consumo, que incluye direcciones de outlook.com, hotmail.com y live.com. Los rechazos en buzones de Microsoft 365 usan otros códigos, como 5.7.509 cuando el dominio falla DMARC con política reject."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito tener DMARC en p=reject para cumplir?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Microsoft exige un registro DMARC con al menos p=none, y recomienda p=reject. Lo que sí exige es que el mensaje pase DMARC, es decir, que SPF o DKIM estén alineados con el dominio del From."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Basta con que SPF pase para evitar el 5.7.515?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. La página de soporte de Microsoft pide que pasen tanto SPF como DKIM, además de publicar DMARC y que al menos uno de los dos esté alineado con el dominio del From."
+      }
+    }
+  ]
+}
+</script>
+
+
+</head>
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors whitespace-nowrap">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas gratis -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas gratis</span>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Chequeo de seguridad</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Verificador de remitentes</span>
+                                    </a>
+                                    <a href="/verificar-lista-negra" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador de listas negras</span>
+                                    </a>
+                                    <a href="/inboxscore" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>InboxScore</span>
+                                    </a>
+                                    <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Todas las herramientas</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Aprender -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Aprender</span>
+                                <div class="space-y-1">
+                                    <a href="/guias" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guías de configuración</span>
+                                    </a>
+                                    <a href="/glosario/" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Glosario DNS</span>
+                                    </a>
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC para empresas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min"
+                        target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
+                        onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                <!-- Recursos: Aprender (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Aprender</span>
+                    <a href="/guias" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guías de configuración</a>
+                    <a href="/glosario/" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Glosario DNS</a>
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guía DMARC para empresas</a>
+                </div>
+
+                <!-- Recursos: Herramientas gratis (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-brand-600 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas gratis</span>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad</a>
+                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Verificador de remitentes</a>
+                    <a href="/verificar-lista-negra" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador de listas negras</a>
+                    <a href="/inboxscore" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">InboxScore</a>
+                    <a href="/herramientas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" onclick="closeMobileMenu(); if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Error 550 5.7.515 de Outlook: causa y solución
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">DMARC</span>
+            <h1 class="blog-article-h1">Error 550 5.7.515 de Outlook: causa y solución</h1>
+            <p class="blog-meta blog-meta--on-dark">
+                <time datetime="2026-11-19" data-updated="2026-11-19">
+                    19 de noviembre de 2026
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>8 min de lectura</span>
+                
+            </p>
+            
+            <div class="blog-listen" data-nosnippet>
+                <p class="blog-listen-label" id="blog-listen-label-error-550-5-7-515-outlook">
+                    Escuchar este artículo · 9:23
+                </p>
+                <audio
+                    class="blog-listen-audio"
+                    controls
+                    preload="none"
+                    controlslist="nodownload"
+                    aria-labelledby="blog-listen-label-error-550-5-7-515-outlook"
+                >
+                    <source src="/blog/error-550-5-7-515-outlook/audio.mp3" type="audio/mpeg">
+                    Tu navegador no admite audio HTML5.
+                </audio>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="blog-article-body blog-article-body--with-toc">
+        
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-significa-el-error-550-57515">¿Qué significa el error 550 5.7.515?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#a-quien-aplican-los-requisitos-de-microsoft">¿A quién aplican los requisitos de Microsoft?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-exige-microsoft-para-no-recibir-el-57515">¿Qué exige Microsoft para no recibir el 5.7.515?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-diagnosticar-el-error-con-las-cabeceras">¿Cómo diagnosticar el error con las cabeceras?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-resolver-el-error-550-57515">¿Cómo resolver el error 550 5.7.515?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#en-que-se-diferencia-del-57509-y-del-5726">¿En qué se diferencia del 5.7.509 y del 5.7.26?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">¿Cómo ayuda InboxSeguro?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </details>
+        
+
+        <div class="blog-article-main">
+            <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> El error 550 5.7.515 significa que Outlook.com rechazó tu correo porque el dominio del From no cumple los requisitos de autenticación que Microsoft exige a los remitentes de alto volumen: más de 5.000 correos al día hacia sus cuentas de consumo (Outlook.com, Hotmail, Live.com, MSN). Microsoft pide que SPF y DKIM pasen, que el dominio publique un registro DMARC (al menos p=none) y que SPF o DKIM estén alineados con el From. Para resolverlo, revisa las cabeceras, identifica qué sistema envió el correo y configúralo para autenticar con tu dominio.</p>
+                </div>
+                
+                <p>Enviaste una cotización a un cliente con dirección @hotmail.com y volvió un rebote con este texto:</p>
+<pre><code>550 5.7.515 Access denied, sending domain ejemplo.cl does not meet the required authentication level.
+</code></pre>
+<p>No es un bloqueo al azar. Es Outlook.com aplicando los requisitos de autenticación que Microsoft exige a los dominios que envían mucho correo a sus cuentas personales. Esta guía explica qué significa el error, qué pide Microsoft y cómo corregirlo.</p>
+<blockquote>
+<p><strong>¿Tienes prisa?</strong> Revisa si tu dominio tiene DMARC publicado con el <a href="/dmarc-checker">verificador DMARC</a>.</p>
+</blockquote>
+<h2  id="que-significa-el-error-550-57515">¿Qué significa el error 550 5.7.515?</h2>
+<p>El 550 5.7.515 significa que Outlook.com rechazó el mensaje porque el dominio que aparece en el From no alcanzó el nivel de autenticación que Microsoft exige a los remitentes de alto volumen. El 550 indica un rechazo definitivo: el correo no se entregó.</p>
+<p>Según la <a href="https://support.microsoft.com/en-us/outlook/fix-ndr-error-550-5-7-515-in-outlook-com">página de soporte de Microsoft</a>, el error aparece al enviar a Outlook.com y a los servicios de correo de consumo relacionados, como Hotmail, Live.com y MSN. El texto completo agrega: <em>The sender&rsquo;s domain in the 5322.From address doesn&rsquo;t meet the authentication requirements defined for the sender.</em></p>
+<p>El <code>5322.From</code> es la dirección que ve el destinatario en el campo &ldquo;De&rdquo;. Microsoft también la llama remitente P2.</p>
+<h2  id="a-quien-aplican-los-requisitos-de-microsoft">¿A quién aplican los requisitos de Microsoft?</h2>
+<p>Aplican a los dominios que envían más de 5.000 correos al día a cuentas de Outlook.com. Microsoft anunció estos requisitos en abril de 2025 y los empezó a aplicar el 5 de mayo de 2025.</p>
+<p>Las fuentes oficiales describen el umbral así:</p>
+<ul>
+<li>El <a href="https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730">anuncio de Microsoft</a> habla de dominios que envían <strong>más de 5.000 correos al día</strong>, y aclara que aplica a Outlook.com, el servicio de consumo que atiende direcciones de hotmail.com, live.com y outlook.com.</li>
+<li>La página de soporte define al remitente de alto volumen como quien envía <strong>5.000 o más mensajes</strong> a esos servicios usando el mismo dominio en el <code>5322.From</code>.</li>
+</ul>
+<p>Un dato importante para empresas B2B: aunque tus clientes usen Microsoft 365 en su trabajo, muchas personas reciben facturas, avisos o boletines en cuentas personales de Hotmail u Outlook. Si sumas todos los sistemas que envían con tu dominio, el volumen puede crecer más de lo que parece.</p>
+<h2  id="que-exige-microsoft-para-no-recibir-el-57515">¿Qué exige Microsoft para no recibir el 5.7.515?</h2>
+<p>Microsoft exige tres cosas: que SPF y DKIM pasen, que tu dominio publique un registro DMARC, y que el mensaje pase DMARC, es decir, que SPF o DKIM estén alineados con el dominio del From.</p>
+<p>Según la página de soporte de Microsoft:</p>
+<ol>
+<li><strong>SPF y DKIM publicados, y ambos deben pasar.</strong> El SPF debe listar con precisión las IP o servidores autorizados a enviar.</li>
+<li><strong>Un registro DMARC publicado.</strong> Microsoft da este ejemplo: nombre <code>_dmarc</code>, valor TXT <code>v=DMARC1; p=none</code>. Su página de políticas indica al menos <code>p=none</code> y recomienda <code>p=reject</code>.</li>
+<li><strong>El mensaje debe pasar DMARC.</strong> Al menos uno de los dos, SPF o DKIM, debe estar alineado con el dominio del <code>5322.From</code>. Microsoft prefiere que estén alineados ambos.</li>
+</ol>
+<p>La alineación está definida en la <a href="https://www.rfc-editor.org/rfc/rfc7489">RFC 7489</a> (sección 3.1): el dominio que autenticó SPF o el dominio que firmó DKIM debe coincidir con el dominio del From. Si DMARC es nuevo para ti, empieza por <a href="/blog/que-es-dmarc-como-activarlo/">qué es DMARC y cómo activarlo</a>.</p>
+<p>El anuncio de Microsoft suma recomendaciones de buenas prácticas para remitentes grandes: un From o Reply-To válido que pueda recibir respuestas, un enlace para darse de baja visible y funcional, limpieza de listas y manejo de rebotes, y asuntos claros enviados a personas que dieron su consentimiento.</p>
+<h2  id="como-diagnosticar-el-error-con-las-cabeceras">¿Cómo diagnosticar el error con las cabeceras?</h2>
+<p>Envía un correo de prueba desde el mismo sistema a una cuenta de Outlook.com y revisa la cabecera Authentication-Results: ahí verás si SPF, DKIM y DMARC pasaron y con qué dominio. Microsoft explica cómo abrirla en <a href="https://support.microsoft.com/es-es/office/ver-encabezados-de-mensajes-de-internet-en-outlook-cd039382-dc6e-4264-ac74-c048563d212c">ver encabezados de mensajes de Internet en Outlook</a>.</p>
+<p>La cabecera, definida en la <a href="https://www.rfc-editor.org/rfc/rfc8601">RFC 8601</a>, puede verse parecida a esto:</p>
+<pre><code>Authentication-Results: spf=pass smtp.mailfrom=rebotes.plataforma.example.com;
+  dkim=fail header.d=ejemplo.cl;
+  dmarc=pass action=none header.from=ejemplo.cl
+</code></pre>
+<p>Qué mirar, según la <a href="https://learn.microsoft.com/en-us/defender-office-365/message-headers-eop-mdo">guía de Microsoft sobre cabeceras</a>:</p>
+<ul>
+<li><strong><code>header.from</code></strong>: el dominio que DMARC evalúa.</li>
+<li><strong><code>smtp.mailfrom</code></strong>: el dominio del <code>5321.MailFrom</code> (también llamado Return-Path o remitente P1), que es el que evalúa SPF.</li>
+<li><strong><code>header.d</code></strong>: el dominio que firmó con DKIM.</li>
+<li><strong><code>spf=</code>, <code>dkim=</code> y <code>dmarc=</code></strong>: el resultado de cada uno.</li>
+</ul>
+<p>En el ejemplo, DMARC pasa gracias a SPF, pero DKIM falla. Para un remitente de alto volumen eso basta para recibir el 5.7.515, porque Microsoft pide que pasen SPF y DKIM.</p>
+<p>Microsoft también pide revisar que el dominio del Return-Path esté alineado con el del From.</p>
+<h2  id="como-resolver-el-error-550-57515">¿Cómo resolver el error 550 5.7.515?</h2>
+<p>Identifica qué sistema envió el correo rechazado, haz que firme DKIM con tu dominio, confirma que esté autorizado en tu SPF y publica un registro DMARC. Después envía una prueba a Outlook.com y confirma que SPF, DKIM y DMARC pasen.</p>
+<ol>
+<li><strong>Identifica el sistema.</strong> El rebote te dice desde qué dirección salió: tu casilla, el CRM, el facturador, la tienda o la herramienta de boletines. Si no sabes cuáles envían con tu dominio, revisa <a href="/blog/quien-esta-enviando-correos-con-mi-dominio/">cómo saber quién está enviando correos con tu dominio</a>.</li>
+<li><strong>Configura DKIM con tu dominio.</strong> El servicio te dará los registros DNS para publicar. La firma debe llevar tu dominio, por ejemplo <code>d=ejemplo.cl</code>. Puedes revisar el resultado con el <a href="/dkim-checker">verificador DKIM</a> o la guía para <a href="/blog/como-verificar-dkim-de-tu-dominio/">verificar DKIM de tu dominio</a>.</li>
+<li><strong>Revisa tu SPF.</strong> Microsoft pide que tu SPF incluya las IP o los <code>include</code> que exige cada servicio. Puedes leer tu registro con el <a href="/spf-checker">verificador SPF</a>, que además cuenta las consultas DNS frente al límite de 10 de la <a href="https://www.rfc-editor.org/rfc/rfc7208">RFC 7208</a> (sección 4.6.4).</li>
+<li><strong>Publica DMARC.</strong> Si no tienes, empieza con <code>p=none</code> y un <code>rua</code> para recibir reportes. Microsoft pide al menos esa política.</li>
+<li><strong>Revisa los servicios externos.</strong> Para cada servicio que envía en tu nombre, Microsoft pide confirmar que el MAIL FROM use tu dominio, que DKIM firme con tu dominio, que tu SPF lo incluya y que DMARC se evalúe con tu dominio.</li>
+<li><strong>Prueba de nuevo.</strong> Envía a una cuenta de Outlook.com y confirma <code>spf=pass</code>, <code>dkim=pass</code> y <code>dmarc=pass</code> en la cabecera.</li>
+</ol>
+<p>Si el rechazo viene de Gmail con otro código, revisa la guía del <a href="/blog/error-550-5-7-26-gmail-dmarc/">error 550 5.7.26 de Gmail</a>. Si tus correos no rebotan pero llegan a spam, revisa <a href="/blog/mis-correos-llegan-a-spam/">por qué mis correos llegan a spam</a>.</p>
+<h2  id="en-que-se-diferencia-del-57509-y-del-5726">¿En qué se diferencia del 5.7.509 y del 5.7.26?</h2>
+<p>El 5.7.515 es un rechazo de Outlook.com por no cumplir los requisitos de remitente de alto volumen. El 5.7.509 aparece en Exchange Online cuando el dominio del From falla DMARC y su política es reject. El 5.7.26 es el código que usa Gmail.</p>
+<ul>
+<li><strong><code>5.7.509</code></strong>: según la <a href="https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/non-delivery-reports-in-exchange-online/non-delivery-reports-in-exchange-online">lista de NDR de Exchange Online</a>, <em>Access denied, sending domain [dominio] does not pass DMARC verification and has a DMARC policy of reject.</em> Lo provoca la política que tu propio dominio publicó.</li>
+<li><strong><code>5.7.515</code></strong>: lo provoca la regla de Microsoft para remitentes de alto volumen. Puede aparecer aunque tu política DMARC sea <code>p=none</code>, si SPF o DKIM no pasan.</li>
+<li><strong><code>5.7.26</code></strong>: es el rechazo de Gmail por falta de autenticación. Google también tiene requisitos para quienes envían más de 5.000 mensajes al día a cuentas personales de Gmail.</li>
+</ul>
+<h2  id="como-ayuda-inboxseguro">¿Cómo ayuda InboxSeguro?</h2>
+<p>El 5.7.515 suele aparecer porque un sistema envía con tu dominio sin DKIM o sin alineación, y nadie lo tenía identificado. Cuando apuntas el <code>rua</code> de tu DMARC a InboxSeguro, los reportes llegan a su panel y la plataforma:</p>
+<ul>
+<li><strong>Muestra qué sistemas envían correo con tu dominio</strong>, a partir de los reportes DMARC, para encontrar el que no autentica.</li>
+<li><strong>Permite asignar un responsable</strong> a cada sistema.</li>
+<li><strong>Guía un DMARC gradual</strong> (<code>none</code> → <code>quarantine</code> → <code>reject</code>) sin cortar correo legítimo.</li>
+<li><strong>Muestra el estado DNS</strong> de SPF, DKIM, DMARC, BIMI, MTA-STS y RUA.</li>
+</ul>
+<p>Para empezar, revisa tu dominio con el <a href="/domain-checker">diagnóstico de dominio</a> y descubre qué servidores declara tu SPF con el <a href="/quien-puede-enviar-correos">diagnosticador de quién puede enviar correos</a>.</p>
+<h2  id="fuentes">Fuentes</h2>
+<ul>
+<li><a href="https://support.microsoft.com/en-us/outlook/fix-ndr-error-550-5-7-515-in-outlook-com">Microsoft Support: Fix NDR error 550 5.7.515 in Outlook.com</a>.</li>
+<li><a href="https://techcommunity.microsoft.com/blog/microsoftdefenderforoffice365blog/strengthening-email-ecosystem-outlook%E2%80%99s-new-requirements-for-high%E2%80%90volume-senders/4399730">Microsoft Tech Community: Strengthening Email Ecosystem: Outlook&rsquo;s New Requirements for High-Volume Senders</a> (2 de abril de 2025, actualizado el 29 de abril de 2025).</li>
+<li><a href="https://postmaster.outlook.com/policies.aspx">Outlook.com Postmaster: Policies</a>.</li>
+<li><a href="https://support.microsoft.com/es-es/office/ver-encabezados-de-mensajes-de-internet-en-outlook-cd039382-dc6e-4264-ac74-c048563d212c">Microsoft Support: Ver encabezados de mensajes de Internet en Outlook</a>.</li>
+<li><a href="https://learn.microsoft.com/en-us/defender-office-365/message-headers-eop-mdo">Microsoft Learn: Anti-spam message headers in Microsoft 365</a>.</li>
+<li><a href="https://learn.microsoft.com/en-us/exchange/mail-flow-best-practices/non-delivery-reports-in-exchange-online/non-delivery-reports-in-exchange-online">Microsoft Learn: Non-delivery reports in Exchange Online</a>.</li>
+<li><a href="https://support.google.com/a/answer/81126?hl=es">Google: Directrices para remitentes de correo electrónico</a>.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc7489">RFC 7489: DMARC</a>, sección 3.1.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc7208">RFC 7208: SPF</a>, sección 4.6.4.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc8601">RFC 8601: Message Header Field for Indicating Message Authentication Status</a>.</li>
+</ul>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿El error 550 5.7.515 afecta a correos enviados a empresas que usan Microsoft 365?</h3>
+                    <p>El anuncio de Microsoft indica que estos requisitos aplican a Outlook.com, su servicio de consumo, que incluye direcciones de outlook.com, hotmail.com y live.com. Los rechazos en buzones de Microsoft 365 usan otros códigos, como 5.7.509 cuando el dominio falla DMARC con política reject.</p>
+                    
+                    <h3>¿Necesito tener DMARC en p=reject para cumplir?</h3>
+                    <p>No. Microsoft exige un registro DMARC con al menos p=none, y recomienda p=reject. Lo que sí exige es que el mensaje pase DMARC, es decir, que SPF o DKIM estén alineados con el dominio del From.</p>
+                    
+                    <h3>¿Basta con que SPF pase para evitar el 5.7.515?</h3>
+                    <p>No. La página de soporte de Microsoft pide que pasen tanto SPF como DKIM, además de publicar DMARC y que al menos uno de los dos esté alineado con el dominio del From.</p>
+                    
+                </section>
+                
+            </div>
+
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary" href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener"
+                       data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+
+        
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-significa-el-error-550-57515">¿Qué significa el error 550 5.7.515?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#a-quien-aplican-los-requisitos-de-microsoft">¿A quién aplican los requisitos de Microsoft?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-exige-microsoft-para-no-recibir-el-57515">¿Qué exige Microsoft para no recibir el 5.7.515?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-diagnosticar-el-error-con-las-cabeceras">¿Cómo diagnosticar el error con las cabeceras?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-resolver-el-error-550-57515">¿Cómo resolver el error 550 5.7.515?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#en-que-se-diferencia-del-57509-y-del-5726">¿En qué se diferencia del 5.7.509 y del 5.7.26?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">¿Cómo ayuda InboxSeguro?</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </nav>
+        
+    </div>
+</article>
+
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Soluciones</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/seguridad-correo-proveedores" class="hover:text-blue-400 transition-colors">Seguridad para proveedores</a></li>
+                            <li><a href="/informe-higiene-correo-corporativo" class="hover:text-blue-400 transition-colors">Informe de higiene</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Detener suplantación</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas gratis</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad</a></li>
+                            <li><a href="/verificar-lista-negra" class="hover:text-blue-400 transition-colors">Verificador de listas negras</a></li>
+                            <li><a href="/inboxscore" class="hover:text-blue-400 transition-colors">InboxScore</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/guias" class="hover:text-blue-400 transition-colors">Guías</a></li>
+                            <li><a href="/glosario/" class="hover:text-blue-400 transition-colors">Glosario</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>
