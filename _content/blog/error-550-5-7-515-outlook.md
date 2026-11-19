@@ -1,7 +1,7 @@
 ---
-title: "Error 550 5.7.515 de Outlook: qué significa y cómo resolverlo"
+title: "Error 550 5.7.515 de Outlook: causa y solución"
 slug: error-550-5-7-515-outlook
-description: "Error 550 5.7.515 de Outlook.com: qué exige Microsoft a los remitentes de alto volumen (SPF, DKIM y DMARC alineado) y cómo diagnosticar y corregir el rechazo."
+description: "Qué significa el error 550 5.7.515 de Outlook.com, qué exige Microsoft (SPF, DKIM y DMARC alineado) y cómo corregir el rechazo."
 excerpt: "Outlook.com rechaza tu correo con 550 5.7.515. Qué pide Microsoft a quienes envían más de 5.000 correos, cómo revisar las cabeceras y qué corregir."
 category: DMARC
 date: 2026-11-19

@@ -6,11 +6,11 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
-      <title>Error 550 5.7.515 de Outlook: qué significa y cómo resolverlo</title>
+      <title>Error 550 5.7.515 de Outlook: causa y solución</title>
       <link>https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/</guid>
       <pubDate>Thu, 19 Nov 2026 00:00:00 -0000</pubDate>
-      <description>Error 550 5.7.515 de Outlook.com: qué exige Microsoft a los remitentes de alto volumen (SPF, DKIM y DMARC alineado) y cómo diagnosticar y corregir el rechazo.</description>
+      <description>Qué significa el error 550 5.7.515 de Outlook.com, qué exige Microsoft (SPF, DKIM y DMARC alineado) y cómo corregir el rechazo.</description>
     </item>
     <item>
       <title>Qué es BIMI y cómo mostrar tu logo en Gmail</title>
