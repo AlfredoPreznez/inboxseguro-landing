@@ -231,7 +231,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/blog/</loc>
-    <lastmod>2026-11-16</lastmod>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -268,6 +268,12 @@
   <url>
     <loc>https://www.inboxseguro.com/blog/error-550-5-7-26-gmail-dmarc/</loc>
     <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/</loc>
+    <lastmod>2026-11-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
