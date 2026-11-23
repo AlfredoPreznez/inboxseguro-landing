@@ -231,7 +231,7 @@
   </url>
   <url>
     <loc>https://www.inboxseguro.com/blog/</loc>
-    <lastmod>2026-11-19</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -298,6 +298,12 @@
   <url>
     <loc>https://www.inboxseguro.com/blog/que-es-dmarc-como-activarlo/</loc>
     <lastmod>2026-11-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.inboxseguro.com/blog/que-es-una-rbl-lista-negra-dns/</loc>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

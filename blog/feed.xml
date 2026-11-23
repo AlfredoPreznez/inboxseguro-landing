@@ -6,6 +6,13 @@
     <description>Guías prácticas de seguridad de correo para empresas.</description>
     <language>es-cl</language>
     <item>
+      <title>Qué es una RBL y cómo funciona una lista negra</title>
+      <link>https://www.inboxseguro.com/blog/que-es-una-rbl-lista-negra-dns/</link>
+      <guid isPermaLink="true">https://www.inboxseguro.com/blog/que-es-una-rbl-lista-negra-dns/</guid>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 -0000</pubDate>
+      <description>Qué es una RBL o lista negra DNS (DNSBL), cómo la consultan los servidores de correo, qué significa estar listado y qué hacer para salir.</description>
+    </item>
+    <item>
       <title>Error 550 5.7.515 de Outlook: causa y solución</title>
       <link>https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/</link>
       <guid isPermaLink="true">https://www.inboxseguro.com/blog/error-550-5-7-515-outlook/</guid>
