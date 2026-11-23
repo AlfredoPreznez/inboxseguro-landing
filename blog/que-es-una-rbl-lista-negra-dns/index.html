@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qué es una RBL y cómo funciona una lista negra | InboxSeguro</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <meta name="description" content="Qué es una RBL o lista negra DNS (DNSBL), cómo la consultan los servidores de correo, qué significa estar listado y qué hacer para salir.">
+    <link rel="canonical" href="https://www.inboxseguro.com/blog/que-es-una-rbl-lista-negra-dns/">
+    <meta name="robots" content="index, follow">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="InboxSeguro">
+    <meta property="og:locale" content="es_CL">
+    <meta property="og:url" content="https://www.inboxseguro.com/blog/que-es-una-rbl-lista-negra-dns/">
+    <meta property="og:title" content="Qué es una RBL y cómo funciona una lista negra | InboxSeguro">
+    <meta property="og:description" content="Qué es una RBL o lista negra DNS (DNSBL), cómo la consultan los servidores de correo, qué significa estar listado y qué hacer para salir.">
+    <meta property="og:image" content="https://www.inboxseguro.com/blog/covers/que-es-una-rbl-lista-negra-dns.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Qué es una RBL y cómo funciona una lista negra | InboxSeguro">
+    <meta name="twitter:description" content="Qué es una RBL o lista negra DNS (DNSBL), cómo la consultan los servidores de correo, qué significa estar listado y qué hacer para salir.">
+    <meta name="twitter:image" content="https://www.inboxseguro.com/blog/covers/que-es-una-rbl-lista-negra-dns.png">
+    <link rel="alternate" type="application/rss+xml" title="Blog InboxSeguro" href="https://www.inboxseguro.com/blog/feed.xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/fontawesome/icons.min.css?v=1.0.0">
+    <link rel="stylesheet" href="/styles.css?v=1.0.8">
+    <link rel="stylesheet" href="/blog.css?v=1.2.3">
+    
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Qué es una RBL y cómo funciona una lista negra",
+  "description": "Qué es una RBL o lista negra DNS (DNSBL), cómo la consultan los servidores de correo, qué significa estar listado y qué hacer para salir.",
+  "datePublished": "2026-11-23",
+  "dateModified": "2026-11-23",
+  "author": {
+    "@type": "Organization",
+    "name": "InboxSeguro"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "InboxSeguro",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.inboxseguro.com/logo.png"
+    }
+  },
+  "image": [
+    "https://www.inboxseguro.com/blog/covers/que-es-una-rbl-lista-negra-dns.png"
+  ],
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.inboxseguro.com/blog/que-es-una-rbl-lista-negra-dns/"
+  },
+  "url": "https://www.inboxseguro.com/blog/que-es-una-rbl-lista-negra-dns/"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Inicio",
+      "item": "https://www.inboxseguro.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://www.inboxseguro.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Qué es una RBL y cómo funciona una lista negra",
+      "item": "https://www.inboxseguro.com/blog/que-es-una-rbl-lista-negra-dns/"
+    }
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿RBL y DNSBL son lo mismo?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "En el uso diario, sí: mucha gente llama RBL a cualquier lista negra publicada en el DNS. La RFC 5782 aclara que el término RBL corresponde, en sentido estricto, a la lista original de MAPS, y que el término convencional hoy es DNSBL (DNS blacklist o blocklist)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Estar en una RBL significa que todos mis correos rebotan?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No necesariamente. Cada servidor decide qué listas consulta. Según la RFC 5782, algunos rechazan la conexión si encuentran la IP en una lista y otros usan el resultado como un factor más de un puntaje. En ese caso el correo puede llegar, pero a spam. Google indica que los mensajes desde IP incluidas en una lista de bloqueadas tienen más probabilidad de marcarse como spam."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto tarda una lista en quitar mi IP?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Depende de cada lista: la RFC 5782 no define reglas para entrar o salir. Para la lista de remitentes bloqueados de Microsoft 365, Microsoft indica que los resultados varían y que la salida puede tardar hasta 24 horas o más."
+      }
+    }
+  ]
+}
+</script>
+
+
+</head>
+<body class="bg-white text-slate-800 antialiased relative min-h-screen flex flex-col">
+<!-- chrome:nav -->
+    <div data-nosnippet>
+    <nav class="fixed w-full z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between h-16 md:h-20 items-center">
+
+                <a href="/" class="flex items-center gap-1.5 cursor-pointer">
+                    <img src="/logo.png" alt=""
+                        class="h-8 md:h-9 w-auto object-contain">
+                    <span class="flex items-baseline gap-0.5 leading-none font-bold text-white select-none">
+                        <span class="text-lg md:text-xl">Inbox<span class="text-brand-600">Seguro</span></span>
+                        <sup class="text-brand-600 text-[0.6rem] font-bold relative top-[-0.8em]">TM</sup>
+                    </span>
+                </a>
+
+                <div class="hidden lg:flex items-center text-sm font-medium" style="gap:0.85rem">
+                    <a href="/como-funciona" class="text-slate-300 hover:text-white transition-colors whitespace-nowrap">Cómo funciona</a>
+                    <a href="/plataforma" class="text-slate-300 hover:text-white transition-colors">Plataforma</a>
+                    <a href="/precios" class="text-slate-300 hover:text-white transition-colors">Precios</a>
+                    <a href="/herramientas" class="text-slate-300 hover:text-white transition-colors">Herramientas</a>
+                    <a href="/blog/" class="text-slate-300 hover:text-white transition-colors">Blog</a>
+
+                                        <!-- Dropdown Recursos -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-1 text-slate-300 hover:text-white transition-colors focus:outline-none py-2 cursor-pointer">
+                            <span>Recursos</span>
+                            <svg class="w-4 h-4 transition-transform group-hover:rotate-180 text-slate-400 group-hover:text-brand-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="absolute left-1/2 transform -translate-x-1/2 mt-1 w-[480px] rounded-xl bg-white border border-slate-100 shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50 p-4 grid grid-cols-2 gap-4">
+                            <!-- Columna 1: Herramientas gratis -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Herramientas gratis</span>
+                                <div class="space-y-1">
+                                    <a href="/domain-checker" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Chequeo de seguridad</span>
+                                    </a>
+                                    <a href="/quien-puede-enviar-correos" class="flex items-center gap-2 px-2.5 py-2 text-xs text-slate-700 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors font-semibold">
+                                        <span>Verificador de remitentes</span>
+                                    </a>
+                                    <a href="/verificar-lista-negra" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Verificador de listas negras</span>
+                                    </a>
+                                    <a href="/inboxscore" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>InboxScore</span>
+                                    </a>
+                                    <a href="/herramientas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Todas las herramientas</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <!-- Columna 2: Aprender -->
+                            <div>
+                                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Aprender</span>
+                                <div class="space-y-1">
+                                    <a href="/guias" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guías de configuración</span>
+                                    </a>
+                                    <a href="/glosario/" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Glosario DNS</span>
+                                    </a>
+                                    <a href="/dmarc-para-empresas" class="flex items-center gap-2 px-2.5 py-1.5 text-xs text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">
+                                        <span>Guía DMARC para empresas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="/contacto" class="text-slate-300 hover:text-white transition-colors">Contacto</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="hidden md:block whitespace-nowrap text-sm font-medium text-slate-300 hover:text-white transition-colors">Acceso Clientes</a>
+                    <a href="/precios"
+                        class="hidden sm:inline-flex items-center whitespace-nowrap text-sm font-semibold text-slate-300 hover:text-white px-3 py-2 md:px-4 md:py-2.5 rounded-lg transition-colors" data-seo-event="cta_precios">Ver planes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min"
+                        target="_blank" rel="noopener" data-seo-event="cta_demo_calendly"
+                        onclick="if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 md:px-5 md:py-2.5 rounded-lg text-sm font-semibold shadow-lg transition-colors">Agendar demo</a>
+                    <!-- Hamburger -->
+                    <button id="menuBtn" onclick="toggleMobileMenu()"
+                        class="lg:hidden p-2 text-slate-300 hover:text-white cursor-pointer">
+                        <svg id="menuIconOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        <svg id="menuIconClose" class="w-6 h-6 hidden" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-t border-slate-100 shadow-lg">
+            <div class="px-4 py-4 space-y-1">
+                <a href="/como-funciona" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Cómo funciona</a>
+                <a href="/plataforma" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Plataforma</a>
+                <a href="/precios" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Precios</a>
+                <a href="/herramientas" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Herramientas</a>
+                <a href="/blog/" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Blog</a>
+
+                <!-- Recursos: Aprender (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-blue-500 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Aprender</span>
+                    <a href="/guias" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guías de configuración</a>
+                    <a href="/glosario/" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Glosario DNS</a>
+                    <a href="/dmarc-para-empresas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Guía DMARC para empresas</a>
+                </div>
+
+                <!-- Recursos: Herramientas gratis (móvil) -->
+                <div class="px-4 py-2 border-l-2 border-brand-600 my-2 space-y-1 bg-slate-50/50 rounded-r-lg">
+                    <span class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Herramientas gratis</span>
+                    <a href="/domain-checker" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Chequeo de seguridad</a>
+                    <a href="/quien-puede-enviar-correos" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm font-semibold text-slate-700 hover:text-brand-600 transition-colors">Verificador de remitentes</a>
+                    <a href="/verificar-lista-negra" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Verificador de listas negras</a>
+                    <a href="/inboxscore" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">InboxScore</a>
+                    <a href="/herramientas" onclick="closeMobileMenu()"
+                        class="block py-2 pl-2 text-sm text-slate-600 hover:text-brand-600 transition-colors">Todas las herramientas</a>
+                </div>
+
+                <a href="/contacto" onclick="closeMobileMenu()"
+                    class="block px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-brand-600 rounded-lg transition-colors">Contacto</a>
+                <div class="pt-2 border-t border-slate-100 space-y-1">
+                    <a href="https://panel.inboxseguro.com/login"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Acceso Clientes</a>
+                    <a href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener" onclick="closeMobileMenu(); if (typeof gtag==='function') gtag('event','schedule_demo');"
+                        class="block px-4 py-3 text-sm font-medium text-brand-600 hover:bg-blue-50 rounded-lg transition-colors">Agendar demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+    </div>
+    <!-- /chrome:nav -->
+<main class="flex-grow">
+
+<article class="blog-article">
+    <header class="blog-article-hero">
+        <div class="blog-article-hero-inner">
+            <nav class="blog-breadcrumbs blog-breadcrumbs--on-dark" aria-label="Miga de pan">
+                <a href="/">Inicio</a><span>/</span><a href="/blog/">Blog</a><span>/</span>Qué es una RBL y cómo funciona una lista negra
+            </nav>
+            <span class="blog-chip blog-chip--on-dark">Entregabilidad</span>
+            <h1 class="blog-article-h1">Qué es una RBL y cómo funciona una lista negra</h1>
+            <p class="blog-meta blog-meta--on-dark">
+                <time datetime="2026-11-23" data-updated="2026-11-23">
+                    23 de noviembre de 2026
+                </time>
+                <span aria-hidden="true">·</span>
+                <span>9 min de lectura</span>
+                
+            </p>
+            
+            <div class="blog-listen" data-nosnippet>
+                <p class="blog-listen-label" id="blog-listen-label-que-es-una-rbl-lista-negra-dns">
+                    Escuchar este artículo · 11:49
+                </p>
+                <audio
+                    class="blog-listen-audio"
+                    controls
+                    preload="none"
+                    controlslist="nodownload"
+                    aria-labelledby="blog-listen-label-que-es-una-rbl-lista-negra-dns"
+                >
+                    <source src="/blog/que-es-una-rbl-lista-negra-dns/audio.mp3" type="audio/mpeg">
+                    Tu navegador no admite audio HTML5.
+                </audio>
+            </div>
+            
+        </div>
+    </header>
+
+    <div class="blog-article-body blog-article-body--with-toc">
+        
+        <details class="blog-toc blog-toc--mobile">
+            <summary class="blog-toc-summary">Contenido</summary>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-es-una-rbl">Qué es una RBL</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-funciona-la-consulta-dns">Cómo funciona la consulta DNS</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#la-ip-se-invierte-y-se-agrega-el-nombre-de-la-lista">La IP se invierte y se agrega el nombre de la lista</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#que-responde-la-lista">Qué responde la lista</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#sublistas-por-que-a-veces-ves-127004-o-127006">Sublistas: por qué a veces ves 127.0.0.4 o 127.0.0.6</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#las-listas-cambian-rapido">Las listas cambian rápido</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#listas-de-ip-y-listas-de-dominio">Listas de IP y listas de dominio</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-pasa-cuando-tu-ip-o-tu-dominio-aparece">Qué pasa cuando tu IP o tu dominio aparece</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#como-se-ve-el-rechazo">Cómo se ve el rechazo</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-hacer-si-estas-listado">Qué hacer si estás listado</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#1-encuentra-la-causa">1. Encuentra la causa</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#2-corrige-antes-de-pedir-la-salida">2. Corrige antes de pedir la salida</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#3-pide-la-salida-en-el-sitio-de-cada-lista">3. Pide la salida en el sitio de cada lista</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-vigilarlo">Cómo vigilarlo</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#para-tu-equipo-tecnico">Para tu equipo técnico</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </details>
+        
+
+        <div class="blog-article-main">
+            <div class="blog-prose">
+                
+                <div class="blog-summary" role="note" aria-label="Respuesta corta">
+                    <p><strong>Respuesta corta:</strong> Una RBL, o lista negra DNS (DNSBL), es una lista de direcciones IP o de dominios publicada en el DNS que los servidores de correo consultan para decidir si aceptan un mensaje. Según la RFC 5782, la consulta se arma invirtiendo los números de la IP y agregando el nombre de la lista; si hay un registro A, normalmente 127.0.0.2, la IP está listada, y si no hay registros, no lo está. Algunos servidores rechazan la conexión y otros usan el resultado en un puntaje de spam. Si estás listado, corrige la causa antes de pedir la salida en el sitio de cada lista.</p>
+                </div>
+                
+                <p>Un cliente te dice que no le llegó la factura y encuentras un rebote que menciona una &ldquo;RBL&rdquo; o una &ldquo;blacklist&rdquo;. Antes de pedir que te saquen, conviene entender qué es una RBL, cómo la usan los servidores que reciben tu correo y por qué tu IP o tu dominio pudo terminar ahí.</p>
+<blockquote>
+<p><strong>¿Tienes prisa?</strong> Revisa si tu IP o tu dominio aparece en listas negras con el <a href="/verificar-lista-negra">verificador de listas negras</a>.</p>
+</blockquote>
+<h2  id="que-es-una-rbl">Qué es una RBL</h2>
+<p>Una <strong>RBL</strong> es una lista negra publicada en el <strong>DNS</strong>, el sistema que guarda la información pública de internet, que los servidores de correo consultan para decidir si aceptan un mensaje. Normalmente contiene direcciones IP, y a veces dominios, que quien administra la lista considera fuente de correo no deseado.</p>
+<p>El nombre tiene historia. Según la RFC 5782 (sección 1), en 1997 Dave Rand y Paul Vixie empezaron a mantener una lista de IP que les enviaban spam, conocida como <em>Real-time Blackhole List</em> o <strong>RBL</strong>. Luego la distribuyeron por DNS y otras personas crearon sus propias listas.</p>
+<p>La misma RFC aclara que mucha gente llama &ldquo;RBL&rdquo; a cualquier lista negra en el DNS, pero que el término convencional es <strong>DNSBL</strong> (<em>DNS blacklist</em> o <em>blocklist</em>). En la práctica, RBL, DNSBL, lista negra DNS y <em>blacklist</em> DNS se usan como sinónimos. Tienes la definición corta en el <a href="/glosario/rbl/">glosario: RBL</a>.</p>
+<p>Un detalle importante: la RFC 5782 describe cómo se estructuran y consultan estas listas, pero <strong>no define políticas</strong> para agregar o quitar direcciones (sección 1). Cada lista tiene sus propias reglas.</p>
+<h2  id="como-funciona-la-consulta-dns">Cómo funciona la consulta DNS</h2>
+<p>Una RBL es una <strong>zona DNS</strong> cuyos nombres representan entradas de la lista (RFC 5782, sección 2).</p>
+<h3  id="la-ip-se-invierte-y-se-agrega-el-nombre-de-la-lista">La IP se invierte y se agrega el nombre de la lista</h3>
+<p>Para una dirección IPv4, el nombre se arma invirtiendo el orden de sus cuatro números y agregando el nombre de la lista (sección 2.1). La RFC usa este ejemplo: si la lista se llama <code>bad.example.com</code> y la IP es <code>192.0.2.99</code>, el servidor consulta:</p>
+<pre><code>99.2.0.192.bad.example.com
+</code></pre>
+<p>Con IPv6 la idea es la misma, pero la dirección se escribe con sus 32 dígitos hexadecimales, uno por uno y en orden inverso, seguidos del nombre de la lista (sección 2.4).</p>
+<h3  id="que-responde-la-lista">Qué responde la lista</h3>
+<ul>
+<li><strong>Si la IP está listada</strong>, la lista responde con un registro A. Por convención su valor es <code>127.0.0.2</code> (sección 2.1). La RFC indica que cualquier registro A devuelto significa que la dirección está listada (sección 6).</li>
+<li><strong>Si la IP no está listada</strong>, no debe existir ningún registro para ella (sección 2.1). El servidor DNS responde que el nombre no existe, la respuesta que la RFC 1035 llama <em>Name Error</em> (sección 4.1.1) y que la RFC 2308 también denomina <strong>NXDOMAIN</strong>.</li>
+<li><strong>El motivo va en un registro TXT.</strong> Las listas negras deberían publicar un TXT que explique por qué la IP está listada; muchas veces incluye la dirección de una página con más información, y suele usarse como texto del error SMTP que recibe quien envía (sección 2.1).</li>
+</ul>
+<h3  id="sublistas-por-que-a-veces-ves-127004-o-127006">Sublistas: por qué a veces ves 127.0.0.4 o 127.0.0.6</h3>
+<p>Algunas listas agrupan varios motivos, por ejemplo relays abiertos y equipos comprometidos por malware, y los distinguen con distintos valores del registro A (sección 2.3). En el ejemplo de la RFC, si una sublista usa <code>127.0.0.2</code> y otra <code>127.0.0.4</code>, una IP que está en ambas responde <code>127.0.0.6</code>.</p>
+<h3  id="las-listas-cambian-rapido">Las listas cambian rápido</h3>
+<p>Según la RFC 5782 (sección 4), una lista de IP que enviaron spam puede cambiar cada pocos minutos. Una revisión puntual muestra el estado de ese momento, no el de mañana.</p>
+<h2  id="listas-de-ip-y-listas-de-dominio">Listas de IP y listas de dominio</h2>
+<p>La mayoría de las listas usa direcciones IP (RFC 5782, sección 2). Algunas, en cambio, contienen <strong>nombres de dominio</strong>. Se las llama <strong>RHSBL</strong> (<em>right-hand-side blacklists</em>) y la consulta pone el dominio delante del nombre de la lista (sección 3). El ejemplo de la RFC: si la lista es <code>doms.example.net</code> y el dominio listado es <code>invalid.edu</code>, la entrada es <code>invalid.edu.doms.example.net</code>. Responden con registros A y TXT, igual que las de IP.</p>
+<p>Son <strong>mucho menos comunes</strong> que las de IP. Según la sección 6, se usan para revisar dominios de direcciones de correo, nombres de servidor en las cabeceras y dominios de los enlaces del mensaje.</p>
+<p>Por eso, si sospechas de tu dominio, revisa también la IP del servidor que entrega tus correos. Tienes una guía para cada caso: <a href="/blog/como-saber-si-mi-dominio-esta-en-lista-negra/">cómo saber si mi dominio está en lista negra</a> y <a href="/blog/como-saber-si-mi-ip-esta-en-lista-negra/">cómo saber si mi IP está en lista negra</a>.</p>
+<h2  id="que-pasa-cuando-tu-ip-o-tu-dominio-aparece">Qué pasa cuando tu IP o tu dominio aparece</h2>
+<p>Cada servidor que recibe correo elige qué listas consulta. La RFC 5782 (sección 6) describe dos usos habituales:</p>
+<ul>
+<li><strong>Rechazo en la conexión.</strong> El servidor revisa sus listas en cada conexión entrante y, si encuentra la IP en una lista negra, rechaza la conexión.</li>
+<li><strong>Puntaje de spam.</strong> El resultado es un factor más dentro de un puntaje. Un filtro también puede revisar, después de recibir el mensaje, las IP de las cabeceras <code>Received:</code> o los enlaces del cuerpo.</li>
+</ul>
+<p>En el segundo caso, el correo no rebota, pero puede llegar a spam. Google lo dice en sus directrices para remitentes: los mensajes enviados desde direcciones IP incluidas en una lista de bloqueadas tienen más probabilidad de marcarse como spam. Si usas una IP compartida, Google pide asegurarse de que no figure en ninguna lista de IP bloqueadas de internet.</p>
+<h3  id="como-se-ve-el-rechazo">Cómo se ve el rechazo</h3>
+<p>Cuando hay rechazo, recibes un rebote con un código SMTP. Según la RFC 5321 (sección 4.2.1), los códigos que empiezan con 5 son errores permanentes: el servidor no aceptó la acción y el cliente no debería repetirla igual. El <code>550</code> incluye, entre otros casos, un comando rechazado por motivos de política (sección 4.2.3).</p>
+<p>Muchos rebotes agregan un código extendido de la RFC 3463: la clase <code>5</code> es una falla permanente y los códigos <code>X.7.X</code> corresponden a seguridad o política. Por ejemplo, <code>5.7.1</code> significa <em>Delivery not authorized, message refused</em> y puede ser resultado de un filtrado por servidor.</p>
+<p>Según la RFC 5782 (sección 2.1), el texto del registro TXT de la lista se usa a menudo como texto de ese error SMTP. Microsoft usa su propia lista de remitentes bloqueados, y su rebote se ve así:</p>
+<pre><code>550 5.7.606-649 Access denied, banned sending IP [IP de origen]
+</code></pre>
+<p>Revisa también la <a href="/blog/reputacion-de-dominio-de-correo/">reputación de tu dominio de correo</a> y <a href="/blog/mis-correos-llegan-a-spam/">por qué mis correos llegan a spam</a>, porque una lista negra no es la única causa.</p>
+<h2  id="que-hacer-si-estas-listado">Qué hacer si estás listado</h2>
+<h3  id="1-encuentra-la-causa">1. Encuentra la causa</h3>
+<p>Lee el texto del rebote: muchas veces es el TXT de la lista, con el motivo y un enlace a más información. Si la IP es compartida de tu proveedor de correo, avísale, porque la administra él. Si es tuya, busca qué envió correo no deseado, por ejemplo un equipo comprometido por malware, uno de los motivos de listado que menciona la RFC 5782 (sección 2.3).</p>
+<p>Google advierte otra causa: enviar pruebas de phishing o campañas de prueba desde tu dominio puede dañar su reputación y hacer que lo agreguen a listas de bloqueados de internet.</p>
+<h3  id="2-corrige-antes-de-pedir-la-salida">2. Corrige antes de pedir la salida</h3>
+<blockquote>
+<p><strong>Advertencia:</strong> si pides la salida sin corregir la causa, puedes volver a la lista. Microsoft lo dice expresamente: verifica que los mensajes no sean abusivos ni maliciosos, porque de lo contrario la IP podría bloquearse otra vez.</p>
+</blockquote>
+<h3  id="3-pide-la-salida-en-el-sitio-de-cada-lista">3. Pide la salida en el sitio de cada lista</h3>
+<p>Cada lista tiene su propio procedimiento, porque la RFC 5782 no lo define. Sigue el enlace del TXT o del rebote.</p>
+<p>Para Microsoft 365, si el rebote es <code>550 5.7.606-649</code>, usa el portal oficial <a href="https://sender.office.com">sender.office.com</a>: ingresas la dirección que recibió el rebote y la IP del error, confirmas desde el enlace que llega a ese correo y seleccionas <strong>Delist IP</strong>. Según Microsoft, puede tardar hasta 24 horas o más. Si el error es <code>5.7.511</code>, escribe a delist@microsoft.com con el código completo y la IP. Para Outlook.com, Microsoft enlaza un formulario aparte desde la misma página.</p>
+<h2  id="como-vigilarlo">Cómo vigilarlo</h2>
+<p>Como las listas cambian rápido, una sola revisión no basta:</p>
+<ul>
+<li>Revisa tu IP y tu dominio en el <a href="/verificar-lista-negra">verificador de listas negras</a> ante cualquier rebote raro.</li>
+<li>Si tu IP es compartida con tu proveedor, Google recomienda Postmaster Tools para ver su reputación.</li>
+<li>Usa el <a href="/mx-lookup">MX Lookup</a> para ver dónde recibe correo tu dominio y el <a href="/domain-checker">diagnóstico de dominio</a> para revisar su autenticación.</li>
+</ul>
+<h2  id="para-tu-equipo-tecnico">Para tu equipo técnico</h2>
+<p>Puedes reproducir la consulta con <code>dig</code>. Con la IP de documentación <code>203.0.113.10</code> y una lista de ejemplo <code>bl.example.com</code>, se consulta el registro A del nombre invertido:</p>
+<pre><code>dig +short 10.113.0.203.bl.example.com A
+</code></pre>
+<p>Si responde un valor como <code>127.0.0.2</code>, la IP está listada. Para ver el motivo:</p>
+<pre><code>dig +short 10.113.0.203.bl.example.com TXT
+</code></pre>
+<p>Si no hay respuesta y <code>dig</code> sin <code>+short</code> muestra <code>status: NXDOMAIN</code>, el nombre no existe y la IP no está en esa lista.</p>
+<p>Para una lista de dominios, el dominio va delante del nombre de la lista, por ejemplo <code>ejemplo.cl.doms.example.com</code>.</p>
+<p>Para comprobar que una lista sigue funcionando, la RFC 5782 (sección 5) exige que toda lista IPv4 tenga una entrada para <code>127.0.0.2</code> y ninguna para <code>127.0.0.1</code>. La sección 7 explica por qué importa: hubo una lista abandonada cuyo dominio se volvió a registrar y empezó a responder a todo.</p>
+<h2  id="como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</h2>
+<p>InboxSeguro no te saca de una lista negra: te avisa y te guía. El monitoreo revisa cada hora 6 listas (Spamcop, Barracuda, PSBL, Mailspike, DroneBL y Backscatterer) y, si apareces, te guía para pedir la salida. Además:</p>
+<ul>
+<li>Te muestra qué sistemas envían correo con tu dominio y te permite asignar un responsable a cada uno, para encontrar el que causó el problema.</li>
+<li>Detecta posibles suplantaciones de tu dominio.</li>
+<li>Te guía para avanzar con DMARC de <code>p=none</code> a <code>quarantine</code> y <code>reject</code> sin cortar correos legítimos.</li>
+<li>Muestra el estado DNS de SPF, DKIM, DMARC, BIMI, MTA-STS y RUA.</li>
+</ul>
+<p>Para una revisión inmediata y gratis, usa el <a href="/verificar-lista-negra">verificador de listas negras</a>.</p>
+<h2  id="fuentes">Fuentes</h2>
+<ul>
+<li><a href="https://www.rfc-editor.org/rfc/rfc5782">RFC 5782: DNS Blacklists and Whitelists</a>, secciones 1, 2, 2.1, 2.3, 2.4, 3, 4, 5, 6 y 7.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc5321">RFC 5321: Simple Mail Transfer Protocol</a>, secciones 4.2.1 y 4.2.3.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc3463">RFC 3463: Enhanced Mail System Status Codes</a>, secciones 2 y 3.8.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc1035">RFC 1035: Domain Names - Implementation and Specification</a>, sección 4.1.1.</li>
+<li><a href="https://www.rfc-editor.org/rfc/rfc2308">RFC 2308: Negative Caching of DNS Queries</a>, sección 1.</li>
+<li><a href="https://learn.microsoft.com/en-us/defender-office-365/external-senders-use-the-delist-portal-to-unblock-yourself">Microsoft Learn: Use the delist portal to remove yourself from the blocked senders list and address 5.7.511 Access denied errors</a>.</li>
+<li><a href="https://support.google.com/a/answer/81126?hl=es">Google: Directrices para remitentes de correo electrónico</a>.</li>
+</ul>
+                
+                <section class="blog-faq" aria-labelledby="preguntas-frecuentes">
+                    <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
+                    
+                    <h3>¿RBL y DNSBL son lo mismo?</h3>
+                    <p>En el uso diario, sí: mucha gente llama RBL a cualquier lista negra publicada en el DNS. La RFC 5782 aclara que el término RBL corresponde, en sentido estricto, a la lista original de MAPS, y que el término convencional hoy es DNSBL (DNS blacklist o blocklist).</p>
+                    
+                    <h3>¿Estar en una RBL significa que todos mis correos rebotan?</h3>
+                    <p>No necesariamente. Cada servidor decide qué listas consulta. Según la RFC 5782, algunos rechazan la conexión si encuentran la IP en una lista y otros usan el resultado como un factor más de un puntaje. En ese caso el correo puede llegar, pero a spam. Google indica que los mensajes desde IP incluidas en una lista de bloqueadas tienen más probabilidad de marcarse como spam.</p>
+                    
+                    <h3>¿Cuánto tarda una lista en quitar mi IP?</h3>
+                    <p>Depende de cada lista: la RFC 5782 no define reglas para entrar o salir. Para la lista de remitentes bloqueados de Microsoft 365, Microsoft indica que los resultados varían y que la salida puede tardar hasta 24 horas o más.</p>
+                    
+                </section>
+                
+            </div>
+
+            <aside class="blog-cta" aria-label="Siguiente paso">
+                <h2>Revisa tu dominio gratis</h2>
+                <p>Usa las herramientas gratuitas para ver qué hay publicado en DNS, o agenda una demo si quieres inventario continuo de quién envía con tu dominio.</p>
+                <div class="blog-cta-tools">
+                    <a href="/spf-checker" data-seo-event="cta_spf_checker">Verificador SPF</a>
+                    <a href="/dmarc-checker" data-seo-event="cta_dmarc_checker">Verificador DMARC</a>
+                    <a href="/dkim-checker" data-seo-event="cta_dkim_checker">Verificador DKIM</a>
+                </div>
+                <div class="blog-cta-actions">
+                    <a class="blog-cta-primary" href="/domain-checker" data-seo-event="cta_domain_checker">Diagnóstico completo</a>
+                    <a class="blog-cta-secondary" href="https://calendly.com/alfredo-inboxseguro/30min" target="_blank" rel="noopener"
+                       data-seo-event="cta_demo_calendly" onclick="if (typeof gtag==='function') gtag('event','schedule_demo');">Agendar demo</a>
+                </div>
+            </aside>
+        </div>
+
+        
+        <nav class="blog-toc blog-toc--desktop" aria-label="Contenido del artículo">
+            <p class="blog-toc-title">Contenido</p>
+            <ol class="blog-toc-list">
+                
+                <li class="blog-toc-item">
+                    <a href="#que-es-una-rbl">Qué es una RBL</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-funciona-la-consulta-dns">Cómo funciona la consulta DNS</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#la-ip-se-invierte-y-se-agrega-el-nombre-de-la-lista">La IP se invierte y se agrega el nombre de la lista</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#que-responde-la-lista">Qué responde la lista</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#sublistas-por-que-a-veces-ves-127004-o-127006">Sublistas: por qué a veces ves 127.0.0.4 o 127.0.0.6</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#las-listas-cambian-rapido">Las listas cambian rápido</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#listas-de-ip-y-listas-de-dominio">Listas de IP y listas de dominio</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-pasa-cuando-tu-ip-o-tu-dominio-aparece">Qué pasa cuando tu IP o tu dominio aparece</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#como-se-ve-el-rechazo">Cómo se ve el rechazo</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#que-hacer-si-estas-listado">Qué hacer si estás listado</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#1-encuentra-la-causa">1. Encuentra la causa</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#2-corrige-antes-de-pedir-la-salida">2. Corrige antes de pedir la salida</a>
+                </li>
+                
+                <li class="blog-toc-item blog-toc-item--sub">
+                    <a href="#3-pide-la-salida-en-el-sitio-de-cada-lista">3. Pide la salida en el sitio de cada lista</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-vigilarlo">Cómo vigilarlo</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#para-tu-equipo-tecnico">Para tu equipo técnico</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#como-ayuda-inboxseguro">Cómo ayuda InboxSeguro</a>
+                </li>
+                
+                <li class="blog-toc-item">
+                    <a href="#fuentes">Fuentes</a>
+                </li>
+                
+            </ol>
+        </nav>
+        
+    </div>
+</article>
+
+</main>
+<!-- chrome:footer -->
+    <div data-nosnippet>
+    <footer class="bg-slate-950 border-t border-slate-800 py-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-start gap-10">
+                <!-- Brand & Address -->
+                <div class="max-w-sm">
+                    <div class="flex items-center gap-1.5 mb-4">
+                        <img src="/logo.png" alt="" class="h-6 w-auto grayscale">
+                        <span class="font-bold text-white text-lg tracking-tight">
+                            Inbox<span class="text-blue-400">Seguro</span><sup class="text-[0.5rem] relative top-[-0.6em]">&trade;</sup>
+                        </span>
+                    </div>
+                    <p class="text-slate-500 text-sm leading-relaxed mb-4">
+                        Seguridad del correo de tu empresa: control de envíos, inventario con responsables y documento de gobernanza descargable.
+                    </p>
+                    <div class="space-y-2 text-xs text-slate-500 italic">
+                        <p class="flex items-center gap-2">
+                            <i class="fa-solid fa-location-dot w-4"></i>
+                            Santiago, Chile
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Links Quick Access -->
+                <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-16">
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Producto</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/como-funciona" class="hover:text-blue-400 transition-colors font-medium">Cómo funciona</a></li>
+                            <li><a href="/plataforma" class="hover:text-blue-400 transition-colors">Plataforma</a></li>
+                            <li><a href="/dmarc-para-empresas" class="hover:text-blue-400 transition-colors">DMARC para empresas</a></li>
+                            <li><a href="/precios" class="hover:text-blue-400 transition-colors">Precios</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Soluciones</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/seguridad-correo-proveedores" class="hover:text-blue-400 transition-colors">Seguridad para proveedores</a></li>
+                            <li><a href="/informe-higiene-correo-corporativo" class="hover:text-blue-400 transition-colors">Informe de higiene</a></li>
+                            <li><a href="/control-envios-dominio" class="hover:text-blue-400 transition-colors">Control de envíos</a></li>
+                            <li><a href="/suplantacion-correo-empresa" class="hover:text-blue-400 transition-colors">Detener suplantación</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Herramientas gratis</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/herramientas" class="hover:text-blue-400 transition-colors font-semibold">Todas las herramientas</a></li>
+                            <li><a href="/quien-puede-enviar-correos" class="hover:text-blue-400 transition-colors">Verificador de remitentes</a></li>
+                            <li><a href="/domain-checker" class="hover:text-blue-400 transition-colors">Chequeo de seguridad</a></li>
+                            <li><a href="/verificar-lista-negra" class="hover:text-blue-400 transition-colors">Verificador de listas negras</a></li>
+                            <li><a href="/inboxscore" class="hover:text-blue-400 transition-colors">InboxScore</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm mb-4 uppercase tracking-wider">Compañía</h4>
+                        <ul class="space-y-2 text-sm text-slate-500">
+                            <li><a href="/blog/" class="hover:text-blue-400 transition-colors">Blog</a></li>
+                            <li><a href="/guias" class="hover:text-blue-400 transition-colors">Guías</a></li>
+                            <li><a href="/glosario/" class="hover:text-blue-400 transition-colors">Glosario</a></li>
+                            <li><a href="/faq" class="hover:text-blue-400 transition-colors">Preguntas Frecuentes</a></li>
+                            <li><a href="/terminos" class="hover:text-blue-400 transition-colors">Términos</a></li>
+                            <li><a href="/privacidad" class="hover:text-blue-400 transition-colors">Privacidad</a></li>
+                            <li><a href="https://www.linkedin.com/company/inboxseguro" target="_blank"
+                                    class="hover:text-blue-400 transition-colors flex items-center gap-1.5">
+                                    <i class="fa-brands fa-linkedin-in text-xs"></i> LinkedIn de la Empresa
+                                </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs text-slate-600">
+                    © 2026 InboxSeguro. Todos los derechos reservados. Hecho con precisión en Santiago, Chile.
+                </p>
+                <div class="flex gap-4">
+                    <a href="mailto:contacto@inboxseguro.com" class="text-slate-600 hover:text-white transition-colors">
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    </div>
+    <!-- /chrome:footer -->
+<script>
+    function toggleMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.toggle('hidden');
+        iconOpen.classList.toggle('hidden');
+        iconClose.classList.toggle('hidden');
+    }
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const iconOpen = document.getElementById('menuIconOpen');
+        const iconClose = document.getElementById('menuIconClose');
+        menu.classList.add('hidden');
+        iconOpen.classList.remove('hidden');
+        iconClose.classList.add('hidden');
+    }
+</script>
+<script src="/analytics-config.js"></script>
+<script src="/analytics-loader.js"></script>
+<script src="/seo-analytics.js" defer></script>
+<script src="/session-cta.js" defer></script>
+</body>
+</html>
