@@ -22,8 +22,8 @@
       id: 'founding',
       name: 'Fundador',
       base: 25,
-      included: 1,
-      extraPrice: 5,
+      included: 10,
+      extraPrice: 0,
       maxDomains: 10,
       registerPlan: 'founding'
     },
@@ -131,7 +131,7 @@
     if (!q.available) {
       return 'Hasta ' + q.maxDomains + ' ' + domainNoun(q.maxDomains) + ' en este plan';
     }
-    if (q.id === 'business' && q.domains <= q.included) {
+    if ((q.id === 'business' || q.id === 'founding') && q.domains <= q.included) {
       return 'Incluye hasta ' + q.included + ' dominios por US$' + q.total + '/mes';
     }
     return 'Para ' + q.domains + ' ' + domainNoun(q.domains) + ': US$' + q.total + '/mes';
@@ -140,7 +140,8 @@
   function cardsIntroText(n) {
     if (n <= PLANS.business.included) {
       return (
-        'Para ' + n + ' ' + domainNoun(n) + ', Fundador y Estándar muestran el total mensual de la tarjeta; ' +
+        'Para ' + n + ' ' + domainNoun(n) + ', Fundador incluye hasta ' + PLANS.founding.included +
+        ' dominios por US$' + PLANS.founding.base + '/mes, Estándar muestra el total mensual y ' +
         'Business incluye hasta ' + PLANS.business.included + ' dominios por US$' + PLANS.business.base + '/mes. ' +
         'Los precios están expresados en USD.'
       );
@@ -161,6 +162,7 @@
     if (!q.available && q.id === 'business') {
       return 'Total máximo: 40 dominios.';
     }
+    if (q.id === 'founding' && q.extra === 0) return '10 dominios incluidos · Sin costo adicional';
     if (q.extra === 0) return 'Sin dominios adicionales';
     var noun = q.extra === 1 ? 'dominio adicional' : 'dominios adicionales';
     return q.extra + ' ' + noun + ' · US$' + q.extraCost + '/mes';
